@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"bookstoreinventorymanagementsystem","l":"BookstoreInventoryManagementSystem"},{"p":"bookstoreinventorymanagementsystem","l":"DatabaseManager"},{"p":"bookstoreinventorymanagementsystem","l":"LoginPage"}];updateSearchResults();
