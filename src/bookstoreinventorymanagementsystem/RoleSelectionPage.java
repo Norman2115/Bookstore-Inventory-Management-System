@@ -4,15 +4,56 @@ package bookstoreinventorymanagementsystem;
  *
  * @author Norman
  */
-public class LoginPage extends javax.swing.JFrame {
+public class RoleSelectionPage extends javax.swing.JFrame {
+
+    private boolean isAdminSelected = false;
+    private boolean isSalespersonSelected = false;
 
     /**
      * Creates new form LoginPage
      */
-    public LoginPage() {
+    public RoleSelectionPage() {
         initComponents();
-        jLabel1.setText("<html><font color='#3EA434'>Family</font> <font color='#008CD6'>Bookstore</font></html>");
-        passwordField.setEchoChar('\u2022');
+        jLabel1.setText("<html><font color='#3EA434'>What's</font> <font color='#008CD6'>Your Role?</font></html>");
+    }
+
+    /**
+     * Updates the UI components based on the selected role.
+     *
+     * @param isAdminSelected {@code true} if the admin role is selected,
+     * {@code false} if the salesperson role is selected
+     */
+    public void handleRoleSelection(boolean isAdminSelected) {
+        this.isAdminSelected = isAdminSelected; 
+        this.isSalespersonSelected = !isAdminSelected;
+
+        if (isAdminSelected) {
+            salespersonRole.setBorder(javax.swing.BorderFactory
+                    .createLineBorder(ColorManager.MEDIUM_GREY));
+            salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass()
+                    .getResource("/icon/salesperson_unselected.png")));
+            salespersonText.setForeground(ColorManager.LIGHT_GREY);
+
+            adminRole.setBorder(javax.swing.BorderFactory
+                    .createLineBorder(new java.awt.Color(62, 164, 52)));
+            adminRole.setBackground(ColorManager.PRIMARY_WHITE);
+            adminIcon.setIcon(new javax.swing.ImageIcon(getClass()
+                    .getResource("/icon/admin_selected.png")));
+            adminText.setForeground(ColorManager.DARK_GREEN);
+        } else {
+            adminRole.setBorder(javax.swing.BorderFactory
+                    .createLineBorder(ColorManager.MEDIUM_GREY));
+            adminIcon.setIcon(new javax.swing.ImageIcon(getClass()
+                    .getResource("/icon/admin_unselected.png")));
+            adminText.setForeground(ColorManager.LIGHT_GREY);
+
+            salespersonRole.setBorder(javax.swing.BorderFactory
+                    .createLineBorder(new java.awt.Color(62, 164, 52)));
+            salespersonRole.setBackground(ColorManager.PRIMARY_WHITE);
+            salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass()
+                    .getResource("/icon/salesperson_selected.png")));
+            salespersonText.setForeground(ColorManager.DARK_GREEN);
+        }
     }
 
     /**
@@ -32,17 +73,16 @@ public class LoginPage extends javax.swing.JFrame {
         LeftPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        showHidePasswordIcon = new javax.swing.JLabel();
-        forgotPasswordLink = new javax.swing.JLabel();
         loginButton = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        signUpLink = new javax.swing.JLabel();
-        passwordField = new javax.swing.JPasswordField();
+        loginLink = new javax.swing.JLabel();
+        adminRole = new javax.swing.JPanel();
+        adminIcon = new javax.swing.JLabel();
+        adminText = new javax.swing.JLabel();
+        salespersonRole = new javax.swing.JPanel();
+        salespersonIcon = new javax.swing.JLabel();
+        salespersonText = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -83,60 +123,12 @@ public class LoginPage extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Family Bookstore");
+        jLabel1.setText("What's Your Role");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 100, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Hello! Let's get started");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 100, 0));
-        jLabel3.setText("Username");
-
-        jTextField1.setBackground(new java.awt.Color(253, 252, 248));
-        jTextField1.setForeground(new java.awt.Color(0, 100, 0));
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 100, 0));
-        jLabel4.setText("Password");
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
-        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-
-        showHidePasswordIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hidePasswordIcon.png"))); // NOI18N
-        showHidePasswordIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        showHidePasswordIcon.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                showHidePasswordIconMouseClicked(evt);
-            }
-        });
-
-        forgotPasswordLink.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        forgotPasswordLink.setForeground(new java.awt.Color(0, 100, 0));
-        forgotPasswordLink.setText("Forgot Password?");
-        forgotPasswordLink.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                forgotPasswordLinkMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                forgotPasswordLinkMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                forgotPasswordLinkMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                forgotPasswordLinkMouseReleased(evt);
-            }
-        });
+        jLabel2.setText("Please choose a role to continue");
 
         loginButton.setBackground(new java.awt.Color(0, 140, 214));
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -160,7 +152,7 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("LOGIN");
+        jLabel8.setText("CONTINUE");
 
         javax.swing.GroupLayout loginButtonLayout = new javax.swing.GroupLayout(loginButton);
         loginButton.setLayout(loginButtonLayout);
@@ -182,37 +174,116 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 100, 0));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("Don't have an account?");
+        jLabel9.setText("Already have an account?");
 
-        signUpLink.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        signUpLink.setForeground(new java.awt.Color(0, 100, 0));
-        signUpLink.setText("Sign up");
-        signUpLink.addMouseListener(new java.awt.event.MouseAdapter() {
+        loginLink.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        loginLink.setForeground(new java.awt.Color(0, 100, 0));
+        loginLink.setText("Login");
+        loginLink.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                signUpLinkMouseClicked(evt);
+                loginLinkMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                signUpLinkMouseEntered(evt);
+                loginLinkMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                signUpLinkMouseExited(evt);
+                loginLinkMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                signUpLinkMousePressed(evt);
+                loginLinkMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                signUpLinkMouseReleased(evt);
+                loginLinkMouseReleased(evt);
             }
         });
 
-        passwordField.setBackground(new java.awt.Color(253, 252, 248));
-        passwordField.setForeground(new java.awt.Color(0, 100, 0));
-        passwordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
+        adminRole.setBackground(new java.awt.Color(253, 252, 248));
+        adminRole.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        adminRole.setPreferredSize(new java.awt.Dimension(186, 181));
+        adminRole.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                adminRoleMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                adminRoleMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                adminRoleMouseExited(evt);
             }
         });
+
+        adminIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/admin_unselected.png"))); // NOI18N
+
+        adminText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        adminText.setForeground(new java.awt.Color(230, 230, 230));
+        adminText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        adminText.setText("Administrator");
+
+        javax.swing.GroupLayout adminRoleLayout = new javax.swing.GroupLayout(adminRole);
+        adminRole.setLayout(adminRoleLayout);
+        adminRoleLayout.setHorizontalGroup(
+            adminRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(adminRoleLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(adminIcon)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminRoleLayout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(adminText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
+        adminRoleLayout.setVerticalGroup(
+            adminRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(adminRoleLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(adminIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(adminText)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        salespersonRole.setBackground(new java.awt.Color(253, 252, 248));
+        salespersonRole.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        salespersonRole.setPreferredSize(new java.awt.Dimension(186, 181));
+        salespersonRole.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                salespersonRoleMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                salespersonRoleMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                salespersonRoleMouseExited(evt);
+            }
+        });
+
+        salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/salesperson_unselected.png"))); // NOI18N
+
+        salespersonText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        salespersonText.setForeground(new java.awt.Color(230, 230, 230));
+        salespersonText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        salespersonText.setText("Salesperson");
+
+        javax.swing.GroupLayout salespersonRoleLayout = new javax.swing.GroupLayout(salespersonRole);
+        salespersonRole.setLayout(salespersonRoleLayout);
+        salespersonRoleLayout.setHorizontalGroup(
+            salespersonRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(salespersonRoleLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(salespersonRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(salespersonIcon)
+                    .addComponent(salespersonText))
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+        salespersonRoleLayout.setVerticalGroup(
+            salespersonRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(salespersonRoleLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(salespersonIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(salespersonText)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
@@ -228,22 +299,16 @@ public class LoginPage extends javax.swing.JFrame {
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(forgotPasswordLink)
+                            .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
+                                .addComponent(adminRole, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(salespersonRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(signUpLink))
-                            .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(showHidePasswordIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(loginLink)))
                         .addGap(0, 26, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -255,25 +320,15 @@ public class LoginPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(13, 13, 13)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-                .addGap(19, 19, 19)
-                .addComponent(jLabel4)
-                .addGap(13, 13, 13)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(showHidePasswordIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(passwordField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(forgotPasswordLink)
-                .addGap(18, 18, 18)
+                    .addComponent(adminRole, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                    .addComponent(salespersonRole, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(signUpLink))
+                    .addComponent(loginLink))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
 
@@ -334,63 +389,55 @@ public class LoginPage extends javax.swing.JFrame {
         loginButton.setBackground(new java.awt.Color(0, 92, 143));
     }//GEN-LAST:event_loginButtonMousePressed
 
-    private void forgotPasswordLinkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordLinkMouseEntered
-        forgotPasswordLink.setForeground(new java.awt.Color(0, 140, 214));
-    }//GEN-LAST:event_forgotPasswordLinkMouseEntered
+    private void loginLinkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseEntered
+        loginLink.setForeground(new java.awt.Color(0, 140, 214));
+    }//GEN-LAST:event_loginLinkMouseEntered
 
-    private void forgotPasswordLinkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordLinkMouseExited
-        forgotPasswordLink.setForeground(new java.awt.Color(0, 100, 0));
-    }//GEN-LAST:event_forgotPasswordLinkMouseExited
+    private void loginLinkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseExited
+        loginLink.setForeground(new java.awt.Color(0, 100, 0));
+    }//GEN-LAST:event_loginLinkMouseExited
 
-    private void forgotPasswordLinkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordLinkMousePressed
-        forgotPasswordLink.setForeground(new java.awt.Color(0, 113, 176));
-    }//GEN-LAST:event_forgotPasswordLinkMousePressed
+    private void loginLinkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMousePressed
+        loginLink.setForeground(new java.awt.Color(0, 113, 176));
+    }//GEN-LAST:event_loginLinkMousePressed
 
-    private void forgotPasswordLinkMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordLinkMouseReleased
-        forgotPasswordLink.setForeground(new java.awt.Color(0, 140, 214));
-    }//GEN-LAST:event_forgotPasswordLinkMouseReleased
+    private void loginLinkMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseReleased
+        loginLink.setForeground(new java.awt.Color(0, 140, 214));
+    }//GEN-LAST:event_loginLinkMouseReleased
 
-    private void signUpLinkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLinkMouseEntered
-        signUpLink.setForeground(new java.awt.Color(0, 140, 214));
-    }//GEN-LAST:event_signUpLinkMouseEntered
+    private void adminRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseClicked
+        handleRoleSelection(true);
+    }//GEN-LAST:event_adminRoleMouseClicked
 
-    private void signUpLinkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLinkMouseExited
-        signUpLink.setForeground(new java.awt.Color(0, 100, 0));
-    }//GEN-LAST:event_signUpLinkMouseExited
+    private void salespersonRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseClicked
+        handleRoleSelection(false);
+    }//GEN-LAST:event_salespersonRoleMouseClicked
 
-    private void signUpLinkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLinkMousePressed
-        signUpLink.setForeground(new java.awt.Color(0, 113, 176));
-    }//GEN-LAST:event_signUpLinkMousePressed
-
-    private void signUpLinkMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLinkMouseReleased
-        signUpLink.setForeground(new java.awt.Color(0, 140, 214));
-    }//GEN-LAST:event_signUpLinkMouseReleased
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
-    private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
-        if (passwordField.getEchoChar() != '\0') {
-            passwordField.setEchoChar('\0');
-            showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/showPasswordIcon.png")));
-        } else {
-            passwordField.setEchoChar('\u2022');
-            showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/hidePasswordIcon.png")));
+    private void adminRoleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseEntered
+        if (!isAdminSelected) {
+            adminRole.setBackground(ColorManager.DARK_GREY);
         }
-    }//GEN-LAST:event_showHidePasswordIconMouseClicked
+    }//GEN-LAST:event_adminRoleMouseEntered
 
-    private void signUpLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLinkMouseClicked
+    private void adminRoleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseExited
+        adminRole.setBackground(ColorManager.PRIMARY_WHITE);
+    }//GEN-LAST:event_adminRoleMouseExited
+
+    private void salespersonRoleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseEntered
+        if (!isSalespersonSelected) {
+            salespersonRole.setBackground(ColorManager.DARK_GREY);
+        }
+    }//GEN-LAST:event_salespersonRoleMouseEntered
+
+    private void salespersonRoleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseExited
+        salespersonRole.setBackground(ColorManager.PRIMARY_WHITE);
+    }//GEN-LAST:event_salespersonRoleMouseExited
+
+    private void loginLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseClicked
         dispose();
-        RoleSelectionPage roleSelectionPage = new RoleSelectionPage();
-        roleSelectionPage.setVisible(true);
-    }//GEN-LAST:event_signUpLinkMouseClicked
+        LoginPage loginPage = new LoginPage();
+        loginPage.setVisible(true);
+    }//GEN-LAST:event_loginLinkMouseClicked
 
     /**
      * @param args the command line arguments
@@ -409,20 +456,21 @@ public class LoginPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RoleSelectionPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RoleSelectionPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RoleSelectionPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RoleSelectionPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginPage().setVisible(true);
+                new RoleSelectionPage().setVisible(true);
             }
         });
     }
@@ -430,22 +478,21 @@ public class LoginPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
-    private javax.swing.JLabel forgotPasswordLink;
+    private javax.swing.JLabel adminIcon;
+    private javax.swing.JPanel adminRole;
+    private javax.swing.JLabel adminText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel loginButton;
-    private javax.swing.JPasswordField passwordField;
-    private javax.swing.JLabel showHidePasswordIcon;
-    private javax.swing.JLabel signUpLink;
+    private javax.swing.JLabel loginLink;
+    private javax.swing.JLabel salespersonIcon;
+    private javax.swing.JPanel salespersonRole;
+    private javax.swing.JLabel salespersonText;
     // End of variables declaration//GEN-END:variables
 }
