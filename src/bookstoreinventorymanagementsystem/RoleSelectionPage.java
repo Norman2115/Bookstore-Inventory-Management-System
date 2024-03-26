@@ -221,7 +221,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
         adminIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/admin_unselected.png"))); // NOI18N
 
-        adminText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        adminText.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         adminText.setForeground(new java.awt.Color(230, 230, 230));
         adminText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminText.setText("Administrator");
@@ -246,7 +246,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
                 .addComponent(adminIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(adminText)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         salespersonRole.setBackground(new java.awt.Color(253, 252, 248));
@@ -272,7 +272,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
         salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/salesperson_unselected.png"))); // NOI18N
 
-        salespersonText.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        salespersonText.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         salespersonText.setForeground(new java.awt.Color(230, 230, 230));
         salespersonText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         salespersonText.setText("Salesperson");
@@ -283,10 +283,10 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             salespersonRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(salespersonRoleLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addGroup(salespersonRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(salespersonIcon)
-                    .addComponent(salespersonText))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGroup(salespersonRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(salespersonIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(salespersonText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         salespersonRoleLayout.setVerticalGroup(
             salespersonRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
