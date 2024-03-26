@@ -6,8 +6,8 @@ Family Bookstore
 ### School
 INTI International University
 
-### Semester
-3, JAN2024
+### Subject
+PRG2203 Object-Oriented Programming
 
 ### Session
 JAN2024
