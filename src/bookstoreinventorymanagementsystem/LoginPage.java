@@ -50,6 +50,7 @@ public class LoginPage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOGIN");
+        setPreferredSize(new java.awt.Dimension(900, 500));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setToolTipText("");
@@ -120,7 +121,6 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
 
-        forgotPasswordLink.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         forgotPasswordLink.setForeground(new java.awt.Color(0, 100, 0));
         forgotPasswordLink.setText("Forgot Password?");
         forgotPasswordLink.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -179,18 +179,13 @@ public class LoginPage extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 100, 0));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel9.setText("Don't have an account?");
 
-        signUpLink.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         signUpLink.setForeground(new java.awt.Color(0, 100, 0));
         signUpLink.setText("Sign up");
         signUpLink.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                signUpLinkMouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 signUpLinkMouseEntered(evt);
             }
@@ -274,7 +269,7 @@ public class LoginPage extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(signUpLink))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -377,20 +372,12 @@ public class LoginPage extends javax.swing.JFrame {
     private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
         if (passwordField.getEchoChar() != '\0') {
             passwordField.setEchoChar('\0');
-            showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/showPasswordIcon.png")));
+            showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/showPasswordIcon.png")));
         } else {
             passwordField.setEchoChar('\u2022');
-            showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/hidePasswordIcon.png")));
+            showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hidePasswordIcon.png")));
         }
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
-
-    private void signUpLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLinkMouseClicked
-        dispose();
-        RoleSelectionPage roleSelectionPage = new RoleSelectionPage();
-        roleSelectionPage.setVisible(true);
-    }//GEN-LAST:event_signUpLinkMouseClicked
 
     /**
      * @param args the command line arguments
