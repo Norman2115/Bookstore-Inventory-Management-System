@@ -10,11 +10,12 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     private boolean isSalespersonSelected = false;
 
     /**
-     * Creates new form LoginPage
+     * Creates new form RoleSelectionPage
      */
     public RoleSelectionPage() {
         initComponents();
-        jLabel1.setText("<html><font color='#3EA434'>What's</font> <font color='#008CD6'>Your Role?</font></html>");
+        jLabel1.setText("<html><font color='#3EA434'>What's</font> "
+                + "<font color='#008CD6'>Your Role?</font></html>");
     }
 
     /**

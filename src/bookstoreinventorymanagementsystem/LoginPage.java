@@ -11,7 +11,8 @@ public class LoginPage extends javax.swing.JFrame {
      */
     public LoginPage() {
         initComponents();
-        jLabel1.setText("<html><font color='#3EA434'>Family</font> <font color='#008CD6'>Bookstore</font></html>");
+        jLabel1.setText("<html><font color='#3EA434'>Family</font> "
+                + "<font color='#008CD6'>Bookstore</font></html>");
         passwordField.setEchoChar('\u2022');
     }
 
