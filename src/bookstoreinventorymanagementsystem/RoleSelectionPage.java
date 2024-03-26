@@ -25,7 +25,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
      * {@code false} if the salesperson role is selected
      */
     public void handleRoleSelection(boolean isAdminSelected) {
-        this.isAdminSelected = isAdminSelected; 
+        this.isAdminSelected = isAdminSelected;
         this.isSalespersonSelected = !isAdminSelected;
 
         if (isAdminSelected) {
@@ -74,7 +74,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         LeftPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        loginButton = new javax.swing.JPanel();
+        continueButton = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         loginLink = new javax.swing.JLabel();
@@ -131,22 +131,22 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Please choose a role to continue");
 
-        loginButton.setBackground(new java.awt.Color(0, 140, 214));
-        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        continueButton.setBackground(new java.awt.Color(0, 140, 214));
+        continueButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginButtonMouseClicked(evt);
+                continueButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginButtonMouseEntered(evt);
+                continueButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginButtonMouseExited(evt);
+                continueButtonMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                loginButtonMousePressed(evt);
+                continueButtonMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                loginButtonMouseReleased(evt);
+                continueButtonMouseReleased(evt);
             }
         });
 
@@ -155,18 +155,18 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("CONTINUE");
 
-        javax.swing.GroupLayout loginButtonLayout = new javax.swing.GroupLayout(loginButton);
-        loginButton.setLayout(loginButtonLayout);
-        loginButtonLayout.setHorizontalGroup(
-            loginButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginButtonLayout.createSequentialGroup()
+        javax.swing.GroupLayout continueButtonLayout = new javax.swing.GroupLayout(continueButton);
+        continueButton.setLayout(continueButtonLayout);
+        continueButtonLayout.setHorizontalGroup(
+            continueButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, continueButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        loginButtonLayout.setVerticalGroup(
-            loginButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginButtonLayout.createSequentialGroup()
+        continueButtonLayout.setVerticalGroup(
+            continueButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, continueButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                 .addContainerGap())
@@ -210,6 +210,12 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 adminRoleMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                adminRoleMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                adminRoleMouseReleased(evt);
             }
         });
 
@@ -256,6 +262,12 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 salespersonRoleMouseExited(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                salespersonRoleMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                salespersonRoleMouseReleased(evt);
+            }
         });
 
         salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/salesperson_unselected.png"))); // NOI18N
@@ -300,7 +312,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(continueButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
                                 .addComponent(adminRole, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -325,7 +337,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
                     .addComponent(adminRole, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                     .addComponent(salespersonRole, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
                 .addGap(26, 26, 26)
-                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(continueButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -370,25 +382,25 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
+    private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
         // Navigate
-    }//GEN-LAST:event_loginButtonMouseClicked
+    }//GEN-LAST:event_continueButtonMouseClicked
 
-    private void loginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseEntered
-        loginButton.setBackground(new java.awt.Color(0, 113, 176));
-    }//GEN-LAST:event_loginButtonMouseEntered
+    private void continueButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseEntered
+        continueButton.setBackground(new java.awt.Color(0, 113, 176));
+    }//GEN-LAST:event_continueButtonMouseEntered
 
-    private void loginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseExited
-        loginButton.setBackground(new java.awt.Color(0, 140, 214));
-    }//GEN-LAST:event_loginButtonMouseExited
+    private void continueButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseExited
+        continueButton.setBackground(new java.awt.Color(0, 140, 214));
+    }//GEN-LAST:event_continueButtonMouseExited
 
-    private void loginButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseReleased
-        loginButton.setBackground(new java.awt.Color(0, 113, 176));
-    }//GEN-LAST:event_loginButtonMouseReleased
+    private void continueButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseReleased
+        continueButton.setBackground(new java.awt.Color(0, 113, 176));
+    }//GEN-LAST:event_continueButtonMouseReleased
 
-    private void loginButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMousePressed
-        loginButton.setBackground(new java.awt.Color(0, 92, 143));
-    }//GEN-LAST:event_loginButtonMousePressed
+    private void continueButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMousePressed
+        continueButton.setBackground(new java.awt.Color(0, 92, 143));
+    }//GEN-LAST:event_continueButtonMousePressed
 
     private void loginLinkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseEntered
         loginLink.setForeground(new java.awt.Color(0, 140, 214));
@@ -421,7 +433,9 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     }//GEN-LAST:event_adminRoleMouseEntered
 
     private void adminRoleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseExited
-        adminRole.setBackground(ColorManager.PRIMARY_WHITE);
+        if (!isAdminSelected) {
+            adminRole.setBackground(ColorManager.PRIMARY_WHITE);
+        }
     }//GEN-LAST:event_adminRoleMouseExited
 
     private void salespersonRoleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseEntered
@@ -431,7 +445,9 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     }//GEN-LAST:event_salespersonRoleMouseEntered
 
     private void salespersonRoleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseExited
-        salespersonRole.setBackground(ColorManager.PRIMARY_WHITE);
+        if (!isSalespersonSelected) {
+            salespersonRole.setBackground(ColorManager.PRIMARY_WHITE);
+        }
     }//GEN-LAST:event_salespersonRoleMouseExited
 
     private void loginLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseClicked
@@ -439,6 +455,30 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         LoginPage loginPage = new LoginPage();
         loginPage.setVisible(true);
     }//GEN-LAST:event_loginLinkMouseClicked
+
+    private void adminRoleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMousePressed
+        if (!isAdminSelected) {
+            adminRole.setBackground(ColorManager.DEEP_GREY);
+        }
+    }//GEN-LAST:event_adminRoleMousePressed
+
+    private void adminRoleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseReleased
+        if (!isAdminSelected) {
+            adminRole.setBackground(ColorManager.DARK_GREY);
+        }
+    }//GEN-LAST:event_adminRoleMouseReleased
+
+    private void salespersonRoleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMousePressed
+        if (!isSalespersonSelected) {
+            salespersonRole.setBackground(ColorManager.DEEP_GREY);
+        }
+    }//GEN-LAST:event_salespersonRoleMousePressed
+
+    private void salespersonRoleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseReleased
+        if (!isSalespersonSelected) {
+            salespersonRole.setBackground(ColorManager.DARK_GREY);
+        }
+    }//GEN-LAST:event_salespersonRoleMouseReleased
 
     /**
      * @param args the command line arguments
@@ -482,6 +522,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     private javax.swing.JLabel adminIcon;
     private javax.swing.JPanel adminRole;
     private javax.swing.JLabel adminText;
+    private javax.swing.JPanel continueButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
@@ -490,7 +531,6 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JPanel loginButton;
     private javax.swing.JLabel loginLink;
     private javax.swing.JLabel salespersonIcon;
     private javax.swing.JPanel salespersonRole;
