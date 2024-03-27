@@ -7,7 +7,7 @@ Family Bookstore
 INTI International University
 
 ### Subject
-PRG2203 Object-Oriented Programming
+PRG2201 Object-Oriented Programming
 
 ### Session
 JAN2024
