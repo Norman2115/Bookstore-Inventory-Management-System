@@ -8,12 +8,12 @@ package bookstoreinventorymanagementsystem;
  *
  * @author User
  */
-public class AdminHomepage extends javax.swing.JFrame {
+public class AdminViewProductPage extends javax.swing.JFrame {
 
     /**
      * Creates new form Admin_homepage
      */
-    public AdminHomepage() {
+    public AdminViewProductPage() {
         initComponents();
     }
 
@@ -27,7 +27,7 @@ public class AdminHomepage extends javax.swing.JFrame {
     private void initComponents() {
 
         background = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        toolsBar = new javax.swing.JPanel();
         accountButton = new javax.swing.JPanel();
         userProfilePicturte = new javax.swing.JLabel();
         userName = new javax.swing.JLabel();
@@ -43,18 +43,20 @@ public class AdminHomepage extends javax.swing.JFrame {
         invoiceLable = new javax.swing.JLabel();
         logoutButton = new javax.swing.JPanel();
         logoutLable = new javax.swing.JLabel();
+        viewProductButton = new javax.swing.JPanel();
+        viewProductLable = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        informationTable = new javax.swing.JTable();
         searchBar = new javax.swing.JTextField();
         searchButton = new javax.swing.JToggleButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(253, 252, 248));
 
-        background.setBackground(new java.awt.Color(253, 252, 248));
+        background.setBackground(new java.awt.Color(0, 255, 153));
         background.setPreferredSize(new java.awt.Dimension(1080, 720));
 
-        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        toolsBar.setBackground(new java.awt.Color(0, 0, 0));
 
         accountButton.setBackground(new java.awt.Color(0, 113, 176));
         accountButton.setPreferredSize(new java.awt.Dimension(138, 138));
@@ -243,25 +245,54 @@ public class AdminHomepage extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        viewProductButton.setBackground(new java.awt.Color(0, 113, 176));
+        viewProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
+
+        viewProductLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        viewProductLable.setForeground(new java.awt.Color(253, 252, 248));
+        viewProductLable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        viewProductLable.setText("VIEW PRODUCT");
+        viewProductLable.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout viewProductButtonLayout = new javax.swing.GroupLayout(viewProductButton);
+        viewProductButton.setLayout(viewProductButtonLayout);
+        viewProductButtonLayout.setHorizontalGroup(
+            viewProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewProductButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(viewProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        viewProductButtonLayout.setVerticalGroup(
+            viewProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewProductButtonLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(viewProductLable, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout toolsBarLayout = new javax.swing.GroupLayout(toolsBar);
+        toolsBar.setLayout(toolsBarLayout);
+        toolsBarLayout.setHorizontalGroup(
+            toolsBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(toolsBarLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(toolsBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(accountButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deleteProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(restockButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(invoiceButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(logoutButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(logoutButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        toolsBarLayout.setVerticalGroup(
+            toolsBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(toolsBarLayout.createSequentialGroup()
                 .addComponent(accountButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(viewProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -272,36 +303,13 @@ public class AdminHomepage extends javax.swing.JFrame {
                 .addComponent(restockButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(invoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         accountButton.getAccessibleContext().setAccessibleDescription("");
-        accountButton.getAccessibleContext().setAccessibleParent(background);
 
-        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
-        background.setLayout(backgroundLayout);
-        backgroundLayout.setHorizontalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        backgroundLayout.setVerticalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        searchBar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        searchBar.setToolTipText("Search Bar");
-        searchBar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        searchBar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchBarActionPerformed(evt);
-            }
-        });
-
-        searchButton.setText("jToggleButton1");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        informationTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -312,36 +320,61 @@ public class AdminHomepage extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(informationTable);
+        informationTable.getAccessibleContext().setAccessibleParent(background);
+
+        searchBar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        searchBar.setToolTipText("Search Bar");
+        searchBar.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        searchBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
+        background.setLayout(backgroundLayout);
+        backgroundLayout.setHorizontalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backgroundLayout.createSequentialGroup()
+                .addComponent(toolsBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 925, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
+                        .addComponent(searchBar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(1531, 1531, 1531))
+        );
+        backgroundLayout.setVerticalGroup(
+            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(toolsBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(backgroundLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+        );
+
+        searchBar.getAccessibleContext().setAccessibleParent(background);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(searchBar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1573, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 36, Short.MAX_VALUE))
+                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -368,21 +401,23 @@ public class AdminHomepage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminHomepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminViewProductPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminHomepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminViewProductPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminHomepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminViewProductPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminHomepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminViewProductPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminHomepage().setVisible(true);
+                new AdminViewProductPage().setVisible(true);
             }
         });
     }
@@ -396,18 +431,20 @@ public class AdminHomepage extends javax.swing.JFrame {
     private javax.swing.JLabel deleteProductLable;
     private javax.swing.JPanel editProductButton;
     private javax.swing.JLabel editProductLable;
+    private javax.swing.JTable informationTable;
     private javax.swing.JPanel invoiceButton;
     private javax.swing.JLabel invoiceLable;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel logoutButton;
     private javax.swing.JLabel logoutLable;
     private javax.swing.JPanel restockButton;
     private javax.swing.JLabel restockLable;
     private javax.swing.JTextField searchBar;
     private javax.swing.JToggleButton searchButton;
+    private javax.swing.JPanel toolsBar;
     private javax.swing.JLabel userName;
     private javax.swing.JLabel userProfilePicturte;
+    private javax.swing.JPanel viewProductButton;
+    private javax.swing.JLabel viewProductLable;
     // End of variables declaration//GEN-END:variables
 }
