@@ -320,51 +320,51 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_loginButtonMouseClicked
 
     private void loginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseEntered
-        loginButton.setBackground(new java.awt.Color(0, 113, 176));
+        loginButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_loginButtonMouseEntered
 
     private void loginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseExited
-        loginButton.setBackground(new java.awt.Color(0, 140, 214));
+        loginButton.setBackground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_loginButtonMouseExited
 
     private void loginButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseReleased
-        loginButton.setBackground(new java.awt.Color(0, 113, 176));
+        loginButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_loginButtonMouseReleased
 
     private void loginButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMousePressed
-        loginButton.setBackground(new java.awt.Color(0, 92, 143));
+        loginButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_loginButtonMousePressed
 
     private void forgotPasswordLinkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordLinkMouseEntered
-        forgotPasswordLink.setForeground(new java.awt.Color(0, 140, 214));
+        forgotPasswordLink.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_forgotPasswordLinkMouseEntered
 
     private void forgotPasswordLinkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordLinkMouseExited
-        forgotPasswordLink.setForeground(new java.awt.Color(0, 100, 0));
+        forgotPasswordLink.setForeground(ColorManager.DARK_GREEN);
     }//GEN-LAST:event_forgotPasswordLinkMouseExited
 
     private void forgotPasswordLinkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordLinkMousePressed
-        forgotPasswordLink.setForeground(new java.awt.Color(0, 113, 176));
+        forgotPasswordLink.setForeground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_forgotPasswordLinkMousePressed
 
     private void forgotPasswordLinkMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordLinkMouseReleased
-        forgotPasswordLink.setForeground(new java.awt.Color(0, 140, 214));
+        forgotPasswordLink.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_forgotPasswordLinkMouseReleased
 
     private void signUpLinkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLinkMouseEntered
-        signUpLink.setForeground(new java.awt.Color(0, 140, 214));
+        signUpLink.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_signUpLinkMouseEntered
 
     private void signUpLinkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLinkMouseExited
-        signUpLink.setForeground(new java.awt.Color(0, 100, 0));
+        signUpLink.setForeground(ColorManager.DARK_GREEN);
     }//GEN-LAST:event_signUpLinkMouseExited
 
     private void signUpLinkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLinkMousePressed
-        signUpLink.setForeground(new java.awt.Color(0, 113, 176));
+        signUpLink.setForeground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_signUpLinkMousePressed
 
     private void signUpLinkMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpLinkMouseReleased
-        signUpLink.setForeground(new java.awt.Color(0, 140, 214));
+        signUpLink.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_signUpLinkMouseReleased
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
