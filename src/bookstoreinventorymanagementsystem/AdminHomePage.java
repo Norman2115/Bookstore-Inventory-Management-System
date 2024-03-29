@@ -65,8 +65,20 @@ public class AdminHomePage extends javax.swing.JFrame {
         addProductButton.setBackground(new java.awt.Color(62, 164, 52));
         addProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
         addProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addProductButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 addProductButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addProductButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                addProductButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                addProductButtonMouseReleased(evt);
             }
         });
 
@@ -95,6 +107,23 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         deleteProductButton.setBackground(new java.awt.Color(62, 164, 52));
         deleteProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
+        deleteProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteProductButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteProductButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteProductButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                deleteProductButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                deleteProductButtonMouseReleased(evt);
+            }
+        });
 
         deleteProductLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         deleteProductLable.setForeground(new java.awt.Color(253, 252, 248));
@@ -121,6 +150,23 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         editProductButton.setBackground(new java.awt.Color(62, 164, 52));
         editProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
+        editProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editProductButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editProductButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editProductButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                editProductButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                editProductButtonMouseReleased(evt);
+            }
+        });
 
         editProductLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         editProductLable.setForeground(new java.awt.Color(253, 252, 248));
@@ -147,6 +193,23 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         restockButton.setBackground(new java.awt.Color(62, 164, 52));
         restockButton.setPreferredSize(new java.awt.Dimension(138, 138));
+        restockButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                restockButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                restockButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                restockButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                restockButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                restockButtonMouseReleased(evt);
+            }
+        });
 
         restockLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         restockLable.setForeground(new java.awt.Color(253, 252, 248));
@@ -173,6 +236,23 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         invoiceButton.setBackground(new java.awt.Color(62, 164, 52));
         invoiceButton.setPreferredSize(new java.awt.Dimension(138, 138));
+        invoiceButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                invoiceButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                invoiceButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                invoiceButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                invoiceButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                invoiceButtonMouseReleased(evt);
+            }
+        });
 
         invoiceLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         invoiceLable.setForeground(new java.awt.Color(253, 252, 248));
@@ -199,6 +279,23 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         logoutButton.setBackground(new java.awt.Color(62, 164, 52));
         logoutButton.setPreferredSize(new java.awt.Dimension(138, 138));
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                logoutButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseReleased(evt);
+            }
+        });
 
         logoutLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         logoutLable.setForeground(new java.awt.Color(253, 252, 248));
@@ -226,11 +323,20 @@ public class AdminHomePage extends javax.swing.JFrame {
         viewProductButton.setBackground(new java.awt.Color(62, 164, 52));
         viewProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
         viewProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewProductButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 viewProductButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 viewProductButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                viewProductButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                viewProductButtonMouseReleased(evt);
             }
         });
 
@@ -394,17 +500,152 @@ public class AdminHomePage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+// viewProductButton
     private void viewProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseEntered
-        viewProductButton.setBackground(Color.red);
+        viewProductButton.setBackground(ColorManager.MEDIUM_GREEN);
     }//GEN-LAST:event_viewProductButtonMouseEntered
 
-    private void addProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseEntered
+    private void viewProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseExited
+        viewProductButton.setBackground(ColorManager.PRIMARY_GREEN);
+    }//GEN-LAST:event_viewProductButtonMouseExited
+
+    private void viewProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMousePressed
+        viewProductButton.setBackground(ColorManager.DEEP_GREEN);
+    }//GEN-LAST:event_viewProductButtonMousePressed
+
+    private void viewProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseReleased
+        viewProductButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_viewProductButtonMouseReleased
+
+    private void viewProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseClicked
+        //link to other page
+    }//GEN-LAST:event_viewProductButtonMouseClicked
+
+    // addProductButton
+    private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
         // TODO add your handling code here:
+    }//GEN-LAST:event_addProductButtonMouseClicked
+
+    private void addProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseEntered
+        addProductButton.setBackground(ColorManager.MEDIUM_GREEN);
     }//GEN-LAST:event_addProductButtonMouseEntered
 
-    private void viewProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseExited
+    private void addProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseExited
+        addProductButton.setBackground(ColorManager.PRIMARY_GREEN);
+    }//GEN-LAST:event_addProductButtonMouseExited
+
+    private void addProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMousePressed
+        addProductButton.setBackground(ColorManager.DEEP_GREEN);
+    }//GEN-LAST:event_addProductButtonMousePressed
+
+    private void addProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseReleased
+        addProductButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_addProductButtonMouseReleased
+
+    // deleteProductButton
+    private void deleteProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_viewProductButtonMouseExited
+    }//GEN-LAST:event_deleteProductButtonMouseClicked
+
+    private void deleteProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseEntered
+        deleteProductButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_deleteProductButtonMouseEntered
+
+    private void deleteProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseExited
+        deleteProductButton.setBackground(ColorManager.PRIMARY_GREEN);
+    }//GEN-LAST:event_deleteProductButtonMouseExited
+
+    private void deleteProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMousePressed
+        deleteProductButton.setBackground(ColorManager.DEEP_GREEN);
+    }//GEN-LAST:event_deleteProductButtonMousePressed
+
+    private void deleteProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseReleased
+        deleteProductButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_deleteProductButtonMouseReleased
+    
+    //editProductButton
+    private void editProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editProductButtonMouseClicked
+
+    private void editProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseEntered
+        editProductButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_editProductButtonMouseEntered
+
+    private void editProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseExited
+        editProductButton.setBackground(ColorManager.PRIMARY_GREEN);
+    }//GEN-LAST:event_editProductButtonMouseExited
+
+    private void editProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMousePressed
+        editProductButton.setBackground(ColorManager.DEEP_GREEN);
+    }//GEN-LAST:event_editProductButtonMousePressed
+
+    private void editProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseReleased
+        editProductButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_editProductButtonMouseReleased
+
+    //restockButton
+    private void restockButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_restockButtonMouseClicked
+
+    private void restockButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseEntered
+        restockButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_restockButtonMouseEntered
+
+    private void restockButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseExited
+         restockButton.setBackground(ColorManager.PRIMARY_GREEN);
+    }//GEN-LAST:event_restockButtonMouseExited
+
+    private void restockButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMousePressed
+        restockButton.setBackground(ColorManager.DEEP_GREEN);
+    }//GEN-LAST:event_restockButtonMousePressed
+
+    private void restockButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseReleased
+        restockButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_restockButtonMouseReleased
+
+    //invoice
+    private void invoiceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseClicked
+        //
+    }//GEN-LAST:event_invoiceButtonMouseClicked
+
+    private void invoiceButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseEntered
+        invoiceButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_invoiceButtonMouseEntered
+
+    private void invoiceButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseExited
+        invoiceButton.setBackground(ColorManager.PRIMARY_GREEN);
+    }//GEN-LAST:event_invoiceButtonMouseExited
+
+    private void invoiceButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMousePressed
+        invoiceButton.setBackground(ColorManager.DEEP_GREEN);
+    }//GEN-LAST:event_invoiceButtonMousePressed
+
+    private void invoiceButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseReleased
+        invoiceButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_invoiceButtonMouseReleased
+
+    //logout
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logoutButtonMouseClicked
+
+    private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
+        logoutButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_logoutButtonMouseEntered
+
+    private void logoutButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseExited
+        logoutButton.setBackground(ColorManager.PRIMARY_GREEN);
+    }//GEN-LAST:event_logoutButtonMouseExited
+
+    private void logoutButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMousePressed
+        logoutButton.setBackground(ColorManager.DEEP_GREEN);
+    }//GEN-LAST:event_logoutButtonMousePressed
+
+    private void logoutButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseReleased
+        logoutButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_logoutButtonMouseReleased
 
     /**
      * @param args the command line arguments

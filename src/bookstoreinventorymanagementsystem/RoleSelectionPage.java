@@ -387,35 +387,35 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     }//GEN-LAST:event_continueButtonMouseClicked
 
     private void continueButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseEntered
-        continueButton.setBackground(new java.awt.Color(0, 113, 176));
+        continueButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_continueButtonMouseEntered
 
     private void continueButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseExited
-        continueButton.setBackground(new java.awt.Color(0, 140, 214));
+        continueButton.setBackground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_continueButtonMouseExited
 
     private void continueButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseReleased
-        continueButton.setBackground(new java.awt.Color(0, 113, 176));
+        continueButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_continueButtonMouseReleased
 
     private void continueButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMousePressed
-        continueButton.setBackground(new java.awt.Color(0, 92, 143));
+        continueButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_continueButtonMousePressed
 
     private void loginLinkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseEntered
-        loginLink.setForeground(new java.awt.Color(0, 140, 214));
+        loginLink.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_loginLinkMouseEntered
 
     private void loginLinkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseExited
-        loginLink.setForeground(new java.awt.Color(0, 100, 0));
+        loginLink.setForeground(ColorManager.DARK_GREEN);
     }//GEN-LAST:event_loginLinkMouseExited
 
     private void loginLinkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMousePressed
-        loginLink.setForeground(new java.awt.Color(0, 113, 176));
+        loginLink.setForeground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_loginLinkMousePressed
 
     private void loginLinkMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseReleased
-        loginLink.setForeground(new java.awt.Color(0, 140, 214));
+        loginLink.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_loginLinkMouseReleased
 
     private void adminRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseClicked
@@ -428,7 +428,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
     private void adminRoleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseEntered
         if (!isAdminSelected) {
-            adminRole.setBackground(ColorManager.DARK_GREY);
+            adminRole.setBackground(ColorManager.DEEP_GREY);
         }
     }//GEN-LAST:event_adminRoleMouseEntered
 
@@ -440,7 +440,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
     private void salespersonRoleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseEntered
         if (!isSalespersonSelected) {
-            salespersonRole.setBackground(ColorManager.DARK_GREY);
+            salespersonRole.setBackground(ColorManager.DEEP_GREY);
         }
     }//GEN-LAST:event_salespersonRoleMouseEntered
 
@@ -458,25 +458,25 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
     private void adminRoleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMousePressed
         if (!isAdminSelected) {
-            adminRole.setBackground(ColorManager.DEEP_GREY);
+            adminRole.setBackground(ColorManager.DARK_GREY);
         }
     }//GEN-LAST:event_adminRoleMousePressed
 
     private void adminRoleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseReleased
         if (!isAdminSelected) {
-            adminRole.setBackground(ColorManager.DARK_GREY);
+            adminRole.setBackground(ColorManager.DEEP_GREY);
         }
     }//GEN-LAST:event_adminRoleMouseReleased
 
     private void salespersonRoleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMousePressed
         if (!isSalespersonSelected) {
-            salespersonRole.setBackground(ColorManager.DEEP_GREY);
+            salespersonRole.setBackground(ColorManager.DARK_GREY);
         }
     }//GEN-LAST:event_salespersonRoleMousePressed
 
     private void salespersonRoleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseReleased
         if (!isSalespersonSelected) {
-            salespersonRole.setBackground(ColorManager.DARK_GREY);
+            salespersonRole.setBackground(ColorManager.DEEP_GREY);
         }
     }//GEN-LAST:event_salespersonRoleMouseReleased
 
