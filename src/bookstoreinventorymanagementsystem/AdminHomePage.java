@@ -4,6 +4,8 @@
  */
 package bookstoreinventorymanagementsystem;
 
+import java.awt.Color;
+
 /**
  *
  * @author User
@@ -28,9 +30,6 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         background = new javax.swing.JPanel();
         toolsBar = new javax.swing.JPanel();
-        accountButton = new javax.swing.JPanel();
-        userProfilePicturte = new javax.swing.JLabel();
-        userName = new javax.swing.JLabel();
         addProductButton = new javax.swing.JPanel();
         addProductLable = new javax.swing.JLabel();
         deleteProductButton = new javax.swing.JPanel();
@@ -48,48 +47,28 @@ public class AdminHomePage extends javax.swing.JFrame {
         welcomePanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        topBar = new javax.swing.JPanel();
+        userProfilePicturte = new javax.swing.JLabel();
+        date = new javax.swing.JLabel();
+        time1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(253, 252, 248));
 
         background.setBackground(new java.awt.Color(0, 255, 153));
-        background.setPreferredSize(new java.awt.Dimension(1080, 720));
+        background.setPreferredSize(new java.awt.Dimension(1080, 700));
 
-        toolsBar.setBackground(new java.awt.Color(0, 0, 0));
+        toolsBar.setBackground(new java.awt.Color(0, 140, 214));
+        toolsBar.setAlignmentX(0.0F);
+        toolsBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        accountButton.setBackground(new java.awt.Color(0, 113, 176));
-        accountButton.setPreferredSize(new java.awt.Dimension(138, 138));
-
-        userProfilePicturte.setText("This is a  picture");
-
-        userName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        userName.setForeground(new java.awt.Color(253, 252, 248));
-        userName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        userName.setText("NAME");
-        userName.setPreferredSize(new java.awt.Dimension(138, 16));
-
-        javax.swing.GroupLayout accountButtonLayout = new javax.swing.GroupLayout(accountButton);
-        accountButton.setLayout(accountButtonLayout);
-        accountButtonLayout.setHorizontalGroup(
-            accountButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, accountButtonLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(userProfilePicturte, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
-            .addComponent(userName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        accountButtonLayout.setVerticalGroup(
-            accountButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(accountButtonLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(userProfilePicturte, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        addProductButton.setBackground(new java.awt.Color(0, 113, 176));
+        addProductButton.setBackground(new java.awt.Color(62, 164, 52));
         addProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
+        addProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addProductButtonMouseEntered(evt);
+            }
+        });
 
         addProductLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         addProductLable.setForeground(new java.awt.Color(253, 252, 248));
@@ -114,7 +93,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        deleteProductButton.setBackground(new java.awt.Color(0, 113, 176));
+        deleteProductButton.setBackground(new java.awt.Color(62, 164, 52));
         deleteProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
 
         deleteProductLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -140,7 +119,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        editProductButton.setBackground(new java.awt.Color(0, 113, 176));
+        editProductButton.setBackground(new java.awt.Color(62, 164, 52));
         editProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
 
         editProductLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -166,7 +145,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        restockButton.setBackground(new java.awt.Color(0, 113, 176));
+        restockButton.setBackground(new java.awt.Color(62, 164, 52));
         restockButton.setPreferredSize(new java.awt.Dimension(138, 138));
 
         restockLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -192,7 +171,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        invoiceButton.setBackground(new java.awt.Color(0, 113, 176));
+        invoiceButton.setBackground(new java.awt.Color(62, 164, 52));
         invoiceButton.setPreferredSize(new java.awt.Dimension(138, 138));
 
         invoiceLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -218,7 +197,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        logoutButton.setBackground(new java.awt.Color(0, 113, 176));
+        logoutButton.setBackground(new java.awt.Color(62, 164, 52));
         logoutButton.setPreferredSize(new java.awt.Dimension(138, 138));
 
         logoutLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -244,8 +223,16 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        viewProductButton.setBackground(new java.awt.Color(0, 113, 176));
+        viewProductButton.setBackground(new java.awt.Color(62, 164, 52));
         viewProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
+        viewProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                viewProductButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                viewProductButtonMouseExited(evt);
+            }
+        });
 
         viewProductLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         viewProductLable.setForeground(new java.awt.Color(253, 252, 248));
@@ -277,7 +264,6 @@ public class AdminHomePage extends javax.swing.JFrame {
             .addGroup(toolsBarLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(toolsBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(accountButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deleteProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,51 +275,81 @@ public class AdminHomePage extends javax.swing.JFrame {
         toolsBarLayout.setVerticalGroup(
             toolsBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(toolsBarLayout.createSequentialGroup()
-                .addComponent(accountButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(viewProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(deleteProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(editProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(restockButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(invoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-
-        accountButton.getAccessibleContext().setAccessibleDescription("");
 
         welcomePanel.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel2.setText("Inventory Management System");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 100)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 80)); // NOI18N
         jLabel3.setText("Family Bookstore ");
 
         javax.swing.GroupLayout welcomePanelLayout = new javax.swing.GroupLayout(welcomePanel);
         welcomePanel.setLayout(welcomePanelLayout);
         welcomePanelLayout.setHorizontalGroup(
             welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, welcomePanelLayout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+            .addGroup(welcomePanelLayout.createSequentialGroup()
+                .addGap(85, 85, 85)
                 .addGroup(welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addGap(43, 43, 43))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         welcomePanelLayout.setVerticalGroup(
             welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(welcomePanelLayout.createSequentialGroup()
-                .addGap(255, 255, 255)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, welcomePanelLayout.createSequentialGroup()
+                .addContainerGap(230, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
+                .addGap(253, 253, 253))
+        );
+
+        topBar.setBackground(new java.awt.Color(0, 140, 214));
+        topBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        userProfilePicturte.setText("ICOM");
+
+        date.setText("Date");
+
+        time1.setText("Time");
+
+        javax.swing.GroupLayout topBarLayout = new javax.swing.GroupLayout(topBar);
+        topBar.setLayout(topBarLayout);
+        topBarLayout.setHorizontalGroup(
+            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topBarLayout.createSequentialGroup()
+                .addContainerGap(802, Short.MAX_VALUE)
+                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(time1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userProfilePicturte)
+                .addGap(36, 36, 36))
+        );
+        topBarLayout.setVerticalGroup(
+            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(topBarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(time1)
+                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(userProfilePicturte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -342,17 +358,26 @@ public class AdminHomePage extends javax.swing.JFrame {
         backgroundLayout.setHorizontalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
-                .addComponent(toolsBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(welcomePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addComponent(toolsBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(welcomePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addComponent(topBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(toolsBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(backgroundLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(welcomePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(topBar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(toolsBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(welcomePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -364,13 +389,23 @@ public class AdminHomePage extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void viewProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseEntered
+        viewProductButton.setBackground(Color.red);
+    }//GEN-LAST:event_viewProductButtonMouseEntered
+
+    private void addProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addProductButtonMouseEntered
+
+    private void viewProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_viewProductButtonMouseExited
 
     /**
      * @param args the command line arguments
@@ -408,6 +443,7 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new AdminHomePage().setVisible(true);
             }
@@ -415,10 +451,10 @@ public class AdminHomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel accountButton;
     private javax.swing.JPanel addProductButton;
     private javax.swing.JLabel addProductLable;
     private javax.swing.JPanel background;
+    private javax.swing.JLabel date;
     private javax.swing.JPanel deleteProductButton;
     private javax.swing.JLabel deleteProductLable;
     private javax.swing.JPanel editProductButton;
@@ -431,8 +467,9 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JLabel logoutLable;
     private javax.swing.JPanel restockButton;
     private javax.swing.JLabel restockLable;
+    private javax.swing.JLabel time1;
     private javax.swing.JPanel toolsBar;
-    private javax.swing.JLabel userName;
+    private javax.swing.JPanel topBar;
     private javax.swing.JLabel userProfilePicturte;
     private javax.swing.JPanel viewProductButton;
     private javax.swing.JLabel viewProductLable;
