@@ -56,7 +56,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         setBackground(new java.awt.Color(253, 252, 248));
 
         background.setBackground(new java.awt.Color(0, 255, 153));
-        background.setPreferredSize(new java.awt.Dimension(1080, 700));
+        background.setPreferredSize(new java.awt.Dimension(1080, 600));
 
         toolsBar.setBackground(new java.awt.Color(0, 140, 214));
         toolsBar.setAlignmentX(0.0F);
@@ -291,7 +291,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        welcomePanel.setBackground(new java.awt.Color(255, 255, 255));
+        welcomePanel.setBackground(new java.awt.Color(253, 252, 248));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel2.setText("Inventory Management System");
@@ -313,7 +313,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         welcomePanelLayout.setVerticalGroup(
             welcomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, welcomePanelLayout.createSequentialGroup()
-                .addContainerGap(238, Short.MAX_VALUE)
+                .addContainerGap(165, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
@@ -375,7 +375,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(toolsBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGap(0, 25, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(welcomePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0))
         );
