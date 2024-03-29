@@ -5,30 +5,25 @@ package bookstoreinventorymanagementsystem;
  * @author Norman
  */
 public class RoleSelectionPage extends javax.swing.JFrame {
-
-    private boolean isAdminSelected = false;
-    private boolean isSalespersonSelected = false;
+    
+    private UserRole userRole;
+    private UserData userData;
 
     /**
      * Creates new form RoleSelectionPage
      */
     public RoleSelectionPage() {
         initComponents();
+        userRole = null;
+        userData = UserData.getInstance();
         jLabel1.setText("<html><font color='#3EA434'>What's</font> "
                 + "<font color='#008CD6'>Your Role?</font></html>");
     }
+    
+    public void handleRoleSelection(UserRole userRole) {
+        this.userRole = userRole;
 
-    /**
-     * Updates the UI components based on the selected role.
-     *
-     * @param isAdminSelected {@code true} if the admin role is selected,
-     * {@code false} if the salesperson role is selected
-     */
-    public void handleRoleSelection(boolean isAdminSelected) {
-        this.isAdminSelected = isAdminSelected;
-        this.isSalespersonSelected = !isAdminSelected;
-
-        if (isAdminSelected) {
+        if (userRole == UserRole.ADMIN) {
             salespersonRole.setBorder(javax.swing.BorderFactory
                     .createLineBorder(ColorManager.MEDIUM_GREY));
             salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass()
@@ -383,7 +378,18 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
-        // Navigate
+        if (userRole != null) {
+            userData.setRole(userRole);
+            dispose();
+            new SignUpPage().setVisible(true);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(
+                    null, 
+                    "PLease select a role.", 
+                    "No role", 
+                    javax.swing.JOptionPane.PLAIN_MESSAGE
+            );
+        }
     }//GEN-LAST:event_continueButtonMouseClicked
 
     private void continueButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseEntered
@@ -419,33 +425,33 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     }//GEN-LAST:event_loginLinkMouseReleased
 
     private void adminRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseClicked
-        handleRoleSelection(true);
+        handleRoleSelection(UserRole.ADMIN);
     }//GEN-LAST:event_adminRoleMouseClicked
 
     private void salespersonRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseClicked
-        handleRoleSelection(false);
+        handleRoleSelection(UserRole.SALESPERSON);
     }//GEN-LAST:event_salespersonRoleMouseClicked
 
     private void adminRoleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseEntered
-        if (!isAdminSelected) {
+        if (userRole != UserRole.ADMIN) {
             adminRole.setBackground(ColorManager.DEEP_GREY);
         }
     }//GEN-LAST:event_adminRoleMouseEntered
 
     private void adminRoleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseExited
-        if (!isAdminSelected) {
+        if (userRole != UserRole.ADMIN) {
             adminRole.setBackground(ColorManager.PRIMARY_WHITE);
         }
     }//GEN-LAST:event_adminRoleMouseExited
 
     private void salespersonRoleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseEntered
-        if (!isSalespersonSelected) {
+        if (userRole != UserRole.SALESPERSON) {
             salespersonRole.setBackground(ColorManager.DEEP_GREY);
         }
     }//GEN-LAST:event_salespersonRoleMouseEntered
 
     private void salespersonRoleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseExited
-        if (!isSalespersonSelected) {
+        if (userRole != UserRole.SALESPERSON) {
             salespersonRole.setBackground(ColorManager.PRIMARY_WHITE);
         }
     }//GEN-LAST:event_salespersonRoleMouseExited
@@ -457,25 +463,25 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     }//GEN-LAST:event_loginLinkMouseClicked
 
     private void adminRoleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMousePressed
-        if (!isAdminSelected) {
+        if (userRole != UserRole.ADMIN) {
             adminRole.setBackground(ColorManager.DARK_GREY);
         }
     }//GEN-LAST:event_adminRoleMousePressed
 
     private void adminRoleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseReleased
-        if (!isAdminSelected) {
+        if (userRole != UserRole.ADMIN) {
             adminRole.setBackground(ColorManager.DEEP_GREY);
         }
     }//GEN-LAST:event_adminRoleMouseReleased
 
     private void salespersonRoleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMousePressed
-        if (!isSalespersonSelected) {
+        if (userRole != UserRole.SALESPERSON) {
             salespersonRole.setBackground(ColorManager.DARK_GREY);
         }
     }//GEN-LAST:event_salespersonRoleMousePressed
 
     private void salespersonRoleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseReleased
-        if (!isSalespersonSelected) {
+        if (userRole != UserRole.SALESPERSON) {
             salespersonRole.setBackground(ColorManager.DEEP_GREY);
         }
     }//GEN-LAST:event_salespersonRoleMouseReleased
