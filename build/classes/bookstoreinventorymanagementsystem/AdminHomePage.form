@@ -26,17 +26,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="background" min="-2" max="-2" attributes="0"/>
+          <Component id="basePanel" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="background" min="-2" max="-2" attributes="0"/>
+          <Component id="basePanel" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="background">
+    <Container class="javax.swing.JPanel" name="basePanel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="99" green="ff" red="0" type="rgb"/>
@@ -52,7 +52,7 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="toolsBar" min="-2" max="-2" attributes="0"/>
+                          <Component id="sideNavBar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Component id="welcomePanel" max="32767" attributes="0"/>
                       </Group>
@@ -70,7 +70,7 @@
               <Group type="102" attributes="0">
                   <Component id="topBar" min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="toolsBar" max="32767" attributes="0"/>
+                      <Component id="sideNavBar" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="welcomePanel" min="-2" max="-2" attributes="0"/>
@@ -82,7 +82,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="toolsBar">
+        <Container class="javax.swing.JPanel" name="sideNavBar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="d6" green="8c" red="0" type="rgb"/>
@@ -573,7 +573,7 @@
                       <EmptySpace pref="802" max="32767" attributes="0"/>
                       <Component id="date" min="-2" pref="95" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="time1" min="-2" pref="95" max="-2" attributes="0"/>
+                      <Component id="time" min="-2" pref="95" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="userProfilePicturte" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
@@ -585,7 +585,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="time1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="time" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="date" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                           <Component id="userProfilePicturte" alignment="3" max="32767" attributes="0"/>
                       </Group>
@@ -605,7 +605,7 @@
                 <Property name="text" type="java.lang.String" value="Date"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="time1">
+            <Component class="javax.swing.JLabel" name="time">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Time"/>
               </Properties>

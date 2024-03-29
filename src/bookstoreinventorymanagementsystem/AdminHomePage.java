@@ -28,8 +28,8 @@ public class AdminHomePage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        background = new javax.swing.JPanel();
-        toolsBar = new javax.swing.JPanel();
+        basePanel = new javax.swing.JPanel();
+        sideNavBar = new javax.swing.JPanel();
         addProductButton = new javax.swing.JPanel();
         addProductLable = new javax.swing.JLabel();
         deleteProductButton = new javax.swing.JPanel();
@@ -50,17 +50,17 @@ public class AdminHomePage extends javax.swing.JFrame {
         topBar = new javax.swing.JPanel();
         userProfilePicturte = new javax.swing.JLabel();
         date = new javax.swing.JLabel();
-        time1 = new javax.swing.JLabel();
+        time = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(253, 252, 248));
 
-        background.setBackground(new java.awt.Color(0, 255, 153));
-        background.setPreferredSize(new java.awt.Dimension(1080, 600));
+        basePanel.setBackground(new java.awt.Color(0, 255, 153));
+        basePanel.setPreferredSize(new java.awt.Dimension(1080, 600));
 
-        toolsBar.setBackground(new java.awt.Color(0, 140, 214));
-        toolsBar.setAlignmentX(0.0F);
-        toolsBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        sideNavBar.setBackground(new java.awt.Color(0, 140, 214));
+        sideNavBar.setAlignmentX(0.0F);
+        sideNavBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         addProductButton.setBackground(new java.awt.Color(62, 164, 52));
         addProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
@@ -363,13 +363,13 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout toolsBarLayout = new javax.swing.GroupLayout(toolsBar);
-        toolsBar.setLayout(toolsBarLayout);
-        toolsBarLayout.setHorizontalGroup(
-            toolsBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(toolsBarLayout.createSequentialGroup()
+        javax.swing.GroupLayout sideNavBarLayout = new javax.swing.GroupLayout(sideNavBar);
+        sideNavBar.setLayout(sideNavBarLayout);
+        sideNavBarLayout.setHorizontalGroup(
+            sideNavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sideNavBarLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(toolsBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(sideNavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(deleteProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -378,9 +378,9 @@ public class AdminHomePage extends javax.swing.JFrame {
                     .addComponent(logoutButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(viewProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
-        toolsBarLayout.setVerticalGroup(
-            toolsBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(toolsBarLayout.createSequentialGroup()
+        sideNavBarLayout.setVerticalGroup(
+            sideNavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sideNavBarLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(viewProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -433,7 +433,7 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         date.setText("Date");
 
-        time1.setText("Time");
+        time.setText("Time");
 
         javax.swing.GroupLayout topBarLayout = new javax.swing.GroupLayout(topBar);
         topBar.setLayout(topBarLayout);
@@ -443,7 +443,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addContainerGap(802, Short.MAX_VALUE)
                 .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(time1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(userProfilePicturte)
                 .addGap(36, 36, 36))
@@ -453,34 +453,34 @@ public class AdminHomePage extends javax.swing.JFrame {
             .addGroup(topBarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(time1)
+                    .addComponent(time)
                     .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(userProfilePicturte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
-        background.setLayout(backgroundLayout);
-        backgroundLayout.setHorizontalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLayout.createSequentialGroup()
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addComponent(toolsBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
+        basePanel.setLayout(basePanelLayout);
+        basePanelLayout.setHorizontalGroup(
+            basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(basePanelLayout.createSequentialGroup()
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(basePanelLayout.createSequentialGroup()
+                        .addComponent(sideNavBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(welcomePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(backgroundLayout.createSequentialGroup()
+                    .addGroup(basePanelLayout.createSequentialGroup()
                         .addComponent(topBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        backgroundLayout.setVerticalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLayout.createSequentialGroup()
+        basePanelLayout.setVerticalGroup(
+            basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(basePanelLayout.createSequentialGroup()
                 .addComponent(topBar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(toolsBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(backgroundLayout.createSequentialGroup()
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sideNavBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(basePanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(welcomePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0))
@@ -490,11 +490,11 @@ public class AdminHomePage extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -693,7 +693,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addProductButton;
     private javax.swing.JLabel addProductLable;
-    private javax.swing.JPanel background;
+    private javax.swing.JPanel basePanel;
     private javax.swing.JLabel date;
     private javax.swing.JPanel deleteProductButton;
     private javax.swing.JLabel deleteProductLable;
@@ -707,8 +707,8 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JLabel logoutLable;
     private javax.swing.JPanel restockButton;
     private javax.swing.JLabel restockLable;
-    private javax.swing.JLabel time1;
-    private javax.swing.JPanel toolsBar;
+    private javax.swing.JPanel sideNavBar;
+    private javax.swing.JLabel time;
     private javax.swing.JPanel topBar;
     private javax.swing.JLabel userProfilePicturte;
     private javax.swing.JPanel viewProductButton;

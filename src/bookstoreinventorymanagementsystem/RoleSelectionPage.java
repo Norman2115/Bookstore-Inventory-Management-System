@@ -5,55 +5,50 @@ package bookstoreinventorymanagementsystem;
  * @author Norman
  */
 public class RoleSelectionPage extends javax.swing.JFrame {
-
-    private boolean isAdminSelected = false;
-    private boolean isSalespersonSelected = false;
+    
+    private UserRole userRole;
+    private UserData userData;
 
     /**
      * Creates new form RoleSelectionPage
      */
     public RoleSelectionPage() {
         initComponents();
-        jLabel1.setText("<html><font color='#3EA434'>What's</font> "
+        userRole = null;
+        userData = UserData.getInstance();
+        titleLabel.setText("<html><font color='#3EA434'>What's</font> "
                 + "<font color='#008CD6'>Your Role?</font></html>");
     }
+    
+    public void handleRoleSelection(UserRole userRole) {
+        this.userRole = userRole;
 
-    /**
-     * Updates the UI components based on the selected role.
-     *
-     * @param isAdminSelected {@code true} if the admin role is selected,
-     * {@code false} if the salesperson role is selected
-     */
-    public void handleRoleSelection(boolean isAdminSelected) {
-        this.isAdminSelected = isAdminSelected;
-        this.isSalespersonSelected = !isAdminSelected;
-
-        if (isAdminSelected) {
-            salespersonRole.setBorder(javax.swing.BorderFactory
+        if (userRole == UserRole.ADMIN) {
+            salespersonSelectionPanel.setBorder(javax.swing.BorderFactory
                     .createLineBorder(ColorManager.MEDIUM_GREY));
             salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass()
                     .getResource("/icon/salesperson_unselected.png")));
-            salespersonText.setForeground(ColorManager.LIGHT_GREY);
+            salespersonLabel.setForeground(ColorManager.LIGHT_GREY);
 
-            adminRole.setBorder(javax.swing.BorderFactory
+            adminSelectionPanel.setBorder(javax.swing.BorderFactory
                     .createLineBorder(new java.awt.Color(62, 164, 52)));
-            adminRole.setBackground(ColorManager.PRIMARY_WHITE);
+            adminSelectionPanel.setBackground(ColorManager.PRIMARY_WHITE);
             adminIcon.setIcon(new javax.swing.ImageIcon(getClass()
                     .getResource("/icon/admin_selected.png")));
-            adminText.setForeground(ColorManager.DARK_GREEN);
+            adminLabel.setForeground(ColorManager.DARK_GREEN);
         } else {
-            adminRole.setBorder(javax.swing.BorderFactory
+            adminSelectionPanel.setBorder(javax.swing.BorderFactory
                     .createLineBorder(ColorManager.MEDIUM_GREY));
             adminIcon.setIcon(new javax.swing.ImageIcon(getClass()
                     .getResource("/icon/admin_unselected.png")));
-            adminText.setForeground(ColorManager.LIGHT_GREY);
+            adminLabel.setForeground(ColorManager.LIGHT_GREY);
 
-            salespersonRole.setBorder(javax.swing.BorderFactory
+            salespersonSelectionPanel.setBorder(javax.swing.BorderFactory
                     .createLineBorder(new java.awt.Color(62, 164, 52)));
-            salespersonRole.setBackground(ColorManager.PRIMARY_WHITE);
+            salespersonSelectionPanel.setBackground(ColorManager.PRIMARY_WHITE);
             salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass()
                     .getResource("/icon/salesperson_selected.png")));
-            salespersonText.setForeground(ColorManager.DARK_GREEN);
+            salespersonLabel.setForeground(ColorManager.DARK_GREEN);
         }
     }
 
@@ -68,22 +63,22 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
+        basePanel = new javax.swing.JPanel();
         RightPanel = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        banner = new javax.swing.JLabel();
         LeftPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
+        subTitleLabel = new javax.swing.JLabel();
         continueButton = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        loginLink = new javax.swing.JLabel();
-        adminRole = new javax.swing.JPanel();
+        continueLabel = new javax.swing.JLabel();
+        alreadyHaveAccountLabel = new javax.swing.JLabel();
+        goToLoginButton = new javax.swing.JLabel();
+        adminSelectionPanel = new javax.swing.JPanel();
         adminIcon = new javax.swing.JLabel();
-        adminText = new javax.swing.JLabel();
-        salespersonRole = new javax.swing.JPanel();
+        adminLabel = new javax.swing.JLabel();
+        salespersonSelectionPanel = new javax.swing.JPanel();
         salespersonIcon = new javax.swing.JLabel();
-        salespersonText = new javax.swing.JLabel();
+        salespersonLabel = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -92,15 +87,15 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOGIN");
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setToolTipText("");
-        jPanel1.setPreferredSize(new java.awt.Dimension(900, 500));
+        basePanel.setBackground(new java.awt.Color(204, 204, 204));
+        basePanel.setToolTipText("");
+        basePanel.setPreferredSize(new java.awt.Dimension(900, 500));
 
         RightPanel.setBackground(new java.awt.Color(62, 164, 52));
         RightPanel.setPreferredSize(new java.awt.Dimension(450, 500));
 
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/BookstorePic.png"))); // NOI18N
+        banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/BookstorePic.png"))); // NOI18N
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);
@@ -108,28 +103,28 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 438, Short.MAX_VALUE)
+                .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, 438, Short.MAX_VALUE)
                 .addContainerGap())
         );
         RightPanelLayout.setVerticalGroup(
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         LeftPanel.setBackground(new java.awt.Color(253, 252, 248));
         LeftPanel.setPreferredSize(new java.awt.Dimension(450, 500));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("What's Your Role");
+        titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("What's Your Role");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 100, 0));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Please choose a role to continue");
+        subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));
+        subTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        subTitleLabel.setText("Please choose a role to continue");
 
         continueButton.setBackground(new java.awt.Color(0, 140, 214));
         continueButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -150,10 +145,10 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("CONTINUE");
+        continueLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        continueLabel.setForeground(new java.awt.Color(255, 255, 255));
+        continueLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        continueLabel.setText("CONTINUE");
 
         javax.swing.GroupLayout continueButtonLayout = new javax.swing.GroupLayout(continueButton);
         continueButton.setLayout(continueButtonLayout);
@@ -161,140 +156,140 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             continueButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, continueButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addComponent(continueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
                 .addContainerGap())
         );
         continueButtonLayout.setVerticalGroup(
             continueButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, continueButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addComponent(continueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 100, 0));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("Already have an account?");
+        alreadyHaveAccountLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        alreadyHaveAccountLabel.setForeground(new java.awt.Color(0, 100, 0));
+        alreadyHaveAccountLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        alreadyHaveAccountLabel.setText("Already have an account?");
 
-        loginLink.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        loginLink.setForeground(new java.awt.Color(0, 100, 0));
-        loginLink.setText("Login");
-        loginLink.addMouseListener(new java.awt.event.MouseAdapter() {
+        goToLoginButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        goToLoginButton.setForeground(new java.awt.Color(0, 100, 0));
+        goToLoginButton.setText("Login");
+        goToLoginButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginLinkMouseClicked(evt);
+                goToLoginButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginLinkMouseEntered(evt);
+                goToLoginButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginLinkMouseExited(evt);
+                goToLoginButtonMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                loginLinkMousePressed(evt);
+                goToLoginButtonMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                loginLinkMouseReleased(evt);
+                goToLoginButtonMouseReleased(evt);
             }
         });
 
-        adminRole.setBackground(new java.awt.Color(253, 252, 248));
-        adminRole.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        adminRole.setPreferredSize(new java.awt.Dimension(186, 181));
-        adminRole.addMouseListener(new java.awt.event.MouseAdapter() {
+        adminSelectionPanel.setBackground(new java.awt.Color(253, 252, 248));
+        adminSelectionPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        adminSelectionPanel.setPreferredSize(new java.awt.Dimension(186, 181));
+        adminSelectionPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                adminRoleMouseClicked(evt);
+                adminSelectionPanelMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                adminRoleMouseEntered(evt);
+                adminSelectionPanelMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                adminRoleMouseExited(evt);
+                adminSelectionPanelMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                adminRoleMousePressed(evt);
+                adminSelectionPanelMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                adminRoleMouseReleased(evt);
+                adminSelectionPanelMouseReleased(evt);
             }
         });
 
         adminIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/admin_unselected.png"))); // NOI18N
 
-        adminText.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        adminText.setForeground(new java.awt.Color(230, 230, 230));
-        adminText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        adminText.setText("Administrator");
+        adminLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        adminLabel.setForeground(new java.awt.Color(230, 230, 230));
+        adminLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        adminLabel.setText("Administrator");
 
-        javax.swing.GroupLayout adminRoleLayout = new javax.swing.GroupLayout(adminRole);
-        adminRole.setLayout(adminRoleLayout);
-        adminRoleLayout.setHorizontalGroup(
-            adminRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(adminRoleLayout.createSequentialGroup()
+        javax.swing.GroupLayout adminSelectionPanelLayout = new javax.swing.GroupLayout(adminSelectionPanel);
+        adminSelectionPanel.setLayout(adminSelectionPanelLayout);
+        adminSelectionPanelLayout.setHorizontalGroup(
+            adminSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(adminSelectionPanelLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(adminIcon)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminRoleLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminSelectionPanelLayout.createSequentialGroup()
                 .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(adminText, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(adminLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
         );
-        adminRoleLayout.setVerticalGroup(
-            adminRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(adminRoleLayout.createSequentialGroup()
+        adminSelectionPanelLayout.setVerticalGroup(
+            adminSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(adminSelectionPanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(adminIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(adminText)
+                .addComponent(adminLabel)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        salespersonRole.setBackground(new java.awt.Color(253, 252, 248));
-        salespersonRole.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        salespersonRole.setPreferredSize(new java.awt.Dimension(186, 181));
-        salespersonRole.addMouseListener(new java.awt.event.MouseAdapter() {
+        salespersonSelectionPanel.setBackground(new java.awt.Color(253, 252, 248));
+        salespersonSelectionPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        salespersonSelectionPanel.setPreferredSize(new java.awt.Dimension(186, 181));
+        salespersonSelectionPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                salespersonRoleMouseClicked(evt);
+                salespersonSelectionPanelMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                salespersonRoleMouseEntered(evt);
+                salespersonSelectionPanelMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                salespersonRoleMouseExited(evt);
+                salespersonSelectionPanelMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                salespersonRoleMousePressed(evt);
+                salespersonSelectionPanelMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                salespersonRoleMouseReleased(evt);
+                salespersonSelectionPanelMouseReleased(evt);
             }
         });
 
         salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/salesperson_unselected.png"))); // NOI18N
 
-        salespersonText.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        salespersonText.setForeground(new java.awt.Color(230, 230, 230));
-        salespersonText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        salespersonText.setText("Salesperson");
+        salespersonLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        salespersonLabel.setForeground(new java.awt.Color(230, 230, 230));
+        salespersonLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        salespersonLabel.setText("Salesperson");
 
-        javax.swing.GroupLayout salespersonRoleLayout = new javax.swing.GroupLayout(salespersonRole);
-        salespersonRole.setLayout(salespersonRoleLayout);
-        salespersonRoleLayout.setHorizontalGroup(
-            salespersonRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(salespersonRoleLayout.createSequentialGroup()
+        javax.swing.GroupLayout salespersonSelectionPanelLayout = new javax.swing.GroupLayout(salespersonSelectionPanel);
+        salespersonSelectionPanel.setLayout(salespersonSelectionPanelLayout);
+        salespersonSelectionPanelLayout.setHorizontalGroup(
+            salespersonSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(salespersonSelectionPanelLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addGroup(salespersonRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(salespersonSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(salespersonIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(salespersonText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(salespersonLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
-        salespersonRoleLayout.setVerticalGroup(
-            salespersonRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(salespersonRoleLayout.createSequentialGroup()
+        salespersonSelectionPanelLayout.setVerticalGroup(
+            salespersonSelectionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(salespersonSelectionPanelLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(salespersonIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(salespersonText)
+                .addComponent(salespersonLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -307,21 +302,21 @@ public class RoleSelectionPage extends javax.swing.JFrame {
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(subTitleLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(continueButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                                .addComponent(adminRole, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(adminSelectionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(salespersonRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(salespersonSelectionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(alreadyHaveAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(loginLink)))
+                                .addComponent(goToLoginButton)))
                         .addGap(0, 26, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -329,35 +324,35 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addComponent(jLabel1)
+                .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(subTitleLabel)
                 .addGap(18, 18, 18)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(adminRole, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                    .addComponent(salespersonRole, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                    .addComponent(adminSelectionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                    .addComponent(salespersonSelectionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
                 .addGap(26, 26, 26)
                 .addComponent(continueButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(loginLink))
+                    .addComponent(alreadyHaveAccountLabel)
+                    .addComponent(goToLoginButton))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
+        basePanel.setLayout(basePanelLayout);
+        basePanelLayout.setHorizontalGroup(
+            basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(basePanelLayout.createSequentialGroup()
                 .addComponent(RightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(LeftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        basePanelLayout.setVerticalGroup(
+            basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(basePanelLayout.createSequentialGroup()
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(RightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LeftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -368,13 +363,13 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -383,7 +378,18 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
-        // Navigate
+        if (userRole != null) {
+            userData.setRole(userRole);
+            dispose();
+            new SignUpPage().setVisible(true);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(
+                    null, 
+                    "PLease select a role.", 
+                    "No role", 
+                    javax.swing.JOptionPane.PLAIN_MESSAGE
+            );
+        }
     }//GEN-LAST:event_continueButtonMouseClicked
 
     private void continueButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseEntered
@@ -402,83 +408,83 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         continueButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_continueButtonMousePressed
 
-    private void loginLinkMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseEntered
-        loginLink.setForeground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_loginLinkMouseEntered
+    private void goToLoginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseEntered
+        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMouseEntered
 
-    private void loginLinkMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseExited
-        loginLink.setForeground(ColorManager.DARK_GREEN);
-    }//GEN-LAST:event_loginLinkMouseExited
+    private void goToLoginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseExited
+        goToLoginButton.setForeground(ColorManager.DARK_GREEN);
+    }//GEN-LAST:event_goToLoginButtonMouseExited
 
-    private void loginLinkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMousePressed
-        loginLink.setForeground(ColorManager.MEDIUM_BLUE);
-    }//GEN-LAST:event_loginLinkMousePressed
+    private void goToLoginButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMousePressed
+        goToLoginButton.setForeground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMousePressed
 
-    private void loginLinkMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseReleased
-        loginLink.setForeground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_loginLinkMouseReleased
+    private void goToLoginButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseReleased
+        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMouseReleased
 
-    private void adminRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseClicked
-        handleRoleSelection(true);
-    }//GEN-LAST:event_adminRoleMouseClicked
+    private void adminSelectionPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminSelectionPanelMouseClicked
+        handleRoleSelection(UserRole.ADMIN);
+    }//GEN-LAST:event_adminSelectionPanelMouseClicked
 
-    private void salespersonRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseClicked
-        handleRoleSelection(false);
-    }//GEN-LAST:event_salespersonRoleMouseClicked
+    private void salespersonSelectionPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonSelectionPanelMouseClicked
+        handleRoleSelection(UserRole.SALESPERSON);
+    }//GEN-LAST:event_salespersonSelectionPanelMouseClicked
 
-    private void adminRoleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseEntered
-        if (!isAdminSelected) {
-            adminRole.setBackground(ColorManager.DEEP_GREY);
+    private void adminSelectionPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminSelectionPanelMouseEntered
+        if (userRole != UserRole.ADMIN) {
+            adminSelectionPanel.setBackground(ColorManager.DEEP_GREY);
         }
-    }//GEN-LAST:event_adminRoleMouseEntered
+    }//GEN-LAST:event_adminSelectionPanelMouseEntered
 
-    private void adminRoleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseExited
-        if (!isAdminSelected) {
-            adminRole.setBackground(ColorManager.PRIMARY_WHITE);
+    private void adminSelectionPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminSelectionPanelMouseExited
+        if (userRole != UserRole.ADMIN) {
+            adminSelectionPanel.setBackground(ColorManager.PRIMARY_WHITE);
         }
-    }//GEN-LAST:event_adminRoleMouseExited
+    }//GEN-LAST:event_adminSelectionPanelMouseExited
 
-    private void salespersonRoleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseEntered
-        if (!isSalespersonSelected) {
-            salespersonRole.setBackground(ColorManager.DEEP_GREY);
+    private void salespersonSelectionPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonSelectionPanelMouseEntered
+        if (userRole != UserRole.SALESPERSON) {
+            salespersonSelectionPanel.setBackground(ColorManager.DEEP_GREY);
         }
-    }//GEN-LAST:event_salespersonRoleMouseEntered
+    }//GEN-LAST:event_salespersonSelectionPanelMouseEntered
 
-    private void salespersonRoleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseExited
-        if (!isSalespersonSelected) {
-            salespersonRole.setBackground(ColorManager.PRIMARY_WHITE);
+    private void salespersonSelectionPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonSelectionPanelMouseExited
+        if (userRole != UserRole.SALESPERSON) {
+            salespersonSelectionPanel.setBackground(ColorManager.PRIMARY_WHITE);
         }
-    }//GEN-LAST:event_salespersonRoleMouseExited
+    }//GEN-LAST:event_salespersonSelectionPanelMouseExited
 
-    private void loginLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginLinkMouseClicked
+    private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
         dispose();
         LoginPage loginPage = new LoginPage();
         loginPage.setVisible(true);
-    }//GEN-LAST:event_loginLinkMouseClicked
+    }//GEN-LAST:event_goToLoginButtonMouseClicked
 
-    private void adminRoleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMousePressed
-        if (!isAdminSelected) {
-            adminRole.setBackground(ColorManager.DARK_GREY);
+    private void adminSelectionPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminSelectionPanelMousePressed
+        if (userRole != UserRole.ADMIN) {
+            adminSelectionPanel.setBackground(ColorManager.DARK_GREY);
         }
-    }//GEN-LAST:event_adminRoleMousePressed
+    }//GEN-LAST:event_adminSelectionPanelMousePressed
 
-    private void adminRoleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminRoleMouseReleased
-        if (!isAdminSelected) {
-            adminRole.setBackground(ColorManager.DEEP_GREY);
+    private void adminSelectionPanelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminSelectionPanelMouseReleased
+        if (userRole != UserRole.ADMIN) {
+            adminSelectionPanel.setBackground(ColorManager.DEEP_GREY);
         }
-    }//GEN-LAST:event_adminRoleMouseReleased
+    }//GEN-LAST:event_adminSelectionPanelMouseReleased
 
-    private void salespersonRoleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMousePressed
-        if (!isSalespersonSelected) {
-            salespersonRole.setBackground(ColorManager.DARK_GREY);
+    private void salespersonSelectionPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonSelectionPanelMousePressed
+        if (userRole != UserRole.SALESPERSON) {
+            salespersonSelectionPanel.setBackground(ColorManager.DARK_GREY);
         }
-    }//GEN-LAST:event_salespersonRoleMousePressed
+    }//GEN-LAST:event_salespersonSelectionPanelMousePressed
 
-    private void salespersonRoleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonRoleMouseReleased
-        if (!isSalespersonSelected) {
-            salespersonRole.setBackground(ColorManager.DEEP_GREY);
+    private void salespersonSelectionPanelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonSelectionPanelMouseReleased
+        if (userRole != UserRole.SALESPERSON) {
+            salespersonSelectionPanel.setBackground(ColorManager.DEEP_GREY);
         }
-    }//GEN-LAST:event_salespersonRoleMouseReleased
+    }//GEN-LAST:event_salespersonSelectionPanelMouseReleased
 
     /**
      * @param args the command line arguments
@@ -520,20 +526,20 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
     private javax.swing.JLabel adminIcon;
-    private javax.swing.JPanel adminRole;
-    private javax.swing.JLabel adminText;
+    private javax.swing.JLabel adminLabel;
+    private javax.swing.JPanel adminSelectionPanel;
+    private javax.swing.JLabel alreadyHaveAccountLabel;
+    private javax.swing.JLabel banner;
+    private javax.swing.JPanel basePanel;
     private javax.swing.JPanel continueButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel continueLabel;
+    private javax.swing.JLabel goToLoginButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JLabel loginLink;
     private javax.swing.JLabel salespersonIcon;
-    private javax.swing.JPanel salespersonRole;
-    private javax.swing.JLabel salespersonText;
+    private javax.swing.JLabel salespersonLabel;
+    private javax.swing.JPanel salespersonSelectionPanel;
+    private javax.swing.JLabel subTitleLabel;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
