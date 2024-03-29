@@ -5,12 +5,15 @@ package bookstoreinventorymanagementsystem;
  * @author Norman
  */
 public class SignUpPage extends javax.swing.JFrame {
-
+    
+    private UserData userData;
+    
     /**
      * Creates new form LoginPage
      */
     public SignUpPage() {
         initComponents();
+        userData = UserData.getInstance();
         jLabel1.setText("<html><font color='#3EA434'>Sign</font> "
                 + "<font color='#008CD6'>Up</font></html>");
         passwordField.setEchoChar('\u2022');
