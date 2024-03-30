@@ -33,6 +33,7 @@ public class UserData {
         // Create a new table in mySQL for storing counter
         // Like the approach we used to do in C++ to generate id
         // Admin prefix (A), Salesperson prefix (S)
+        
         this.userID = userID;
     }
     

@@ -20,7 +20,7 @@ public class DatabaseManager {
      */
     public static void connect() throws SQLException {
         connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/testdb",
+                "jdbc:mysql://localhost:3306/bookstore_inventory",
                 "root",
                 "user@12345@?");
     }
