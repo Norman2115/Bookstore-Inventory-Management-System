@@ -1,13 +1,15 @@
 package bookstoreinventorymanagementsystem;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Norman
  */
 public class SignUpPage extends javax.swing.JFrame {
-    
+
     private UserData userData;
-    
+
     /**
      * Creates new form LoginPage
      */
@@ -337,7 +339,9 @@ public class SignUpPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
-        // Navigate
+        String username = usernameField.getText();
+        String password = Arrays.toString(passwordField.getPassword());
+        String confirmPassword = Arrays.toString(confirmPasswordField.getPassword());
     }//GEN-LAST:event_signUpButtonMouseClicked
 
     private void signUpButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseEntered
