@@ -57,14 +57,14 @@ public class SignUpPage extends javax.swing.JFrame {
     ) {
         if (!field.getText().trim().isEmpty()) {
             if (!validation.isValid()) {
-                field.setBorder(new LineBorder(Color.RED));
+                field.setBorder(new LineBorder(ColorManager.RED));
                 errorLabel.setText(validation.getErrorMessage());
-                errorLabel.setForeground(Color.RED);
+                errorLabel.setForeground(ColorManager.RED);
                 Font font = errorLabel.getFont();
                 errorLabel.setFont(new Font(font.getName(), font.getStyle(), 10));
                 errorLabel.setMaximumSize(new Dimension(386, font.getSize()));
             } else {
-                field.setBorder(new LineBorder(Color.GREEN));
+                field.setBorder(new LineBorder(ColorManager.LIGHT_GREEN));
                 errorLabel.setText("");
             }
         } else {
@@ -526,11 +526,11 @@ public class SignUpPage extends javax.swing.JFrame {
         ValidationResult passwordValidation = ValidationHandler.isValidPassword(password);
         isPasswordValid = passwordValidation.isValid();
         handleFieldValidation(passwordField, passwordErrorLabel, passwordValidation);
-        
+
         if (isUsernameValid) {
             userData.setPassword(password);
         }
-        
+
         confirmPasswordFieldFocusLost(evt);
     }//GEN-LAST:event_passwordFieldFocusLost
 

@@ -36,6 +36,7 @@ public class ColorManager {
     public static Color DARK_BLUE = new Color(0, 0, 139);
     
     // GREEN
+    public static final Color LIGHT_GREEN = new Color(0, 200, 0);
     // Used for hover effect
     public static final Color MEDIUM_GREEN = new Color(52, 144, 42);
     // Used for click effect
@@ -43,6 +44,9 @@ public class ColorManager {
     // Used for text color
     public static final Color DARK_GREEN = new Color(0, 100, 0);
 
+    // RED
+    public static final Color RED = new Color(255, 0, 0);
+    
     // GREY
     // Greys are used for certain elements
     public static final Color LIGHT_GREY = new Color(230, 230, 230);
