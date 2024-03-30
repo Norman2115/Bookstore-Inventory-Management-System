@@ -71,10 +71,7 @@
                   <Component id="topBar" min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="sideNavBar" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          <Component id="displayPanel" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="displayPanel" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
