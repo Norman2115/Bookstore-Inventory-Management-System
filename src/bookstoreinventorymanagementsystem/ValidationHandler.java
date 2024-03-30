@@ -36,8 +36,8 @@ public class ValidationHandler {
         }
 
         if (!hasDigit || !hasLetter || !hasSymbol) {
-            return new ValidationResult(false, "Password must contain "
-                    + "at least one digit, one letter, and one symbol");
+            return new ValidationResult(false, "Password must be "
+                    + "a combination of numbers, letters and symbols");
         }
         
         return new ValidationResult(true, null);
