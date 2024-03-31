@@ -571,7 +571,9 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     //restockButton
     private void restockButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseClicked
-        // TODO add your handling code here:
+        displayPanel.removeAll();
+        Restock restock = new Restock();
+        displayPanel.add(restock).setVisible(true);
     }//GEN-LAST:event_restockButtonMouseClicked
 
     private void restockButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseEntered
