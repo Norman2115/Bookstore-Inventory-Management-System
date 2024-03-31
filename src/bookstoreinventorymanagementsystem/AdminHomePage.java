@@ -466,9 +466,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addComponent(topBar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sideNavBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(basePanelLayout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(displayPanel))))
+                    .addComponent(displayPanel)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
