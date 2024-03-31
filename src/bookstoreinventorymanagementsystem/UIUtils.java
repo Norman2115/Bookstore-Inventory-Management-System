@@ -7,6 +7,7 @@ package bookstoreinventorymanagementsystem;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
@@ -15,6 +16,12 @@ import javax.swing.text.JTextComponent;
  * @author coco1
  */
 public class UIUtils {
+
+    public static void displayErrorMessage(String message) {
+        JOptionPane.showMessageDialog(
+                null, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
     public static void handleFieldValidation(
             JTextComponent field,
             JLabel errorLabel,

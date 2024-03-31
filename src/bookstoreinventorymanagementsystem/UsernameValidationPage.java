@@ -2,7 +2,8 @@ package bookstoreinventorymanagementsystem;
 
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  *
@@ -10,9 +11,7 @@ import javax.swing.JOptionPane;
  */
 public class UsernameValidationPage extends javax.swing.JFrame {
 
-    boolean isUsernameExists;
-    boolean isSQLExceptionOccured;
-    boolean isGoToLoginButtonClicked;
+    private boolean isUsernameExists;
 
     /**
      * Creates new form LoginPage
@@ -20,8 +19,6 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     public UsernameValidationPage() {
         initComponents();
         isUsernameExists = false;
-        isSQLExceptionOccured = false;
-        isGoToLoginButtonClicked = false;
         titleLabel.setText("<html><font color='#3EA434'>Verify</font> "
                 + "<font color='#008CD6'>Username</font></html>");
         LeftPanel.grabFocus();
@@ -116,14 +113,12 @@ public class UsernameValidationPage extends javax.swing.JFrame {
         usernameField.setBackground(new java.awt.Color(253, 252, 248));
         usernameField.setForeground(new java.awt.Color(0, 100, 0));
         usernameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        usernameField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                usernameFieldFocusLost(evt);
-            }
-        });
         usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 usernameFieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyReleased(evt);
             }
         });
 
@@ -291,16 +286,9 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
         if (isUsernameExists) {
             dispose();
-            new LoginPage().setVisible(true); // Replace with reset password page
+            new LoginPage().setVisible(true);
         } else {
-            if (isSQLExceptionOccured) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Please enter a valid username before proceeding",
-                        "Invalid",
-                        JOptionPane.ERROR_MESSAGE
-                );
-            }
+            UIUtils.displayErrorMessage("Please enter a valid username before proceeding");
         }
     }//GEN-LAST:event_continueButtonMouseClicked
 
@@ -337,33 +325,9 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     }//GEN-LAST:event_goToLoginButtonMouseReleased
 
     private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
-        isGoToLoginButtonClicked = true;
         dispose();
         new LoginPage().setVisible(true);
     }//GEN-LAST:event_goToLoginButtonMouseClicked
-
-    private void usernameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameFieldFocusLost
-        if (isGoToLoginButtonClicked) {
-            return;
-        }
-
-        String username = usernameField.getText();
-        try {
-            ValidationResult usernameFound = ValidationHandler.checkUsernameExistence(username);
-            isUsernameExists = usernameFound.isValid();
-            UIUtils.handleFieldValidation(usernameField, usernameErrorLabel, usernameFound);
-        } catch (SQLException se) {
-            isSQLExceptionOccured = true;
-            JOptionPane.showMessageDialog(
-                    null,
-                    "An error occurred while checking the username existence. Please try again later",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            dispose();
-            new LoginPage().setVisible(true);
-        }
-    }//GEN-LAST:event_usernameFieldFocusLost
 
     private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
         LeftPanel.grabFocus();
@@ -378,6 +342,19 @@ public class UsernameValidationPage extends javax.swing.JFrame {
             LeftPanel.requestFocusInWindow();
         }
     }//GEN-LAST:event_usernameFieldKeyPressed
+
+    private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
+        String username = usernameField.getText();
+        try {
+            ValidationResult usernameFound = ValidationHandler.checkUsernameExistence(username);
+            isUsernameExists = usernameFound.isValid();
+            UIUtils.handleFieldValidation(usernameField, usernameErrorLabel, usernameFound);
+        } catch (SQLException se) {
+            UIUtils.displayErrorMessage("An error occurred while checking the username existence. Please try again later");
+            dispose();
+            new LoginPage().setVisible(true);
+        }
+    }//GEN-LAST:event_usernameFieldKeyReleased
 
     /**
      * @param args the command line arguments
