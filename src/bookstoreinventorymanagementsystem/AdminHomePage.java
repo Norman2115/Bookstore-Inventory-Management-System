@@ -592,7 +592,9 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     //invoice
     private void invoiceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseClicked
-        //
+        displayPanel.removeAll();
+        Invoice invoice = new Invoice();
+        displayPanel.add(invoice).setVisible(true);
     }//GEN-LAST:event_invoiceButtonMouseClicked
 
     private void invoiceButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseEntered
