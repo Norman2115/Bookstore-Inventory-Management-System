@@ -50,29 +50,6 @@ public class SignUpPage extends javax.swing.JFrame {
         }
     }
 
-    public void handleFieldValidation(
-            JTextComponent field,
-            JLabel errorLabel,
-            ValidationResult validation
-    ) {
-        if (!field.getText().trim().isEmpty()) {
-            if (!validation.isValid()) {
-                field.setBorder(new LineBorder(ColorManager.RED));
-                errorLabel.setText(validation.getErrorMessage());
-                errorLabel.setForeground(ColorManager.RED);
-                Font font = errorLabel.getFont();
-                errorLabel.setFont(new Font(font.getName(), font.getStyle(), 10));
-                errorLabel.setMaximumSize(new Dimension(386, font.getSize()));
-            } else {
-                field.setBorder(new LineBorder(ColorManager.LIGHT_GREEN));
-                errorLabel.setText("");
-            }
-        } else {
-            field.setBorder(new LineBorder(ColorManager.MEDIUM_GREY));
-            errorLabel.setText("");
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,6 +96,11 @@ public class SignUpPage extends javax.swing.JFrame {
 
         RightPanel.setBackground(new java.awt.Color(62, 164, 52));
         RightPanel.setPreferredSize(new java.awt.Dimension(450, 500));
+        RightPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RightPanelMouseClicked(evt);
+            }
+        });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/BookstorePic.png"))); // NOI18N
@@ -142,6 +124,11 @@ public class SignUpPage extends javax.swing.JFrame {
 
         LeftPanel.setBackground(new java.awt.Color(253, 252, 248));
         LeftPanel.setPreferredSize(new java.awt.Dimension(450, 500));
+        LeftPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LeftPanelMouseClicked(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -489,13 +476,13 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void usernameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameFieldFocusLost
         String username = usernameField.getText();
-        ValidationResult usernameValidation = ValidationHandler.isValidUsername(username);
-        handleFieldValidation(usernameField, usernameErrorLabel, usernameValidation);
+        ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
+        ValidationHandler.handleFieldValidation(usernameField, usernameErrorLabel, usernameValidation);
 
         if (usernameValidation.isValid()) {
             try {
-                ValidationResult usernameUniqueValidation = ValidationHandler.isUsernameUnique(username);
-                handleFieldValidation(usernameField, usernameErrorLabel, usernameUniqueValidation);
+                ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
+                ValidationHandler.handleFieldValidation(usernameField, usernameErrorLabel, usernameUniqueValidation);
                 isUsernameValid = usernameValidation.isValid() && usernameUniqueValidation.isValid();
             } catch (SQLException se) {
                 JOptionPane.showMessageDialog(
@@ -518,14 +505,14 @@ public class SignUpPage extends javax.swing.JFrame {
         ValidationResult confirmPasswordValidation = ValidationHandler
                 .confirmPasswordMatches(password, confirmPassword);
         isConfirmPasswordValid = confirmPasswordValidation.isValid();
-        handleFieldValidation(confirmPasswordField, confirmPasswordErrorLabel, confirmPasswordValidation);
+        ValidationHandler.handleFieldValidation(confirmPasswordField, confirmPasswordErrorLabel, confirmPasswordValidation);
     }//GEN-LAST:event_confirmPasswordFieldFocusLost
 
     private void passwordFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusLost
         String password = new String(passwordField.getPassword());
-        ValidationResult passwordValidation = ValidationHandler.isValidPassword(password);
+        ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
         isPasswordValid = passwordValidation.isValid();
-        handleFieldValidation(passwordField, passwordErrorLabel, passwordValidation);
+        ValidationHandler.handleFieldValidation(passwordField, passwordErrorLabel, passwordValidation);
 
         if (isUsernameValid) {
             userData.setPassword(password);
@@ -533,6 +520,14 @@ public class SignUpPage extends javax.swing.JFrame {
 
         confirmPasswordFieldFocusLost(evt);
     }//GEN-LAST:event_passwordFieldFocusLost
+
+    private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
+        RightPanel.grabFocus();
+    }//GEN-LAST:event_RightPanelMouseClicked
+
+    private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
+        LeftPanel.grabFocus();
+    }//GEN-LAST:event_LeftPanelMouseClicked
 
     /**
      * @param args the command line arguments
