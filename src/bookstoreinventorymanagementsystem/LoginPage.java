@@ -135,6 +135,9 @@ public class LoginPage extends javax.swing.JFrame {
         forgotPasswordButton.setForeground(new java.awt.Color(0, 100, 0));
         forgotPasswordButton.setText("Forgot Password?");
         forgotPasswordButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                forgotPasswordButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 forgotPasswordButtonMouseEntered(evt);
             }
@@ -410,6 +413,11 @@ public class LoginPage extends javax.swing.JFrame {
     private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
         LeftPanel.grabFocus();
     }//GEN-LAST:event_LeftPanelMouseClicked
+
+    private void forgotPasswordButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordButtonMouseClicked
+        dispose();
+        new UsernameValidationPage().setVisible(true);
+    }//GEN-LAST:event_forgotPasswordButtonMouseClicked
 
     /**
      * @param args the command line arguments

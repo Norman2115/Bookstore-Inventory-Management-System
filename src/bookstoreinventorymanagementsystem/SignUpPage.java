@@ -477,12 +477,12 @@ public class SignUpPage extends javax.swing.JFrame {
     private void usernameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameFieldFocusLost
         String username = usernameField.getText();
         ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
-        ValidationHandler.handleFieldValidation(usernameField, usernameErrorLabel, usernameValidation);
+        UIUtils.handleFieldValidation(usernameField, usernameErrorLabel, usernameValidation);
 
         if (usernameValidation.isValid()) {
             try {
                 ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
-                ValidationHandler.handleFieldValidation(usernameField, usernameErrorLabel, usernameUniqueValidation);
+                UIUtils.handleFieldValidation(usernameField, usernameErrorLabel, usernameUniqueValidation);
                 isUsernameValid = usernameValidation.isValid() && usernameUniqueValidation.isValid();
             } catch (SQLException se) {
                 JOptionPane.showMessageDialog(
@@ -505,14 +505,14 @@ public class SignUpPage extends javax.swing.JFrame {
         ValidationResult confirmPasswordValidation = ValidationHandler
                 .confirmPasswordMatches(password, confirmPassword);
         isConfirmPasswordValid = confirmPasswordValidation.isValid();
-        ValidationHandler.handleFieldValidation(confirmPasswordField, confirmPasswordErrorLabel, confirmPasswordValidation);
+        UIUtils.handleFieldValidation(confirmPasswordField, confirmPasswordErrorLabel, confirmPasswordValidation);
     }//GEN-LAST:event_confirmPasswordFieldFocusLost
 
     private void passwordFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusLost
         String password = new String(passwordField.getPassword());
         ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
         isPasswordValid = passwordValidation.isValid();
-        ValidationHandler.handleFieldValidation(passwordField, passwordErrorLabel, passwordValidation);
+        UIUtils.handleFieldValidation(passwordField, passwordErrorLabel, passwordValidation);
 
         if (isUsernameValid) {
             userData.setPassword(password);
