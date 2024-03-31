@@ -97,6 +97,9 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="f8" green="fc" red="fd" type="rgb"/>
         </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[958, 569]"/>
+        </Property>
       </Properties>
 
       <Layout>
@@ -137,7 +140,7 @@
                                       <Component id="unitPrice" min="-2" pref="235" max="-2" attributes="0"/>
                                       <Component id="promotion" min="-2" pref="235" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="163" max="32767" attributes="0"/>
+                                  <EmptySpace pref="258" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="imagePanel" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel17" min="-2" pref="196" max="-2" attributes="0"/>
@@ -232,7 +235,7 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="addProductButton" min="-2" pref="52" max="-2" attributes="0"/>
-                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
