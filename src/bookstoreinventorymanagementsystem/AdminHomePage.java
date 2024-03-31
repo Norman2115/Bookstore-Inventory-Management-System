@@ -529,7 +529,9 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     // deleteProductButton
     private void deleteProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseClicked
-        // TODO add your handling code here:
+        displayPanel.removeAll();
+        deleteProduct deleteProduct = new deleteProduct();
+        displayPanel.add(deleteProduct).setVisible(true);
     }//GEN-LAST:event_deleteProductButtonMouseClicked
 
     private void deleteProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseEntered
