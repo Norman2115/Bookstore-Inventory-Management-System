@@ -98,8 +98,8 @@
                       </Group>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="156" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="162" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="deleteBar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -120,7 +120,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="48" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="ADD NEW PRODUCT"/>
+            <Property name="text" type="java.lang.String" value="DELETE PRODUCT"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
@@ -172,13 +172,22 @@
             <Component class="javax.swing.JTable" name="jTable1">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                  <Table columnCount="7" rowCount="9">
+                    <Column editable="false" title="Book Title" type="java.lang.String"/>
+                    <Column editable="false" title="ISBN" type="java.lang.Integer"/>
+                    <Column editable="false" title="Genre" type="java.lang.String"/>
+                    <Column editable="false" title="Language" type="java.lang.String"/>
+                    <Column editable="false" title="Author" type="java.lang.String"/>
+                    <Column editable="false" title="Publication Year" type="java.lang.Object"/>
+                    <Column editable="false" title="Supplier" type="java.lang.String"/>
                   </Table>
                 </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Default Cursor"/>
+                </Property>
+                <Property name="showGrid" type="boolean" value="true"/>
+                <Property name="showHorizontalLines" type="boolean" value="true"/>
+                <Property name="showVerticalLines" type="boolean" value="true"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -211,13 +220,17 @@
             <Component class="javax.swing.JTable" name="jTable2">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                  <Table columnCount="7" rowCount="9">
+                    <Column editable="false" title="Book Title" type="java.lang.String"/>
+                    <Column editable="false" title="ISBN" type="java.lang.Integer"/>
+                    <Column editable="false" title="Genre" type="java.lang.String"/>
+                    <Column editable="false" title="Language" type="java.lang.String"/>
+                    <Column editable="false" title="Author" type="java.lang.String"/>
+                    <Column editable="false" title="Publication Year" type="java.lang.Object"/>
+                    <Column editable="false" title="Supplier" type="java.lang.String"/>
                   </Table>
                 </Property>
+                <Property name="showGrid" type="boolean" value="true"/>
               </Properties>
             </Component>
           </SubComponents>
