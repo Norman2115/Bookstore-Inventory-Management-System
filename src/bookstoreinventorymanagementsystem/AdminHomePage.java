@@ -613,7 +613,7 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     //logout
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
