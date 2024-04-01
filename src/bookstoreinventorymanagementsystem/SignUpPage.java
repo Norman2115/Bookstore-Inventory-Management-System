@@ -23,8 +23,8 @@ public class SignUpPage extends javax.swing.JFrame {
         isUsernameValid = false;
         isPasswordValid = false;
         isEmailValid = false;
-        titleLabel.setText("<html><font color='#3EA434'>Sign</font> "
-                + "<font color='#008CD6'>Up</font></html>");
+        titleLabel.setText("<html><font color='#3EA434'>Create</font> "
+                + "<font color='#008CD6'>Your Account</font></html>");
         passwordField.setEchoChar('\u2022');
     }
 
@@ -125,7 +125,7 @@ public class SignUpPage extends javax.swing.JFrame {
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("Sign Up");
+        titleLabel.setText("Create Your Account");
 
         usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(0, 100, 0));
@@ -309,9 +309,9 @@ public class SignUpPage extends javax.swing.JFrame {
         LeftPanelLayout.setVerticalGroup(
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(37, 37, 37)
                 .addComponent(titleLabel)
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
                 .addComponent(usernameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
