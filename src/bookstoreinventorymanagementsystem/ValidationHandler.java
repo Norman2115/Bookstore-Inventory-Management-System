@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -63,6 +65,17 @@ public class ValidationHandler {
         } finally {
             DatabaseManager.closeConnection();
         }
+    }
+    
+    public static ValidationResult validateEmail(String email) {
+        Pattern emailPattern = Pattern.compile("^.+@.+(\\.[^\\.]+)+$");
+        Matcher matcher = emailPattern.matcher(email);
+        
+        if (!matcher.matches()) {
+            return new ValidationResult(false, "Invalid email format");
+        }
+        
+        return new ValidationResult(true, null);
     }
 
     public static ValidationResult validatePassword(String password) {

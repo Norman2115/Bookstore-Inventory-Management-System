@@ -8,12 +8,13 @@ import java.sql.SQLException;
  *
  * @author Norman
  */
-public class UserData {
+public final class UserData {
 
     private static UserData instance;
 
     private String userID;
     private String username;
+    private String email;
     private String password;
     private UserRole role;
     private byte[] profilePicture;
@@ -52,6 +53,14 @@ public class UserData {
 
     public String getUsername() {
         return username;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    public String getEmail() {
+        return email;
     }
 
     public void setPassword(String password) {
