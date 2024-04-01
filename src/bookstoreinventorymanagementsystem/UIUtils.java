@@ -22,6 +22,11 @@ public class UIUtils {
                 null, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    public static void displaySuccessMessage(String message) {
+        JOptionPane.showMessageDialog(
+                null, message, "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public static void handleFieldValidation(
             JTextComponent field,
             JLabel errorLabel,
