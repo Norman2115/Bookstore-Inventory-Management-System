@@ -20,15 +20,23 @@ public class Verification {
     }
     
     public boolean checkInteger(String target){
-        // \d represents numeric characters and + means match more than one time 
-        String regex = "\\d+";
-        return target.matches(regex);
+        if(sqlInjectionProtect(target)){
+            // \d represents numeric characters and + means match more than one time
+            String regex = "\\d+";
+            return target.matches(regex);
+        }
+        else 
+            return false;
     }
     
     public boolean checkFloatNumber(String target){
-        String regex1 = "\\d+\\.\\d{1,2}$";
-        String regex2 = "\\d+\\.?";
-        return target.matches(regex1)||target.matches(regex2);
+        if(sqlInjectionProtect(target)){
+            String regex1 = "\\d+\\.\\d{1,2}$";
+            String regex2 = "\\d+\\.?";
+            return target.matches(regex1)||target.matches(regex2);
+        }
+        else 
+            return false;        
     }
     
     
