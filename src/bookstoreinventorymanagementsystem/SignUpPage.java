@@ -3,6 +3,7 @@ package bookstoreinventorymanagementsystem;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import javax.swing.JLabel;
@@ -47,29 +48,6 @@ public class SignUpPage extends javax.swing.JFrame {
             passwordField.setEchoChar('\u2022');
             toggleIcon.setIcon(new javax.swing.ImageIcon(getClass()
                     .getResource("/icon/hidePasswordIcon.png")));
-        }
-    }
-
-    public void handleFieldValidation(
-            JTextComponent field,
-            JLabel errorLabel,
-            ValidationResult validation
-    ) {
-        if (!field.getText().trim().isEmpty()) {
-            if (!validation.isValid()) {
-                field.setBorder(new LineBorder(ColorManager.RED));
-                errorLabel.setText(validation.getErrorMessage());
-                errorLabel.setForeground(ColorManager.RED);
-                Font font = errorLabel.getFont();
-                errorLabel.setFont(new Font(font.getName(), font.getStyle(), 10));
-                errorLabel.setMaximumSize(new Dimension(386, font.getSize()));
-            } else {
-                field.setBorder(new LineBorder(ColorManager.LIGHT_GREEN));
-                errorLabel.setText("");
-            }
-        } else {
-            field.setBorder(new LineBorder(ColorManager.MEDIUM_GREY));
-            errorLabel.setText("");
         }
     }
 
@@ -119,6 +97,11 @@ public class SignUpPage extends javax.swing.JFrame {
 
         RightPanel.setBackground(new java.awt.Color(62, 164, 52));
         RightPanel.setPreferredSize(new java.awt.Dimension(450, 500));
+        RightPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RightPanelMouseClicked(evt);
+            }
+        });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/BookstorePic.png"))); // NOI18N
@@ -142,6 +125,11 @@ public class SignUpPage extends javax.swing.JFrame {
 
         LeftPanel.setBackground(new java.awt.Color(253, 252, 248));
         LeftPanel.setPreferredSize(new java.awt.Dimension(450, 500));
+        LeftPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LeftPanelMouseClicked(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -154,14 +142,17 @@ public class SignUpPage extends javax.swing.JFrame {
         usernameField.setBackground(new java.awt.Color(253, 252, 248));
         usernameField.setForeground(new java.awt.Color(0, 100, 0));
         usernameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        usernameField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                usernameFieldFocusLost(evt);
-            }
-        });
         usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameFieldActionPerformed(evt);
+            }
+        });
+        usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyReleased(evt);
             }
         });
 
@@ -252,14 +243,17 @@ public class SignUpPage extends javax.swing.JFrame {
         passwordField.setBackground(new java.awt.Color(253, 252, 248));
         passwordField.setForeground(new java.awt.Color(0, 100, 0));
         passwordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        passwordField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                passwordFieldFocusLost(evt);
-            }
-        });
         passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordFieldActionPerformed(evt);
+            }
+        });
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyReleased(evt);
             }
         });
 
@@ -270,14 +264,17 @@ public class SignUpPage extends javax.swing.JFrame {
         confirmPasswordField.setBackground(new java.awt.Color(253, 252, 248));
         confirmPasswordField.setForeground(new java.awt.Color(0, 100, 0));
         confirmPasswordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        confirmPasswordField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                confirmPasswordFieldFocusLost(evt);
-            }
-        });
         confirmPasswordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmPasswordFieldActionPerformed(evt);
+            }
+        });
+        confirmPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                confirmPasswordFieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                confirmPasswordFieldKeyReleased(evt);
             }
         });
 
@@ -487,52 +484,73 @@ public class SignUpPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameFieldActionPerformed
 
-    private void usernameFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usernameFieldFocusLost
+    private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
+        RightPanel.grabFocus();
+    }//GEN-LAST:event_RightPanelMouseClicked
+
+    private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
+        LeftPanel.grabFocus();
+    }//GEN-LAST:event_LeftPanelMouseClicked
+
+    private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
         String username = usernameField.getText();
-        ValidationResult usernameValidation = ValidationHandler.isValidUsername(username);
-        handleFieldValidation(usernameField, usernameErrorLabel, usernameValidation);
+        ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
+        UIUtils.handleFieldValidation(usernameField, usernameErrorLabel, usernameValidation);
 
         if (usernameValidation.isValid()) {
             try {
-                ValidationResult usernameUniqueValidation = ValidationHandler.isUsernameUnique(username);
-                handleFieldValidation(usernameField, usernameErrorLabel, usernameUniqueValidation);
+                ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
+                UIUtils.handleFieldValidation(usernameField, usernameErrorLabel, usernameUniqueValidation);
                 isUsernameValid = usernameValidation.isValid() && usernameUniqueValidation.isValid();
             } catch (SQLException se) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "An error occurred while checking the username uniqueness.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE
-                );
+                UIUtils.displayErrorMessage("An error occurred while checking the username uniqueness.");
             }
         }
 
         if (isUsernameValid) {
             userData.setUsername(username);
         }
-    }//GEN-LAST:event_usernameFieldFocusLost
+    }//GEN-LAST:event_usernameFieldKeyReleased
 
-    private void confirmPasswordFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_confirmPasswordFieldFocusLost
+    private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         String password = new String(passwordField.getPassword());
-        String confirmPassword = new String(confirmPasswordField.getPassword());
-        ValidationResult confirmPasswordValidation = ValidationHandler
-                .confirmPasswordMatches(password, confirmPassword);
-        isConfirmPasswordValid = confirmPasswordValidation.isValid();
-        handleFieldValidation(confirmPasswordField, confirmPasswordErrorLabel, confirmPasswordValidation);
-    }//GEN-LAST:event_confirmPasswordFieldFocusLost
-
-    private void passwordFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFieldFocusLost
-        String password = new String(passwordField.getPassword());
-        ValidationResult passwordValidation = ValidationHandler.isValidPassword(password);
+        ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
         isPasswordValid = passwordValidation.isValid();
-        handleFieldValidation(passwordField, passwordErrorLabel, passwordValidation);
+        UIUtils.handleFieldValidation(passwordField, passwordErrorLabel, passwordValidation);
 
         if (isUsernameValid) {
             userData.setPassword(password);
         }
 
-        confirmPasswordFieldFocusLost(evt);
-    }//GEN-LAST:event_passwordFieldFocusLost
+        confirmPasswordFieldKeyReleased(evt);
+    }//GEN-LAST:event_passwordFieldKeyReleased
+
+    private void confirmPasswordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordFieldKeyReleased
+        String password = new String(passwordField.getPassword());
+        String confirmPassword = new String(confirmPasswordField.getPassword());
+        ValidationResult confirmPasswordValidation = ValidationHandler
+                .confirmPasswordMatches(password, confirmPassword);
+        isConfirmPasswordValid = confirmPasswordValidation.isValid();
+        UIUtils.handleFieldValidation(confirmPasswordField, confirmPasswordErrorLabel, confirmPasswordValidation);
+    }//GEN-LAST:event_confirmPasswordFieldKeyReleased
+
+    private void usernameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_usernameFieldKeyPressed
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_passwordFieldKeyPressed
+
+    private void confirmPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_confirmPasswordFieldKeyPressed
 
     /**
      * @param args the command line arguments
