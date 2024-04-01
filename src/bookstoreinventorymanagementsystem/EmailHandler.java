@@ -1,5 +1,6 @@
 package bookstoreinventorymanagementsystem;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import javax.mail.PasswordAuthentication;
@@ -19,15 +20,39 @@ import javax.mail.internet.MimeMessage;
  */
 public class EmailHandler {
 
-    private static final String FROM_EMAIL = "bookstoreautomated@gmail.com";
-    private static final String PASSWORD = "oynb kbnd totr ysnf";
+    public static final String EMAIL_VERIFICATION_SUBJECT
+            = "Family Bookstore Email Verification";
 
+    public static final String EMAIL_VERIFICATION_BODY;
+
+    public static final String RESET_PASSWORD_SUBJECT
+            = "Family Bookstore Account Password Reset";
+
+    public static final String RESET_PASSWORD_BODY;
+    
+    static {
+        String emailVerificationBody = null;
+        String resetPasswordBody = null;
+        
+        try {
+            emailVerificationBody = EmailTemplateLoader
+                    .loadTemplate("verification_email_template.html");
+            resetPasswordBody = EmailTemplateLoader
+                    .loadTemplate("reset_password_email_template.html");
+        } catch (IOException ex) {
+            UIUtils.displayErrorMessage(ex.getMessage());
+        }
+        
+        EMAIL_VERIFICATION_BODY = emailVerificationBody;
+        RESET_PASSWORD_BODY = resetPasswordBody;
+    }
+    
     private String code;
 
     public EmailHandler() {
-        this.code = null;
+        code = null;
     }
-    
+
     public String getCode() {
         return code;
     }
@@ -39,13 +64,30 @@ public class EmailHandler {
         for (int i = 0; i < 6; ++i) {
             codeBuilder.append(rand.nextInt(9));
         }
-        
+
         return codeBuilder.toString();
     }
-    
-    public void sendEmail(
+
+    public void sendVerificationEmail(
+            String toEmail
+    ) throws MessagingException, UnsupportedEncodingException {
+        code = generateCode();
+        sendEmail(toEmail,EMAIL_VERIFICATION_SUBJECT, 
+                EMAIL_VERIFICATION_BODY.formatted(code));
+    }
+
+    public void sendResetPasswordEmail(
+            String toEmail
+    ) throws MessagingException, UnsupportedEncodingException {
+        code = generateCode();
+        sendEmail(toEmail, RESET_PASSWORD_SUBJECT,
+                RESET_PASSWORD_BODY.formatted(code));
+    }
+
+    private void sendEmail(
             String toEmail,
-            EmailType emailType
+            String subject,
+            String body
     ) throws MessagingException, UnsupportedEncodingException {
         Properties props = new Properties();
 
@@ -58,7 +100,7 @@ public class EmailHandler {
         Authenticator auth = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(FROM_EMAIL, PASSWORD);
+                return new PasswordAuthentication(EmailConfig.getUsername(), EmailConfig.getPassword());
             }
         };
 
@@ -70,28 +112,8 @@ public class EmailHandler {
         msg.addHeader("format", "flowed");
         msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-        msg.setFrom(new InternetAddress(FROM_EMAIL, "Family Bookstore"));
+        msg.setFrom(new InternetAddress(EmailConfig.getUsername(), "Family Bookstore"));
         msg.setReplyTo(InternetAddress.parse("noreply@example.com", false));
-
-        String subject = null;
-        String body = null;
-
-        switch (emailType) {
-            case EMAIL_VERIFICATION -> {
-                subject = EmailTemplates.EMAIL_VERIFICATION_SUBJECT;
-                code = generateCode();
-                body = EmailTemplates.EMAIL_VERIFICATION_BODY.formatted(code);
-            }
-            case RESET_PASSWORD -> {
-                subject = EmailTemplates.RESET_PASSWORD_SUBJECT;
-                code = generateCode();
-                body = EmailTemplates.RESET_PASSWORD_BODY.formatted(code);
-            }
-        }
-
-        if (subject == null || body == null) {
-            throw new IllegalArgumentException("Attemped to send email without subject and body");
-        }
 
         msg.setSubject(subject, "UTF-8");
         msg.setContent(body, "text/HTML");

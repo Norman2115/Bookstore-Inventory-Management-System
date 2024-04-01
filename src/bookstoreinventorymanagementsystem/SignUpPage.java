@@ -9,7 +9,7 @@ import java.sql.SQLException;
  */
 public class SignUpPage extends javax.swing.JFrame {
 
-    private UserData userData;
+    private final UserData userData;
     private boolean isUsernameValid;
     private boolean isPasswordValid;
     private boolean isEmailValid;
@@ -19,12 +19,15 @@ public class SignUpPage extends javax.swing.JFrame {
      */
     public SignUpPage() {
         initComponents();
+        
         userData = UserData.getInstance();
+        
         isUsernameValid = false;
         isPasswordValid = false;
         isEmailValid = false;
-        titleLabel.setText("<html><font color='#3EA434'>Create</font> "
-                + "<font color='#008CD6'>Your Account</font></html>");
+        
+        titleLabel.setText("<html><font color='#3EA434'>Craft</font> "
+                + "<font color='#008CD6'>Your Profile</font></html>");
         passwordField.setEchoChar('\u2022');
     }
 
@@ -125,7 +128,7 @@ public class SignUpPage extends javax.swing.JFrame {
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("Create Your Account");
+        titleLabel.setText("Craft Your Profile");
 
         usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(0, 100, 0));
@@ -427,11 +430,21 @@ public class SignUpPage extends javax.swing.JFrame {
     }//GEN-LAST:event_signUpButtonMouseEntered
 
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
+        if (usernameField.getText().trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
+        }
+
+        if (emailField.getText().trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
+        }
+
+        if (passwordField.getPassword().length == 0) {
+            UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
+        }
+
         if (isUsernameValid && isPasswordValid && isEmailValid) {
             dispose();
             new EmailVerificationPage().setVisible(true);
-        } else {
-            UIUtils.displayErrorMessage("Please ensure all fields are valid before proceeding");
         }
     }//GEN-LAST:event_signUpButtonMouseClicked
 
@@ -449,13 +462,19 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
         String username = usernameField.getText();
+
+        if (username.trim().isEmpty()) {
+            UIUtils.resetFieldState(usernameField, usernameErrorLabel);
+            return;
+        }
+
         ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
-        UIUtils.handleFieldValidation(usernameField, usernameErrorLabel, usernameValidation);
+        UIUtils.updateFieldState(usernameField, usernameErrorLabel, usernameValidation);
 
         if (usernameValidation.isValid()) {
             try {
                 ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
-                UIUtils.handleFieldValidation(usernameField, usernameErrorLabel, usernameUniqueValidation);
+                UIUtils.updateFieldState(usernameField, usernameErrorLabel, usernameUniqueValidation);
                 isUsernameValid = usernameValidation.isValid() && usernameUniqueValidation.isValid();
             } catch (SQLException se) {
                 UIUtils.displayErrorMessage("An error occurred while checking the username uniqueness.");
@@ -469,9 +488,15 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         String password = new String(passwordField.getPassword());
+
+        if (password.trim().isEmpty()) {
+            UIUtils.resetFieldState(passwordField, passwordErrorLabel);
+            return;
+        }
+
         ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
         isPasswordValid = passwordValidation.isValid();
-        UIUtils.handleFieldValidation(passwordField, passwordErrorLabel, passwordValidation);
+        UIUtils.updateFieldState(passwordField, passwordErrorLabel, passwordValidation);
 
         if (isPasswordValid) {
             userData.setPassword(password);
@@ -498,9 +523,15 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
         String email = emailField.getText();
+
+        if (email.trim().isEmpty()) {
+            UIUtils.resetFieldState(emailField, emailErrorLabel);
+            return;
+        }
+
         ValidationResult emailValidation = ValidationHandler.validateEmail(email);
         isEmailValid = emailValidation.isValid();
-        UIUtils.handleFieldValidation(emailField, emailErrorLabel, emailValidation);
+        UIUtils.updateFieldState(emailField, emailErrorLabel, emailValidation);
 
         if (isEmailValid) {
             userData.setEmail(email);

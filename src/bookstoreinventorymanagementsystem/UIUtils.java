@@ -27,26 +27,41 @@ public class UIUtils {
                 null, message, "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void handleFieldValidation(
+    public static void resetFieldState(
+            JTextComponent field,
+            JLabel errorLabel
+    ) {
+        field.setBorder(new LineBorder(ColorManager.MEDIUM_GREY));
+        errorLabel.setText("");
+    }
+
+    public static void updateFieldState(
             JTextComponent field,
             JLabel errorLabel,
             ValidationResult validation
     ) {
-        if (!field.getText().trim().isEmpty()) {
-            if (!validation.isValid()) {
-                field.setBorder(new LineBorder(ColorManager.RED));
-                errorLabel.setText(validation.getErrorMessage());
-                errorLabel.setForeground(ColorManager.RED);
-                Font font = errorLabel.getFont();
-                errorLabel.setFont(new Font(font.getName(), font.getStyle(), 10));
-                errorLabel.setMaximumSize(new Dimension(386, font.getSize()));
-            } else {
-                field.setBorder(new LineBorder(ColorManager.LIGHT_GREEN));
-                errorLabel.setText("");
-            }
+        if (!validation.isValid()) {
+            field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
+            errorLabel.setText(validation.getErrorMessage());
+            errorLabel.setForeground(ColorManager.MEDIUM_RED);
+            Font font = errorLabel.getFont();
+            errorLabel.setFont(new Font(font.getName(), font.getStyle(), 10));
+            errorLabel.setMaximumSize(new Dimension(386, font.getSize()));
         } else {
             field.setBorder(new LineBorder(ColorManager.MEDIUM_GREY));
             errorLabel.setText("");
         }
+    }
+
+    public static void markFieldAsRequired(
+            JTextComponent field,
+            JLabel errorLabel
+    ) {
+        field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
+        errorLabel.setText("Field is required");
+        errorLabel.setForeground(ColorManager.MEDIUM_RED);
+        Font font = errorLabel.getFont();
+        errorLabel.setFont(new Font(font.getName(), font.getStyle(), 10));
+        errorLabel.setMaximumSize(new Dimension(386, font.getSize()));
     }
 }

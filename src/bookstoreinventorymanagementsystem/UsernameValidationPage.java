@@ -345,10 +345,16 @@ public class UsernameValidationPage extends javax.swing.JFrame {
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
         String username = usernameField.getText();
+        
+        if (username.trim().isEmpty()) {
+            UIUtils.resetFieldState(usernameField, usernameErrorLabel);
+            return;
+        }
+        
         try {
             ValidationResult usernameFound = ValidationHandler.checkUsernameExistence(username);
             isUsernameExists = usernameFound.isValid();
-            UIUtils.handleFieldValidation(usernameField, usernameErrorLabel, usernameFound);
+            UIUtils.updateFieldState(usernameField, usernameErrorLabel, usernameFound);
         } catch (SQLException se) {
             UIUtils.displayErrorMessage("An error occurred while checking the username existence. Please try again later");
             dispose();

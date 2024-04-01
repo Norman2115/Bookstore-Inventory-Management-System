@@ -111,6 +111,14 @@ public class ValidationHandler {
 
         return new ValidationResult(true, null);
     }
+    
+    public static ValidationResult validateVerificationCode(String entered, String actual) {
+        if (!entered.equals(actual)) {
+            return new ValidationResult(false, "You have entered a wrong code. Please try again");
+        }
+        
+        return new ValidationResult(true, null);
+    }
 
     private static boolean isSymbol(char c) {
         return !Character.isLetterOrDigit(c);
