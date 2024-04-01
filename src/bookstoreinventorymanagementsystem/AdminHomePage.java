@@ -508,7 +508,9 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     // addProductButton
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
-
+        displayPanel.removeAll();
+        addProduct addProduct = new addProduct();
+        displayPanel.add(addProduct).setVisible(true);
     }//GEN-LAST:event_addProductButtonMouseClicked
 
     private void addProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseEntered
