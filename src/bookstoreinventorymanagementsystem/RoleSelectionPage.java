@@ -93,6 +93,11 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
         RightPanel.setBackground(new java.awt.Color(62, 164, 52));
         RightPanel.setPreferredSize(new java.awt.Dimension(450, 500));
+        RightPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RightPanelMouseClicked(evt);
+            }
+        });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/BookstorePic.png"))); // NOI18N
@@ -116,6 +121,11 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
         LeftPanel.setBackground(new java.awt.Color(253, 252, 248));
         LeftPanel.setPreferredSize(new java.awt.Dimension(450, 500));
+        LeftPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LeftPanelMouseClicked(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -485,6 +495,14 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             salespersonSelectionPanel.setBackground(ColorManager.DEEP_GREY);
         }
     }//GEN-LAST:event_salespersonSelectionPanelMouseReleased
+
+    private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
+        RightPanel.grabFocus();
+    }//GEN-LAST:event_RightPanelMouseClicked
+
+    private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
+        LeftPanel.grabFocus();
+    }//GEN-LAST:event_LeftPanelMouseClicked
 
     /**
      * @param args the command line arguments

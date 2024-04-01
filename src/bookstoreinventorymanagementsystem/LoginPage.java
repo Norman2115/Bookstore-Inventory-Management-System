@@ -58,6 +58,11 @@ public class LoginPage extends javax.swing.JFrame {
 
         RightPanel.setBackground(new java.awt.Color(62, 164, 52));
         RightPanel.setPreferredSize(new java.awt.Dimension(450, 500));
+        RightPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RightPanelMouseClicked(evt);
+            }
+        });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/BookstorePic.png"))); // NOI18N
@@ -81,6 +86,11 @@ public class LoginPage extends javax.swing.JFrame {
 
         LeftPanel.setBackground(new java.awt.Color(253, 252, 248));
         LeftPanel.setPreferredSize(new java.awt.Dimension(450, 500));
+        LeftPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LeftPanelMouseClicked(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -125,6 +135,9 @@ public class LoginPage extends javax.swing.JFrame {
         forgotPasswordButton.setForeground(new java.awt.Color(0, 100, 0));
         forgotPasswordButton.setText("Forgot Password?");
         forgotPasswordButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                forgotPasswordButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 forgotPasswordButtonMouseEntered(evt);
             }
@@ -392,6 +405,19 @@ public class LoginPage extends javax.swing.JFrame {
         RoleSelectionPage roleSelectionPage = new RoleSelectionPage();
         roleSelectionPage.setVisible(true);
     }//GEN-LAST:event_goToSignUpButtonMouseClicked
+
+    private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
+        RightPanel.grabFocus();
+    }//GEN-LAST:event_RightPanelMouseClicked
+
+    private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
+        LeftPanel.grabFocus();
+    }//GEN-LAST:event_LeftPanelMouseClicked
+
+    private void forgotPasswordButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordButtonMouseClicked
+        dispose();
+        new UsernameValidationPage().setVisible(true);
+    }//GEN-LAST:event_forgotPasswordButtonMouseClicked
 
     /**
      * @param args the command line arguments
