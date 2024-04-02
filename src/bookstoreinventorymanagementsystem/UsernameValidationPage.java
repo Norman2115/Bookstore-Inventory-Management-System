@@ -2,8 +2,6 @@ package bookstoreinventorymanagementsystem;
 
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  *
@@ -354,7 +352,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
         try {
             ValidationResult usernameFound = ValidationHandler.checkUsernameExistence(username);
             isUsernameExists = usernameFound.isValid();
-            UIUtils.updateFieldState(usernameField, usernameErrorLabel, usernameFound);
+            UIUtils.updateFieldErrorState(usernameField, usernameErrorLabel, usernameFound);
         } catch (SQLException se) {
             UIUtils.displayErrorMessage("An error occurred while checking the username existence. Please try again later");
             dispose();

@@ -40,7 +40,7 @@ public class EmailVerificationPage extends javax.swing.JFrame {
     private void sendVerificationEmailAsync(String toEmail) {
         Thread emailThread = new Thread(() -> {
             try {
-                emailHandler.sendVerificationEmail(toEmail);
+                emailHandler.sendRegistrationVerificationEmail(toEmail);
                 verificationCode = emailHandler.getCode();
             } catch (MessagingException | UnsupportedEncodingException ex) {
                 UIUtils.displayErrorMessage("An error occured: " + ex.getMessage());
@@ -382,7 +382,7 @@ public class EmailVerificationPage extends javax.swing.JFrame {
         }
         ValidationResult codeValidation = ValidationHandler
                 .validateVerificationCode(enteredCode, verificationCode);
-        UIUtils.updateFieldState(verificationCodeField, 
+        UIUtils.updateFieldErrorState(verificationCodeField, 
                 verificationCodeErrorLabel, codeValidation);
         
         if (codeValidation.isValid()) {

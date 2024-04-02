@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
 
 import java.awt.Dimension;
@@ -35,7 +31,7 @@ public class UIUtils {
         errorLabel.setText("");
     }
 
-    public static void updateFieldState(
+    public static void updateFieldErrorState(
             JTextComponent field,
             JLabel errorLabel,
             ValidationResult validation

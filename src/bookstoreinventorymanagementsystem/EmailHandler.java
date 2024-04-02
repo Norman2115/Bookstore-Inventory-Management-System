@@ -1,6 +1,5 @@
 package bookstoreinventorymanagementsystem;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import javax.mail.PasswordAuthentication;
@@ -20,33 +19,8 @@ import javax.mail.internet.MimeMessage;
  */
 public class EmailHandler {
 
-    public static final String EMAIL_VERIFICATION_SUBJECT
-            = "Family Bookstore Email Verification";
-
-    public static final String EMAIL_VERIFICATION_BODY;
-
-    public static final String RESET_PASSWORD_SUBJECT
-            = "Family Bookstore Account Password Reset";
-
-    public static final String RESET_PASSWORD_BODY;
-    
-    static {
-        String emailVerificationBody = null;
-        String resetPasswordBody = null;
-        
-        try {
-            emailVerificationBody = EmailTemplateLoader
-                    .loadTemplate("verification_email_template.html");
-            resetPasswordBody = EmailTemplateLoader
-                    .loadTemplate("reset_password_email_template.html");
-        } catch (IOException ex) {
-            UIUtils.displayErrorMessage(ex.getMessage());
-        }
-        
-        EMAIL_VERIFICATION_BODY = emailVerificationBody;
-        RESET_PASSWORD_BODY = resetPasswordBody;
-    }
-    
+    private static final String FROM_EMAIL = "bookstoreautomated@gmail.com";
+    private static final String PASSWORD = "oynb kbnd totr ysnf";
     private String code;
 
     public EmailHandler() {
@@ -68,20 +42,85 @@ public class EmailHandler {
         return codeBuilder.toString();
     }
 
-    public void sendVerificationEmail(
+    public void sendRegistrationVerificationEmail(
             String toEmail
     ) throws MessagingException, UnsupportedEncodingException {
+        final String registrationVerificationEmailSubject
+                = "Family Bookstore Email Verification";
+
         code = generateCode();
-        sendEmail(toEmail,EMAIL_VERIFICATION_SUBJECT, 
-                EMAIL_VERIFICATION_BODY.formatted(code));
+        
+        final String registrationVerificationEmailBody
+                = """
+                <html>
+
+                <head>
+                </head>
+
+                <body style="font-family: Arial, sans-serif;">
+                  <p style="margin-bottom: 30px;">
+                    Welcome to
+                    <span style="color: #3ea434">Family</span>
+                    <span style="color: #008cd6">Bookstore</span>!
+                    To complete your registration, please verify your
+                    email address.
+                  </p>
+                  <p style="margin-bottom: 30px;">
+                    Here is your verification code: <strong>%s</strong>
+                  </p>
+                  <p style="margin-bottom: 30px;">
+                    Didn't sign up? Please ignore this email.
+                  </p>
+                  <p style="margin-bottom: 30px;">
+                    Thank you for choosing
+                    <span style="color: #3ea434">Family</span>
+                    <span style="color: #008cd6">Bookstore</span>!
+                  </p>
+                </body>
+
+                </html>
+                """.formatted(code);
+        
+        sendEmail(toEmail, registrationVerificationEmailSubject, 
+                registrationVerificationEmailBody);
     }
 
     public void sendResetPasswordEmail(
             String toEmail
     ) throws MessagingException, UnsupportedEncodingException {
+        final String passwordResetEmailSubject
+                = "Family Bookstore Account Password Reset";
+
         code = generateCode();
-        sendEmail(toEmail, RESET_PASSWORD_SUBJECT,
-                RESET_PASSWORD_BODY.formatted(code));
+        
+        final String passwordResetEmailBody
+                = """
+                <html>
+                
+                <head>
+                </head>
+                
+                <body style="font-family: Arial, sans-serif;">
+                    <p style="margin-bottom: 30px;">
+                        Please use this code to reset the password for your
+                        <span style="color: #3ea434">Family</span>
+                        <span style="color: #008cd6">Bookstore</span>
+                        Inventory Management System account.
+                    </p>
+                    <p style="margin-bottom: 30px;">
+                        Here is your code: <strong>%s</strong>
+                    </p>
+                    <p style="margin-bottom: 30px;">
+                        Didn't request this? Please ignore.
+                    </p>
+                    <p>Happy managing!</p>
+                </body>
+                
+                </html>
+                """.formatted(code);
+        
+        sendEmail(toEmail, passwordResetEmailSubject,
+                passwordResetEmailBody);
     }
 
     private void sendEmail(
@@ -100,7 +139,7 @@ public class EmailHandler {
         Authenticator auth = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EmailConfig.getUsername(), EmailConfig.getPassword());
+                return new PasswordAuthentication(FROM_EMAIL, PASSWORD);
             }
         };
 
@@ -112,7 +151,7 @@ public class EmailHandler {
         msg.addHeader("format", "flowed");
         msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-        msg.setFrom(new InternetAddress(EmailConfig.getUsername(), "Family Bookstore"));
+        msg.setFrom(new InternetAddress(FROM_EMAIL, "Family Bookstore"));
         msg.setReplyTo(InternetAddress.parse("noreply@example.com", false));
 
         msg.setSubject(subject, "UTF-8");
@@ -125,4 +164,6 @@ public class EmailHandler {
 
         Transport.send(msg);
     }
+    
+    
 }
