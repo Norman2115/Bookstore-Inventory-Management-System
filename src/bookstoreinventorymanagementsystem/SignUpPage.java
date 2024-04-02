@@ -19,13 +19,13 @@ public class SignUpPage extends javax.swing.JFrame {
      */
     public SignUpPage() {
         initComponents();
-        
+
         userData = UserData.getInstance();
-        
+
         isUsernameValid = false;
         isPasswordValid = false;
         isEmailValid = false;
-        
+
         titleLabel.setText("<html><font color='#3EA434'>Craft</font> "
                 + "<font color='#008CD6'>Your Profile</font></html>");
         passwordField.setEchoChar('\u2022');
@@ -430,17 +430,9 @@ public class SignUpPage extends javax.swing.JFrame {
     }//GEN-LAST:event_signUpButtonMouseEntered
 
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
-        if (usernameField.getText().trim().isEmpty()) {
-            UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
-        }
-
-        if (emailField.getText().trim().isEmpty()) {
-            UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
-        }
-
-        if (passwordField.getPassword().length == 0) {
-            UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
-        }
+        UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
+        UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
+        UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
 
         if (isUsernameValid && isPasswordValid && isEmailValid) {
             dispose();
@@ -462,12 +454,6 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
         String username = usernameField.getText();
-
-        if (username.trim().isEmpty()) {
-            UIUtils.resetFieldState(usernameField, usernameErrorLabel);
-            return;
-        }
-
         ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
         UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameValidation);
 
@@ -488,12 +474,6 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         String password = new String(passwordField.getPassword());
-
-        if (password.trim().isEmpty()) {
-            UIUtils.resetFieldState(passwordField, passwordErrorLabel);
-            return;
-        }
-
         ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
         isPasswordValid = passwordValidation.isValid();
         UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
@@ -523,12 +503,6 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
         String email = emailField.getText();
-
-        if (email.trim().isEmpty()) {
-            UIUtils.resetFieldState(emailField, emailErrorLabel);
-            return;
-        }
-
         ValidationResult emailValidation = ValidationHandler.validateEmail(email);
         isEmailValid = emailValidation.isValid();
         UIUtils.setFieldErrorState(emailField, emailErrorLabel, emailValidation);

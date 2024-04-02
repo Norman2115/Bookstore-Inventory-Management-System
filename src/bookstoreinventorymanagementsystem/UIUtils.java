@@ -1,5 +1,6 @@
 package bookstoreinventorymanagementsystem;
 
+import com.sun.mail.handlers.text_html;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -53,8 +54,8 @@ public class UIUtils {
      * Sets the error state for a text field and its associated error label
      * based on the validation result. It sets the border color of the text
      * field to red and displays error message in the label if the validation
-     * result is invalid. If the field is valid, the method resets the border
-     * color to its original color and clears the error message.
+     * result is invalid. If the field is valid or empty, the method resets the
+     * border color to its original color and clears the error message.
      *
      * @param field the text field to set the error state.
      * @param errorLabel the error label associated with the text field.
@@ -66,6 +67,11 @@ public class UIUtils {
             JLabel errorLabel,
             ValidationResult validation
     ) {
+        if (field.getText().trim().isEmpty()) {
+            resetFieldState(field, errorLabel);
+            return;
+        }
+
         if (!validation.isValid()) {
             field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
             errorLabel.setText(validation.getErrorMessage());
@@ -79,11 +85,10 @@ public class UIUtils {
     }
 
     /**
-     * Marks a text field as required by setting its error state and error
-     * message label. If the field is empty, it sets the border color to red and
-     * displays an error message "Field is required" in the label. Otherwise, if
-     * the field contains text, it restores the border color back to original
-     * and clears the error message.
+     * Marks a text field as required. If the field is empty, it sets the border
+     * color to red and displays an error message "Field is required" in the
+     * label. Otherwise, if the field contains text, it restores the border
+     * color back to original and clears the error message.
      *
      * @param field the text field to mark as required.
      * @param errorLabel the error label associated with the text field.
