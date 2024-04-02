@@ -1,9 +1,10 @@
 package bookstoreinventorymanagementsystem;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.io.UnsupportedEncodingException;
+import javax.mail.MessagingException;
+import javax.swing.Timer;
 
 /**
  *
@@ -11,14 +12,43 @@ import java.util.Queue;
  */
 public class EmailVerificationPage extends javax.swing.JFrame {
 
+    private final UserData userData;
+    private final EmailHandler emailHandler;
+    private String verificationCode;
+    private final Timer resendCodeButtonTimer;
+
     /**
      * Creates new form LoginPage
      */
     public EmailVerificationPage() {
         initComponents();
+
         titleLabel.setText("<html><font color='#3EA434'>Almost</font> "
                 + "<font color='#008CD6'>There!</font></html>");
         LeftPanel.grabFocus();
+
+        userData = UserData.getInstance();
+        emailHandler = new EmailHandler();
+
+        sendVerificationEmailAsync(userData.getEmail());
+
+        resendCodeButtonTimer = new Timer(10000, (ActionEvent e) -> {
+            resendCodeButton.setEnabled(true);
+        });
+    }
+
+    private void sendVerificationEmailAsync(String toEmail) {
+        Thread emailThread = new Thread(() -> {
+            try {
+                emailHandler.sendRegistrationVerificationEmail(toEmail);
+                verificationCode = emailHandler.getCode();
+            } catch (MessagingException | UnsupportedEncodingException ex) {
+                UIUtils.displayErrorMessage("An error occured: " + ex.getMessage());
+                dispose();
+                new LoginPage().setVisible(true);
+            }
+        });
+        emailThread.start();
     }
 
     /**
@@ -48,6 +78,7 @@ public class EmailVerificationPage extends javax.swing.JFrame {
         verificationCodeErrorLabel = new javax.swing.JLabel();
         didntReceiveLabel = new javax.swing.JLabel();
         resendCodeButton = new javax.swing.JLabel();
+        resendCodeButton1 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -220,6 +251,26 @@ public class EmailVerificationPage extends javax.swing.JFrame {
             }
         });
 
+        resendCodeButton1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        resendCodeButton1.setForeground(new java.awt.Color(0, 100, 0));
+        resendCodeButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resendCodeButton1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                resendCodeButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                resendCodeButton1MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                resendCodeButton1MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                resendCodeButton1MouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -233,24 +284,25 @@ public class EmailVerificationPage extends javax.swing.JFrame {
                             .addComponent(subTitleLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(verificationCodeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(LeftPanelLayout.createSequentialGroup()
-                                    .addGap(18, 18, 18)
-                                    .addComponent(rememberPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(goToLoginButton))
-                                .addComponent(finishButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(LeftPanelLayout.createSequentialGroup()
-                                    .addComponent(verificationCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 0, 0)
-                                    .addComponent(verificationCodeIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(verificationCodeErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(verificationCodeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(rememberPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(goToLoginButton))
+                            .addComponent(finishButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(verificationCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(verificationCodeIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(verificationCodeErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(didntReceiveLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(resendCodeButton)))
+                                .addComponent(resendCodeButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(resendCodeButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -270,9 +322,11 @@ public class EmailVerificationPage extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addComponent(verificationCodeErrorLabel)
                 .addGap(10, 10, 10)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(didntReceiveLabel)
-                    .addComponent(resendCodeButton))
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(didntReceiveLabel)
+                        .addComponent(resendCodeButton))
+                    .addComponent(resendCodeButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -320,7 +374,21 @@ public class EmailVerificationPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void finishButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseClicked
+        String enteredCode = verificationCodeField.getText();
+        if (enteredCode.trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(verificationCodeField, 
+                    verificationCodeErrorLabel);
+            return;
+        }
+        ValidationResult codeValidation = ValidationHandler
+                .validateVerificationCode(enteredCode, verificationCode);
+        UIUtils.updateFieldErrorState(verificationCodeField, 
+                verificationCodeErrorLabel, codeValidation);
         
+        if (codeValidation.isValid()) {
+            dispose();
+            new LoginPage().setVisible(true);
+        }
     }//GEN-LAST:event_finishButtonMouseClicked
 
     private void finishButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseEntered
@@ -375,19 +443,23 @@ public class EmailVerificationPage extends javax.swing.JFrame {
     }//GEN-LAST:event_verificationCodeFieldKeyPressed
 
     private void verificationCodeFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyReleased
-        String verificationCode = verificationCodeField.getText();
+        if (verificationCodeField.getText().trim().isEmpty()) {
+            UIUtils.resetFieldState(verificationCodeField, verificationCodeErrorLabel);
+        }
     }//GEN-LAST:event_verificationCodeFieldKeyReleased
 
     private void verificationCodeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyTyped
         char c = evt.getKeyChar();
-        
-        if (!Character.isDigit(c) || verificationCodeField.getText().length() >= 6) {
+        if (!Character.isDigit(c)
+                || verificationCodeField.getText().length() >= 6) {
             evt.consume();
         }
     }//GEN-LAST:event_verificationCodeFieldKeyTyped
 
     private void resendCodeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButtonMouseClicked
-        // TODO add your handling code here:
+        sendVerificationEmailAsync(userData.getEmail());
+        resendCodeButton.setEnabled(false);
+        resendCodeButtonTimer.start();
     }//GEN-LAST:event_resendCodeButtonMouseClicked
 
     private void resendCodeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButtonMouseEntered
@@ -405,6 +477,26 @@ public class EmailVerificationPage extends javax.swing.JFrame {
     private void resendCodeButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButtonMouseReleased
         resendCodeButton.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_resendCodeButtonMouseReleased
+
+    private void resendCodeButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButton1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resendCodeButton1MouseClicked
+
+    private void resendCodeButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButton1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resendCodeButton1MouseEntered
+
+    private void resendCodeButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButton1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resendCodeButton1MouseExited
+
+    private void resendCodeButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButton1MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resendCodeButton1MousePressed
+
+    private void resendCodeButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButton1MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resendCodeButton1MouseReleased
 
     /**
      * @param args the command line arguments
@@ -457,6 +549,7 @@ public class EmailVerificationPage extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel rememberPasswordLabel;
     private javax.swing.JLabel resendCodeButton;
+    private javax.swing.JLabel resendCodeButton1;
     private javax.swing.JLabel subTitleLabel;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JLabel verificationCodeErrorLabel;

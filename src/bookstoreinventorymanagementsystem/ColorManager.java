@@ -45,7 +45,8 @@ public class ColorManager {
     public static final Color DARK_GREEN = new Color(0, 100, 0);
 
     // RED
-    public static final Color RED = new Color(255, 0, 0);
+    public static final Color LIGHT_RED = new Color(255, 127, 127);
+    public static final Color MEDIUM_RED = new Color(255, 60, 60);
     
     // GREY
     // Greys are used for certain elements
