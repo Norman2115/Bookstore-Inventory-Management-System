@@ -19,7 +19,7 @@ public class ValidationHandler {
      * Validates username to ensure it meets length requirements. Usernames must
      * be between 6 and 16 characters long.
      *
-     * @param username the username to validate
+     * @param username the username to validate.
      * @return a ValidationResult indicating whether the username is valid.
      */
     public static ValidationResult validateUsername(String username) {
@@ -97,7 +97,7 @@ public class ValidationHandler {
      * email address must contains a username, followed by the '@' symbol, and
      * then a domain name with at least one dot, such as "user@example.com".
      *
-     * @param email the email address to validate
+     * @param email the email address to validate.
      * @return a ValidationResult object indicating whether the email address is
      * valid.
      */
