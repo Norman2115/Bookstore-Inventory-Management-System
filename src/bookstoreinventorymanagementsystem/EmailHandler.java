@@ -14,6 +14,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 /**
+ * This class handles the functionality related to sending emails for various
+ * purposes within the app, such as registration verification emails and
+ * password reset emails, using Google Mail's SMTP server.
  *
  * @author Teo Chung Henn
  */
@@ -172,7 +175,7 @@ public class EmailHandler {
      * Sends an email to the specified email address with the provided subject
      * and body content. This method sets up the SMTP server and configures
      * SSL/TLS encryption for secure communication. The email is sent using the
-     * Google Mail SMTP server.
+     * Google Mail's SMTP server.
      *
      * @param toEmail the recipient's email address to which the email will be
      * sent.
