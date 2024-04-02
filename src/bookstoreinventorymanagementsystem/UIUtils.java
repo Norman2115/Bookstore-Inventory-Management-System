@@ -31,7 +31,7 @@ public class UIUtils {
         errorLabel.setText("");
     }
 
-    public static void updateFieldErrorState(
+    public static void setFieldErrorState(
             JTextComponent field,
             JLabel errorLabel,
             ValidationResult validation
@@ -53,11 +53,7 @@ public class UIUtils {
             JTextComponent field,
             JLabel errorLabel
     ) {
-        field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
-        errorLabel.setText("Field is required");
-        errorLabel.setForeground(ColorManager.MEDIUM_RED);
-        Font font = errorLabel.getFont();
-        errorLabel.setFont(new Font(font.getName(), font.getStyle(), 10));
-        errorLabel.setMaximumSize(new Dimension(386, font.getSize()));
+        setFieldErrorState(field, errorLabel, 
+                new ValidationResult(false, "Field is required"));
     }
 }

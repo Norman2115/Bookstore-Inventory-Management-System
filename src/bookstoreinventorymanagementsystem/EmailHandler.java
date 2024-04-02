@@ -15,23 +15,48 @@ import javax.mail.internet.MimeMessage;
 
 /**
  *
- * @author coco1
+ * @author Teo Chung Henn
  */
 public class EmailHandler {
 
+    /**
+     * The sender's email address.
+     */
     private static final String FROM_EMAIL = "bookstoreautomated@gmail.com";
+
+    /**
+     * The sender's email password.
+     */
     private static final String PASSWORD = "oynb kbnd totr ysnf";
-    private String code;
 
+    /**
+     * The generated verification code used to verify the authenticity of the
+     * user requesting action (e.g, registration verification or password reset)
+     */
+    private String verificationCode;
+
+    /**
+     * Constructs an EmailHandler object with a null verification code.
+     */
     public EmailHandler() {
-        code = null;
+        verificationCode = null;
     }
 
-    public String getCode() {
-        return code;
+    /**
+     * Retrieves the generated verification code.
+     *
+     * @return the verification code.
+     */
+    public String getVerificationCode() {
+        return verificationCode;
     }
 
-    private String generateCode() {
+    /**
+     * Generates a random verification code consisting of 6 digits.
+     *
+     * @return the generated verification code
+     */
+    private String generateVerificationCode() {
         Random rand = new Random();
         StringBuilder codeBuilder = new StringBuilder();
 
@@ -42,14 +67,24 @@ public class EmailHandler {
         return codeBuilder.toString();
     }
 
+    /**
+     * Sends a registration verification email. The email contains a
+     * verification code that the recipient needs to use to verify their email
+     * address to complete the sign up process.
+     *
+     * @param toEmail the recipient's email address to which the verification
+     * email will be sent.
+     * @throws MessagingException if an error occurs while sending the mail.
+     * @throws UnsupportedEncodingException if the encoding is not supported.
+     */
     public void sendRegistrationVerificationEmail(
             String toEmail
     ) throws MessagingException, UnsupportedEncodingException {
+        verificationCode = generateVerificationCode();
+
         final String registrationVerificationEmailSubject
                 = "Family Bookstore Email Verification";
 
-        code = generateCode();
-        
         final String registrationVerificationEmailBody
                 = """
                 <html>
@@ -79,20 +114,30 @@ public class EmailHandler {
                 </body>
 
                 </html>
-                """.formatted(code);
-        
-        sendEmail(toEmail, registrationVerificationEmailSubject, 
+                """.formatted(verificationCode);
+
+        sendEmail(toEmail, registrationVerificationEmailSubject,
                 registrationVerificationEmailBody);
     }
 
+    /**
+     * Sends a password reset email to the specified email address. The email
+     * contains a verification code that the user needs to use to verify their
+     * identity before they can reset their password.
+     *
+     * @param toEmail the recipient's email address to which the password reset
+     * email will be sent.
+     * @throws MessagingException if an error occurs while sending the email.
+     * @throws UnsupportedEncodingException if the encoding is not supported.
+     */
     public void sendResetPasswordEmail(
             String toEmail
     ) throws MessagingException, UnsupportedEncodingException {
+        verificationCode = generateVerificationCode();
+
         final String passwordResetEmailSubject
                 = "Family Bookstore Account Password Reset";
 
-        code = generateCode();
-        
         final String passwordResetEmailBody
                 = """
                 <html>
@@ -117,12 +162,26 @@ public class EmailHandler {
                 </body>
                 
                 </html>
-                """.formatted(code);
-        
+                """.formatted(verificationCode);
+
         sendEmail(toEmail, passwordResetEmailSubject,
                 passwordResetEmailBody);
     }
 
+    /**
+     * Sends an email to the specified email address with the provided subject
+     * and body content. This method sets up the SMTP server and configures
+     * SSL/TLS encryption for secure communication. The email is sent using the
+     * Google Mail SMTP server.
+     *
+     * @param toEmail the recipient's email address to which the email will be
+     * sent.
+     * @param subject the subject of the email.
+     * @param body the body content of the email, which should be formatted in
+     * HTML.
+     * @throws MessagingException if an error occurs while sending the email.
+     * @throws UnsupportedEncodingException if the encoding is not supported.
+     */
     private void sendEmail(
             String toEmail,
             String subject,
@@ -164,6 +223,4 @@ public class EmailHandler {
 
         Transport.send(msg);
     }
-    
-    
 }

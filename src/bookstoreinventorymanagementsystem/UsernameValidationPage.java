@@ -352,7 +352,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
         try {
             ValidationResult usernameFound = ValidationHandler.checkUsernameExistence(username);
             isUsernameExists = usernameFound.isValid();
-            UIUtils.updateFieldErrorState(usernameField, usernameErrorLabel, usernameFound);
+            UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameFound);
         } catch (SQLException se) {
             UIUtils.displayErrorMessage("An error occurred while checking the username existence. Please try again later");
             dispose();

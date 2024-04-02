@@ -469,12 +469,12 @@ public class SignUpPage extends javax.swing.JFrame {
         }
 
         ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
-        UIUtils.updateFieldErrorState(usernameField, usernameErrorLabel, usernameValidation);
+        UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameValidation);
 
         if (usernameValidation.isValid()) {
             try {
                 ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
-                UIUtils.updateFieldErrorState(usernameField, usernameErrorLabel, usernameUniqueValidation);
+                UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameUniqueValidation);
                 isUsernameValid = usernameValidation.isValid() && usernameUniqueValidation.isValid();
             } catch (SQLException se) {
                 UIUtils.displayErrorMessage("An error occurred while checking the username uniqueness.");
@@ -496,7 +496,7 @@ public class SignUpPage extends javax.swing.JFrame {
 
         ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
         isPasswordValid = passwordValidation.isValid();
-        UIUtils.updateFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
+        UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
 
         if (isPasswordValid) {
             userData.setPassword(password);
@@ -531,7 +531,7 @@ public class SignUpPage extends javax.swing.JFrame {
 
         ValidationResult emailValidation = ValidationHandler.validateEmail(email);
         isEmailValid = emailValidation.isValid();
-        UIUtils.updateFieldErrorState(emailField, emailErrorLabel, emailValidation);
+        UIUtils.setFieldErrorState(emailField, emailErrorLabel, emailValidation);
 
         if (isEmailValid) {
             userData.setEmail(email);
