@@ -19,31 +19,16 @@ public class SignUpPage extends javax.swing.JFrame {
      */
     public SignUpPage() {
         initComponents();
-        
+
         userData = UserData.getInstance();
-        
+
         isUsernameValid = false;
         isPasswordValid = false;
         isEmailValid = false;
-        
+
         titleLabel.setText("<html><font color='#3EA434'>Craft</font> "
                 + "<font color='#008CD6'>Your Profile</font></html>");
         passwordField.setEchoChar('\u2022');
-    }
-
-    private void togglePasswordVisibility(
-            javax.swing.JPasswordField passwordField,
-            javax.swing.JLabel toggleIcon
-    ) {
-        if (passwordField.getEchoChar() != '\0') {
-            passwordField.setEchoChar('\0');
-            toggleIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/showPasswordIcon.png")));
-        } else {
-            passwordField.setEchoChar('\u2022');
-            toggleIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/hidePasswordIcon.png")));
-        }
     }
 
     /**
@@ -385,7 +370,7 @@ public class SignUpPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
-        togglePasswordVisibility(passwordField, showHidePasswordIcon);
+        UIUtils.togglePasswordVisibility(passwordField, showHidePasswordIcon);
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
 
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
@@ -430,17 +415,9 @@ public class SignUpPage extends javax.swing.JFrame {
     }//GEN-LAST:event_signUpButtonMouseEntered
 
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
-        if (usernameField.getText().trim().isEmpty()) {
-            UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
-        }
-
-        if (emailField.getText().trim().isEmpty()) {
-            UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
-        }
-
-        if (passwordField.getPassword().length == 0) {
-            UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
-        }
+        UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
+        UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
+        UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
 
         if (isUsernameValid && isPasswordValid && isEmailValid) {
             dispose();
@@ -462,19 +439,13 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
         String username = usernameField.getText();
-
-        if (username.trim().isEmpty()) {
-            UIUtils.resetFieldState(usernameField, usernameErrorLabel);
-            return;
-        }
-
         ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
-        UIUtils.updateFieldErrorState(usernameField, usernameErrorLabel, usernameValidation);
+        UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameValidation);
 
         if (usernameValidation.isValid()) {
             try {
                 ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
-                UIUtils.updateFieldErrorState(usernameField, usernameErrorLabel, usernameUniqueValidation);
+                UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameUniqueValidation);
                 isUsernameValid = usernameValidation.isValid() && usernameUniqueValidation.isValid();
             } catch (SQLException se) {
                 UIUtils.displayErrorMessage("An error occurred while checking the username uniqueness.");
@@ -488,15 +459,9 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         String password = new String(passwordField.getPassword());
-
-        if (password.trim().isEmpty()) {
-            UIUtils.resetFieldState(passwordField, passwordErrorLabel);
-            return;
-        }
-
         ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
         isPasswordValid = passwordValidation.isValid();
-        UIUtils.updateFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
+        UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
 
         if (isPasswordValid) {
             userData.setPassword(password);
@@ -523,15 +488,9 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
         String email = emailField.getText();
-
-        if (email.trim().isEmpty()) {
-            UIUtils.resetFieldState(emailField, emailErrorLabel);
-            return;
-        }
-
         ValidationResult emailValidation = ValidationHandler.validateEmail(email);
         isEmailValid = emailValidation.isValid();
-        UIUtils.updateFieldErrorState(emailField, emailErrorLabel, emailValidation);
+        UIUtils.setFieldErrorState(emailField, emailErrorLabel, emailValidation);
 
         if (isEmailValid) {
             userData.setEmail(email);
