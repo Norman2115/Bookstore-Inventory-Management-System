@@ -31,21 +31,6 @@ public class SignUpPage extends javax.swing.JFrame {
         passwordField.setEchoChar('\u2022');
     }
 
-    private void togglePasswordVisibility(
-            javax.swing.JPasswordField passwordField,
-            javax.swing.JLabel toggleIcon
-    ) {
-        if (passwordField.getEchoChar() != '\0') {
-            passwordField.setEchoChar('\0');
-            toggleIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/showPasswordIcon.png")));
-        } else {
-            passwordField.setEchoChar('\u2022');
-            toggleIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/hidePasswordIcon.png")));
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -385,7 +370,7 @@ public class SignUpPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
-        togglePasswordVisibility(passwordField, showHidePasswordIcon);
+        UIUtils.togglePasswordVisibility(passwordField, showHidePasswordIcon);
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
 
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed

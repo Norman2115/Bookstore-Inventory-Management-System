@@ -1,10 +1,11 @@
 package bookstoreinventorymanagementsystem;
 
-import com.sun.mail.handlers.text_html;
 import java.awt.Dimension;
 import java.awt.Font;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
@@ -98,8 +99,40 @@ public class UIUtils {
             JLabel errorLabel
     ) {
         if (field.getText().trim().isEmpty()) {
-            setFieldErrorState(field, errorLabel,
-                    new ValidationResult(false, "Field is required"));
+            field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
+            errorLabel.setText("Field is required");
+            errorLabel.setForeground(ColorManager.MEDIUM_RED);
+            Font font = errorLabel.getFont();
+            errorLabel.setFont(new Font(font.getName(), font.getStyle(), 10));
+            errorLabel.setMaximumSize(new Dimension(386, font.getSize()));
+        }
+    }
+
+    /**
+     * Toggles the visibility of the password in a password field and updates
+     * the icon. If the password is currently hidden, it will be shown, and the
+     * icon will change to represent an open eye. If the password is currently
+     * shown, it will be hidden, and the icon will change back to represent a
+     * closed eye.
+     * <p>
+     * The icons are expected to be located in the correct destination provided
+     * by the resource paths.
+     *
+     * @param passwordField the password field to toggle visibility
+     * @param toggleIcon the label used to display the eye icon
+     */
+    public static void togglePasswordVisibility(
+            JPasswordField passwordField,
+            JLabel toggleIcon
+    ) {
+        if (passwordField.getEchoChar() != '\0') {
+            passwordField.setEchoChar('\0');
+            toggleIcon.setIcon(new ImageIcon(
+                    UIUtils.class.getResource("/icon/showPasswordIcon.png")));
+        } else {
+            passwordField.setEchoChar('\u2022');
+            toggleIcon.setIcon(new ImageIcon(
+                    UIUtils.class.getResource("/icon/hidePasswordIcon.png")));
         }
     }
 }

@@ -389,21 +389,12 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
-        if (passwordField.getEchoChar() != '\0') {
-            passwordField.setEchoChar('\0');
-            showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/showPasswordIcon.png")));
-        } else {
-            passwordField.setEchoChar('\u2022');
-            showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/hidePasswordIcon.png")));
-        }
+        UIUtils.togglePasswordVisibility(passwordField, showHidePasswordIcon);
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
 
     private void goToSignUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMouseClicked
         dispose();
-        RoleSelectionPage roleSelectionPage = new RoleSelectionPage();
-        roleSelectionPage.setVisible(true);
+        new RoleSelectionPage().setVisible(true);
     }//GEN-LAST:event_goToSignUpButtonMouseClicked
 
     private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
