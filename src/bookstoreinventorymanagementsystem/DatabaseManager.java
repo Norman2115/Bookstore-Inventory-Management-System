@@ -22,7 +22,7 @@ public class DatabaseManager {
         connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/bookstore_inventory",
                 "root",
-                "user@12345@?");
+                "admin");
     }
 
     /**
