@@ -21,20 +21,22 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
+
 /**
  *
  * @author User
  */
-public class addProduct extends javax.swing.JInternalFrame {
-
+public class AddProduct extends javax.swing.JInternalFrame {
+    private final ProductData productData;
     /**
      * Creates new form welcomeText
      */
-    public addProduct() {
+    public AddProduct() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
+        productData  =  ProductData.getInstance();
     }
     
     
@@ -427,60 +429,30 @@ public class addProduct extends javax.swing.JInternalFrame {
 
 //add product button effect
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
-        Object[] values = new Object[12];
-        //get data
-        values[0] = bookTitle.getText();
-        values[1] = genre.getText();
-        values[2] = language.getText();
-        values[3] = author.getText();
-        values[4] = publicationYear.getText();
-        values[5] = isbn.getText();
-        values[6] = supplier.getText();
-        values[7] = stockQuantity.getText();
-        values[8] = purchasePrice.getText();
-        values[9] = unitPrice.getText();
-        values[10] = promotion.getText();
+        //get data and insert data into productData
+        productData.setBookTitle(bookTitle.getText());
+        productData.setGenre(genre.getText());
+        productData.setLanguage(language.getText());
+        productData.setAuthor(author.getText());
+        productData.setPublicationYear(Integer.parseInt(publicationYear.getText()));
+        productData.setISBN(Integer.parseInt(isbn.getText()));
+        productData.setSupplier(supplier.getText());
+        productData.setStockQuantity(Integer.parseInt(stockQuantity.getText()));
+        productData.setPurchasePrice(Double.parseDouble(purchasePrice.getText()));
+        productData.setUnitPrice(Double.parseDouble(unitPrice.getText()));
+        productData.setPromotion(Double.parseDouble(promotion.getText()));
         //get iamge and convert it form icon
         Icon icon = imageLabel.getIcon();
-        Image image = ((ImageIcon) icon).getImage();
-        //create a BufferedImage object
-        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        //convert image to BufferedImage
-        Graphics2D g2d = bufferedImage.createGraphics();
-        g2d.drawImage(image, 0, 0, null);
-        g2d.dispose();
-
-        //let BufferedImage write into ByteArrayOutputStream to get BLOB
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //translate image into BOLB
+        ImageTranslator translator = new ImageTranslator();
+        translator.iconToBLOB(icon);
+        byte[] image = translator.getBLOB();
+        productData.setImage(image);
+        //save data into database
         try {
-            ImageIO.write(bufferedImage, "jpg", baos);
-        } catch (IOException ex) {
-            Logger.getLogger(addProduct.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        byte[] imageData = baos.toByteArray();
-        values[11] = imageData;
-        
-
-        //insert data into database        
-        try {
-            DatabaseManager.connect();
-            StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (product_name,genre,language,author,publication_year,isbn,supplier,stock_quantity,purchase_price,unit_price,promotion,picture) VALUES (?");
-            for (int i = 1; i < values.length; i++) {
-                queryBuilder.append(", ?");
-            }
-            queryBuilder.append(");");
-            String query = queryBuilder.toString();
-            System.out.println(query);
-            PreparedStatement preparedStmt = getConnection().prepareStatement(query);
-            for (int i = 0; i < values.length; i++) {
-                preparedStmt.setObject(i + 1, values[i]);
-            }
-            preparedStmt.execute();
-            DatabaseManager.closeConnection();
-            JOptionPane.showMessageDialog(null,"Product added succesfull","Add product",JOptionPane.INFORMATION_MESSAGE);
+            productData.saveUserDataToDatabase();
         } catch (SQLException ex) {
-            Logger.getLogger(addProduct.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_addProductButtonMouseClicked
 
@@ -503,7 +475,7 @@ public class addProduct extends javax.swing.JInternalFrame {
     private void imagePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imagePanelMouseClicked
         //import picture from user
         JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(addProduct.this);
+        int result = fileChooser.showOpenDialog(AddProduct.this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             ImageIcon imageIcon = new ImageIcon(selectedFile.getPath());
