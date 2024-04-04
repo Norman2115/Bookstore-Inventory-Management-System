@@ -282,12 +282,15 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
-        if (isUsernameExists) {
-            dispose();
-            new LoginPage().setVisible(true);
-        } else {
-            UIUtils.displayErrorMessage("Please enter a valid username before proceeding");
-        }
+        dispose();
+        new ResetPasswordPage().setVisible(true);
+        
+//        if (isUsernameExists) {
+//            dispose();
+//            // new ResetPasswordPage().setVisible(true);
+//        } else {
+//            UIUtils.displayErrorMessage("Please enter a valid username before proceeding");
+//        }
     }//GEN-LAST:event_continueButtonMouseClicked
 
     private void continueButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseEntered
