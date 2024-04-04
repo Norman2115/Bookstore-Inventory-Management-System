@@ -391,7 +391,8 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         if (userRole != null) {
             userData.setRole(userRole);
             dispose();
-            new SignUpPage().setVisible(true);
+            // new SignUpPage().setVisible(true);
+            new SignUpPage2().setVisible(true);
         } else {
             javax.swing.JOptionPane.showMessageDialog(
                     null, 

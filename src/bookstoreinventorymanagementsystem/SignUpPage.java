@@ -99,7 +99,7 @@ public class SignUpPage extends javax.swing.JFrame {
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -268,7 +268,7 @@ public class SignUpPage extends javax.swing.JFrame {
                         .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 27, Short.MAX_VALUE)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(showHidePasswordIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -329,7 +329,7 @@ public class SignUpPage extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(alreadyHaveAccountLabel)
                     .addComponent(goToLoginButton))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
@@ -343,11 +343,8 @@ public class SignUpPage extends javax.swing.JFrame {
         );
         basePanelLayout.setVerticalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(basePanelLayout.createSequentialGroup()
-                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(RightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LeftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+            .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -360,9 +357,7 @@ public class SignUpPage extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(basePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
         );
 
         pack();
@@ -425,10 +420,6 @@ public class SignUpPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_signUpButtonMouseClicked
 
-    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameFieldActionPerformed
-
     private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
         RightPanel.grabFocus();
     }//GEN-LAST:event_RightPanelMouseClicked
@@ -436,6 +427,40 @@ public class SignUpPage extends javax.swing.JFrame {
     private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
         LeftPanel.grabFocus();
     }//GEN-LAST:event_LeftPanelMouseClicked
+
+    private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
+        String password = new String(passwordField.getPassword());
+        ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
+        isPasswordValid = passwordValidation.isValid();
+        UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
+
+        if (isPasswordValid) {
+            userData.setPassword(password);
+        }
+    }//GEN-LAST:event_passwordFieldKeyReleased
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_passwordFieldKeyPressed
+
+    private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
+        String email = emailField.getText();
+        ValidationResult emailValidation = ValidationHandler.validateEmail(email);
+        isEmailValid = emailValidation.isValid();
+        UIUtils.setFieldErrorState(emailField, emailErrorLabel, emailValidation);
+
+        if (isEmailValid) {
+            userData.setEmail(email);
+        }
+    }//GEN-LAST:event_emailFieldKeyReleased
+
+    private void emailFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_emailFieldKeyPressed
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
         String username = usernameField.getText();
@@ -457,45 +482,15 @@ public class SignUpPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_usernameFieldKeyReleased
 
-    private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
-        String password = new String(passwordField.getPassword());
-        ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
-        isPasswordValid = passwordValidation.isValid();
-        UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
-
-        if (isPasswordValid) {
-            userData.setPassword(password);
-        }
-    }//GEN-LAST:event_passwordFieldKeyReleased
-
     private void usernameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             LeftPanel.requestFocusInWindow();
         }
     }//GEN-LAST:event_usernameFieldKeyPressed
 
-    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            LeftPanel.requestFocusInWindow();
-        }
-    }//GEN-LAST:event_passwordFieldKeyPressed
-
-    private void emailFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            LeftPanel.requestFocusInWindow();
-        }
-    }//GEN-LAST:event_emailFieldKeyPressed
-
-    private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
-        String email = emailField.getText();
-        ValidationResult emailValidation = ValidationHandler.validateEmail(email);
-        isEmailValid = emailValidation.isValid();
-        UIUtils.setFieldErrorState(emailField, emailErrorLabel, emailValidation);
-
-        if (isEmailValid) {
-            userData.setEmail(email);
-        }
-    }//GEN-LAST:event_emailFieldKeyReleased
+    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usernameFieldActionPerformed
 
     /**
      * @param args the command line arguments
