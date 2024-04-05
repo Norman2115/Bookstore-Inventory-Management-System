@@ -105,7 +105,7 @@ public class ViewProduct extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         searchBar = new javax.swing.JTextField();
         searchType = new javax.swing.JComboBox<>();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        searchButton = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         viewTable = new javax.swing.JTable();
 
@@ -164,10 +164,10 @@ public class ViewProduct extends javax.swing.JInternalFrame {
             }
         });
 
-        jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
-        jToggleButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
+        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jToggleButton1MouseClicked(evt);
+                searchButtonMouseClicked(evt);
             }
         });
 
@@ -206,7 +206,7 @@ public class ViewProduct extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -224,7 +224,7 @@ public class ViewProduct extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel5)
                                 .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -248,16 +248,92 @@ public class ViewProduct extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        // TODO add your handling code here:
+        String searchBy=null;
+        switch (searchType.getSelectedIndex()){
+            case 0:
+                searchBy = "product_name";
+                break;
+            case 1:
+                searchBy = "product_name";
+                break;
+            case 2:
+                searchBy = "isbn";
+                break;
+            case 3:
+                searchBy = "gnere";
+                break;
+            case 4:
+                searchBy = "author";
+                break;
+            case 5:
+                searchBy = "supplier";
+                break;
+            case 6:
+                searchBy = "stock_quantity";
+                break;
+            case 7:
+                searchBy = "purchase_price";
+                break;
+            case 8:
+                searchBy = "unit_price";
+                break;
+            case 9:
+                searchBy = "promotion";
+                break;
+            case 10:
+                searchBy = "unit_price*promotion";
+                break;
+        }
+        String condition = searchBy + " LIKE " +searchBar.getText() + "%";
+        System.out.println(condition);
+        readDataFromDatabaseAndWriteIntoTable("product",condition,searchBy);
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void searchTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchTypeActionPerformed
 
-    private void jToggleButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MouseClicked
-        
-    }//GEN-LAST:event_jToggleButton1MouseClicked
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        String searchBy=null;
+        switch (searchType.getSelectedIndex()){
+            case 0:
+                searchBy = "product_name";
+                break;
+            case 1:
+                searchBy = "product_name";
+                break;
+            case 2:
+                searchBy = "isbn";
+                break;
+            case 3:
+                searchBy = "gnere";
+                break;
+            case 4:
+                searchBy = "author";
+                break;
+            case 5:
+                searchBy = "supplier";
+                break;
+            case 6:
+                searchBy = "stock_quantity";
+                break;
+            case 7:
+                searchBy = "purchase_price";
+                break;
+            case 8:
+                searchBy = "unit_price";
+                break;
+            case 9:
+                searchBy = "promotion";
+                break;
+            case 10:
+                searchBy = "unit_price*promotion";
+                break;
+        }
+        String condition = searchBy + " LIKE " +searchBar.getText() + "%";
+        System.out.println(condition);
+        readDataFromDatabaseAndWriteIntoTable("product",condition,searchBy);
+    }//GEN-LAST:event_searchButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -269,8 +345,8 @@ public class ViewProduct extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField searchBar;
+    private javax.swing.JToggleButton searchButton;
     private javax.swing.JComboBox<String> searchType;
     private javax.swing.JTable viewTable;
     // End of variables declaration//GEN-END:variables
