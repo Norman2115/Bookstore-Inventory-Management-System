@@ -13,6 +13,7 @@ public final class UserData {
     private static UserData instance;
 
     private String userID;
+    private String fullName;
     private String username;
     private String email;
     private String password;
@@ -41,6 +42,14 @@ public final class UserData {
         // Admin prefix (A), Salesperson prefix (S)
 
         this.userID = userID;
+    }
+    
+    public String getFullName() {
+        return fullName;
+    }
+    
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getUserID() {

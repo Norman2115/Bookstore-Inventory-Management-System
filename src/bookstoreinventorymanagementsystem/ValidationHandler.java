@@ -17,7 +17,7 @@ public class ValidationHandler {
 
     /**
      * Validates username to ensure it meets length requirements. Usernames must
-     * be between 6 and 16 characters long.
+     * be between 6 and 16 characters long and contain only underscores.
      *
      * @param username the username to validate.
      * @return a ValidationResult indicating whether the username is valid.
@@ -25,6 +25,10 @@ public class ValidationHandler {
     public static ValidationResult validateUsername(String username) {
         if (username.length() < 6 || username.length() > 16) {
             return new ValidationResult(false, "Must be between 6 and 16 characters long");
+        }
+
+        if (!containsOnlyUnderscores(username)) {
+            return new ValidationResult(false, "Must contain only letters, digits, or underscores");
         }
 
         return new ValidationResult(true, null);
@@ -93,7 +97,7 @@ public class ValidationHandler {
     }
 
     /**
-     * Validates an email address to ensure it has a valid format. The provided
+     * Validates email address to ensure it has a valid format. The provided
      * email address must contains a username, followed by the '@' symbol, and
      * then a domain name with at least one dot, such as "user@example.com".
      *
@@ -113,9 +117,10 @@ public class ValidationHandler {
     }
 
     /**
-     * Validates a password to ensure it meets length and format requirements.
-     * The password must be between 8 and 16 characters long and contain a
-     * combination of numbers, letters, and symbols.
+     * Validates password to ensure it meets length and format requirements. The
+     * password must be between 8 and 16 characters long and contain a
+     * combination of numbers, letters, and symbols. It must not contain any
+     * spaces.
      *
      * @param password the password to validate.
      * @return a ValidationResult indicating whether the password is valid.
@@ -123,6 +128,10 @@ public class ValidationHandler {
     public static ValidationResult validatePassword(String password) {
         if (password.length() < 8 || password.length() > 16) {
             return new ValidationResult(false, "Must be between 8 and 16 characters long");
+        }
+
+        if (password.contains(" ")) {
+            return new ValidationResult(false, "Must not contain spaces");
         }
 
         boolean hasDigit = false;
@@ -178,12 +187,65 @@ public class ValidationHandler {
     }
 
     /**
+     * Validates full name to ensure it contains only letters and at most one
+     * blank space between words and the name does not end with a blank space.
+     *
+     * @param fullName the full name to validate.
+     * @return a ValidationResult indicating whether the full name is valid.
+     */
+    public static ValidationResult validateFullName(String fullName) {
+        if (!containsOnlyLetters(fullName)) {
+            return new ValidationResult(false, "Must contain only letters");
+        }
+
+        if (!containsOnlySingleSpace(fullName)) {
+            return new ValidationResult(false, "Must contain at most one blank space and cannot end with a space");
+        }
+
+        return new ValidationResult(true, null);
+    }
+
+    /**
      * Checks if the given character is a symbol.
      *
      * @param c the character to check.
      * @return true if the character is a symbol.
      */
-    private static boolean isSymbol(char c) {
+    public static boolean isSymbol(char c) {
         return !Character.isLetterOrDigit(c);
+    }
+
+    /**
+     * Checks if the given string contains only letters, digits, or underscores.
+     * Indirectly, it disallows blank space. If the string contains any blank
+     * spaces in between characters, the regular expression will not match.
+     *
+     * @param str the string to check.
+     * @return true if the string contains only letters, digits, or underscores.
+     */
+    public static boolean containsOnlyUnderscores(String str) {
+        return str.matches("^[a-zA-Z0-9_]*$");
+    }
+
+    /**
+     * Checks if the given string contains only letters/alphabets.
+     *
+     * @param str the string to check.
+     * @return true if the string contains only letters.
+     */
+    public static boolean containsOnlyLetters(String str) {
+        return str.matches("^[a-zA-Z ]*$");
+    }
+
+    /**
+     * Checks if the given string contains at most one blank space between words
+     * and does not end with a blank space.
+     *
+     * @param str the string to check.
+     * @return true if the string contains at most one blank space between words
+     * and does not end with a space.
+     */
+    public static boolean containsOnlySingleSpace(String str) {
+        return str.matches("^[a-zA-Z]+( [a-zA-z]+)*$");
     }
 }

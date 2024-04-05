@@ -5,11 +5,12 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Norman
+ * @author Teo Chung Henn
  */
 public class SignUpPage extends javax.swing.JFrame {
 
     private final UserData userData;
+    private boolean isFullNameValid;
     private boolean isUsernameValid;
     private boolean isPasswordValid;
     private boolean isEmailValid;
@@ -19,16 +20,11 @@ public class SignUpPage extends javax.swing.JFrame {
      */
     public SignUpPage() {
         initComponents();
-
         userData = UserData.getInstance();
-
+        isFullNameValid = false;
         isUsernameValid = false;
         isPasswordValid = false;
         isEmailValid = false;
-
-        titleLabel.setText("<html><font color='#3EA434'>Craft</font> "
-                + "<font color='#008CD6'>Your Profile</font></html>");
-        passwordField.setEchoChar('\u2022');
     }
 
     /**
@@ -47,21 +43,25 @@ public class SignUpPage extends javax.swing.JFrame {
         banner = new javax.swing.JLabel();
         LeftPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
-        usernameLabel = new javax.swing.JLabel();
-        usernameField = new javax.swing.JTextField();
-        emailLabel = new javax.swing.JLabel();
-        emailField = new javax.swing.JTextField();
-        usernameIcon = new javax.swing.JLabel();
-        emailIcon = new javax.swing.JLabel();
+        fullNameLabel = new javax.swing.JLabel();
+        fullNameField = new javax.swing.JTextField();
+        passwordLabel = new javax.swing.JLabel();
+        fullNameIcon = new javax.swing.JLabel();
+        showHidePasswordIcon = new javax.swing.JLabel();
         signUpButton = new javax.swing.JPanel();
         signUpLabel = new javax.swing.JLabel();
-        alreadyHaveAccountLabel = new javax.swing.JLabel();
+        alreadyHaveAnAccountLabel = new javax.swing.JLabel();
         goToLoginButton = new javax.swing.JLabel();
-        passwordLabel = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
-        showHidePasswordIcon = new javax.swing.JLabel();
-        usernameErrorLabel = new javax.swing.JLabel();
         emailErrorLabel = new javax.swing.JLabel();
+        emailLabel = new javax.swing.JLabel();
+        emailField = new javax.swing.JTextField();
+        emailIcon = new javax.swing.JLabel();
+        fullNameErrorLabel = new javax.swing.JLabel();
+        usernameErrorLabel = new javax.swing.JLabel();
+        usernameLabel = new javax.swing.JLabel();
+        usernameField = new javax.swing.JTextField();
+        usernameIcon = new javax.swing.JLabel();
         passwordErrorLabel = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
@@ -74,6 +74,11 @@ public class SignUpPage extends javax.swing.JFrame {
         basePanel.setBackground(new java.awt.Color(204, 204, 204));
         basePanel.setToolTipText("");
         basePanel.setPreferredSize(new java.awt.Dimension(900, 500));
+        basePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                basePanelMouseClicked(evt);
+            }
+        });
 
         RightPanel.setBackground(new java.awt.Color(62, 164, 52));
         RightPanel.setPreferredSize(new java.awt.Dimension(450, 500));
@@ -99,7 +104,7 @@ public class SignUpPage extends javax.swing.JFrame {
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -113,52 +118,45 @@ public class SignUpPage extends javax.swing.JFrame {
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("Craft Your Profile");
+        titleLabel.setText("<html><font color='#3EA434'>Craft </font><font color='#008CD6'>Your Account</font></html>");
 
-        usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        usernameLabel.setForeground(new java.awt.Color(0, 100, 0));
-        usernameLabel.setText("Username");
+        fullNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        fullNameLabel.setForeground(new java.awt.Color(0, 100, 0));
+        fullNameLabel.setText("Full Name");
 
-        usernameField.setBackground(new java.awt.Color(253, 252, 248));
-        usernameField.setForeground(new java.awt.Color(0, 100, 0));
-        usernameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        usernameField.addActionListener(new java.awt.event.ActionListener() {
+        fullNameField.setBackground(new java.awt.Color(253, 252, 248));
+        fullNameField.setForeground(new java.awt.Color(0, 100, 0));
+        fullNameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        fullNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameFieldActionPerformed(evt);
+                fullNameFieldActionPerformed(evt);
             }
         });
-        usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                usernameFieldKeyPressed(evt);
-            }
+        fullNameField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                usernameFieldKeyReleased(evt);
+                fullNameFieldKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                fullNameFieldKeyTyped(evt);
             }
         });
 
-        emailLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        emailLabel.setForeground(new java.awt.Color(0, 100, 0));
-        emailLabel.setText("Email");
+        passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        passwordLabel.setForeground(new java.awt.Color(0, 100, 0));
+        passwordLabel.setText("Password");
 
-        emailField.setBackground(new java.awt.Color(253, 252, 248));
-        emailField.setForeground(new java.awt.Color(0, 100, 0));
-        emailField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        emailField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                emailFieldKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                emailFieldKeyReleased(evt);
+        fullNameIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fullNameIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        fullNameIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        showHidePasswordIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hidePasswordIcon.png"))); // NOI18N
+        showHidePasswordIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        showHidePasswordIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                showHidePasswordIconMouseClicked(evt);
             }
         });
-
-        usernameIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        usernameIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
-        usernameIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-
-        emailIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        emailIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hidePasswordIcon.png"))); // NOI18N
-        emailIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         signUpButton.setBackground(new java.awt.Color(0, 140, 214));
         signUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -201,10 +199,10 @@ public class SignUpPage extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        alreadyHaveAccountLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        alreadyHaveAccountLabel.setForeground(new java.awt.Color(0, 100, 0));
-        alreadyHaveAccountLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        alreadyHaveAccountLabel.setText("Already have an account?");
+        alreadyHaveAnAccountLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        alreadyHaveAnAccountLabel.setForeground(new java.awt.Color(0, 100, 0));
+        alreadyHaveAnAccountLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        alreadyHaveAnAccountLabel.setText("Already have an account?");
 
         goToLoginButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         goToLoginButton.setForeground(new java.awt.Color(0, 100, 0));
@@ -227,109 +225,164 @@ public class SignUpPage extends javax.swing.JFrame {
             }
         });
 
-        passwordLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        passwordLabel.setForeground(new java.awt.Color(0, 100, 0));
-        passwordLabel.setText("Password");
-
         passwordField.setBackground(new java.awt.Color(253, 252, 248));
         passwordField.setForeground(new java.awt.Color(0, 100, 0));
         passwordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        passwordField.setEchoChar('\u2022');
         passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordFieldActionPerformed(evt);
             }
         });
         passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                passwordFieldKeyPressed(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 passwordFieldKeyReleased(evt);
             }
-        });
-
-        showHidePasswordIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        showHidePasswordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hidePasswordIcon.png"))); // NOI18N
-        showHidePasswordIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        showHidePasswordIcon.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                showHidePasswordIconMouseClicked(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyTyped(evt);
             }
         });
+
+        emailLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        emailLabel.setForeground(new java.awt.Color(0, 100, 0));
+        emailLabel.setText("Email");
+
+        emailField.setBackground(new java.awt.Color(253, 252, 248));
+        emailField.setForeground(new java.awt.Color(0, 100, 0));
+        emailField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        emailField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailFieldActionPerformed(evt);
+            }
+        });
+        emailField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                emailFieldKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                emailFieldKeyTyped(evt);
+            }
+        });
+
+        emailIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        emailIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        emailIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        usernameLabel.setForeground(new java.awt.Color(0, 100, 0));
+        usernameLabel.setText("Username");
+
+        usernameField.setBackground(new java.awt.Color(253, 252, 248));
+        usernameField.setForeground(new java.awt.Color(0, 100, 0));
+        usernameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        usernameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usernameFieldActionPerformed(evt);
+            }
+        });
+        usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyTyped(evt);
+            }
+        });
+
+        usernameIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        usernameIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        usernameIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LeftPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(LeftPanelLayout.createSequentialGroup()
-                        .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(showHidePasswordIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(emailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(alreadyHaveAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(goToLoginButton))
-                            .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(usernameIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fullNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(signUpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(usernameErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(fullNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(fullNameIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(showHidePasswordIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(emailErrorLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(emailIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(emailErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(passwordErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(31, 31, 31))))
+                            .addComponent(emailLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fullNameErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(passwordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(usernameErrorLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(usernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(usernameIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(passwordErrorLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 26, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(LeftPanelLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(alreadyHaveAnAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(goToLoginButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         LeftPanelLayout.setVerticalGroup(
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(45, 45, 45)
                 .addComponent(titleLabel)
-                .addGap(18, 18, 18)
-                .addComponent(usernameLabel)
+                .addGap(22, 22, 22)
+                .addComponent(fullNameLabel)
+                .addGap(13, 13, 13)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(fullNameIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fullNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(fullNameErrorLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(emailLabel)
+                .addGap(13, 13, 13)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(emailField)
+                    .addComponent(emailIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(emailErrorLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(usernameLabel)
+                .addGap(13, 13, 13)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(usernameField)
                     .addComponent(usernameIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addComponent(usernameErrorLabel)
-                .addGap(10, 10, 10)
-                .addComponent(emailLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(emailIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(emailField))
-                .addGap(2, 2, 2)
-                .addComponent(emailErrorLabel)
-                .addGap(10, 10, 10)
                 .addComponent(passwordLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(showHidePasswordIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(showHidePasswordIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addComponent(passwordErrorLabel)
-                .addGap(22, 22, 22)
+                .addGap(30, 30, 30)
                 .addComponent(signUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(alreadyHaveAccountLabel)
+                    .addComponent(alreadyHaveAnAccountLabel)
                     .addComponent(goToLoginButton))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
@@ -343,11 +396,8 @@ public class SignUpPage extends javax.swing.JFrame {
         );
         basePanelLayout.setVerticalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(basePanelLayout.createSequentialGroup()
-                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(RightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LeftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+            .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -360,43 +410,34 @@ public class SignUpPage extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
-        UIUtils.togglePasswordVisibility(passwordField, showHidePasswordIcon);
-    }//GEN-LAST:event_showHidePasswordIconMouseClicked
+    private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
+        UIUtils.markFieldAsRequired(fullNameField, fullNameErrorLabel);
+        UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
+        UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
+        UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
+        if (isFullNameValid
+                && isEmailValid
+                && isUsernameValid
+                && isPasswordValid) {
+            dispose();
+            new EmailVerificationPage().setVisible(true);
+        }
+    }//GEN-LAST:event_signUpButtonMouseClicked
 
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
+    private void signUpButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseEntered
+        signUpButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_signUpButtonMouseEntered
 
-    private void goToLoginButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseReleased
-        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_goToLoginButtonMouseReleased
-
-    private void goToLoginButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMousePressed
-        goToLoginButton.setForeground(ColorManager.MEDIUM_BLUE);
-    }//GEN-LAST:event_goToLoginButtonMousePressed
-
-    private void goToLoginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseExited
-        goToLoginButton.setForeground(ColorManager.DARK_GREEN);
-    }//GEN-LAST:event_goToLoginButtonMouseExited
-
-    private void goToLoginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseEntered
-        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_goToLoginButtonMouseEntered
-
-    private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
-        dispose();
-        new LoginPage().setVisible(true);
-    }//GEN-LAST:event_goToLoginButtonMouseClicked
+    private void signUpButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseExited
+        signUpButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_signUpButtonMouseExited
 
     private void signUpButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseReleased
         signUpButton.setBackground(ColorManager.MEDIUM_BLUE);
@@ -406,28 +447,38 @@ public class SignUpPage extends javax.swing.JFrame {
         signUpButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_signUpButtonMousePressed
 
-    private void signUpButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseExited
-        signUpButton.setBackground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_signUpButtonMouseExited
+    private void goToLoginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseEntered
+        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMouseEntered
 
-    private void signUpButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseEntered
-        signUpButton.setBackground(ColorManager.MEDIUM_BLUE);
-    }//GEN-LAST:event_signUpButtonMouseEntered
+    private void goToLoginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseExited
+        goToLoginButton.setForeground(ColorManager.DARK_GREEN);
+    }//GEN-LAST:event_goToLoginButtonMouseExited
 
-    private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
-        UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
-        UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
-        UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
+    private void goToLoginButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMousePressed
+        goToLoginButton.setForeground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMousePressed
 
-        if (isUsernameValid && isPasswordValid && isEmailValid) {
-            dispose();
-            new EmailVerificationPage().setVisible(true);
-        }
-    }//GEN-LAST:event_signUpButtonMouseClicked
+    private void goToLoginButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseReleased
+        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMouseReleased
 
-    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
+    private void fullNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameFieldActionPerformed
+    }//GEN-LAST:event_fullNameFieldActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
+        UIUtils.togglePasswordVisibility(passwordField, showHidePasswordIcon);
+    }//GEN-LAST:event_showHidePasswordIconMouseClicked
+
+    private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
+        dispose();
+        new LoginPage().setVisible(true);
+    }//GEN-LAST:event_goToLoginButtonMouseClicked
 
     private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
         RightPanel.grabFocus();
@@ -437,11 +488,38 @@ public class SignUpPage extends javax.swing.JFrame {
         LeftPanel.grabFocus();
     }//GEN-LAST:event_LeftPanelMouseClicked
 
+    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailFieldActionPerformed
+
+    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usernameFieldActionPerformed
+
+    private void fullNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyReleased
+        String fullName = fullNameField.getText();
+        ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
+        UIUtils.setFieldErrorState(fullNameField, fullNameErrorLabel, fullNameValidation);
+        isFullNameValid = fullNameValidation.isValid();
+        if (isFullNameValid) {
+            userData.setFullName(fullName);
+        }
+    }//GEN-LAST:event_fullNameFieldKeyReleased
+
+    private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
+        String email = emailField.getText();
+        ValidationResult emailValidation = ValidationHandler.validateEmail(email);
+        UIUtils.setFieldErrorState(emailField, emailErrorLabel, emailValidation);
+        isEmailValid = emailValidation.isValid();
+        if (isEmailValid) {
+            userData.setEmail(email);
+        }
+    }//GEN-LAST:event_emailFieldKeyReleased
+
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
         String username = usernameField.getText();
         ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
         UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameValidation);
-
         if (usernameValidation.isValid()) {
             try {
                 ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
@@ -451,7 +529,6 @@ public class SignUpPage extends javax.swing.JFrame {
                 UIUtils.displayErrorMessage("An error occurred while checking the username uniqueness.");
             }
         }
-
         if (isUsernameValid) {
             userData.setUsername(username);
         }
@@ -460,42 +537,40 @@ public class SignUpPage extends javax.swing.JFrame {
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         String password = new String(passwordField.getPassword());
         ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
-        isPasswordValid = passwordValidation.isValid();
         UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
-
+        isPasswordValid = passwordValidation.isValid();
         if (isPasswordValid) {
             userData.setPassword(password);
         }
     }//GEN-LAST:event_passwordFieldKeyReleased
 
-    private void usernameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyPressed
+    private void fullNameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyTyped
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             LeftPanel.requestFocusInWindow();
         }
-    }//GEN-LAST:event_usernameFieldKeyPressed
+    }//GEN-LAST:event_fullNameFieldKeyTyped
 
-    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+    private void emailFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyTyped
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             LeftPanel.requestFocusInWindow();
         }
-    }//GEN-LAST:event_passwordFieldKeyPressed
+    }//GEN-LAST:event_emailFieldKeyTyped
 
-    private void emailFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyPressed
+    private void usernameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyTyped
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             LeftPanel.requestFocusInWindow();
         }
-    }//GEN-LAST:event_emailFieldKeyPressed
+    }//GEN-LAST:event_usernameFieldKeyTyped
 
-    private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
-        String email = emailField.getText();
-        ValidationResult emailValidation = ValidationHandler.validateEmail(email);
-        isEmailValid = emailValidation.isValid();
-        UIUtils.setFieldErrorState(emailField, emailErrorLabel, emailValidation);
-
-        if (isEmailValid) {
-            userData.setEmail(email);
+    private void passwordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyTyped
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
         }
-    }//GEN-LAST:event_emailFieldKeyReleased
+    }//GEN-LAST:event_passwordFieldKeyTyped
+
+    private void basePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_basePanelMouseClicked
+        basePanel.requestFocusInWindow();
+    }//GEN-LAST:event_basePanelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -524,6 +599,8 @@ public class SignUpPage extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -536,13 +613,17 @@ public class SignUpPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
-    private javax.swing.JLabel alreadyHaveAccountLabel;
+    private javax.swing.JLabel alreadyHaveAnAccountLabel;
     private javax.swing.JLabel banner;
     private javax.swing.JPanel basePanel;
     private javax.swing.JLabel emailErrorLabel;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailIcon;
     private javax.swing.JLabel emailLabel;
+    private javax.swing.JLabel fullNameErrorLabel;
+    private javax.swing.JTextField fullNameField;
+    private javax.swing.JLabel fullNameIcon;
+    private javax.swing.JLabel fullNameLabel;
     private javax.swing.JLabel goToLoginButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
