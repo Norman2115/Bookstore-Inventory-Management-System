@@ -14,79 +14,48 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class viewProduct extends javax.swing.JInternalFrame {
-    private final ProductData[] productData = new ProductData[100];
-    private int readCounter = 0;
-    
-    /**
-     * Creates new form welcomeText
-     */
-    public viewProduct() {
+public class ViewProduct extends javax.swing.JInternalFrame {
+
+    public ViewProduct() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        readCounter = readDataFromDatabase("product","product_name");
-        insertaDataIntoTable(readCounter);
+        readDataFromDatabaseAndWriteIntoTable("product","product_name");
     }
-    private int readDataFromDatabase(String tableName,String orderBy){
+    
+    private void readDataFromDatabaseAndWriteIntoTable(String tableName,String orderBy){
         try {
             //Connect to database
-            try {
-                DatabaseManager.connect();
-            } catch (SQLException ex) {
-                Logger.getLogger(viewProduct.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            DatabaseManager.connect();
             //select data from database
             Connection connection = DatabaseManager.getConnection();
             String query = "SELECT * FROM " + tableName + " ORDER BY " + orderBy;
             System.out.println(query);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
-            //initialized            
-            for(int i=0;i<100;i++){
-                productData[i]  = ProductData.getInstance();
-            }
             //catch data
+            Object[] rowData = new Object[10];
             while (resultSet.next()){
-                readCounter = 0;
-                //get every row data
-                productData[readCounter].setBookTitle(resultSet.getString("product_name"));
-                productData[readCounter].setGenre(resultSet.getString("genre"));
-                productData[readCounter].setLanguage(resultSet.getString("language"));
-                productData[readCounter].setAuthor(resultSet.getString("author"));
-                productData[readCounter].setPublicationYear(resultSet.getInt("publication_year"));
-                productData[readCounter].setISBN(resultSet.getInt("isbn"));
-                productData[readCounter].setSupplier(resultSet.getString("supplier"));
-                productData[readCounter].setStockQuantity(resultSet.getInt("stock_quantity"));
-                productData[readCounter].setPurchasePrice(resultSet.getDouble("purchase_price"));
-                productData[readCounter].setUnitPrice(resultSet.getDouble("unit_price"));
-                productData[readCounter].setPromotion(resultSet.getDouble("promotion"));
-                readCounter++;
+            //get every row data
+            rowData[0] = resultSet.getString("product_name");
+            rowData[1] = resultSet.getInt("isbn");
+            rowData[2] = resultSet.getString("genre");
+            rowData[3] = resultSet.getString("author");
+            rowData[4] = resultSet.getString("supplier");
+            rowData[5] = resultSet.getInt("stock_quantity");
+            rowData[6] = resultSet.getDouble("purchase_price");
+            rowData[7] = resultSet.getDouble("unit_price");
+            rowData[8] = resultSet.getDouble("promotion");
+            rowData[9] = resultSet.getDouble("purchase_price")*resultSet.getDouble("promotion");  
+            //add row
+            ((DefaultTableModel) viewTable.getModel()).addRow(rowData);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(viewProduct.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ViewProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return readCounter;        
     }
-    private void insertaDataIntoTable(int counter){
-        Object[] rowData = new Object[10];
-        for(int i=0;i<counter;i++){
-            rowData[0] =  productData[readCounter].getBookTitle();
-            rowData[1] =  productData[readCounter].getISBN();
-            rowData[2] =  productData[readCounter].getGenre();
-            rowData[3] =  productData[readCounter].getAuthor();
-            rowData[4] =  productData[readCounter].getSupplier();
-            rowData[5] =  productData[readCounter].getStockQuantity();
-            rowData[6] =  productData[readCounter].getPurchasePrice();
-            rowData[7] =  productData[readCounter].getUnitPrice();
-            rowData[8] =  productData[readCounter].getPromotion();
-            rowData[9] =  productData[readCounter].getSalesPrice();
-            
-            ((DefaultTableModel) viewTable.getModel()).addRow(rowData);
-        }
         
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
