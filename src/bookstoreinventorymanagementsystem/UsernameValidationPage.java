@@ -235,13 +235,13 @@ public class UsernameValidationPage extends javax.swing.JFrame {
                     .addComponent(usernameIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addComponent(usernameErrorLabel)
-                .addGap(22, 22, 22)
+                .addGap(25, 25, 25)
                 .addComponent(continueButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rememberPasswordLabel)
                     .addComponent(goToLoginButton))
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -282,12 +282,15 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
-        if (isUsernameExists) {
-            dispose();
-            new LoginPage().setVisible(true);
-        } else {
-            UIUtils.displayErrorMessage("Please enter a valid username before proceeding");
-        }
+        dispose();
+        new ResetPasswordPage().setVisible(true);
+        
+//        if (isUsernameExists) {
+//            dispose();
+//            // new ResetPasswordPage().setVisible(true);
+//        } else {
+//            UIUtils.displayErrorMessage("Please enter a valid username before proceeding");
+//        }
     }//GEN-LAST:event_continueButtonMouseClicked
 
     private void continueButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseEntered
