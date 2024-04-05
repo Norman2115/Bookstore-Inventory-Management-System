@@ -55,7 +55,38 @@ public class ViewProduct extends javax.swing.JInternalFrame {
             Logger.getLogger(ViewProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-        
+    
+    private void readDataFromDatabaseAndWriteIntoTable(String tableName,String condition,String orderBy){
+        try {
+            //Connect to database
+            DatabaseManager.connect();
+            //select data from database
+            Connection connection = DatabaseManager.getConnection();
+            String query = "SELECT * FROM " + tableName + "WHERE" + condition + " ORDER BY " + orderBy;
+            System.out.println(query);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            //catch data
+            Object[] rowData = new Object[10];
+            while (resultSet.next()){
+            //get every row data
+            rowData[0] = resultSet.getString("product_name");
+            rowData[1] = resultSet.getInt("isbn");
+            rowData[2] = resultSet.getString("genre");
+            rowData[3] = resultSet.getString("author");
+            rowData[4] = resultSet.getString("supplier");
+            rowData[5] = resultSet.getInt("stock_quantity");
+            rowData[6] = resultSet.getDouble("purchase_price");
+            rowData[7] = resultSet.getDouble("unit_price");
+            rowData[8] = resultSet.getDouble("promotion");
+            rowData[9] = resultSet.getDouble("purchase_price")*resultSet.getDouble("promotion");  
+            //add row
+            ((DefaultTableModel) viewTable.getModel()).addRow(rowData);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewProduct.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,6 +165,11 @@ public class ViewProduct extends javax.swing.JInternalFrame {
         });
 
         jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
+        jToggleButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jToggleButton1MouseClicked(evt);
+            }
+        });
 
         viewTable.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         viewTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -218,6 +254,10 @@ public class ViewProduct extends javax.swing.JInternalFrame {
     private void searchTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchTypeActionPerformed
+
+    private void jToggleButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MouseClicked
+        
+    }//GEN-LAST:event_jToggleButton1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
