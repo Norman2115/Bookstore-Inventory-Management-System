@@ -392,7 +392,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             userData.setRole(userRole);
             dispose();
             // new SignUpPage().setVisible(true);
-            new SignUpPage2().setVisible(true);
+            new SignUpPage().setVisible(true);
         } else {
             javax.swing.JOptionPane.showMessageDialog(
                     null, 
