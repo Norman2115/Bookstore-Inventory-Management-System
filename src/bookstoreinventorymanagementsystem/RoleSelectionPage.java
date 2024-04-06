@@ -7,7 +7,7 @@ package bookstoreinventorymanagementsystem;
 public class RoleSelectionPage extends javax.swing.JFrame {
     
     private UserRole userRole;
-    private UserData userData;
+    private final UserData userData;
 
     /**
      * Creates new form RoleSelectionPage
@@ -16,8 +16,6 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         initComponents();
         userRole = null;
         userData = UserData.getInstance();
-        titleLabel.setText("<html><font color='#3EA434'>What's</font> "
-                + "<font color='#008CD6'>Your Role?</font></html>");
     }
     
     public void handleRoleSelection(UserRole userRole) {
@@ -129,7 +127,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("What's Your Role");
+        titleLabel.setText("<html><font color='#3EA434'>What's</font> <font color='#008CD6'>Your Role?</font></html>");
 
         subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));

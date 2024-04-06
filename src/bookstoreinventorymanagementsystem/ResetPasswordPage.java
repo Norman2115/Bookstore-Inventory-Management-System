@@ -66,7 +66,7 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/banner_9.png"))); // NOI18N
+        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/banner_16.png"))); // NOI18N
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);

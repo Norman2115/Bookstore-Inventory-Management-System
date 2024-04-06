@@ -11,9 +11,6 @@ public class LoginPage extends javax.swing.JFrame {
      */
     public LoginPage() {
         initComponents();
-        titleLabel.setText("<html><font color='#3EA434'>Family</font> "
-                + "<font color='#008CD6'>Bookstore</font></html>");
-        passwordField.setEchoChar('\u2022');
     }
 
     /**
@@ -94,7 +91,7 @@ public class LoginPage extends javax.swing.JFrame {
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("Family Bookstore");
+        titleLabel.setText("<html><font color='#3EA434'>Family</font> <font color='#008CD6'>Bookstore</font></html>");
 
         subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));
@@ -222,6 +219,7 @@ public class LoginPage extends javax.swing.JFrame {
         passwordField.setBackground(new java.awt.Color(253, 252, 248));
         passwordField.setForeground(new java.awt.Color(0, 100, 0));
         passwordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        passwordField.setEchoChar('\u2022');
         passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordFieldActionPerformed(evt);

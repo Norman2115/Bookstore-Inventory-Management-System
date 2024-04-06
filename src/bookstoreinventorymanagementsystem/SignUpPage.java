@@ -89,7 +89,7 @@ public class SignUpPage extends javax.swing.JFrame {
         });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/banner_4.png"))); // NOI18N
+        banner.setIcon(new javax.swing.ImageIcon("D:\\JavaProject\\Bookstore-Inventory-Management-System\\src\\icon\\banner_4.png")); // NOI18N
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);

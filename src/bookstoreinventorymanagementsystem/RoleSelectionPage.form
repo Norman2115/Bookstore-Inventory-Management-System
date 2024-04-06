@@ -211,7 +211,9 @@
                   <Font name="Segoe UI" size="32" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="What&apos;s Your Role"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="&quot;&lt;html&gt;&lt;font color=&apos;#3EA434&apos;&gt;What&apos;s&lt;/font&gt; &lt;font color=&apos;#008CD6&apos;&gt;Your Role?&lt;/font&gt;&lt;/html&gt;&quot;" type="code"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="subTitleLabel">
