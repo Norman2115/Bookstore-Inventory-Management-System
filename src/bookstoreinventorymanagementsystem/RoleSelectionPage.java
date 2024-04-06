@@ -100,7 +100,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/BookstorePic.png"))); // NOI18N
+        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/book_line_art_pinterest_1.png"))); // NOI18N
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);
@@ -115,7 +115,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, 488, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

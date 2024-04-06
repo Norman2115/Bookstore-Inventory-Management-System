@@ -89,17 +89,23 @@ public class SignUpPage extends javax.swing.JFrame {
         });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/book_line_art_10.png"))); // NOI18N
+        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/book_line_art_pinterest_2.png"))); // NOI18N
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);
         RightPanelLayout.setHorizontalGroup(
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(banner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(banner, javax.swing.GroupLayout.PREFERRED_SIZE, 438, Short.MAX_VALUE)
+                .addContainerGap())
         );
         RightPanelLayout.setVerticalGroup(
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(banner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(banner, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         LeftPanel.setBackground(new java.awt.Color(253, 252, 248));
