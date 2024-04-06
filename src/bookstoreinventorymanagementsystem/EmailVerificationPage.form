@@ -232,7 +232,9 @@
                   <Font name="Segoe UI" size="32" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Almost There!"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="&quot;&lt;html&gt;&lt;font color=&apos;#3EA434&apos;&gt;Almost&lt;/font&gt; &lt;font color=&apos;#008CD6&apos;&gt;There!&lt;/font&gt;&lt;/html&gt;&quot;&#xd;&#xa;" type="code"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="subTitleLabel">
@@ -244,7 +246,9 @@
                   <Color blue="0" green="64" red="0" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="One more step to unlock all benefits"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="&quot;We sent an email to &quot; + userData.getEmail()" type="code"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="verificationCodeLabel">

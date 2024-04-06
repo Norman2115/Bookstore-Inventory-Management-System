@@ -21,17 +21,12 @@ public class EmailVerificationPage extends javax.swing.JFrame {
      * Creates new form LoginPage
      */
     public EmailVerificationPage() {
-        initComponents();
-
-        titleLabel.setText("<html><font color='#3EA434'>Almost</font> "
-                + "<font color='#008CD6'>There!</font></html>");
-        LeftPanel.grabFocus();
-
+        // Must declare first before initComponents because I have to get the email
         userData = UserData.getInstance();
+        initComponents();
+        LeftPanel.grabFocus();  
         emailHandler = new EmailHandler();
-
         sendVerificationEmailAsync(userData.getEmail());
-
         resendCodeButtonTimer = new Timer(10000, (ActionEvent e) -> {
             resendCodeButton.setEnabled(true);
         });
@@ -129,12 +124,13 @@ public class EmailVerificationPage extends javax.swing.JFrame {
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("Almost There!");
+        titleLabel.setText("<html><font color='#3EA434'>Almost</font> <font color='#008CD6'>There!</font></html>"
+        );
 
         subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));
         subTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subTitleLabel.setText("One more step to unlock all benefits");
+        subTitleLabel.setText("We sent an email to " + userData.getEmail());
 
         verificationCodeLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         verificationCodeLabel.setForeground(new java.awt.Color(0, 100, 0));

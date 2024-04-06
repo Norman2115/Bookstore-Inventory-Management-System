@@ -22,7 +22,9 @@ public final class UserData {
 
     public UserData() {
         setUserID(null);
+        setFullName(null);
         setUsername(null);
+        setEmail(null);
         setPassword(null);
         setRole(null);
         setProfilePicture(null);
@@ -98,7 +100,9 @@ public final class UserData {
 
     public void reset() {
         setUserID(null);
+        setFullName(null);
         setUsername(null);
+        setEmail(null);
         setPassword(null);
         setRole(null);
         setProfilePicture(null);
