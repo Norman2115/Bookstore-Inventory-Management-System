@@ -22,7 +22,9 @@ public final class UserData {
 
     public UserData() {
         setUserID(null);
+        setFullName(null);
         setUsername(null);
+        setEmail(null);
         setPassword(null);
         setRole(null);
         setProfilePicture(null);
@@ -43,11 +45,11 @@ public final class UserData {
 
         this.userID = userID;
     }
-    
+
     public String getFullName() {
         return fullName;
     }
-    
+
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
@@ -63,11 +65,11 @@ public final class UserData {
     public String getUsername() {
         return username;
     }
-    
+
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     public String getEmail() {
         return email;
     }
@@ -98,10 +100,28 @@ public final class UserData {
 
     public void reset() {
         setUserID(null);
+        setFullName(null);
         setUsername(null);
+        setEmail(null);
         setPassword(null);
         setRole(null);
         setProfilePicture(null);
+    }
+
+    public void readUserDataFromDatabase() throws SQLException {
+        DatabaseManager.connect();
+
+        Connection connection = DatabaseManager.getConnection();
+
+        PreparedStatement statement = connection.prepareStatement(
+                "SELECT * FROM users WHERE username = ?"
+        );
+
+        statement.setString(1, username);
+
+        statement.executeQuery();
+
+        DatabaseManager.closeConnection();
     }
 
     public void saveUserDataToDatabase() throws SQLException {
@@ -118,7 +138,7 @@ public final class UserData {
         statement.setString(3, role.toString());
 
         statement.executeUpdate();
-        
+
         DatabaseManager.closeConnection();
     }
 }
