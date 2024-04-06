@@ -17,8 +17,6 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     public UsernameValidationPage() {
         initComponents();
         isUsernameExists = false;
-        titleLabel.setText("<html><font color='#3EA434'>Verify</font> "
-                + "<font color='#008CD6'>Username</font></html>");
         LeftPanel.grabFocus();
     }
 
@@ -68,7 +66,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
         });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/banner_15.png"))); // NOI18N
+        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/bookstore_banner.png"))); // NOI18N
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);
@@ -97,7 +95,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("Verify Username");
+        titleLabel.setText("<html><font color='#3EA434'>Verify</font> <font color='#008CD6'>Username</font></html>");
 
         subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));

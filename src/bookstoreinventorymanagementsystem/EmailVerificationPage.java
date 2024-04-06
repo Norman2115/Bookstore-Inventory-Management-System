@@ -21,9 +21,8 @@ public class EmailVerificationPage extends javax.swing.JFrame {
      * Creates new form LoginPage
      */
     public EmailVerificationPage() {
-        // Must declare first before initComponents because I have to get the email
-        userData = UserData.getInstance();
         initComponents();
+        userData = UserData.getInstance();
         LeftPanel.grabFocus();  
         emailHandler = new EmailHandler();
         sendVerificationEmailAsync(userData.getEmail());
@@ -95,7 +94,7 @@ public class EmailVerificationPage extends javax.swing.JFrame {
         });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/email_banner_1.png"))); // NOI18N
+        banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/bookstore_banner.png"))); // NOI18N
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);
@@ -130,7 +129,7 @@ public class EmailVerificationPage extends javax.swing.JFrame {
         subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));
         subTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subTitleLabel.setText("We sent an email to " + userData.getEmail());
+        subTitleLabel.setText("We sent an email to " + UserData.getInstance().getEmail());
 
         verificationCodeLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         verificationCodeLabel.setForeground(new java.awt.Color(0, 100, 0));
