@@ -65,7 +65,7 @@ public final class DatabaseConnect {
             }
             return productData;
         } catch (SQLException ex) {
-            Logger.getLogger(ViewProduct.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -108,7 +108,7 @@ public final class DatabaseConnect {
             }
             return productData;
         } catch (SQLException ex) {
-            Logger.getLogger(ViewProduct.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
