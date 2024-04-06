@@ -4,9 +4,6 @@
  */
 package bookstoreinventorymanagementsystem;
 
-import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,78 +12,39 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class ViewProduct extends javax.swing.JInternalFrame {
-
+    private final ProductReadData input = new ProductReadData();
     public ViewProduct() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        readDataFromDatabaseAndWriteIntoTable("product","product_name");
+        //display data read from database
+        ProductData[] productData;
+        //int length = input.getLength("product");
+        productData = input.readData("product","product_name");
+        displayRow(productData);
     }
     
-    private void readDataFromDatabaseAndWriteIntoTable(String tableName,String orderBy){
-        try {
-            //Connect to database
-            DatabaseManager.connect();
-            //select data from database
-            Connection connection = DatabaseManager.getConnection();
-            String query = "SELECT * FROM " + tableName + " ORDER BY " + orderBy;
-            System.out.println(query);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            //catch data
+    private void displayRow(ProductData[] productData){
+        ((DefaultTableModel) viewTable.getModel()).setRowCount(0);
+        int length = productData.length;
+        for (int i = 0;i<length;i++){
             Object[] rowData = new Object[10];
-            while (resultSet.next()){
-            //get every row data
-            rowData[0] = resultSet.getString("product_name");
-            rowData[1] = resultSet.getInt("isbn");
-            rowData[2] = resultSet.getString("genre");
-            rowData[3] = resultSet.getString("author");
-            rowData[4] = resultSet.getString("supplier");
-            rowData[5] = resultSet.getInt("stock_quantity");
-            rowData[6] = resultSet.getDouble("purchase_price");
-            rowData[7] = resultSet.getDouble("unit_price");
-            rowData[8] = resultSet.getDouble("promotion");
-            rowData[9] = resultSet.getDouble("purchase_price")*resultSet.getDouble("promotion");  
-            //add row
+            rowData[0] = productData[i].getBookTitle();
+            rowData[1] = productData[i].getISBN();
+            rowData[2] = productData[i].getGenre();
+            rowData[3] = productData[i].getAuthor();
+            rowData[4] = productData[i].getSupplier();
+            rowData[5] = productData[i].getStockQuantity();
+            rowData[6] = productData[i].getPurchasePrice();
+            rowData[7] = productData[i].getUnitPrice();
+            rowData[8] = productData[i].getPromotion();
+            rowData[9] = productData[i].getUnitPrice()*productData[i].getPromotion();
+            //insert row
             ((DefaultTableModel) viewTable.getModel()).addRow(rowData);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ViewProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void readDataFromDatabaseAndWriteIntoTable(String tableName,String condition,String orderBy){
-        try {
-            //Connect to database
-            DatabaseManager.connect();
-            //select data from database
-            Connection connection = DatabaseManager.getConnection();
-            String query = "SELECT * FROM " + tableName + "WHERE" + condition + " ORDER BY " + orderBy;
-            System.out.println(query);
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            //catch data
-            Object[] rowData = new Object[10];
-            while (resultSet.next()){
-            //get every row data
-            rowData[0] = resultSet.getString("product_name");
-            rowData[1] = resultSet.getInt("isbn");
-            rowData[2] = resultSet.getString("genre");
-            rowData[3] = resultSet.getString("author");
-            rowData[4] = resultSet.getString("supplier");
-            rowData[5] = resultSet.getInt("stock_quantity");
-            rowData[6] = resultSet.getDouble("purchase_price");
-            rowData[7] = resultSet.getDouble("unit_price");
-            rowData[8] = resultSet.getDouble("promotion");
-            rowData[9] = resultSet.getDouble("purchase_price")*resultSet.getDouble("promotion");  
-            //add row
-            ((DefaultTableModel) viewTable.getModel()).addRow(rowData);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ViewProduct.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -284,9 +242,11 @@ public class ViewProduct extends javax.swing.JInternalFrame {
                 searchBy = "unit_price*promotion";
                 break;
         }
-        String condition = searchBy + " LIKE " +searchBar.getText() + "%";
-        System.out.println(condition);
-        readDataFromDatabaseAndWriteIntoTable("product",condition,searchBy);
+        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
+        //display data
+        ProductData[] productData;
+        productData = input.readData("product",condition,searchBy);
+        displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void searchTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTypeActionPerformed
@@ -330,9 +290,12 @@ public class ViewProduct extends javax.swing.JInternalFrame {
                 searchBy = "unit_price*promotion";
                 break;
         }
-        String condition = searchBy + " LIKE " +searchBar.getText() + "%";
+        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
         System.out.println(condition);
-        readDataFromDatabaseAndWriteIntoTable("product",condition,searchBy);
+        //display data
+        ProductData[] productData;
+        productData = input.readData("product",condition,searchBy);
+        displayRow(productData);
     }//GEN-LAST:event_searchButtonMouseClicked
 
 
