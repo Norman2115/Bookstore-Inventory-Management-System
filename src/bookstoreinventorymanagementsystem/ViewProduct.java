@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class ViewProduct extends javax.swing.JInternalFrame {
-    private final ProductReadData input = new ProductReadData();
+    private final DatabaseConnect input = new DatabaseConnect();
     public ViewProduct() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));

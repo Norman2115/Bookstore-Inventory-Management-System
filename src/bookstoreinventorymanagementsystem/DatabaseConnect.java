@@ -15,15 +15,15 @@ import java.util.logging.Logger;
  *
  * @author USER
  */
-public final class ProductReadData {
+public final class DatabaseConnect {
     private Connection connection;
-    public ProductReadData(){
+    public DatabaseConnect(){
         try {
             //Connect to database
             DatabaseManager.connect();
             connection = DatabaseManager.getConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ProductReadData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     private int rowNumber;
@@ -123,7 +123,7 @@ public final class ProductReadData {
             //return length
             return rowNumber;
         } catch (SQLException ex) {
-            Logger.getLogger(ProductReadData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     return 0;
     }
@@ -140,7 +140,7 @@ public final class ProductReadData {
             //return length
             return rowNumber;
         } catch (SQLException ex) {
-            Logger.getLogger(ProductReadData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     return 0;
     }
@@ -150,7 +150,7 @@ public final class ProductReadData {
             //close connection
             DatabaseManager.closeConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ProductReadData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
