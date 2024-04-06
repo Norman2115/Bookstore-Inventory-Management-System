@@ -117,6 +117,98 @@ public class ValidationHandler {
     }
 
     /**
+     *
+     * @param email
+     * @return
+     * @throws SQLException
+     */
+    public static ValidationResult checkUniqueEmail(String email) throws SQLException {
+        try {
+            DatabaseManager.connect();
+            Connection connection = DatabaseManager.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM users WHERE email = ?"
+            );
+
+            statement.setString(1, email);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new ValidationResult(false, "Already exists in the database.");
+            }
+
+            return new ValidationResult(true, null);
+        } finally {
+            DatabaseManager.closeConnection();
+        }
+    }
+
+    /**
+     *
+     * @param email
+     * @return
+     * @throws SQLException
+     */
+    public static ValidationResult checkEmailExistence(String email) throws SQLException {
+        try {
+            DatabaseManager.connect();
+            Connection connection = DatabaseManager.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM users WHERE email = ?"
+            );
+
+            statement.setString(1, email);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (!resultSet.next()) {
+                return new ValidationResult(false, "Email does not exist");
+            }
+
+            return new ValidationResult(true, null);
+        } finally {
+            DatabaseManager.closeConnection();
+        }
+    }
+
+    /**
+     *
+     * @param usernameOrEmail
+     * @return
+     * @throws SQLException
+     */
+    public static ValidationResult validateUsernameOrEmail(String usernameOrEmail)
+            throws SQLException {
+        boolean isValidUsername = validateUsername(usernameOrEmail).isValid();
+        boolean isValidEmail = validateEmail(usernameOrEmail).isValid();
+        
+        if (!isValidUsername && !isValidEmail) {
+            return new ValidationResult(false, "Please enter a valid username or email");
+        }
+
+        if (isValidUsername) {
+            ValidationResult usernameExistenceValidation = ValidationHandler
+                    .checkUsernameExistence(usernameOrEmail);
+            if (!usernameExistenceValidation.isValid()) {
+                return usernameExistenceValidation;
+            }
+        }
+
+        if (isValidEmail) {
+            ValidationResult emailExistenceValidation = ValidationHandler
+                    .checkEmailExistence(usernameOrEmail);
+            if (!emailExistenceValidation.isValid()) {
+                return emailExistenceValidation;
+            }
+        }
+
+        return new ValidationResult(true, null);
+    }
+
+    /**
      * Validates password to ensure it meets length and format requirements. The
      * password must be between 8 and 16 characters long and contain a
      * combination of numbers, letters, and symbols. It must not contain any

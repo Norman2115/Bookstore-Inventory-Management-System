@@ -2,6 +2,7 @@ package bookstoreinventorymanagementsystem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -72,6 +73,27 @@ public final class UserData {
 
     public String getEmail() {
         return email;
+    }
+
+    public void retrieveEmailByUsername(String username) throws SQLException {
+        try {
+            DatabaseManager.connect();
+            Connection connection = DatabaseManager.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT email FROM users WHERE username = ?"
+            );
+
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                email = resultSet.getString("email");
+            }
+        } finally {
+            DatabaseManager.closeConnection();
+        }
     }
 
     public void setPassword(String password) {

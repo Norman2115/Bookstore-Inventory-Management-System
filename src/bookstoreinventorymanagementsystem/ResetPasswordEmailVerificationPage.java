@@ -1,23 +1,48 @@
 package bookstoreinventorymanagementsystem;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
+import java.io.UnsupportedEncodingException;
+import javax.mail.MessagingException;
+import javax.swing.Timer;
 
 /**
  *
  * @author Norman
  */
-public class UsernameValidationPage extends javax.swing.JFrame {
+public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
 
     private final UserData userData;
-    
+    private final EmailHandler emailHandler;
+    private String verificationCode;
+    private final Timer resendCodeButtonTimer;
+
     /**
      * Creates new form LoginPage
      */
-    public UsernameValidationPage() {
+    public ResetPasswordEmailVerificationPage() {
         initComponents();
         userData = UserData.getInstance();
-        LeftPanel.grabFocus();
+        LeftPanel.grabFocus();  
+        emailHandler = new EmailHandler();
+        sendResetPasswordEmailAsync(userData.getEmail());
+        resendCodeButtonTimer = new Timer(10000, (ActionEvent e) -> {
+            resendCodeButton.setEnabled(true);
+        });
+    }
+
+    private void sendResetPasswordEmailAsync(String toEmail) {
+        Thread emailThread = new Thread(() -> {
+            try {
+                emailHandler.sendResetPasswordEmail(toEmail);
+                verificationCode = emailHandler.getVerificationCode();
+            } catch (MessagingException | UnsupportedEncodingException ex) {
+                UIUtils.displayErrorMessage("An error occured: " + ex.getMessage());
+                dispose();
+                new LoginPage().setVisible(true);
+            }
+        });
+        emailThread.start();
     }
 
     /**
@@ -37,14 +62,16 @@ public class UsernameValidationPage extends javax.swing.JFrame {
         LeftPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         subTitleLabel = new javax.swing.JLabel();
-        usernameOrEmailLabel = new javax.swing.JLabel();
-        usernameOrEmailField = new javax.swing.JTextField();
-        usernameIcon = new javax.swing.JLabel();
-        continueButton = new javax.swing.JPanel();
-        continueLabel = new javax.swing.JLabel();
+        verificationCodeLabel = new javax.swing.JLabel();
+        verificationCodeField = new javax.swing.JTextField();
+        verificationCodeIcon = new javax.swing.JLabel();
+        finishButton = new javax.swing.JPanel();
+        finishLabel = new javax.swing.JLabel();
         rememberPasswordLabel = new javax.swing.JLabel();
         goToLoginButton = new javax.swing.JLabel();
-        usernameOrEmailErrorLabel = new javax.swing.JLabel();
+        verificationCodeErrorLabel = new javax.swing.JLabel();
+        didntReceiveLabel = new javax.swing.JLabel();
+        resendCodeButton = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -95,71 +122,75 @@ public class UsernameValidationPage extends javax.swing.JFrame {
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("<html><font color='#3EA434'>Account</font> <font color='#008CD6'>Recovery</font></html>");
+        titleLabel.setText("<html><font color='#3EA434'>Verification</font> <font color='#008CD6'>Required</font></html>"
+        );
 
         subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));
         subTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subTitleLabel.setText("Let's confirm your identity");
+        subTitleLabel.setText("We sent an email to " + UserData.getInstance().getEmail());
 
-        usernameOrEmailLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        usernameOrEmailLabel.setForeground(new java.awt.Color(0, 100, 0));
-        usernameOrEmailLabel.setText("Username or Email");
+        verificationCodeLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        verificationCodeLabel.setForeground(new java.awt.Color(0, 100, 0));
+        verificationCodeLabel.setText("Verification Code");
 
-        usernameOrEmailField.setBackground(new java.awt.Color(253, 252, 248));
-        usernameOrEmailField.setForeground(new java.awt.Color(0, 100, 0));
-        usernameOrEmailField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        usernameOrEmailField.addKeyListener(new java.awt.event.KeyAdapter() {
+        verificationCodeField.setBackground(new java.awt.Color(253, 252, 248));
+        verificationCodeField.setForeground(new java.awt.Color(0, 100, 0));
+        verificationCodeField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        verificationCodeField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                usernameOrEmailFieldKeyPressed(evt);
+                verificationCodeFieldKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                usernameOrEmailFieldKeyReleased(evt);
+                verificationCodeFieldKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                verificationCodeFieldKeyTyped(evt);
             }
         });
 
-        usernameIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        usernameIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
-        usernameIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        verificationCodeIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        verificationCodeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        verificationCodeIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
-        continueButton.setBackground(new java.awt.Color(0, 140, 214));
-        continueButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        finishButton.setBackground(new java.awt.Color(0, 140, 214));
+        finishButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                continueButtonMouseClicked(evt);
+                finishButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                continueButtonMouseEntered(evt);
+                finishButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                continueButtonMouseExited(evt);
+                finishButtonMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                continueButtonMousePressed(evt);
+                finishButtonMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                continueButtonMouseReleased(evt);
+                finishButtonMouseReleased(evt);
             }
         });
 
-        continueLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        continueLabel.setForeground(new java.awt.Color(255, 255, 255));
-        continueLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        continueLabel.setText("CONTINUE");
+        finishLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        finishLabel.setForeground(new java.awt.Color(255, 255, 255));
+        finishLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        finishLabel.setText("CONTINUE");
 
-        javax.swing.GroupLayout continueButtonLayout = new javax.swing.GroupLayout(continueButton);
-        continueButton.setLayout(continueButtonLayout);
-        continueButtonLayout.setHorizontalGroup(
-            continueButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, continueButtonLayout.createSequentialGroup()
+        javax.swing.GroupLayout finishButtonLayout = new javax.swing.GroupLayout(finishButton);
+        finishButton.setLayout(finishButtonLayout);
+        finishButtonLayout.setHorizontalGroup(
+            finishButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, finishButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(continueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addComponent(finishLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        continueButtonLayout.setVerticalGroup(
-            continueButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, continueButtonLayout.createSequentialGroup()
+        finishButtonLayout.setVerticalGroup(
+            finishButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, finishButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(continueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addComponent(finishLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -189,6 +220,31 @@ public class UsernameValidationPage extends javax.swing.JFrame {
             }
         });
 
+        didntReceiveLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        didntReceiveLabel.setForeground(new java.awt.Color(0, 100, 0));
+        didntReceiveLabel.setText("Didn't receive?");
+
+        resendCodeButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        resendCodeButton.setForeground(new java.awt.Color(0, 100, 0));
+        resendCodeButton.setText("Resend");
+        resendCodeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resendCodeButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                resendCodeButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                resendCodeButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                resendCodeButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                resendCodeButtonMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -199,23 +255,27 @@ public class UsernameValidationPage extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(subTitleLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(subTitleLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(usernameOrEmailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(verificationCodeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(rememberPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(goToLoginButton))
-                            .addComponent(continueButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(finishButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addComponent(usernameOrEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(verificationCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(usernameIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(usernameOrEmailErrorLabel))
-                        .addGap(0, 26, Short.MAX_VALUE)))
+                                .addComponent(verificationCodeIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(verificationCodeErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(didntReceiveLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(resendCodeButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         LeftPanelLayout.setVerticalGroup(
@@ -226,20 +286,24 @@ public class UsernameValidationPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(subTitleLabel)
                 .addGap(55, 55, 55)
-                .addComponent(usernameOrEmailLabel)
+                .addComponent(verificationCodeLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(usernameOrEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(usernameIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(verificationCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(verificationCodeIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
-                .addComponent(usernameOrEmailErrorLabel)
-                .addGap(25, 25, 25)
-                .addComponent(continueButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(verificationCodeErrorLabel)
+                .addGap(10, 10, 10)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(didntReceiveLabel)
+                    .addComponent(resendCodeButton))
+                .addGap(18, 18, 18)
+                .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rememberPasswordLabel)
                     .addComponent(goToLoginButton))
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -264,9 +328,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,43 +339,39 @@ public class UsernameValidationPage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
-        UIUtils.markFieldAsRequired(usernameOrEmailField, usernameOrEmailErrorLabel);
-        String usernameOrEmail = usernameOrEmailField.getText();
-        try {
-            ValidationResult usernameOrEmailValidation = ValidationHandler
-                    .validateUsernameOrEmail(usernameOrEmail);
-            UIUtils.setFieldErrorState(usernameOrEmailField, usernameOrEmailErrorLabel, 
-                    usernameOrEmailValidation);
-            
-            if (usernameOrEmailValidation.isValid()) {
-                if (!usernameOrEmail.contains("@")) {
-                    userData.retrieveEmailByUsername(usernameOrEmail);
-                    System.out.println(userData.getEmail());
-                }
-                dispose();
-                new ResetPasswordEmailVerificationPage().setVisible(true);
-            }
-        } catch (SQLException se) {
-            UIUtils.displayErrorMessage("An error occurred: " + se.getMessage());
+    private void finishButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseClicked
+        String enteredCode = verificationCodeField.getText();
+        if (enteredCode.trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(verificationCodeField, 
+                    verificationCodeErrorLabel);
+            return;
         }
-    }//GEN-LAST:event_continueButtonMouseClicked
+        ValidationResult codeValidation = ValidationHandler
+                .validateVerificationCode(enteredCode, verificationCode);
+        UIUtils.setFieldErrorState(verificationCodeField, 
+                verificationCodeErrorLabel, codeValidation);
+        
+        if (codeValidation.isValid()) {
+            dispose();
+            new LoginPage().setVisible(true);
+        }
+    }//GEN-LAST:event_finishButtonMouseClicked
 
-    private void continueButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseEntered
-        continueButton.setBackground(ColorManager.MEDIUM_BLUE);
-    }//GEN-LAST:event_continueButtonMouseEntered
+    private void finishButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseEntered
+        finishButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_finishButtonMouseEntered
 
-    private void continueButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseExited
-        continueButton.setBackground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_continueButtonMouseExited
+    private void finishButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseExited
+        finishButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_finishButtonMouseExited
 
-    private void continueButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseReleased
-        continueButton.setBackground(ColorManager.MEDIUM_BLUE);
-    }//GEN-LAST:event_continueButtonMouseReleased
+    private void finishButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseReleased
+        finishButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_finishButtonMouseReleased
 
-    private void continueButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMousePressed
-        continueButton.setBackground(ColorManager.DEEP_BLUE);
-    }//GEN-LAST:event_continueButtonMousePressed
+    private void finishButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMousePressed
+        finishButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_finishButtonMousePressed
 
     private void goToLoginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseEntered
         goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
@@ -344,24 +402,47 @@ public class UsernameValidationPage extends javax.swing.JFrame {
         RightPanel.grabFocus();
     }//GEN-LAST:event_RightPanelMouseClicked
 
-    private void usernameOrEmailFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameOrEmailFieldKeyPressed
+    private void verificationCodeFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             LeftPanel.requestFocusInWindow();
         }
-    }//GEN-LAST:event_usernameOrEmailFieldKeyPressed
+    }//GEN-LAST:event_verificationCodeFieldKeyPressed
 
-    private void usernameOrEmailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameOrEmailFieldKeyReleased
-//        String username = usernameOrEmailField.getText();
-//        try {
-//            ValidationResult usernameFound = ValidationHandler.checkUsernameExistence(username);
-//            isUsernameExists = usernameFound.isValid();
-//            UIUtils.setFieldErrorState(usernameOrEmailField, usernameOrEmailErrorLabel, usernameFound);
-//        } catch (SQLException se) {
-//            UIUtils.displayErrorMessage("An error occurred while checking the username existence. Please try again later");
-//            dispose();
-//            new LoginPage().setVisible(true);
-//        }
-    }//GEN-LAST:event_usernameOrEmailFieldKeyReleased
+    private void verificationCodeFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyReleased
+        if (verificationCodeField.getText().trim().isEmpty()) {
+            UIUtils.resetFieldState(verificationCodeField, verificationCodeErrorLabel);
+        }
+    }//GEN-LAST:event_verificationCodeFieldKeyReleased
+
+    private void verificationCodeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyTyped
+        char c = evt.getKeyChar();
+        if (!Character.isDigit(c)
+                || verificationCodeField.getText().length() >= 6) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_verificationCodeFieldKeyTyped
+
+    private void resendCodeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButtonMouseClicked
+        sendResetPasswordEmailAsync(userData.getEmail());
+        resendCodeButton.setEnabled(false);
+        resendCodeButtonTimer.start();
+    }//GEN-LAST:event_resendCodeButtonMouseClicked
+
+    private void resendCodeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButtonMouseEntered
+        resendCodeButton.setForeground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_resendCodeButtonMouseEntered
+
+    private void resendCodeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButtonMouseExited
+        resendCodeButton.setForeground(ColorManager.DARK_GREEN);
+    }//GEN-LAST:event_resendCodeButtonMouseExited
+
+    private void resendCodeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButtonMousePressed
+        resendCodeButton.setForeground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_resendCodeButtonMousePressed
+
+    private void resendCodeButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButtonMouseReleased
+        resendCodeButton.setForeground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_resendCodeButtonMouseReleased
 
     /**
      * @param args the command line arguments
@@ -380,21 +461,27 @@ public class UsernameValidationPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UsernameValidationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResetPasswordEmailVerificationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UsernameValidationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResetPasswordEmailVerificationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UsernameValidationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResetPasswordEmailVerificationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UsernameValidationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResetPasswordEmailVerificationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UsernameValidationPage().setVisible(true);
+                new ResetPasswordEmailVerificationPage().setVisible(true);
             }
         });
     }
@@ -403,18 +490,20 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
     private javax.swing.JLabel banner;
-    private javax.swing.JPanel continueButton;
-    private javax.swing.JLabel continueLabel;
+    private javax.swing.JLabel didntReceiveLabel;
+    private javax.swing.JPanel finishButton;
+    private javax.swing.JLabel finishLabel;
     private javax.swing.JLabel goToLoginButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel rememberPasswordLabel;
+    private javax.swing.JLabel resendCodeButton;
     private javax.swing.JLabel subTitleLabel;
     private javax.swing.JLabel titleLabel;
-    private javax.swing.JLabel usernameIcon;
-    private javax.swing.JLabel usernameOrEmailErrorLabel;
-    private javax.swing.JTextField usernameOrEmailField;
-    private javax.swing.JLabel usernameOrEmailLabel;
+    private javax.swing.JLabel verificationCodeErrorLabel;
+    private javax.swing.JTextField verificationCodeField;
+    private javax.swing.JLabel verificationCodeIcon;
+    private javax.swing.JLabel verificationCodeLabel;
     // End of variables declaration//GEN-END:variables
 }
