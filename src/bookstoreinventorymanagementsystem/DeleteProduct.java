@@ -334,8 +334,8 @@ public class DeleteProduct extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
-        JOptionPane.showConfirmDialog(null, "Data cannot be recovered once deleted! Continue delete?", "Warning!", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-        if(true){
+        int input = JOptionPane.showConfirmDialog(null, "Data cannot be recovered once deleted! Continue delete?", "Warning!", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+        if(input == 0){
             int length = deleteTable.getRowCount();
             Object deleteRow[] = new Object[length];
             System.out.println(length);
@@ -343,6 +343,8 @@ public class DeleteProduct extends javax.swing.JInternalFrame {
                 deleteRow[i] = ((DefaultTableModel) deleteTable.getModel()).getValueAt(i, 1);
             }
             database.deleteData("product", "isbn", deleteRow);
+            ((DefaultTableModel) deleteTable.getModel()).setRowCount(0);
+            JOptionPane.showMessageDialog(null, "Delete successfull","Delete successfull",JOptionPane.DEFAULT_OPTION);
         }
     }//GEN-LAST:event_deleteButtonMouseClicked
 
