@@ -17,6 +17,7 @@ import java.util.logging.Logger;
  */
 public final class DatabaseConnect {
     private Connection connection;
+    private int rowNumber;
     public DatabaseConnect(){
         try {
             //Connect to database
@@ -26,7 +27,7 @@ public final class DatabaseConnect {
             Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private int rowNumber;
+
     public ProductData[] readData(String tableName,String orderBy){
         try {
             //get select coloumn number
@@ -37,10 +38,10 @@ public final class DatabaseConnect {
             resultCount.next();
             rowNumber = resultCount.getInt(1);
             ProductData[] productData = new ProductData[rowNumber];
+            //initialized
             for (int i = 0;i<rowNumber;i++){
-                productData[i] = ProductData.getInstance();
-            }
-            //select data from database
+                productData[i] = new ProductData();
+            }//select data from database
             query = "SELECT * FROM " + tableName + " ORDER BY " + orderBy;
             System.out.println(query);
             Statement statement = connection.createStatement();
@@ -79,8 +80,9 @@ public final class DatabaseConnect {
             resultCount.next();
             rowNumber = resultCount.getInt(1);
             ProductData[] productData = new ProductData[rowNumber];
+            //initialized
             for (int i = 0;i<rowNumber;i++){
-                productData[i] = ProductData.getInstance();
+                productData[i] = new ProductData();
             }
             //select data from database
             query = "SELECT * FROM " + tableName + " WHERE " + condition + " ORDER BY " + orderBy;
@@ -143,6 +145,19 @@ public final class DatabaseConnect {
             Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     return 0;
+    }
+    
+    public void deleteData(String tableName,String deleteRowName,Object deleteRow[]){
+        for(int i = 0;i<deleteRowName.length();i++){
+            try {
+                String query = "DELETE FROM "+tableName+" WHERE "+deleteRowName+" = \'"+deleteRow[i]+"\'";
+                System.out.println(query);
+                Statement statement = connection.createStatement();
+                statement.executeUpdate(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(DatabaseConnect.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public void closeConnection(){

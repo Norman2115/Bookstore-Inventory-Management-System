@@ -10,9 +10,7 @@ import java.sql.SQLException;
  *
  * @author User
  */
-public final class ProductData {
-    private static ProductData instance;
-    
+public final class ProductData {    
     private String bookTitle;
     private String genre;
     private String language;
@@ -40,13 +38,6 @@ public final class ProductData {
         setUnitPrice(0.0);
         setPromotion(0.0);
         setImage(null); 
-    }
-    
-    public static ProductData getInstance(){
-        if (instance == null){
-            instance = new ProductData();
-        }
-        return instance;
     }
     
     public void setBookTitle(String bookTitle){

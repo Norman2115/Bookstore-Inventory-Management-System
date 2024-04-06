@@ -44,7 +44,46 @@ public class ViewProduct extends javax.swing.JInternalFrame {
             ((DefaultTableModel) viewTable.getModel()).addRow(rowData);
         }
     }
-   
+    
+    private String getSelection(){
+        String searchBy=null;
+        switch (searchType.getSelectedIndex()){
+            case 0:
+                searchBy = "product_name";
+                break;
+            case 1:
+                searchBy = "product_name";
+                break;
+            case 2:
+                searchBy = "isbn";
+                break;
+            case 3:
+                searchBy = "gnere";
+                break;
+            case 4:
+                searchBy = "author";
+                break;
+            case 5:
+                searchBy = "supplier";
+                break;
+            case 6:
+                searchBy = "stock_quantity";
+                break;
+            case 7:
+                searchBy = "purchase_price";
+                break;
+            case 8:
+                searchBy = "unit_price";
+                break;
+            case 9:
+                searchBy = "promotion";
+                break;
+            case 10:
+                searchBy = "unit_price*promotion";
+                break;
+        }
+        return searchBy;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -206,42 +245,7 @@ public class ViewProduct extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        String searchBy=null;
-        switch (searchType.getSelectedIndex()){
-            case 0:
-                searchBy = "product_name";
-                break;
-            case 1:
-                searchBy = "product_name";
-                break;
-            case 2:
-                searchBy = "isbn";
-                break;
-            case 3:
-                searchBy = "gnere";
-                break;
-            case 4:
-                searchBy = "author";
-                break;
-            case 5:
-                searchBy = "supplier";
-                break;
-            case 6:
-                searchBy = "stock_quantity";
-                break;
-            case 7:
-                searchBy = "purchase_price";
-                break;
-            case 8:
-                searchBy = "unit_price";
-                break;
-            case 9:
-                searchBy = "promotion";
-                break;
-            case 10:
-                searchBy = "unit_price*promotion";
-                break;
-        }
+        String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
         //display data
         ProductData[] productData;
@@ -254,42 +258,7 @@ public class ViewProduct extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_searchTypeActionPerformed
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
-        String searchBy=null;
-        switch (searchType.getSelectedIndex()){
-            case 0:
-                searchBy = "product_name";
-                break;
-            case 1:
-                searchBy = "product_name";
-                break;
-            case 2:
-                searchBy = "isbn";
-                break;
-            case 3:
-                searchBy = "gnere";
-                break;
-            case 4:
-                searchBy = "author";
-                break;
-            case 5:
-                searchBy = "supplier";
-                break;
-            case 6:
-                searchBy = "stock_quantity";
-                break;
-            case 7:
-                searchBy = "purchase_price";
-                break;
-            case 8:
-                searchBy = "unit_price";
-                break;
-            case 9:
-                searchBy = "promotion";
-                break;
-            case 10:
-                searchBy = "unit_price*promotion";
-                break;
-        }
+        String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
         System.out.println(condition);
         //display data

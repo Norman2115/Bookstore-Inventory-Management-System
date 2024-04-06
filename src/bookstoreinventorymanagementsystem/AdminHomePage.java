@@ -4,10 +4,6 @@
  */
 package bookstoreinventorymanagementsystem;
 
-import java.awt.Color;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -512,9 +508,7 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     // addProductButton
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
-        displayPanel.removeAll();
-        AddProduct addProduct = new AddProduct();
-        displayPanel.add(addProduct).setVisible(true);
+
     }//GEN-LAST:event_addProductButtonMouseClicked
 
     private void addProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseEntered
