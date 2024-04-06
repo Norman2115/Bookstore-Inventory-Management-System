@@ -532,7 +532,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     // deleteProductButton
     private void deleteProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseClicked
         displayPanel.removeAll();
-        deleteProduct deleteProduct = new deleteProduct();
+        DeleteProduct deleteProduct = new DeleteProduct();
         displayPanel.add(deleteProduct).setVisible(true);
     }//GEN-LAST:event_deleteProductButtonMouseClicked
 

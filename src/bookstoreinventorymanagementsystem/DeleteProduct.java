@@ -1,28 +1,90 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
 
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author User
  */
-public class deleteProduct extends javax.swing.JInternalFrame {
+public class DeleteProduct extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form deleteProduct
      */
-    public deleteProduct() {
+    private final DatabaseConnect database = new DatabaseConnect();
+    public DeleteProduct() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
+        //display data
+        ProductData[] productData;
+        productData = database.readData("product","product_name");
+        displayRow(productData);
+        
     }
-
+    
+    private void displayRow(ProductData[] productData){
+        ((DefaultTableModel) searchTable.getModel()).setRowCount(0);
+        int length = productData.length;
+        for (int i = 0;i<length;i++){
+            Object[] rowData = new Object[10];
+            rowData[0] = productData[i].getBookTitle();
+            rowData[1] = productData[i].getISBN();
+            rowData[2] = productData[i].getGenre();
+            rowData[3] = productData[i].getAuthor();
+            rowData[4] = productData[i].getSupplier();
+            rowData[5] = productData[i].getStockQuantity();
+            rowData[6] = productData[i].getPurchasePrice();
+            rowData[7] = productData[i].getUnitPrice();
+            rowData[8] = productData[i].getPromotion();
+            rowData[9] = productData[i].getUnitPrice()*productData[i].getPromotion();
+            //insert row
+            ((DefaultTableModel) searchTable.getModel()).addRow(rowData);
+        }
+    }
+    
+    private void insertRow(ProductData[] productData) {
+        int length = productData.length;
+        for (int i = 0; i < length; i++) {
+            Object[] rowData = new Object[10];
+            rowData[0] = productData[i].getBookTitle();
+            rowData[1] = productData[i].getISBN();
+            rowData[2] = productData[i].getGenre();
+            rowData[3] = productData[i].getAuthor();
+            rowData[4] = productData[i].getSupplier();
+            rowData[5] = productData[i].getStockQuantity();
+            rowData[6] = productData[i].getPurchasePrice();
+            rowData[7] = productData[i].getUnitPrice();
+            rowData[8] = productData[i].getPromotion();
+            rowData[9] = productData[i].getUnitPrice() * productData[i].getPromotion();
+            //insert row
+            ((DefaultTableModel) deleteTable.getModel()).addRow(rowData);
+        }
+    }
+    private String getSelection(){
+        String searchBy=null;
+        switch (searchType.getSelectedIndex()){
+            case 0:
+                searchBy = "product_name";
+                break;
+            case 1:
+                searchBy = "product_name";
+                break;
+            case 2:
+                searchBy = "isbn";
+                break;
+            case 3:
+                searchBy = "author";
+                break;
+            case 4:
+                searchBy = "supplier";
+                break;
+        }
+        return searchBy;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,13 +101,13 @@ public class deleteProduct extends javax.swing.JInternalFrame {
         searchButton = new javax.swing.JToggleButton();
         searchType = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        searchTable = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         deleteBar = new javax.swing.JTextField();
         addButton = new javax.swing.JToggleButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        addButton1 = new javax.swing.JToggleButton();
+        deleteTable = new javax.swing.JTable();
+        deleteButton = new javax.swing.JToggleButton();
 
         setPreferredSize(new java.awt.Dimension(945, 573));
 
@@ -65,6 +127,11 @@ public class deleteProduct extends javax.swing.JInternalFrame {
         });
 
         searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
+        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchButtonMouseClicked(evt);
+            }
+        });
 
         searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "search by", "Name", "ISBN", "Author", "Supplier" }));
         searchType.addActionListener(new java.awt.event.ActionListener() {
@@ -73,17 +140,9 @@ public class deleteProduct extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        searchTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Book Title", "ISBN", "Genre", "Language", "Author", "Publication Year", "Supplier"
@@ -104,17 +163,17 @@ public class deleteProduct extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setShowGrid(true);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addInputMethodListener(new java.awt.event.InputMethodListener() {
+        searchTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        searchTable.setShowGrid(true);
+        searchTable.getTableHeader().setReorderingAllowed(false);
+        searchTable.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                jTable1InputMethodTextChanged(evt);
+                searchTableInputMethodTextChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(searchTable);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setText("ISBN :");
@@ -126,18 +185,15 @@ public class deleteProduct extends javax.swing.JInternalFrame {
         });
 
         addButton.setText("ADD");
+        addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addButtonMouseClicked(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        deleteTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Book Title", "ISBN", "Genre", "Language", "Author", "Publication Year", "Supplier"
@@ -158,25 +214,25 @@ public class deleteProduct extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.setShowGrid(true);
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable2);
+        deleteTable.setShowGrid(true);
+        deleteTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(deleteTable);
 
-        addButton1.setBackground(new java.awt.Color(0, 140, 214));
-        addButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        addButton1.setForeground(new java.awt.Color(255, 255, 255));
-        addButton1.setText("Delete");
-        addButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        deleteButton.setBackground(new java.awt.Color(0, 140, 214));
+        deleteButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        deleteButton.setForeground(new java.awt.Color(255, 255, 255));
+        deleteButton.setText("Delete");
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addButton1MouseClicked(evt);
+                deleteButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addButton1MouseEntered(evt);
+                deleteButtonMouseEntered(evt);
             }
         });
-        addButton1.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButton1ActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
@@ -187,7 +243,7 @@ public class deleteProduct extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(105, 105, 105)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(addButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel6)
@@ -233,7 +289,7 @@ public class deleteProduct extends javax.swing.JInternalFrame {
                 .addGap(10, 10, 10)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(addButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -254,7 +310,12 @@ public class deleteProduct extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        // TODO add your handling code here:
+        String searchBy = getSelection();
+        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
+        //display data
+        ProductData[] productData;
+        productData = database.readData("product",condition,searchBy);
+        displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void searchTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTypeActionPerformed
@@ -262,40 +323,68 @@ public class deleteProduct extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_searchTypeActionPerformed
 
     private void deleteBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBarActionPerformed
-        // TODO add your handling code here:
+        String condition = "isbn" + " = " +"\'"+searchBar.getText() +"\'";
+        ProductData[] productData;
+        productData = database.readData("product",condition, "isbn");
+        insertRow(productData);
     }//GEN-LAST:event_deleteBarActionPerformed
 
-    private void addButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addButton1ActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void addButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButton1MouseClicked
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
         JOptionPane.showConfirmDialog(null, "Data cannot be recovered once deleted! Continue delete?", "Warning!", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-    }//GEN-LAST:event_addButton1MouseClicked
+        if(true){
+            int length = deleteTable.getRowCount();
+            Object deleteRow[] = new Object[length];
+            System.out.println(length);
+            for(int i = 0;i<length;i++){
+                deleteRow[i] = ((DefaultTableModel) deleteTable.getModel()).getValueAt(i, 1);
+            }
+            database.deleteData("product", "isbn", deleteRow);
+        }
+    }//GEN-LAST:event_deleteButtonMouseClicked
 
-    private void addButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButton1MouseEntered
+    private void deleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_addButton1MouseEntered
+    }//GEN-LAST:event_deleteButtonMouseEntered
 
-    private void jTable1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTable1InputMethodTextChanged
+    private void searchTableInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_searchTableInputMethodTextChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1InputMethodTextChanged
+    }//GEN-LAST:event_searchTableInputMethodTextChanged
+
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        String searchBy = getSelection();
+        String condition = searchBy + " LIKE " +"\'"+deleteBar.getText() + "%"+"\'";
+        //display data
+        ProductData[] productData;
+        productData = database.readData("product",condition,searchBy);
+        displayRow(productData);
+    }//GEN-LAST:event_searchButtonMouseClicked
+
+    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        String condition = "isbn" + " = " +"\'"+deleteBar.getText() +"\'";
+        ProductData[] productData;
+        productData = database.readData("product",condition, "isbn");
+        insertRow(productData);
+    }//GEN-LAST:event_addButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton addButton;
-    private javax.swing.JToggleButton addButton1;
     private javax.swing.JTextField deleteBar;
+    private javax.swing.JToggleButton deleteButton;
+    private javax.swing.JTable deleteTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField searchBar;
     private javax.swing.JToggleButton searchButton;
+    private javax.swing.JTable searchTable;
     private javax.swing.JComboBox<String> searchType;
     // End of variables declaration//GEN-END:variables
 }
