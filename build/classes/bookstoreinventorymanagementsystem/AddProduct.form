@@ -364,7 +364,7 @@
             <Component class="javax.swing.JLabel" name="imageLabel">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="click to upload  image"/>
+                <Property name="text" type="java.lang.String" value="Click to upload image"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[196, 176]"/>
                 </Property>

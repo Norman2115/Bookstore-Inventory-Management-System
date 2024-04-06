@@ -29,7 +29,7 @@ public class AddProduct extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        productData  =  ProductData.getInstance();
+        productData  = new ProductData();
     }
     
     
@@ -184,7 +184,7 @@ public class AddProduct extends javax.swing.JInternalFrame {
         });
 
         imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imageLabel.setText("click to upload  image");
+        imageLabel.setText("Click to upload image");
         imageLabel.setPreferredSize(new java.awt.Dimension(196, 176));
 
         javax.swing.GroupLayout imagePanelLayout = new javax.swing.GroupLayout(imagePanel);
@@ -446,6 +446,20 @@ public class AddProduct extends javax.swing.JInternalFrame {
             productData.saveUserDataToDatabase();
         } catch (SQLException ex) {
             Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            bookTitle.setText(null);
+            genre.setText(null);
+            language.setText(null);
+            author.setText(null);
+            publicationYear.setText(null);
+            isbn.setText(null);
+            supplier.setText(null);
+            stockQuantity.setText(null);
+            purchasePrice  .setText(null);
+            unitPrice.setText(null);
+            promotion.setText(null);
+            imageLabel.setIcon(null);
+            imageLabel.setText("Click to upload image");
         }
     }//GEN-LAST:event_addProductButtonMouseClicked
 
