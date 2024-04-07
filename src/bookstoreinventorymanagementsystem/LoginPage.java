@@ -1,5 +1,9 @@
 package bookstoreinventorymanagementsystem;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Norman
@@ -432,6 +436,13 @@ public class LoginPage extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+
+        try {
+            DatabaseManager.getConnection().close();
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage("An error occured while trying to connect to the database. Please check your connection.");
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, "Database connection error", ex);
+        }
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
