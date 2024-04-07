@@ -353,7 +353,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
         
         if (codeValidation.isValid()) {
             dispose();
-            new LoginPage().setVisible(true);
+            new ResetPasswordPage().setVisible(true);
         }
     }//GEN-LAST:event_finishButtonMouseClicked
 

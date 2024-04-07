@@ -43,10 +43,7 @@ public class ValidationHandler {
      * @throws java.sql.SQLException if a database access error occurs.
      */
     public static ValidationResult checkUniqueUsername(String username) throws SQLException {
-        try {
-            DatabaseManager.connect();
-            Connection connection = DatabaseManager.getConnection();
-
+        try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM users WHERE username = ?"
             );
@@ -60,8 +57,6 @@ public class ValidationHandler {
             }
 
             return new ValidationResult(true, null);
-        } finally {
-            DatabaseManager.closeConnection();
         }
     }
 
@@ -74,10 +69,7 @@ public class ValidationHandler {
      * @throws SQLException if a database access error occurs.
      */
     public static ValidationResult checkUsernameExistence(String username) throws SQLException {
-        try {
-            DatabaseManager.connect();
-            Connection connection = DatabaseManager.getConnection();
-
+        try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM users WHERE username = ?"
             );
@@ -91,8 +83,6 @@ public class ValidationHandler {
             }
 
             return new ValidationResult(true, null);
-        } finally {
-            DatabaseManager.closeConnection();
         }
     }
 
@@ -123,10 +113,7 @@ public class ValidationHandler {
      * @throws SQLException
      */
     public static ValidationResult checkUniqueEmail(String email) throws SQLException {
-        try {
-            DatabaseManager.connect();
-            Connection connection = DatabaseManager.getConnection();
-
+        try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM users WHERE email = ?"
             );
@@ -140,8 +127,6 @@ public class ValidationHandler {
             }
 
             return new ValidationResult(true, null);
-        } finally {
-            DatabaseManager.closeConnection();
         }
     }
 
@@ -152,10 +137,7 @@ public class ValidationHandler {
      * @throws SQLException
      */
     public static ValidationResult checkEmailExistence(String email) throws SQLException {
-        try {
-            DatabaseManager.connect();
-            Connection connection = DatabaseManager.getConnection();
-
+        try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM users WHERE email = ?"
             );
@@ -169,8 +151,6 @@ public class ValidationHandler {
             }
 
             return new ValidationResult(true, null);
-        } finally {
-            DatabaseManager.closeConnection();
         }
     }
 
@@ -184,7 +164,7 @@ public class ValidationHandler {
             throws SQLException {
         boolean isValidUsername = validateUsername(usernameOrEmail).isValid();
         boolean isValidEmail = validateEmail(usernameOrEmail).isValid();
-        
+
         if (!isValidUsername && !isValidEmail) {
             return new ValidationResult(false, "Please enter a valid username or email");
         }

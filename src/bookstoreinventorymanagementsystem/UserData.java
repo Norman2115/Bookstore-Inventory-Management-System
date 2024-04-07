@@ -76,10 +76,7 @@ public final class UserData {
     }
 
     public void retrieveEmailByUsername(String username) throws SQLException {
-        try {
-            DatabaseManager.connect();
-            Connection connection = DatabaseManager.getConnection();
-
+        try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT email FROM users WHERE username = ?"
             );
@@ -91,8 +88,6 @@ public final class UserData {
             if (resultSet.next()) {
                 email = resultSet.getString("email");
             }
-        } finally {
-            DatabaseManager.closeConnection();
         }
     }
 
@@ -131,36 +126,28 @@ public final class UserData {
     }
 
     public void readUserDataFromDatabase() throws SQLException {
-        DatabaseManager.connect();
+        try (Connection connection = DatabaseManager.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM users WHERE username = ?"
+            );
 
-        Connection connection = DatabaseManager.getConnection();
+            statement.setString(1, username);
 
-        PreparedStatement statement = connection.prepareStatement(
-                "SELECT * FROM users WHERE username = ?"
-        );
-
-        statement.setString(1, username);
-
-        statement.executeQuery();
-
-        DatabaseManager.closeConnection();
+            statement.executeQuery();
+        }
     }
 
     public void saveUserDataToDatabase() throws SQLException {
-        DatabaseManager.connect();
+        try (Connection connection = DatabaseManager.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO users (username, password, user_type) VALUES (?, ?, ?)"
+            );
 
-        Connection connection = DatabaseManager.getConnection();
+            statement.setString(1, username);
+            statement.setString(2, password);
+            statement.setString(3, role.toString());
 
-        PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO users (username, password, user_type) VALUES (?, ?, ?)"
-        );
-
-        statement.setString(1, username);
-        statement.setString(2, password);
-        statement.setString(3, role.toString());
-
-        statement.executeUpdate();
-
-        DatabaseManager.closeConnection();
+            statement.executeUpdate();
+        }
     }
 }

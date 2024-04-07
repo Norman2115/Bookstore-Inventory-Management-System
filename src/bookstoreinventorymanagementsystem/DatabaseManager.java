@@ -1,8 +1,9 @@
 package bookstoreinventorymanagementsystem;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.time.Duration;
 
 /**
  * The class manages the connection to the database.
@@ -13,57 +14,55 @@ import java.util.logging.Logger;
  */
 public class DatabaseManager {
 
-    private static Connection connection;
+    private static final BasicDataSource dataSource;
+    
+    static {
+        dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/bookstore_inventory");
+        dataSource.setUsername("root");
+        dataSource.setPassword("user@12345@?");
 
-    /**
-     * Connects to the database.
-     *
-     * @throws SQLException if a database access error occurs
-     */
-    public static void connect() throws SQLException {
-        connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/bookstore_inventory",
-                "root",
-                "user@12345@?");
+        // Maximum number of active connections
+        dataSource.setMaxTotal(3);
+
+        // Maximum of idle connections
+        dataSource.setMaxIdle(1);
+
+        // Maximum wait time of 5 seconds
+        dataSource.setMaxWait(Duration.ofSeconds(5));
     }
 
     /**
-     * Gets the connection to the database.
+     * Gets the connection from the connection pool
      *
      * @return the database connection
      * @throws SQLException if a database access error occurs
      */
     public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/bookstore_inventory",
-                    "root",
-                    "user@12345@?"
-            );
-        }
-        return connection;
+        return dataSource.getConnection();
+    }
+
+    // For debugging purpose
+    public static int getNumberIdle() {
+        return dataSource.getNumIdle();
+    }
+
+    // For debugging purpose
+    public static int getNumberActive() {
+        return dataSource.getNumActive();
     }
 
     /**
      * Closes the database connection.
      *
+     * @param connection the database connection to close
      * @throws SQLException if a database access error occurs
      */
-    public static void closeConnection() throws SQLException {
+    public static void closeConnection(Connection connection)
+            throws SQLException {
         if (connection != null && !connection.isClosed()) {
             connection.close();
         }
-    }
-
-    public static void registerShutdownHook() throws SQLException {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    System.err.println(ex.getMessage());
-                }
-            }
-        }));
     }
 }
