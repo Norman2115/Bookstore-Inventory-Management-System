@@ -1,14 +1,17 @@
 package bookstoreinventorymanagementsystem;
 
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Norman
  */
 public class LoginPage extends javax.swing.JFrame {
+
+    private static final Logger logger
+            = LoggerFactory.getLogger(LoginPage.class);
 
     /**
      * Creates new form LoginPage
@@ -439,9 +442,10 @@ public class LoginPage extends javax.swing.JFrame {
 
         try {
             DatabaseManager.getConnection().close();
-        } catch (SQLException ex) {
-            UIUtils.displayErrorMessage("An error occured while trying to connect to the database. Please check your connection.");
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, "Database connection error", ex);
+        } catch (ExceptionInInitializerError | SQLException ex) {
+            UIUtils.displayErrorMessage("An error occured while trying to "
+                    + "connect to the database.");
+            logger.error("Database connection error", ex);
         }
 
         /* Create and display the form */
