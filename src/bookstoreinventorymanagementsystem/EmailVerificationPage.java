@@ -176,7 +176,7 @@ public class EmailVerificationPage extends javax.swing.JFrame {
         finishLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         finishLabel.setForeground(new java.awt.Color(255, 255, 255));
         finishLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        finishLabel.setText("FINISH");
+        finishLabel.setText("CONTINUE");
 
         javax.swing.GroupLayout finishButtonLayout = new javax.swing.GroupLayout(finishButton);
         finishButton.setLayout(finishButtonLayout);
@@ -378,7 +378,7 @@ public class EmailVerificationPage extends javax.swing.JFrame {
         
         if (codeValidation.isValid()) {
             dispose();
-            new LoginPage().setVisible(true);
+            new ProfilePicturePage().setVisible(true);
         }
     }//GEN-LAST:event_finishButtonMouseClicked
 
