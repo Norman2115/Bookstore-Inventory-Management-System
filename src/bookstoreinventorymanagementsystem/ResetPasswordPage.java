@@ -1,5 +1,7 @@
 package bookstoreinventorymanagementsystem;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author Norman
@@ -328,7 +330,11 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
-        // Navigate
+        try {
+            userData.readPasswordByUsernameOrEmail(userData.getEmail());
+        } catch (SQLException ex) {
+            // Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_confirmButtonMouseClicked
 
     private void confirmButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseEntered
@@ -373,7 +379,6 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
     private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
         dispose();
-        // new RoleSelectionPage().setVisible(true);
         new LoginPage().setVisible(true);
     }//GEN-LAST:event_goToLoginButtonMouseClicked
 

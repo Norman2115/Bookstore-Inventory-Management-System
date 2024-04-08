@@ -2,6 +2,8 @@ package bookstoreinventorymanagementsystem;
 
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -427,7 +429,7 @@ public class SignUpPage extends javax.swing.JFrame {
                 && isUsernameValid
                 && isPasswordValid) {
             dispose();
-            new EmailVerificationPage().setVisible(true);
+            new SignUpEmailVerificationPage().setVisible(true);
         }
     }//GEN-LAST:event_signUpButtonMouseClicked
 
@@ -476,6 +478,7 @@ public class SignUpPage extends javax.swing.JFrame {
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
 
     private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
+        userData.reset();
         dispose();
         new LoginPage().setVisible(true);
     }//GEN-LAST:event_goToLoginButtonMouseClicked
@@ -527,6 +530,7 @@ public class SignUpPage extends javax.swing.JFrame {
                 isUsernameValid = usernameValidation.isValid() && usernameUniqueValidation.isValid();
             } catch (SQLException se) {
                 UIUtils.displayErrorMessage("An error occurred while checking the username uniqueness.");
+                Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, null, se);
             }
         }
         if (isUsernameValid) {
