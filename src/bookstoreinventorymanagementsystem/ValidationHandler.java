@@ -241,6 +241,14 @@ public class ValidationHandler {
 
         return new ValidationResult(true, null);
     }
+    
+    public static ValidationResult checkIfNewPasswordMatchesOld(String newPassword, String oldPassword) {
+        if (newPassword.equals(oldPassword)) {
+            return new ValidationResult(false, "New password must be different from the old password");
+        }
+        
+        return new ValidationResult(true, null);
+    }
 
     /**
      * Validates verification code entered by the user against the actual

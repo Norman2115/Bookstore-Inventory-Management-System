@@ -122,11 +122,11 @@ public final class UserData {
         }
     }
 
-    public void readPasswordByUsernameOrEmail(String usernameOrEmail) 
+    public void readPasswordByUsernameOrEmail(String usernameOrEmail)
             throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT email FROM users WHERE username = ? OR email = ?"
+                    "SELECT password FROM user WHERE username = ? OR email = ?"
             );
 
             statement.setString(1, usernameOrEmail);
@@ -140,10 +140,27 @@ public final class UserData {
         }
     }
 
+    public void updatePasswordByUsernameOrEmail(String newPassword, String usernameOrEmail)
+            throws SQLException {
+        try (Connection connection = DatabaseManager.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE user "
+                    + "SET password = ? "
+                    + "WHERE username = ? OR email = ?"
+            );
+
+            statement.setString(1, newPassword);
+            statement.setString(2, usernameOrEmail);
+            statement.setString(3, usernameOrEmail);
+
+            statement.executeUpdate();
+        }
+    }
+
     public void readEmailByUsername(String username) throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT email FROM users WHERE username = ?"
+                    "SELECT email FROM user WHERE username = ?"
             );
 
             statement.setString(1, username);

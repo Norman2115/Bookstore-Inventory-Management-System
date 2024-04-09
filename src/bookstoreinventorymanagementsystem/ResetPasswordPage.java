@@ -1,6 +1,8 @@
 package bookstoreinventorymanagementsystem;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -9,13 +11,22 @@ import java.sql.SQLException;
 public class ResetPasswordPage extends javax.swing.JFrame {
 
     private final UserData userData;
-    
+    private boolean isPasswordValid;
+    private boolean isConfirmPasswordValid;
+    private String newPassword;
     /**
      * Creates new form LoginPage
      */
     public ResetPasswordPage() {
         initComponents();
         userData = UserData.getInstance();
+        isPasswordValid = false;
+        isConfirmPasswordValid = false;
+        try {
+            userData.readPasswordByUsernameOrEmail(userData.getEmail());
+        } catch (SQLException ex) {
+            Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -330,10 +341,16 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
-        try {
-            userData.readPasswordByUsernameOrEmail(userData.getEmail());
-        } catch (SQLException ex) {
-            // Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, null, ex);
+        if (isPasswordValid && isConfirmPasswordValid) {
+            userData.setPassword(newPassword);
+            try {
+                userData.updatePasswordByUsernameOrEmail(newPassword, userData.getEmail());
+                dispose();
+                new ResetPasswordSuccessfulPage().setVisible(true);
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage(ex.getMessage());
+                Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_confirmButtonMouseClicked
 
@@ -399,18 +416,27 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     }//GEN-LAST:event_showHideConfirmPasswordIconMouseClicked
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
-        String password = new String(passwordField.getPassword());
-        ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
-        UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
+        newPassword = new String(passwordField.getPassword());
+        ValidationResult passwordValidation = ValidationHandler.validatePassword(newPassword);
+        
+        if (passwordValidation.isValid()) {
+            ValidationResult matchValidation = ValidationHandler
+                    .checkIfNewPasswordMatchesOld(newPassword, userData.getPassword());
+            isPasswordValid = matchValidation.isValid();
+            UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, matchValidation);
+        } else {
+            UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
+        }
+        
         confirmPasswordFieldKeyReleased(evt);
     }//GEN-LAST:event_passwordFieldKeyReleased
 
     private void confirmPasswordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordFieldKeyReleased
-        String password = new String(passwordField.getPassword());
         String confirmPassword = new String(confirmPasswordField.getPassword());
-        ValidationResult confirmPasswordValidation 
-                = ValidationHandler.confirmPasswordMatches(password, confirmPassword);
-        UIUtils.setFieldErrorState(confirmPasswordField, confirmPasswordErrorLabel, 
+        ValidationResult confirmPasswordValidation
+                = ValidationHandler.confirmPasswordMatches(newPassword, confirmPassword);
+        isConfirmPasswordValid = confirmPasswordValidation.isValid();
+        UIUtils.setFieldErrorState(confirmPasswordField, confirmPasswordErrorLabel,
                 confirmPasswordValidation);
     }//GEN-LAST:event_confirmPasswordFieldKeyReleased
 
