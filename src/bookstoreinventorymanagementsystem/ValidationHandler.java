@@ -45,7 +45,7 @@ public class ValidationHandler {
     public static ValidationResult checkUniqueUsername(String username) throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM users WHERE username = ?"
+                    "SELECT * FROM user WHERE username = ?"
             );
 
             statement.setString(1, username);
@@ -71,7 +71,7 @@ public class ValidationHandler {
     public static ValidationResult checkUsernameExistence(String username) throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM users WHERE username = ?"
+                    "SELECT * FROM user WHERE username = ?"
             );
 
             statement.setString(1, username);
@@ -115,7 +115,7 @@ public class ValidationHandler {
     public static ValidationResult checkUniqueEmail(String email) throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM users WHERE email = ?"
+                    "SELECT * FROM user WHERE email = ?"
             );
 
             statement.setString(1, email);
@@ -139,7 +139,7 @@ public class ValidationHandler {
     public static ValidationResult checkEmailExistence(String email) throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM users WHERE email = ?"
+                    "SELECT * FROM user WHERE email = ?"
             );
 
             statement.setString(1, email);
@@ -239,6 +239,14 @@ public class ValidationHandler {
             return new ValidationResult(false, "Password do not match");
         }
 
+        return new ValidationResult(true, null);
+    }
+    
+    public static ValidationResult checkIfNewPasswordMatchesOld(String newPassword, String oldPassword) {
+        if (newPassword.equals(oldPassword)) {
+            return new ValidationResult(false, "New password must be different from the old password");
+        }
+        
         return new ValidationResult(true, null);
     }
 

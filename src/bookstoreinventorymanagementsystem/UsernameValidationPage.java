@@ -288,8 +288,9 @@ public class UsernameValidationPage extends javax.swing.JFrame {
             
             if (usernameOrEmailValidation.isValid()) {
                 if (!usernameOrEmail.contains("@")) {
-                    userData.retrieveEmailByUsername(usernameOrEmail);
-                    System.out.println(userData.getEmail());
+                    userData.readEmailByUsername(usernameOrEmail);
+                } else {
+                    userData.setEmail(usernameOrEmail);
                 }
                 dispose();
                 new ResetPasswordEmailVerificationPage().setVisible(true);

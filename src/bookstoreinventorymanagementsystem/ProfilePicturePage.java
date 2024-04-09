@@ -5,9 +5,13 @@ import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Image;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import javax.swing.ImageIcon;
 
 /**
@@ -16,11 +20,45 @@ import javax.swing.ImageIcon;
  */
 public class ProfilePicturePage extends javax.swing.JFrame {
 
+    private final UserData userData;
+    private File selectedFile;
+
     /**
      * Creates new form LoginPage
      */
     public ProfilePicturePage() {
         initComponents();
+        userData = UserData.getInstance();
+    }
+
+    private void displayProfilePicture(File file) {
+        ImageIcon icon = new ImageIcon(file.getPath());
+        Image image = icon.getImage();
+        Image scaledImage = image.getScaledInstance(
+                pictureLabel.getWidth(),
+                pictureLabel.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+        pictureLabel.setIcon(new ImageIcon(scaledImage));
+        pictureLabel.setSize(uploadPicturePanel.getSize());
+
+        pictureLabel.revalidate();
+        pictureLabel.repaint();
+    }
+
+    private byte[] convertFileToByteArray(File file) {
+        byte[] byteArray = null;
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file)); ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = bis.read(buffer)) != -1) {
+                baos.write(buffer, 0, bytesRead);
+            }
+            byteArray = baos.toByteArray();
+        } catch (IOException ex) {
+            Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return byteArray;
     }
 
     /**
@@ -279,7 +317,18 @@ public class ProfilePicturePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-        // Navigate
+        if (selectedFile != null) {
+            byte[] profilePicture = convertFileToByteArray(selectedFile);
+            userData.setProfilePicture(profilePicture);
+            try {
+                userData.saveUserDataToDatabase();
+                dispose();
+                new SignUpSuccessfulPage().setVisible(true);
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage(ex.getMessage());
+                Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_loginButtonMouseClicked
 
     private void loginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseEntered
@@ -338,40 +387,10 @@ public class ProfilePicturePage extends javax.swing.JFrame {
 
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
+            selectedFile = fileChooser.getSelectedFile();
             displayProfilePicture(selectedFile);
         }
     }//GEN-LAST:event_uploadPicturePanelMouseClicked
-
-    private void displayProfilePicture(File file) {
-        ImageIcon icon = new ImageIcon(file.getPath());
-        Image image = icon.getImage();
-        Image scaledImage = image.getScaledInstance(
-                pictureLabel.getWidth(),
-                pictureLabel.getHeight(),
-                Image.SCALE_SMOOTH
-        );
-        pictureLabel.setIcon(new ImageIcon(scaledImage));
-        pictureLabel.setSize(uploadPicturePanel.getSize());
-
-        pictureLabel.revalidate();
-        pictureLabel.repaint();
-    }
-
-    private byte[] convertFileToByteArray(File file) {
-        byte[] byteArray = null;
-        try (FileInputStream fis = new FileInputStream(file); ByteArrayOutputStream bos = new ByteArrayOutputStream();) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = fis.read(buffer)) != -1) {
-                bos.write(buffer, 0, bytesRead);
-            }
-            byteArray = bos.toByteArray();
-        } catch (IOException ioe) {
-
-        }
-        return byteArray;
-    }
 
     /**
      * @param args the command line arguments

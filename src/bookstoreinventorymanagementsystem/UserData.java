@@ -1,5 +1,7 @@
 package bookstoreinventorymanagementsystem;
 
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,12 +40,7 @@ public final class UserData {
         return instance;
     }
 
-    public void setUserID(String userID) {
-        // Todo: Set prefix + id
-        // Create a new table in mySQL for storing counter
-        // Like the approach we used to do in C++ to generate id
-        // Admin prefix (A), Salesperson prefix (S)
-
+    private void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -53,10 +50,6 @@ public final class UserData {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public String getUserID() {
-        return userID;
     }
 
     public void setUsername(String username) {
@@ -73,22 +66,6 @@ public final class UserData {
 
     public String getEmail() {
         return email;
-    }
-
-    public void retrieveEmailByUsername(String username) throws SQLException {
-        try (Connection connection = DatabaseManager.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT email FROM users WHERE username = ?"
-            );
-
-            statement.setString(1, username);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                email = resultSet.getString("email");
-            }
-        }
     }
 
     public void setPassword(String password) {
@@ -125,29 +102,127 @@ public final class UserData {
         setProfilePicture(null);
     }
 
-    public void readUserDataFromDatabase() throws SQLException {
+    private String getNextUserID() throws SQLException {
+        String prefix = (role == UserRole.ADMIN) ? "A" : "S";
+
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM users WHERE username = ?"
+                    "SELECT current_user_id FROM user_id_counter WHERE prefix = ?"
             );
 
-            statement.setString(1, username);
+            statement.setString(1, prefix);
 
-            statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return prefix + resultSet.getInt("current_user_id");
+            } else {
+                throw new SQLException("No user ID found in the database");
+            }
         }
     }
 
-    public void saveUserDataToDatabase() throws SQLException {
+    public void readPasswordByUsernameOrEmail(String usernameOrEmail)
+            throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO users (username, password, user_type) VALUES (?, ?, ?)"
+                    "SELECT password FROM user WHERE username = ? OR email = ?"
+            );
+
+            statement.setString(1, usernameOrEmail);
+            statement.setString(2, usernameOrEmail);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                password = resultSet.getString("password");
+            }
+        }
+    }
+
+    public void updatePasswordByUsernameOrEmail(String newPassword, String usernameOrEmail)
+            throws SQLException {
+        try (Connection connection = DatabaseManager.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE user "
+                    + "SET password = ? "
+                    + "WHERE username = ? OR email = ?"
+            );
+
+            statement.setString(1, newPassword);
+            statement.setString(2, usernameOrEmail);
+            statement.setString(3, usernameOrEmail);
+
+            statement.executeUpdate();
+        }
+    }
+
+    public void readEmailByUsername(String username) throws SQLException {
+        try (Connection connection = DatabaseManager.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT email FROM user WHERE username = ?"
             );
 
             statement.setString(1, username);
-            statement.setString(2, password);
-            statement.setString(3, role.toString());
 
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                email = resultSet.getString("email");
+            }
+        }
+    }
+
+    public void readUserDataFromDatabase() throws SQLException {
+        // TODO
+    }
+
+    public void saveUserDataToDatabase() throws SQLException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = DatabaseManager.getConnection();
+            connection.setAutoCommit(false);
+
+            String nextUserID = getNextUserID();
+
+            statement = connection.prepareStatement(
+                    "INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?)"
+            );
+            statement.setString(1, nextUserID);
+            statement.setString(2, getFullName());
+            statement.setString(3, getUsername());
+            statement.setString(4, getEmail());
+            statement.setString(5, getPassword());
+            statement.setString(6, getRole().toString());
+            InputStream inputStream = new ByteArrayInputStream(getProfilePicture());
+            statement.setBlob(7, inputStream);
             statement.executeUpdate();
+
+            statement = connection.prepareStatement(
+                    "UPDATE user_id_counter "
+                    + "SET current_user_id = ? "
+                    + "WHERE prefix = ?"
+            );
+            statement.setInt(1, Integer.parseInt(nextUserID.substring(1)) + 1);
+            statement.setString(2, (getRole() == UserRole.ADMIN) ? "A" : "S");
+            statement.executeUpdate();
+
+            connection.commit();
+        } catch (SQLException ex) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            throw ex;
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.setAutoCommit(true);
+                connection.close();
+            }
         }
     }
 }
