@@ -23,7 +23,7 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
     public SignUpEmailVerificationPage() {
         initComponents();
         userData = UserData.getInstance();
-        LeftPanel.grabFocus();  
+        LeftPanel.grabFocus();
         emailHandler = new EmailHandler();
         sendVerificationEmailAsync(userData.getEmail());
         resendCodeButtonTimer = new Timer(10000, (ActionEvent e) -> {
@@ -37,7 +37,7 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
                 emailHandler.sendRegistrationVerificationEmail(toEmail);
                 verificationCode = emailHandler.getVerificationCode();
             } catch (MessagingException | UnsupportedEncodingException ex) {
-                UIUtils.displayErrorMessage("An error occured: " + ex.getMessage());
+                UIUtils.displayErrorMessage(ex.getMessage());
                 dispose();
                 new LoginPage().setVisible(true);
             }
@@ -366,16 +366,18 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
     private void finishButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseClicked
         String enteredCode = verificationCodeField.getText();
+
         if (enteredCode.trim().isEmpty()) {
-            UIUtils.markFieldAsRequired(verificationCodeField, 
+            UIUtils.markFieldAsRequired(verificationCodeField,
                     verificationCodeErrorLabel);
             return;
         }
+
         ValidationResult codeValidation = ValidationHandler
                 .validateVerificationCode(enteredCode, verificationCode);
-        UIUtils.setFieldErrorState(verificationCodeField, 
+        UIUtils.setFieldErrorState(verificationCodeField,
                 verificationCodeErrorLabel, codeValidation);
-        
+
         if (codeValidation.isValid()) {
             dispose();
             new ProfilePicturePage().setVisible(true);
@@ -435,7 +437,8 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
     private void verificationCodeFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyReleased
         if (verificationCodeField.getText().trim().isEmpty()) {
-            UIUtils.resetFieldState(verificationCodeField, verificationCodeErrorLabel);
+            UIUtils.resetFieldState(verificationCodeField);
+            UIUtils.resetErrorLabel(verificationCodeErrorLabel);
         }
     }//GEN-LAST:event_verificationCodeFieldKeyReleased
 

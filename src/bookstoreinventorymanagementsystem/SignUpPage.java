@@ -16,6 +16,10 @@ public class SignUpPage extends javax.swing.JFrame {
     private boolean isUsernameValid;
     private boolean isPasswordValid;
     private boolean isEmailValid;
+    private String fullName;
+    private String username;
+    private String password;
+    private String email;
 
     /**
      * Creates new form LoginPage
@@ -424,10 +428,13 @@ public class SignUpPage extends javax.swing.JFrame {
         UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
         UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
         UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
-        if (isFullNameValid
-                && isEmailValid
-                && isUsernameValid
+
+        if (isFullNameValid && isEmailValid && isUsernameValid
                 && isPasswordValid) {
+            userData.setFullName(fullName);
+            userData.setEmail(email);
+            userData.setUsername(username);
+            userData.setPassword(password);
             dispose();
             new SignUpEmailVerificationPage().setVisible(true);
         }
@@ -500,52 +507,40 @@ public class SignUpPage extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameFieldActionPerformed
 
     private void fullNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyReleased
-        String fullName = fullNameField.getText();
+        fullName = fullNameField.getText();
         ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
         UIUtils.setFieldErrorState(fullNameField, fullNameErrorLabel, fullNameValidation);
         isFullNameValid = fullNameValidation.isValid();
-        if (isFullNameValid) {
-            userData.setFullName(fullName);
-        }
     }//GEN-LAST:event_fullNameFieldKeyReleased
 
     private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
-        String email = emailField.getText();
+        email = emailField.getText();
         ValidationResult emailValidation = ValidationHandler.validateEmail(email);
         UIUtils.setFieldErrorState(emailField, emailErrorLabel, emailValidation);
         isEmailValid = emailValidation.isValid();
-        if (isEmailValid) {
-            userData.setEmail(email);
-        }
     }//GEN-LAST:event_emailFieldKeyReleased
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
-        String username = usernameField.getText();
+        username = usernameField.getText();
         ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
         UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameValidation);
         if (usernameValidation.isValid()) {
             try {
                 ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
                 UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameUniqueValidation);
-                isUsernameValid = usernameValidation.isValid() && usernameUniqueValidation.isValid();
+                isUsernameValid = usernameUniqueValidation.isValid();
             } catch (SQLException se) {
-                UIUtils.displayErrorMessage("An error occurred while checking the username uniqueness.");
+                UIUtils.displayErrorMessage(se.getMessage());
                 Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, null, se);
             }
-        }
-        if (isUsernameValid) {
-            userData.setUsername(username);
         }
     }//GEN-LAST:event_usernameFieldKeyReleased
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
-        String password = new String(passwordField.getPassword());
+        password = new String(passwordField.getPassword());
         ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
         UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
         isPasswordValid = passwordValidation.isValid();
-        if (isPasswordValid) {
-            userData.setPassword(password);
-        }
     }//GEN-LAST:event_passwordFieldKeyReleased
 
     private void fullNameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyTyped

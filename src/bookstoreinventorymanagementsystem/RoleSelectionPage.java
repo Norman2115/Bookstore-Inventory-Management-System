@@ -5,7 +5,7 @@ package bookstoreinventorymanagementsystem;
  * @author Norman
  */
 public class RoleSelectionPage extends javax.swing.JFrame {
-    
+
     private UserRole userRole;
     private final UserData userData;
 
@@ -16,9 +16,10 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         initComponents();
         userRole = null;
         userData = UserData.getInstance();
+        userData.reset();
     }
-    
-    public void handleRoleSelection(UserRole userRole) {
+
+    private void handleRoleSelection(UserRole userRole) {
         this.userRole = userRole;
 
         if (userRole == UserRole.ADMIN) {
@@ -77,6 +78,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         salespersonSelectionPanel = new javax.swing.JPanel();
         salespersonIcon = new javax.swing.JLabel();
         salespersonLabel = new javax.swing.JLabel();
+        roleErrorLabel = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -164,7 +166,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             continueButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, continueButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(continueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addComponent(continueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         continueButtonLayout.setVerticalGroup(
@@ -314,8 +316,8 @@ public class RoleSelectionPage extends javax.swing.JFrame {
                             .addComponent(subTitleLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(continueButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(continueButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
                                 .addComponent(adminSelectionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -324,7 +326,8 @@ public class RoleSelectionPage extends javax.swing.JFrame {
                                 .addGap(12, 12, 12)
                                 .addComponent(alreadyHaveAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(goToLoginButton)))
+                                .addComponent(goToLoginButton))
+                            .addComponent(roleErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 26, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -339,7 +342,9 @@ public class RoleSelectionPage extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(adminSelectionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                     .addComponent(salespersonSelectionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
-                .addGap(26, 26, 26)
+                .addGap(10, 10, 10)
+                .addComponent(roleErrorLabel)
+                .addGap(16, 16, 16)
                 .addComponent(continueButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -387,15 +392,10 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         if (userRole != null) {
             userData.setRole(userRole);
             dispose();
-            // new SignUpPage().setVisible(true);
             new SignUpPage().setVisible(true);
         } else {
-            javax.swing.JOptionPane.showMessageDialog(
-                    null, 
-                    "PLease select a role.", 
-                    "No role", 
-                    javax.swing.JOptionPane.PLAIN_MESSAGE
-            );
+            UIUtils.setErrorLabelMessage(roleErrorLabel,
+                    new ValidationResult(false, "Must select a role"));
         }
     }//GEN-LAST:event_continueButtonMouseClicked
 
@@ -433,10 +433,12 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
     private void adminSelectionPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminSelectionPanelMouseClicked
         handleRoleSelection(UserRole.ADMIN);
+        UIUtils.resetErrorLabel(roleErrorLabel);
     }//GEN-LAST:event_adminSelectionPanelMouseClicked
 
     private void salespersonSelectionPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salespersonSelectionPanelMouseClicked
         handleRoleSelection(UserRole.SALESPERSON);
+        UIUtils.resetErrorLabel(roleErrorLabel);
     }//GEN-LAST:event_salespersonSelectionPanelMouseClicked
 
     private void adminSelectionPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminSelectionPanelMouseEntered
@@ -551,6 +553,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     private javax.swing.JLabel goToLoginButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel roleErrorLabel;
     private javax.swing.JLabel salespersonIcon;
     private javax.swing.JLabel salespersonLabel;
     private javax.swing.JPanel salespersonSelectionPanel;

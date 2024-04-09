@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * @author Teo Chung Henn
  */
 public class ValidationHandler {
-
+    
     /**
      * Validates username to ensure it meets length requirements. Usernames must
      * be between 6 and 16 characters long and contain only underscores.
@@ -100,7 +100,7 @@ public class ValidationHandler {
         Matcher matcher = emailPattern.matcher(email);
 
         if (!matcher.matches()) {
-            return new ValidationResult(false, "Invalid email format");
+            return new ValidationResult(false, "Invalid email format. Must be in format 'user@example.com'");
         }
 
         return new ValidationResult(true, null);
@@ -279,7 +279,7 @@ public class ValidationHandler {
         }
 
         if (!containsOnlySingleSpace(fullName)) {
-            return new ValidationResult(false, "Must contain at most one blank space and cannot end with a space");
+            return new ValidationResult(false, "Must contain at most one space and cannot start or end with space");
         }
 
         return new ValidationResult(true, null);
