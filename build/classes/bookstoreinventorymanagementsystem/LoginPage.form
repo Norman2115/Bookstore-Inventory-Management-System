@@ -159,16 +159,13 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="usernameLabel" min="-2" pref="380" max="-2" attributes="0"/>
-                                  <Component id="passwordLabel" alignment="0" min="-2" pref="360" max="-2" attributes="0"/>
-                                  <Component id="forgotPasswordButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="usernameLabel" alignment="0" min="-2" pref="380" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="dontHaveAccountLabel" min="-2" pref="227" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="goToSignUpButton" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="loginButton" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="usernameField" min="-2" pref="351" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -179,6 +176,9 @@
                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                       <Component id="showHidePasswordIcon" min="-2" pref="35" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="passwordLabel" alignment="0" min="-2" pref="360" max="-2" attributes="0"/>
+                                  <Component id="forgotPasswordButton" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
+                                  <Component id="loginButton" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                           </Group>
@@ -358,7 +358,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="loginLabel" pref="374" max="32767" attributes="0"/>
+                          <Component id="loginLabel" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>

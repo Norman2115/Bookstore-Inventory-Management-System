@@ -159,8 +159,8 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="continueButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="continueButton" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="adminSelectionPanel" min="-2" pref="188" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -172,6 +172,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="goToLoginButton" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="roleErrorLabel" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                           </Group>
@@ -192,7 +193,9 @@
                           <Component id="adminSelectionPanel" pref="173" max="32767" attributes="0"/>
                           <Component id="salespersonSelectionPanel" pref="173" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <Component id="roleErrorLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       <Component id="continueButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -247,7 +250,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="continueLabel" pref="374" max="32767" attributes="0"/>
+                          <Component id="continueLabel" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -451,6 +454,8 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="roleErrorLabel">
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

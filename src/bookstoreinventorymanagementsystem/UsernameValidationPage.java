@@ -17,7 +17,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     public UsernameValidationPage() {
         initComponents();
         userData = UserData.getInstance();
-        LeftPanel.grabFocus();
+        userData.reset();
     }
 
     /**
@@ -352,16 +352,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameOrEmailFieldKeyPressed
 
     private void usernameOrEmailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameOrEmailFieldKeyReleased
-//        String username = usernameOrEmailField.getText();
-//        try {
-//            ValidationResult usernameFound = ValidationHandler.checkUsernameExistence(username);
-//            isUsernameExists = usernameFound.isValid();
-//            UIUtils.setFieldErrorState(usernameOrEmailField, usernameOrEmailErrorLabel, usernameFound);
-//        } catch (SQLException se) {
-//            UIUtils.displayErrorMessage("An error occurred while checking the username existence. Please try again later");
-//            dispose();
-//            new LoginPage().setVisible(true);
-//        }
+
     }//GEN-LAST:event_usernameOrEmailFieldKeyReleased
 
     /**

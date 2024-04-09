@@ -14,6 +14,7 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     private boolean isPasswordValid;
     private boolean isConfirmPasswordValid;
     private String newPassword;
+
     /**
      * Creates new form LoginPage
      */
@@ -25,7 +26,9 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         try {
             userData.readPasswordByUsernameOrEmail(userData.getEmail());
         } catch (SQLException ex) {
-            Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, null, ex);
+            UIUtils.displayErrorMessage(ex.getMessage());
+            Logger.getLogger(ResetPasswordPage.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 
@@ -344,12 +347,14 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         if (isPasswordValid && isConfirmPasswordValid) {
             userData.setPassword(newPassword);
             try {
-                userData.updatePasswordByUsernameOrEmail(newPassword, userData.getEmail());
+                userData.updatePasswordByUsernameOrEmail(newPassword,
+                        userData.getEmail());
                 dispose();
                 new ResetPasswordSuccessfulPage().setVisible(true);
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ex.getMessage());
-                Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ResetPasswordPage.class.getName())
+                        .log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_confirmButtonMouseClicked
@@ -417,27 +422,31 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         newPassword = new String(passwordField.getPassword());
-        ValidationResult passwordValidation = ValidationHandler.validatePassword(newPassword);
-        
+        ValidationResult passwordValidation = ValidationHandler
+                .validatePassword(newPassword);
+
         if (passwordValidation.isValid()) {
             ValidationResult matchValidation = ValidationHandler
-                    .checkIfNewPasswordMatchesOld(newPassword, userData.getPassword());
+                    .checkIfNewPasswordMatchesOld(newPassword,
+                            userData.getPassword());
             isPasswordValid = matchValidation.isValid();
-            UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, matchValidation);
+            UIUtils.setFieldErrorState(passwordField, passwordErrorLabel,
+                    matchValidation);
         } else {
-            UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
+            UIUtils.setFieldErrorState(passwordField, passwordErrorLabel,
+                    passwordValidation);
         }
-        
+
         confirmPasswordFieldKeyReleased(evt);
     }//GEN-LAST:event_passwordFieldKeyReleased
 
     private void confirmPasswordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordFieldKeyReleased
         String confirmPassword = new String(confirmPasswordField.getPassword());
-        ValidationResult confirmPasswordValidation
-                = ValidationHandler.confirmPasswordMatches(newPassword, confirmPassword);
+        ValidationResult confirmPasswordValidation = ValidationHandler
+                .confirmPasswordMatches(newPassword, confirmPassword);
         isConfirmPasswordValid = confirmPasswordValidation.isValid();
-        UIUtils.setFieldErrorState(confirmPasswordField, confirmPasswordErrorLabel,
-                confirmPasswordValidation);
+        UIUtils.setFieldErrorState(confirmPasswordField,
+                confirmPasswordErrorLabel, confirmPasswordValidation);
     }//GEN-LAST:event_confirmPasswordFieldKeyReleased
 
     /**
@@ -457,13 +466,17 @@ public class ResetPasswordPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ResetPasswordPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResetPasswordPage.class.getName()).log(
+                    java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ResetPasswordPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResetPasswordPage.class.getName()).log(
+                    java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ResetPasswordPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResetPasswordPage.class.getName()).log(
+                    java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ResetPasswordPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ResetPasswordPage.class.getName()).log(
+                    java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
