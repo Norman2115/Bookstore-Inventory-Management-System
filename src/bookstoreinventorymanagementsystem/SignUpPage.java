@@ -388,7 +388,7 @@ public class SignUpPage extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(alreadyHaveAnAccountLabel)
                     .addComponent(goToLoginButton))
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
@@ -402,8 +402,8 @@ public class SignUpPage extends javax.swing.JFrame {
         );
         basePanelLayout.setVerticalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
-            .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+            .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(RightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -416,7 +416,7 @@ public class SignUpPage extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

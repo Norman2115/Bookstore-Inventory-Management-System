@@ -120,15 +120,15 @@ public class UIUtils {
     /**
      * Marks a text field as required. If the field is empty, it sets the border
      * color to red and displays an error message "Field is required" in the
-     * label. Otherwise, if the field contains text, it restores the border
-     * color back to original and clears the error message.
+     * label.
      *
      * @param field the text field to mark as required.
      * @param errorLabel the error label associated with the text field.
      */
     public static void markFieldAsRequired(JTextComponent field, JLabel errorLabel) {
         if (field.getText().trim().isEmpty()) {
-            setFieldErrorState(field, errorLabel, new ValidationResult(false, "Field is required"));
+            field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
+            setErrorLabelMessage(errorLabel, new ValidationResult(false, "Field is required"));
         }
     }
 
