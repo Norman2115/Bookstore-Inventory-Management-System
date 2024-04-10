@@ -20,7 +20,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         displayPanel.removeAll();
         welcomeText text = new welcomeText();
         displayPanel.add(text).setVisible(true);
-        
+
     }
 
     /**
@@ -48,23 +48,20 @@ public class AdminHomePage extends javax.swing.JFrame {
         logoutLable = new javax.swing.JLabel();
         viewProductButton = new javax.swing.JPanel();
         viewProductLable = new javax.swing.JLabel();
-        topBar = new javax.swing.JPanel();
-        userProfilePicturte = new javax.swing.JLabel();
-        date = new javax.swing.JLabel();
-        time = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         displayPanel = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(253, 252, 248));
 
-        basePanel.setBackground(new java.awt.Color(0, 255, 153));
-        basePanel.setPreferredSize(new java.awt.Dimension(1080, 600));
+        basePanel.setBackground(new java.awt.Color(255, 255, 255));
+        basePanel.setPreferredSize(new java.awt.Dimension(1080, 630));
 
         sideNavBar.setBackground(new java.awt.Color(0, 140, 214));
         sideNavBar.setAlignmentX(0.0F);
         sideNavBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        addProductButton.setBackground(new java.awt.Color(62, 164, 52));
+        addProductButton.setBackground(new java.awt.Color(0, 140, 214));
         addProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
         addProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -96,18 +93,18 @@ public class AdminHomePage extends javax.swing.JFrame {
             addProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(addProductButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                .addComponent(addProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         addProductButtonLayout.setVerticalGroup(
             addProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(addProductButtonLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(addProductLable, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(addProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        deleteProductButton.setBackground(new java.awt.Color(62, 164, 52));
+        deleteProductButton.setBackground(new java.awt.Color(0, 140, 214));
         deleteProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
         deleteProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -144,13 +141,13 @@ public class AdminHomePage extends javax.swing.JFrame {
         );
         deleteProductButtonLayout.setVerticalGroup(
             deleteProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(deleteProductButtonLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(deleteProductLable, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, deleteProductButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(deleteProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        editProductButton.setBackground(new java.awt.Color(62, 164, 52));
+        editProductButton.setBackground(new java.awt.Color(0, 140, 214));
         editProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
         editProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -180,20 +177,20 @@ public class AdminHomePage extends javax.swing.JFrame {
         editProductButton.setLayout(editProductButtonLayout);
         editProductButtonLayout.setHorizontalGroup(
             editProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(editProductButtonLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editProductButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(editProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                .addComponent(editProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         editProductButtonLayout.setVerticalGroup(
             editProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(editProductButtonLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(editProductLable, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editProductButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(editProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        restockButton.setBackground(new java.awt.Color(62, 164, 52));
+        restockButton.setBackground(new java.awt.Color(0, 140, 214));
         restockButton.setPreferredSize(new java.awt.Dimension(138, 138));
         restockButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -225,18 +222,18 @@ public class AdminHomePage extends javax.swing.JFrame {
             restockButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(restockButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(restockLable, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                .addComponent(restockLable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         restockButtonLayout.setVerticalGroup(
             restockButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(restockButtonLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(restockLable, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(restockLable, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        invoiceButton.setBackground(new java.awt.Color(62, 164, 52));
+        invoiceButton.setBackground(new java.awt.Color(0, 140, 214));
         invoiceButton.setPreferredSize(new java.awt.Dimension(138, 138));
         invoiceButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -256,6 +253,7 @@ public class AdminHomePage extends javax.swing.JFrame {
             }
         });
 
+        invoiceLable.setBackground(new java.awt.Color(0, 140, 214));
         invoiceLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         invoiceLable.setForeground(new java.awt.Color(253, 252, 248));
         invoiceLable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -268,18 +266,18 @@ public class AdminHomePage extends javax.swing.JFrame {
             invoiceButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(invoiceButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(invoiceLable, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                .addComponent(invoiceLable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         invoiceButtonLayout.setVerticalGroup(
             invoiceButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(invoiceButtonLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addComponent(invoiceLable, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        logoutButton.setBackground(new java.awt.Color(62, 164, 52));
+        logoutButton.setBackground(new java.awt.Color(0, 140, 214));
         logoutButton.setPreferredSize(new java.awt.Dimension(138, 138));
         logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -311,18 +309,18 @@ public class AdminHomePage extends javax.swing.JFrame {
             logoutButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(logoutButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(logoutLable, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                .addComponent(logoutLable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         logoutButtonLayout.setVerticalGroup(
             logoutButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(logoutButtonLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(logoutLable, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(logoutLable, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        viewProductButton.setBackground(new java.awt.Color(62, 164, 52));
+        viewProductButton.setBackground(new java.awt.Color(0, 140, 214));
         viewProductButton.setPreferredSize(new java.awt.Dimension(138, 138));
         viewProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -342,7 +340,7 @@ public class AdminHomePage extends javax.swing.JFrame {
             }
         });
 
-        viewProductLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        viewProductLable.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         viewProductLable.setForeground(new java.awt.Color(253, 252, 248));
         viewProductLable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         viewProductLable.setText("VIEW PRODUCT");
@@ -354,91 +352,75 @@ public class AdminHomePage extends javax.swing.JFrame {
             viewProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(viewProductButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(viewProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                .addComponent(viewProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         viewProductButtonLayout.setVerticalGroup(
             viewProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(viewProductButtonLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(viewProductLable, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(viewProductLable, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.setBackground(new java.awt.Color(0, 140, 214));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 160, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout sideNavBarLayout = new javax.swing.GroupLayout(sideNavBar);
         sideNavBar.setLayout(sideNavBarLayout);
         sideNavBarLayout.setHorizontalGroup(
             sideNavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sideNavBarLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sideNavBarLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(sideNavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(restockButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(invoiceButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(logoutButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(viewProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(sideNavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(deleteProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(restockButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logoutButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(viewProductButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(invoiceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         sideNavBarLayout.setVerticalGroup(
             sideNavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sideNavBarLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(viewProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(deleteProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(editProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(restockButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(invoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 147, Short.MAX_VALUE)
-                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        topBar.setBackground(new java.awt.Color(0, 140, 214));
-        topBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        userProfilePicturte.setText("ICOM");
-
-        date.setText("Date");
-
-        time.setText("Time");
-
-        javax.swing.GroupLayout topBarLayout = new javax.swing.GroupLayout(topBar);
-        topBar.setLayout(topBarLayout);
-        topBarLayout.setHorizontalGroup(
-            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topBarLayout.createSequentialGroup()
-                .addContainerGap(802, Short.MAX_VALUE)
-                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(time, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userProfilePicturte)
-                .addGap(36, 36, 36))
-        );
-        topBarLayout.setVerticalGroup(
-            topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(topBarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(topBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(time)
-                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userProfilePicturte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(viewProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(editProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(restockButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(invoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
         );
 
-        displayPanel.setBackground(new java.awt.Color(253, 252, 248));
+        displayPanel.setBackground(new java.awt.Color(204, 204, 204));
+        displayPanel.setPreferredSize(new java.awt.Dimension(942, 630));
 
         javax.swing.GroupLayout displayPanelLayout = new javax.swing.GroupLayout(displayPanel);
         displayPanel.setLayout(displayPanelLayout);
         displayPanelLayout.setHorizontalGroup(
             displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 942, Short.MAX_VALUE)
         );
         displayPanelLayout.setVerticalGroup(
             displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,23 +432,14 @@ public class AdminHomePage extends javax.swing.JFrame {
         basePanelLayout.setHorizontalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(basePanelLayout.createSequentialGroup()
-                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(basePanelLayout.createSequentialGroup()
-                        .addComponent(sideNavBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(displayPanel))
-                    .addGroup(basePanelLayout.createSequentialGroup()
-                        .addComponent(topBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(sideNavBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(displayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         basePanelLayout.setVerticalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(basePanelLayout.createSequentialGroup()
-                .addComponent(topBar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sideNavBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(displayPanel)))
+            .addComponent(sideNavBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(displayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -481,30 +454,156 @@ public class AdminHomePage extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void viewProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseReleased
+        viewProductButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_viewProductButtonMouseReleased
+
+    private void viewProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMousePressed
+        viewProductButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_viewProductButtonMousePressed
+
+    private void viewProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseExited
+        viewProductButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_viewProductButtonMouseExited
 
 // viewProductButton
     private void viewProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseEntered
-        viewProductButton.setBackground(ColorManager.MEDIUM_GREEN);
+        viewProductButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_viewProductButtonMouseEntered
-
-    private void viewProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseExited
-        viewProductButton.setBackground(ColorManager.PRIMARY_GREEN);
-    }//GEN-LAST:event_viewProductButtonMouseExited
-
-    private void viewProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMousePressed
-        viewProductButton.setBackground(ColorManager.DEEP_GREEN);
-    }//GEN-LAST:event_viewProductButtonMousePressed
-
-    private void viewProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseReleased
-        viewProductButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_viewProductButtonMouseReleased
 
     private void viewProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseClicked
         displayPanel.removeAll();
-        viewProduct viewProduct = new viewProduct();
+        viewProductNew viewProduct = new viewProductNew();
         displayPanel.add(viewProduct).setVisible(true);
     }//GEN-LAST:event_viewProductButtonMouseClicked
+
+    private void logoutButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseReleased
+        logoutButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_logoutButtonMouseReleased
+
+    private void logoutButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMousePressed
+        logoutButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_logoutButtonMousePressed
+
+    private void logoutButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseExited
+        logoutButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_logoutButtonMouseExited
+
+    private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
+        logoutButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_logoutButtonMouseEntered
+
+    //logout
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logoutButtonMouseClicked
+
+    private void invoiceButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseReleased
+        invoiceButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_invoiceButtonMouseReleased
+
+    private void invoiceButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMousePressed
+        invoiceButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_invoiceButtonMousePressed
+
+    private void invoiceButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseExited
+        invoiceButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_invoiceButtonMouseExited
+
+    private void invoiceButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseEntered
+        invoiceButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_invoiceButtonMouseEntered
+
+    //invoice
+    private void invoiceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseClicked
+        //
+    }//GEN-LAST:event_invoiceButtonMouseClicked
+
+    private void restockButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseReleased
+        restockButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_restockButtonMouseReleased
+
+    private void restockButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMousePressed
+        restockButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_restockButtonMousePressed
+
+    private void restockButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseExited
+        restockButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_restockButtonMouseExited
+
+    private void restockButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseEntered
+        restockButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_restockButtonMouseEntered
+
+    //restockButton
+    private void restockButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_restockButtonMouseClicked
+
+    private void editProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseReleased
+        editProductButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_editProductButtonMouseReleased
+
+    private void editProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMousePressed
+        editProductButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_editProductButtonMousePressed
+
+    private void editProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseExited
+        editProductButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_editProductButtonMouseExited
+
+    private void editProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseEntered
+        editProductButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_editProductButtonMouseEntered
+
+    //editProductButton
+    private void editProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseClicked
+        displayPanel.removeAll();
+        deleteProduct deleteProduct = new deleteProduct();
+        displayPanel.add(deleteProduct).setVisible(true);
+    }//GEN-LAST:event_editProductButtonMouseClicked
+
+    private void deleteProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseReleased
+        deleteProductButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_deleteProductButtonMouseReleased
+
+    private void deleteProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMousePressed
+        deleteProductButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_deleteProductButtonMousePressed
+
+    private void deleteProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseExited
+        deleteProductButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_deleteProductButtonMouseExited
+
+    private void deleteProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseEntered
+        deleteProductButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_deleteProductButtonMouseEntered
+
+    // deleteProductButton
+    private void deleteProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseClicked
+        displayPanel.removeAll();
+        deleteProductNew deleteProduct = new deleteProductNew();
+        displayPanel.add(deleteProduct).setVisible(true);
+    }//GEN-LAST:event_deleteProductButtonMouseClicked
+
+    private void addProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseReleased
+        addProductButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_addProductButtonMouseReleased
+
+    private void addProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMousePressed
+        addProductButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_addProductButtonMousePressed
+
+    private void addProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseExited
+        addProductButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_addProductButtonMouseExited
+
+    private void addProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseEntered
+        addProductButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_addProductButtonMouseEntered
 
     // addProductButton
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
@@ -512,129 +611,6 @@ public class AdminHomePage extends javax.swing.JFrame {
         addProduct addProduct = new addProduct();
         displayPanel.add(addProduct).setVisible(true);
     }//GEN-LAST:event_addProductButtonMouseClicked
-
-    private void addProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseEntered
-        addProductButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_addProductButtonMouseEntered
-
-    private void addProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseExited
-        addProductButton.setBackground(ColorManager.PRIMARY_GREEN);
-    }//GEN-LAST:event_addProductButtonMouseExited
-
-    private void addProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMousePressed
-        addProductButton.setBackground(ColorManager.DEEP_GREEN);
-    }//GEN-LAST:event_addProductButtonMousePressed
-
-    private void addProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseReleased
-        addProductButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_addProductButtonMouseReleased
-
-    // deleteProductButton
-    private void deleteProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseClicked
-        displayPanel.removeAll();
-        deleteProduct deleteProduct = new deleteProduct();
-        displayPanel.add(deleteProduct).setVisible(true);
-    }//GEN-LAST:event_deleteProductButtonMouseClicked
-
-    private void deleteProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseEntered
-        deleteProductButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_deleteProductButtonMouseEntered
-
-    private void deleteProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseExited
-        deleteProductButton.setBackground(ColorManager.PRIMARY_GREEN);
-    }//GEN-LAST:event_deleteProductButtonMouseExited
-
-    private void deleteProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMousePressed
-        deleteProductButton.setBackground(ColorManager.DEEP_GREEN);
-    }//GEN-LAST:event_deleteProductButtonMousePressed
-
-    private void deleteProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseReleased
-        deleteProductButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_deleteProductButtonMouseReleased
-    
-    //editProductButton
-    private void editProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editProductButtonMouseClicked
-
-    private void editProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseEntered
-        editProductButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_editProductButtonMouseEntered
-
-    private void editProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseExited
-        editProductButton.setBackground(ColorManager.PRIMARY_GREEN);
-    }//GEN-LAST:event_editProductButtonMouseExited
-
-    private void editProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMousePressed
-        editProductButton.setBackground(ColorManager.DEEP_GREEN);
-    }//GEN-LAST:event_editProductButtonMousePressed
-
-    private void editProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseReleased
-        editProductButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_editProductButtonMouseReleased
-
-    //restockButton
-    private void restockButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_restockButtonMouseClicked
-
-    private void restockButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseEntered
-        restockButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_restockButtonMouseEntered
-
-    private void restockButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseExited
-         restockButton.setBackground(ColorManager.PRIMARY_GREEN);
-    }//GEN-LAST:event_restockButtonMouseExited
-
-    private void restockButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMousePressed
-        restockButton.setBackground(ColorManager.DEEP_GREEN);
-    }//GEN-LAST:event_restockButtonMousePressed
-
-    private void restockButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseReleased
-        restockButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_restockButtonMouseReleased
-
-    //invoice
-    private void invoiceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseClicked
-        //
-    }//GEN-LAST:event_invoiceButtonMouseClicked
-
-    private void invoiceButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseEntered
-        invoiceButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_invoiceButtonMouseEntered
-
-    private void invoiceButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseExited
-        invoiceButton.setBackground(ColorManager.PRIMARY_GREEN);
-    }//GEN-LAST:event_invoiceButtonMouseExited
-
-    private void invoiceButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMousePressed
-        invoiceButton.setBackground(ColorManager.DEEP_GREEN);
-    }//GEN-LAST:event_invoiceButtonMousePressed
-
-    private void invoiceButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseReleased
-        invoiceButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_invoiceButtonMouseReleased
-
-    //logout
-    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_logoutButtonMouseClicked
-
-    private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
-        logoutButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_logoutButtonMouseEntered
-
-    private void logoutButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseExited
-        logoutButton.setBackground(ColorManager.PRIMARY_GREEN);
-    }//GEN-LAST:event_logoutButtonMouseExited
-
-    private void logoutButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMousePressed
-        logoutButton.setBackground(ColorManager.DEEP_GREEN);
-    }//GEN-LAST:event_logoutButtonMousePressed
-
-    private void logoutButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseReleased
-        logoutButton.setBackground(ColorManager.MEDIUM_GREEN);
-    }//GEN-LAST:event_logoutButtonMouseReleased
 
     /**
      * @param args the command line arguments
@@ -683,7 +659,6 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JPanel addProductButton;
     private javax.swing.JLabel addProductLable;
     private javax.swing.JPanel basePanel;
-    private javax.swing.JLabel date;
     private javax.swing.JPanel deleteProductButton;
     private javax.swing.JLabel deleteProductLable;
     private javax.swing.JDesktopPane displayPanel;
@@ -691,14 +666,12 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JLabel editProductLable;
     private javax.swing.JPanel invoiceButton;
     private javax.swing.JLabel invoiceLable;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel logoutButton;
     private javax.swing.JLabel logoutLable;
     private javax.swing.JPanel restockButton;
     private javax.swing.JLabel restockLable;
     private javax.swing.JPanel sideNavBar;
-    private javax.swing.JLabel time;
-    private javax.swing.JPanel topBar;
-    private javax.swing.JLabel userProfilePicturte;
     private javax.swing.JPanel viewProductButton;
     private javax.swing.JLabel viewProductLable;
     // End of variables declaration//GEN-END:variables
