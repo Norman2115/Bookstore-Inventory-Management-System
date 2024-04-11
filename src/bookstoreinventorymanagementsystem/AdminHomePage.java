@@ -476,7 +476,7 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     private void viewProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseClicked
         displayPanel.removeAll();
-        viewProductNew viewProduct = new viewProductNew();
+        ViewProductPage viewProduct = new ViewProductPage();
         displayPanel.add(viewProduct).setVisible(true);
     }//GEN-LAST:event_viewProductButtonMouseClicked
 
@@ -540,7 +540,9 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     //restockButton
     private void restockButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseClicked
-        // TODO add your handling code here:
+        displayPanel.removeAll();
+        RestockPage restockPage = new RestockPage();
+        displayPanel.add(restockPage).setVisible(true);
     }//GEN-LAST:event_restockButtonMouseClicked
 
     private void editProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseReleased
@@ -585,7 +587,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     // deleteProductButton
     private void deleteProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseClicked
         displayPanel.removeAll();
-        deleteProductNew deleteProduct = new deleteProductNew();
+        DeleteProductPage deleteProduct = new DeleteProductPage();
         displayPanel.add(deleteProduct).setVisible(true);
     }//GEN-LAST:event_deleteProductButtonMouseClicked
 
@@ -608,7 +610,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     // addProductButton
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
         displayPanel.removeAll();
-        addProduct addProduct = new addProduct();
+        AddProductPage addProduct = new AddProductPage();
         displayPanel.add(addProduct).setVisible(true);
     }//GEN-LAST:event_addProductButtonMouseClicked
 
