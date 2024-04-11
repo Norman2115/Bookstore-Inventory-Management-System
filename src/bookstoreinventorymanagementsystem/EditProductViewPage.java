@@ -14,12 +14,12 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  *
  * @author User
  */
-public class deleteProductNew extends javax.swing.JInternalFrame {
+public class EditProductViewPage extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form welcomeText
      */
-    public deleteProductNew() {
+    public EditProductViewPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
@@ -44,8 +44,6 @@ public class deleteProductNew extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         publicationYear2 = new javax.swing.JTextField();
-        addProductButton1 = new javax.swing.JPanel();
-        jLabel26 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -90,7 +88,7 @@ public class deleteProductNew extends javax.swing.JInternalFrame {
         background.setPreferredSize(new java.awt.Dimension(942, 630));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
-        jLabel1.setText("<html><font color='#3EA434'>DELETE</font> <font color='#008CD6'>PRODUCT</font></html>");
+        jLabel1.setText("<html><font color='#3EA434'>EDIT</font> <font color='#008CD6'>PRODUCT</font></html>");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 113, 176));
@@ -106,80 +104,38 @@ public class deleteProductNew extends javax.swing.JInternalFrame {
             }
         });
 
-        addProductButton1.setBackground(new java.awt.Color(0, 140, 214));
-        addProductButton1.setPreferredSize(new java.awt.Dimension(120, 52));
-        addProductButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                addProductButton1MousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseReleased(evt);
-            }
-        });
-
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setText("DELETE");
-
-        javax.swing.GroupLayout addProductButton1Layout = new javax.swing.GroupLayout(addProductButton1);
-        addProductButton1.setLayout(addProductButton1Layout);
-        addProductButton1Layout.setHorizontalGroup(
-            addProductButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButton1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        addProductButton1Layout.setVerticalGroup(
-            addProductButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButton1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Book Title", "ISBN", "Genre", "Language", "Author", "Publisher", "Year", "Delete ?"
+                "Book Title", "ISBN", "Genre", "Language", "Author", "Publisher", "Year"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -216,7 +172,7 @@ public class deleteProductNew extends javax.swing.JInternalFrame {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 60, 60));
-        jLabel7.setText("*SELECT ROW(S) TO DELETE");
+        jLabel7.setText("*SELECT A ROW TO EDIT");
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -229,12 +185,8 @@ public class deleteProductNew extends javax.swing.JInternalFrame {
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(backgroundLayout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addProductButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(publicationYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -242,7 +194,8 @@ public class deleteProductNew extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 60, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -267,14 +220,9 @@ public class deleteProductNew extends javax.swing.JInternalFrame {
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(addProductButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(75, 75, 75))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(111, 111, 111))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -293,26 +241,6 @@ public class deleteProductNew extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addProductButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseReleased
-
-    private void addProductButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MousePressed
-
-    private void addProductButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseExited
-
-    private void addProductButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseEntered
-
-    private void addProductButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseClicked
-
     private void publicationYear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_publicationYear2ActionPerformed
@@ -323,14 +251,12 @@ public class deleteProductNew extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel addProductButton1;
     private javax.swing.JPanel background;
     private javax.swing.JPanel displayPanel;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
