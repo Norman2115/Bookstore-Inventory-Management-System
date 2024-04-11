@@ -5,32 +5,19 @@
         <group>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ManageOrder.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/AdminHomePage.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UsernameValidationPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UserData.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/viewProduct.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/SignUpPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UserRole.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/welcomeText.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/SignUpSuccessfulPage.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/RoleSelectionPage.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/deleteProduct.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ResetPasswordSuccessfulPage.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ManageCustomer.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/icon/showPasswordIcon.png</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/SalespersonHomePage.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UIUtils.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/DatabaseManager.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/LoginPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ValidationResult.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ProfilePicturePage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ValidationHandler.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/SignUpEmailVerificationPage.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/EmailHandler.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ColorManager.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ResetPasswordEmailVerificationPage.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ResetPasswordPage.java</file>
-            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/Utils.java</file>
+            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ManageCustomer.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/AdminHomePageBackup.java</file>
+            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/icon/showPasswordIcon.png</file>
         </group>
     </open-files>
 </project-private>

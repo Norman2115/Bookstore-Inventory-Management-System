@@ -1,7 +1,10 @@
 package bookstoreinventorymanagementsystem;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -10,14 +13,13 @@ import java.sql.SQLException;
 public class UsernameValidationPage extends javax.swing.JFrame {
 
     private final UserData userData;
-    
+
     /**
      * Creates new form LoginPage
      */
     public UsernameValidationPage() {
         initComponents();
-        userData = UserData.getInstance();
-        userData.reset();
+        userData = new UserData();
     }
 
     /**
@@ -278,25 +280,37 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
-        UIUtils.markFieldAsRequired(usernameOrEmailField, usernameOrEmailErrorLabel);
         String usernameOrEmail = usernameOrEmailField.getText();
-        try {
-            ValidationResult usernameOrEmailValidation = ValidationHandler
-                    .validateUsernameOrEmail(usernameOrEmail);
-            UIUtils.setFieldErrorState(usernameOrEmailField, usernameOrEmailErrorLabel, 
-                    usernameOrEmailValidation);
-            
-            if (usernameOrEmailValidation.isValid()) {
-                if (!usernameOrEmail.contains("@")) {
-                    userData.readEmailByUsername(usernameOrEmail);
+        String email = "";
+
+        if (!usernameOrEmail.trim().isEmpty()) {
+            try {
+                ValidationResult usernameOrEmailValidation = ValidationHandler.validateUsernameOrEmail(usernameOrEmail);
+
+                if (usernameOrEmailValidation.isValid()) {
+                    if (!usernameOrEmail.contains("@")) {
+                        email = UserDAO.readEmailByUsername(usernameOrEmail);
+                    } else {
+                        email = usernameOrEmail;
+                    }
+                    try {
+                        userData.readUserDataFromDatabase(usernameOrEmail);
+                        dispose();
+                        new ResetPasswordEmailVerificationPage(userData).setVisible(true);
+                    } catch (IOException ex) {
+                        UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                        Logger.getLogger(UsernameValidationPage.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } else {
-                    userData.setEmail(usernameOrEmail);
+                    UIUtils.setFieldErrorState(usernameOrEmailField);
+                    UIUtils.setErrorLabelMessage(usernameOrEmailErrorLabel, usernameOrEmailValidation.getErrorMessage());
                 }
-                dispose();
-                new ResetPasswordEmailVerificationPage().setVisible(true);
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                Logger.getLogger(UsernameValidationPage.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException se) {
-            UIUtils.displayErrorMessage("An error occurred: " + se.getMessage());
+        } else {
+            UIUtils.markFieldAsRequired(usernameOrEmailField, usernameOrEmailErrorLabel);
         }
     }//GEN-LAST:event_continueButtonMouseClicked
 
@@ -352,7 +366,8 @@ public class UsernameValidationPage extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameOrEmailFieldKeyPressed
 
     private void usernameOrEmailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameOrEmailFieldKeyReleased
-
+        UIUtils.resetFieldState(usernameOrEmailField);
+        UIUtils.resetErrorLabel(usernameOrEmailErrorLabel);
     }//GEN-LAST:event_usernameOrEmailFieldKeyReleased
 
     /**

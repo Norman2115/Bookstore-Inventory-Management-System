@@ -1,7 +1,9 @@
 package bookstoreinventorymanagementsystem;
 
+import java.sql.Blob;
 import java.io.InputStream;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +14,6 @@ import java.sql.SQLException;
  * @author Norman
  */
 public final class UserData {
-
-    private static UserData instance;
 
     private String userID;
     private String fullName;
@@ -33,13 +33,10 @@ public final class UserData {
         setProfilePicture(null);
     }
 
-    public static UserData getInstance() {
-        if (instance == null) {
-            instance = new UserData();
-        }
-        return instance;
+    private String getUserID() {
+        return userID;
     }
-
+    
     private void setUserID(String userID) {
         this.userID = userID;
     }
@@ -92,16 +89,6 @@ public final class UserData {
         return profilePicture;
     }
 
-    public void reset() {
-        setUserID(null);
-        setFullName(null);
-        setUsername(null);
-        setEmail(null);
-        setPassword(null);
-        setRole(null);
-        setProfilePicture(null);
-    }
-
     private String getNextUserID() throws SQLException {
         String prefix = (role == UserRole.ADMIN) ? "A" : "S";
 
@@ -122,11 +109,26 @@ public final class UserData {
         }
     }
 
-    public void readPasswordByUsernameOrEmail(String usernameOrEmail)
-            throws SQLException {
+    public void updatePassword(String newPassword) throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT password FROM user WHERE username = ? OR email = ?"
+                    "UPDATE user "
+                    + "SET password = ? "
+                    + "WHERE user_id = ?"
+            );
+
+            statement.setString(1, newPassword);
+            statement.setString(2, getUserID());
+
+            statement.executeUpdate();
+        }
+    }
+
+    public void readUserDataFromDatabase(String usernameOrEmail)
+            throws SQLException, IOException {
+        try (Connection connection = DatabaseManager.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM user WHERE username = ? OR email = ?"
             );
 
             statement.setString(1, usernameOrEmail);
@@ -135,46 +137,16 @@ public final class UserData {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                password = resultSet.getString("password");
-            }
-        }
-    }
-
-    public void updatePasswordByUsernameOrEmail(String newPassword, String usernameOrEmail)
-            throws SQLException {
-        try (Connection connection = DatabaseManager.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE user "
-                    + "SET password = ? "
-                    + "WHERE username = ? OR email = ?"
-            );
-
-            statement.setString(1, newPassword);
-            statement.setString(2, usernameOrEmail);
-            statement.setString(3, usernameOrEmail);
-
-            statement.executeUpdate();
-        }
-    }
-
-    public void readEmailByUsername(String username) throws SQLException {
-        try (Connection connection = DatabaseManager.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT email FROM user WHERE username = ?"
-            );
-
-            statement.setString(1, username);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
+                userID = resultSet.getString("user_id");
+                fullName = resultSet.getString("full_name");
+                username = resultSet.getString("username");
                 email = resultSet.getString("email");
+                password = resultSet.getString("password");
+                role = UserRole.valueOf(resultSet.getString("user_role"));
+                Blob pictureBlob = resultSet.getBlob("profile_picture");
+                profilePicture = ImageUtils.convertBlobToByteArray(pictureBlob);
             }
         }
-    }
-
-    public void readUserDataFromDatabase() throws SQLException {
-        // TODO
     }
 
     public void saveUserDataToDatabase() throws SQLException {

@@ -17,19 +17,14 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginPage
+     *
+     * @param userData
      */
-    public ResetPasswordPage() {
+    public ResetPasswordPage(UserData userData) {
         initComponents();
-        userData = UserData.getInstance();
+        this.userData = userData;
         isPasswordValid = false;
         isConfirmPasswordValid = false;
-        try {
-            userData.readPasswordByUsernameOrEmail(userData.getEmail());
-        } catch (SQLException ex) {
-            UIUtils.displayErrorMessage(ex.getMessage());
-            Logger.getLogger(ResetPasswordPage.class.getName())
-                    .log(Level.SEVERE, null, ex);
-        }
     }
 
     /**
@@ -345,16 +340,13 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
     private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
         if (isPasswordValid && isConfirmPasswordValid) {
-            userData.setPassword(newPassword);
             try {
-                userData.updatePasswordByUsernameOrEmail(newPassword,
-                        userData.getEmail());
+                userData.updatePassword(newPassword);
                 dispose();
                 new ResetPasswordSuccessfulPage().setVisible(true);
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage(ex.getMessage());
-                Logger.getLogger(ResetPasswordPage.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_confirmButtonMouseClicked
@@ -422,19 +414,29 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         newPassword = new String(passwordField.getPassword());
-        ValidationResult passwordValidation = ValidationHandler
-                .validatePassword(newPassword);
 
-        if (passwordValidation.isValid()) {
-            ValidationResult matchValidation = ValidationHandler
-                    .checkIfNewPasswordMatchesOld(newPassword,
-                            userData.getPassword());
-            isPasswordValid = matchValidation.isValid();
-            UIUtils.setFieldErrorState(passwordField, passwordErrorLabel,
-                    matchValidation);
+        if (!newPassword.trim().isEmpty()) {
+            ValidationResult passwordValidation = ValidationHandler.validatePassword(newPassword);
+
+            if (passwordValidation.isValid()) {
+                ValidationResult matchValidation = ValidationHandler
+                        .checkIfNewPasswordMatchesOld(newPassword, userData.getPassword());
+                isPasswordValid = matchValidation.isValid();
+
+                if (!matchValidation.isValid()) {
+                    UIUtils.setFieldErrorState(passwordField);
+                    UIUtils.setErrorLabelMessage(passwordErrorLabel, matchValidation.getErrorMessage());
+                } else {
+                    UIUtils.resetFieldState(passwordField);
+                    UIUtils.resetErrorLabel(passwordErrorLabel);
+                }
+            } else {
+                UIUtils.setFieldErrorState(passwordField);
+                UIUtils.setErrorLabelMessage(passwordErrorLabel, passwordValidation.getErrorMessage());
+            }
         } else {
-            UIUtils.setFieldErrorState(passwordField, passwordErrorLabel,
-                    passwordValidation);
+            UIUtils.resetFieldState(passwordField);
+            UIUtils.resetErrorLabel(passwordErrorLabel);
         }
 
         confirmPasswordFieldKeyReleased(evt);
@@ -442,11 +444,24 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
     private void confirmPasswordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordFieldKeyReleased
         String confirmPassword = new String(confirmPasswordField.getPassword());
-        ValidationResult confirmPasswordValidation = ValidationHandler
-                .confirmPasswordMatches(newPassword, confirmPassword);
-        isConfirmPasswordValid = confirmPasswordValidation.isValid();
-        UIUtils.setFieldErrorState(confirmPasswordField,
-                confirmPasswordErrorLabel, confirmPasswordValidation);
+
+        if (!confirmPassword.trim().isEmpty()) {
+            ValidationResult confirmPasswordValidation = ValidationHandler
+                    .confirmPasswordMatches(newPassword, confirmPassword);
+            isConfirmPasswordValid = confirmPasswordValidation.isValid();
+
+            if (!confirmPasswordValidation.isValid()) {
+                UIUtils.setFieldErrorState(confirmPasswordField);
+                UIUtils.setErrorLabelMessage(confirmPasswordErrorLabel,
+                        confirmPasswordValidation.getErrorMessage());
+            } else {
+                UIUtils.resetFieldState(confirmPasswordField);
+                UIUtils.resetErrorLabel(confirmPasswordErrorLabel);
+            }
+        } else {
+            UIUtils.resetFieldState(confirmPasswordField);
+            UIUtils.resetErrorLabel(confirmPasswordErrorLabel);
+        }
     }//GEN-LAST:event_confirmPasswordFieldKeyReleased
 
     /**
@@ -484,7 +499,7 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ResetPasswordPage().setVisible(true);
+                new ResetPasswordPage(new UserData()).setVisible(true);
             }
         });
     }

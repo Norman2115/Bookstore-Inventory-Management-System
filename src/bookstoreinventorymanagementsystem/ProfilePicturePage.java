@@ -25,10 +25,11 @@ public class ProfilePicturePage extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginPage
+     * @param userData
      */
-    public ProfilePicturePage() {
+    public ProfilePicturePage(UserData userData) {
         initComponents();
-        userData = UserData.getInstance();
+        this.userData = userData;
     }
 
     private void displayProfilePicture(File file) {
@@ -45,8 +46,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
     private byte[] convertFileToByteArray(File file) {
         byte[] byteArray = null;
         try (BufferedInputStream bis = new BufferedInputStream(
-                new FileInputStream(file)); 
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
+                new FileInputStream(file)); ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = bis.read(buffer)) != -1) {
@@ -185,11 +185,11 @@ public class ProfilePicturePage extends javax.swing.JFrame {
         dontHaveAccountLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         dontHaveAccountLabel.setForeground(new java.awt.Color(0, 100, 0));
         dontHaveAccountLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        dontHaveAccountLabel.setText("Don't have an account?");
+        dontHaveAccountLabel.setText("Already have an account?");
 
         goToSignUpButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         goToSignUpButton.setForeground(new java.awt.Color(0, 100, 0));
-        goToSignUpButton.setText("Sign up");
+        goToSignUpButton.setText("Login");
         goToSignUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 goToSignUpButtonMouseClicked(evt);
@@ -254,7 +254,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                         .addGap(32, 32, 32)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addComponent(dontHaveAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(dontHaveAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(goToSignUpButton))
                             .addComponent(finishButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -331,12 +331,10 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                 new SignUpSuccessfulPage().setVisible(true);
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ex.getMessage());
-                Logger.getLogger(ProfilePicturePage.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            UIUtils.setErrorLabelMessage(noPictureErrorLabel,
-                    new ValidationResult(false, "Must upload a picture"));
+            UIUtils.setErrorLabelMessage(noPictureErrorLabel, "Must upload a picture");
         }
     }//GEN-LAST:event_finishButtonMouseClicked
 
@@ -374,7 +372,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
 
     private void goToSignUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMouseClicked
         dispose();
-        new RoleSelectionPage().setVisible(true);
+        new LoginPage().setVisible(true);
     }//GEN-LAST:event_goToSignUpButtonMouseClicked
 
     private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
@@ -432,7 +430,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProfilePicturePage().setVisible(true);
+                new ProfilePicturePage(new UserData()).setVisible(true);
             }
         });
     }

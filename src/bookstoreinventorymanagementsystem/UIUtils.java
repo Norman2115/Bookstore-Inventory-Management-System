@@ -53,83 +53,21 @@ public class UIUtils {
         errorLabel.setText("");
     }
 
-    /**
-     * Sets the error message based on the validation result. If the validation
-     * result is invalid, it sets the error message provided for the given error
-     * label. Otherwise, it resets the error label by clearing the error
-     * message.
-     * <p>
-     * This method is used when displaying error messages outside of text field
-     * validation scenarios.
-     *
-     * @param errorLabel the label to display the error message.
-     * @param validation a ValidationResult representing the result of the
-     * validation.
-     */
-    public static void setErrorLabelMessage(
-            JLabel errorLabel,
-            ValidationResult validation
-    ) {
-        if (!validation.isValid()) {
-            errorLabel.setText(validation.getErrorMessage());
-            errorLabel.setForeground(ColorManager.MEDIUM_RED);
-            Font font = errorLabel.getFont();
-            errorLabel.setFont(new Font(font.getName(), font.getStyle(), 10));
-            errorLabel.setMaximumSize(new Dimension(errorLabel.getWidth(), font.getSize()));
-        } else {
-            resetErrorLabel(errorLabel);
-        }
+    public static void setErrorLabelMessage(JLabel errorLabel, String errorMessage) {
+        errorLabel.setText(errorMessage);
+        errorLabel.setForeground(ColorManager.MEDIUM_RED);
+        Font font = errorLabel.getFont();
+        errorLabel.setFont(new Font(font.getName(), font.getStyle(), 10));
+        errorLabel.setMaximumSize(new Dimension(errorLabel.getWidth(), font.getSize()));
     }
 
-    /**
-     * Sets the error state for a text field and its associated error label
-     * based on the validation result. If the validation result is invalid, it
-     * sets the border color of the text field to red and updates the error
-     * label with the provided error message. If the result is valid or empty,
-     * it resets both field and error label states by restoring the original
-     * border color of the text field and clearing the error message.
-     * <p>
-     * This method is used in conjunction with text field validation to display
-     * errors related to the content of the text field.
-     *
-     * @param field the text field to set the error state
-     * @param errorLabel
-     * @param validation a ValidationResult representing the result of the
-     * validation.
-     */
-    public static void setFieldErrorState(
-            JTextComponent field,
-            JLabel errorLabel,
-            ValidationResult validation
-    ) {
-        if (field.getText().trim().isEmpty()) {
-            resetFieldState(field);
-            resetErrorLabel(errorLabel);
-            return;
-        }
-
-        if (!validation.isValid()) {
-            field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
-            setErrorLabelMessage(errorLabel, validation);
-        } else {
-            resetFieldState(field);
-            resetErrorLabel(errorLabel);
-        }
+    public static void setFieldErrorState(JTextComponent field) {
+        field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
     }
 
-    /**
-     * Marks a text field as required. If the field is empty, it sets the border
-     * color to red and displays an error message "Field is required" in the
-     * label.
-     *
-     * @param field the text field to mark as required.
-     * @param errorLabel the error label associated with the text field.
-     */
     public static void markFieldAsRequired(JTextComponent field, JLabel errorLabel) {
-        if (field.getText().trim().isEmpty()) {
-            field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
-            setErrorLabelMessage(errorLabel, new ValidationResult(false, "Field is required"));
-        }
+        field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
+        setErrorLabelMessage(errorLabel, "Field is required");
     }
 
     /**
