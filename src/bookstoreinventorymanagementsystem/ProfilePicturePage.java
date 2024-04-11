@@ -45,8 +45,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
     private byte[] convertFileToByteArray(File file) {
         byte[] byteArray = null;
         try (BufferedInputStream bis = new BufferedInputStream(
-                new FileInputStream(file)); 
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
+                new FileInputStream(file)); ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = bis.read(buffer)) != -1) {
@@ -331,12 +330,10 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                 new SignUpSuccessfulPage().setVisible(true);
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ex.getMessage());
-                Logger.getLogger(ProfilePicturePage.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            UIUtils.setErrorLabelMessage(noPictureErrorLabel,
-                    new ValidationResult(false, "Must upload a picture"));
+            UIUtils.setErrorLabelMessage(noPictureErrorLabel, "Must upload a picture");
         }
     }//GEN-LAST:event_finishButtonMouseClicked
 

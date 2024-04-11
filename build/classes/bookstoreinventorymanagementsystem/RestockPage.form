@@ -660,7 +660,7 @@
                       <Color blue="f8" green="fc" red="fd" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="LOW STOCK"/>
+                    <Property name="text" type="java.lang.String" value="AMOUNT PRODUCT"/>
                   </Properties>
                 </Component>
               </SubComponents>

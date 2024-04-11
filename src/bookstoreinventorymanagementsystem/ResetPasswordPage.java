@@ -422,19 +422,26 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         newPassword = new String(passwordField.getPassword());
-        ValidationResult passwordValidation = ValidationHandler
-                .validatePassword(newPassword);
 
-        if (passwordValidation.isValid()) {
-            ValidationResult matchValidation = ValidationHandler
-                    .checkIfNewPasswordMatchesOld(newPassword,
-                            userData.getPassword());
-            isPasswordValid = matchValidation.isValid();
-            UIUtils.setFieldErrorState(passwordField, passwordErrorLabel,
-                    matchValidation);
+        if (!newPassword.trim().isEmpty()) {
+            ValidationResult passwordValidation = ValidationHandler.validatePassword(newPassword);
+
+            if (passwordValidation.isValid()) {
+                ValidationResult matchValidation = ValidationHandler
+                        .checkIfNewPasswordMatchesOld(newPassword, userData.getPassword());
+                isPasswordValid = matchValidation.isValid();
+
+                if (!matchValidation.isValid()) {
+                    UIUtils.setFieldErrorState(passwordField);
+                    UIUtils.setErrorLabelMessage(passwordErrorLabel, matchValidation.getErrorMessage());
+                }
+            } else {
+                UIUtils.setFieldErrorState(passwordField);
+                UIUtils.setErrorLabelMessage(passwordErrorLabel, passwordValidation.getErrorMessage());
+            }
         } else {
-            UIUtils.setFieldErrorState(passwordField, passwordErrorLabel,
-                    passwordValidation);
+            UIUtils.resetFieldState(passwordField);
+            UIUtils.resetErrorLabel(passwordErrorLabel);
         }
 
         confirmPasswordFieldKeyReleased(evt);
@@ -442,11 +449,18 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
     private void confirmPasswordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordFieldKeyReleased
         String confirmPassword = new String(confirmPasswordField.getPassword());
-        ValidationResult confirmPasswordValidation = ValidationHandler
-                .confirmPasswordMatches(newPassword, confirmPassword);
-        isConfirmPasswordValid = confirmPasswordValidation.isValid();
-        UIUtils.setFieldErrorState(confirmPasswordField,
-                confirmPasswordErrorLabel, confirmPasswordValidation);
+
+        if (confirmPassword.trim().isEmpty()) {
+            ValidationResult confirmPasswordValidation = ValidationHandler
+                    .confirmPasswordMatches(newPassword, confirmPassword);
+            isConfirmPasswordValid = confirmPasswordValidation.isValid();
+
+            if (!confirmPasswordValidation.isValid()) {
+                UIUtils.setFieldErrorState(confirmPasswordField);
+                UIUtils.setErrorLabelMessage(confirmPasswordErrorLabel,
+                        confirmPasswordValidation.getErrorMessage());
+            }
+        }
     }//GEN-LAST:event_confirmPasswordFieldKeyReleased
 
     /**

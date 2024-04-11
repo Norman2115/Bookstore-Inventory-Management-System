@@ -394,8 +394,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
             dispose();
             new SignUpPage().setVisible(true);
         } else {
-            UIUtils.setErrorLabelMessage(roleErrorLabel,
-                    new ValidationResult(false, "Must select a role"));
+            UIUtils.setErrorLabelMessage(roleErrorLabel, "Must select a role");
         }
     }//GEN-LAST:event_continueButtonMouseClicked
 

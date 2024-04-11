@@ -341,20 +341,18 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
     private void finishButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseClicked
         String enteredCode = verificationCodeField.getText();
 
-        if (enteredCode.trim().isEmpty()) {
-            UIUtils.markFieldAsRequired(verificationCodeField,
-                    verificationCodeErrorLabel);
-            return;
-        }
+        if (!enteredCode.trim().isEmpty()) {
+            ValidationResult codeValidation = ValidationHandler.validateVerificationCode(enteredCode, verificationCode);
 
-        ValidationResult codeValidation = ValidationHandler
-                .validateVerificationCode(enteredCode, verificationCode);
-        UIUtils.setFieldErrorState(verificationCodeField,
-                verificationCodeErrorLabel, codeValidation);
-
-        if (codeValidation.isValid()) {
-            dispose();
-            new ResetPasswordPage().setVisible(true);
+            if (codeValidation.isValid()) {
+                dispose();
+                new ResetPasswordPage().setVisible(true);
+            } else {
+                UIUtils.setFieldErrorState(verificationCodeField);
+                UIUtils.setErrorLabelMessage(verificationCodeErrorLabel, codeValidation.getErrorMessage());
+            }
+        } else {
+            UIUtils.markFieldAsRequired(verificationCodeField, verificationCodeErrorLabel);
         }
     }//GEN-LAST:event_finishButtonMouseClicked
 
@@ -410,16 +408,13 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
     }//GEN-LAST:event_verificationCodeFieldKeyPressed
 
     private void verificationCodeFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyReleased
-        if (verificationCodeField.getText().trim().isEmpty()) {
-            UIUtils.resetFieldState(verificationCodeField);
-            UIUtils.resetErrorLabel(verificationCodeErrorLabel);
-        }
+        UIUtils.resetFieldState(verificationCodeField);
+        UIUtils.resetErrorLabel(verificationCodeErrorLabel);
     }//GEN-LAST:event_verificationCodeFieldKeyReleased
 
     private void verificationCodeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c)
-                || verificationCodeField.getText().length() >= 6) {
+        if (!Character.isDigit(c) || verificationCodeField.getText().length() >= 6) {
             evt.consume();
         }
     }//GEN-LAST:event_verificationCodeFieldKeyTyped

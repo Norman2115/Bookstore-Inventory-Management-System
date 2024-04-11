@@ -4,13 +4,20 @@
  */
 package bookstoreinventorymanagementsystem;
 
-import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 /**
  *
  * @author User
  */
 public class AdminHomePage extends javax.swing.JFrame {
+
+    private final UserData userData;
 
     /**
      * Creates new form Admin_homepage
@@ -20,6 +27,15 @@ public class AdminHomePage extends javax.swing.JFrame {
         displayPanel.removeAll();
         welcomeText text = new welcomeText();
         displayPanel.add(text).setVisible(true);
+
+        userData = UserData.getInstance();
+//        ImageIcon icon = new ImageIcon(userData.getProfilePicture());
+//        Image image = icon.getImage();
+//        Image scaledImage = image.getScaledInstance(profilePictureLabel.getWidth(),
+//                profilePictureLabel.getHeight(), Image.SCALE_SMOOTH);
+//        profilePictureLabel.setIcon(new ImageIcon(scaledImage));
+//        profilePictureLabel.revalidate();
+//        profilePictureLabel.repaint();
 
     }
 
@@ -49,6 +65,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         viewProductButton = new javax.swing.JPanel();
         viewProductLable = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        profilePictureLabel = new javax.swing.JLabel();
         displayPanel = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -257,7 +274,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         invoiceLable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         invoiceLable.setForeground(new java.awt.Color(253, 252, 248));
         invoiceLable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        invoiceLable.setText("INVOICE");
+        invoiceLable.setText("VIEW INVOICE");
         invoiceLable.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout invoiceButtonLayout = new javax.swing.GroupLayout(invoiceButton);
@@ -365,15 +382,23 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 140, 214));
 
+        profilePictureLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(profilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 160, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(profilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout sideNavBarLayout = new javax.swing.GroupLayout(sideNavBar);
@@ -395,8 +420,8 @@ public class AdminHomePage extends javax.swing.JFrame {
         sideNavBarLayout.setVerticalGroup(
             sideNavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sideNavBarLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(viewProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -498,7 +523,8 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     //logout
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:
+        dispose();
+        new LoginPage().setVisible(true);
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void invoiceButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseReleased
@@ -519,7 +545,9 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     //invoice
     private void invoiceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseClicked
-        //
+        displayPanel.removeAll();
+        ViewInvoicePage viewInvoice = new ViewInvoicePage();
+        displayPanel.add(viewInvoice).setVisible(true);
     }//GEN-LAST:event_invoiceButtonMouseClicked
 
     private void restockButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseReleased
@@ -671,6 +699,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel logoutButton;
     private javax.swing.JLabel logoutLable;
+    private javax.swing.JLabel profilePictureLabel;
     private javax.swing.JPanel restockButton;
     private javax.swing.JLabel restockLable;
     private javax.swing.JPanel sideNavBar;
