@@ -14,15 +14,15 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
     private final UserData userData;
     private final EmailHandler emailHandler;
-    // private String verificationCode;
     private final Timer resendCodeButtonTimer;
 
     /**
      * Creates new form LoginPage
+     * @param userData
      */
-    public SignUpEmailVerificationPage() {
+    public SignUpEmailVerificationPage(UserData userData) {
+        this.userData = userData;
         initComponents();
-        userData = UserData.getInstance();
         LeftPanel.grabFocus();
         emailHandler = new EmailHandler();
         sendVerificationEmailAsync(userData.getEmail());
@@ -35,7 +35,6 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
         Thread emailThread = new Thread(() -> {
             try {
                 emailHandler.sendRegistrationVerificationEmail(toEmail);
-                // verificationCode = emailHandler.getVerificationCode();
             } catch (MessagingException | UnsupportedEncodingException ex) {
                 UIUtils.displayErrorMessage(ex.getMessage());
                 dispose();
@@ -129,7 +128,7 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
         subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));
         subTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subTitleLabel.setText("We sent an email to " + UserData.getInstance().getEmail());
+        subTitleLabel.setText("We sent an email to " + userData.getEmail());
 
         verificationCodeLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         verificationCodeLabel.setForeground(new java.awt.Color(0, 100, 0));
@@ -373,7 +372,7 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
             if (codeValidation.isValid()) {
                 dispose();
-                new ProfilePicturePage().setVisible(true);
+                new ProfilePicturePage(userData).setVisible(true);
             } else {
                 UIUtils.setFieldErrorState(verificationCodeField);
                 UIUtils.setErrorLabelMessage(verificationCodeErrorLabel, codeValidation.getErrorMessage());
@@ -525,7 +524,7 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SignUpEmailVerificationPage().setVisible(true);
+                new SignUpEmailVerificationPage(new UserData()).setVisible(true);
             }
         });
     }

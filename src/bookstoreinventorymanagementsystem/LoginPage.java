@@ -19,8 +19,7 @@ public class LoginPage extends javax.swing.JFrame {
      * Creates new form LoginPage
      */
     public LoginPage() {
-        userData = UserData.getInstance();
-        userData.reset();
+        userData = new UserData();
         isUsernameValid = false;
         isPasswordValid = false;
         initComponents();
@@ -357,6 +356,7 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         String usernameOrEmail = usernameField.getText();
+        String email = "";
 
         if (!usernameOrEmail.trim().isEmpty()) {
             try {
@@ -366,9 +366,9 @@ public class LoginPage extends javax.swing.JFrame {
 
                 if (usernameOrEmailValidation.isValid()) {
                     if (!usernameOrEmail.contains("@")) {
-                        userData.readEmailByUsername(usernameOrEmail);
+                        email = UserDAO.readEmailByUsername(usernameOrEmail);
                     } else {
-                        userData.setEmail(usernameOrEmail);
+                        email = usernameOrEmail;
                     }
                 } else {
                     UIUtils.setFieldErrorState(usernameField);
@@ -387,7 +387,7 @@ public class LoginPage extends javax.swing.JFrame {
 
         if (!password.trim().isEmpty()) {
             try {
-                String actualPassword = UserData.readPasswordByUsernameOrEmail(userData.getEmail());
+                String actualPassword = UserDAO.readPasswordByUsernameOrEmail(email);
                 ValidationResult passwordMatchValidation = ValidationHandler
                         .checkPasswordMatches(password, actualPassword);
                 isPasswordValid = passwordMatchValidation.isValid();
@@ -410,7 +410,7 @@ public class LoginPage extends javax.swing.JFrame {
                 userData.readUserDataFromDatabase(usernameOrEmail);
                 dispose();
                 if (userData.getRole() == UserRole.ADMIN) {
-                    new AdminHomePage().setVisible(true);
+                    new AdminHomePage(userData).setVisible(true);
                 } else {
                     new SalespersonHomePage().setVisible(true);
                 }
@@ -483,7 +483,7 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void goToSignUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMouseClicked
         dispose();
-        new RoleSelectionPage().setVisible(true);
+        new RoleSelectionPage(userData).setVisible(true);
     }//GEN-LAST:event_goToSignUpButtonMouseClicked
 
     private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked

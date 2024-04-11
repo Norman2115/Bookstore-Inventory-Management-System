@@ -1,6 +1,7 @@
 package bookstoreinventorymanagementsystem;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,8 +19,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
      */
     public UsernameValidationPage() {
         initComponents();
-        userData = UserData.getInstance();
-        userData.reset();
+        userData = new UserData();
     }
 
     /**
@@ -281,6 +281,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
 
     private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
         String usernameOrEmail = usernameOrEmailField.getText();
+        String email = "";
 
         if (!usernameOrEmail.trim().isEmpty()) {
             try {
@@ -288,12 +289,18 @@ public class UsernameValidationPage extends javax.swing.JFrame {
 
                 if (usernameOrEmailValidation.isValid()) {
                     if (!usernameOrEmail.contains("@")) {
-                        userData.readEmailByUsername(usernameOrEmail);
+                        email = UserDAO.readEmailByUsername(usernameOrEmail);
                     } else {
-                        userData.setEmail(usernameOrEmail);
+                        email = usernameOrEmail;
                     }
-                    dispose();
-                    new ResetPasswordEmailVerificationPage().setVisible(true);
+                    try {
+                        userData.readUserDataFromDatabase(usernameOrEmail);
+                        dispose();
+                        new ResetPasswordEmailVerificationPage(userData).setVisible(true);
+                    } catch (IOException ex) {
+                        UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                        Logger.getLogger(UsernameValidationPage.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } else {
                     UIUtils.setFieldErrorState(usernameOrEmailField);
                     UIUtils.setErrorLabelMessage(usernameOrEmailErrorLabel, usernameOrEmailValidation.getErrorMessage());

@@ -19,10 +19,11 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginPage
+     * @param userData
      */
-    public ResetPasswordEmailVerificationPage() {
+    public ResetPasswordEmailVerificationPage(UserData userData) {
+        this.userData = userData;
         initComponents();
-        userData = UserData.getInstance();
         emailHandler = new EmailHandler();
         sendResetPasswordEmailAsync(userData.getEmail());
         resendCodeButtonTimer = new Timer(10000, (ActionEvent e) -> {
@@ -127,7 +128,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
         subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));
         subTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subTitleLabel.setText("We sent an email to " + UserData.getInstance().getEmail());
+        subTitleLabel.setText("We sent an email to " + userData.getEmail());
 
         verificationCodeLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         verificationCodeLabel.setForeground(new java.awt.Color(0, 100, 0));
@@ -346,7 +347,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
 
             if (codeValidation.isValid()) {
                 dispose();
-                new ResetPasswordPage().setVisible(true);
+                new ResetPasswordPage(userData).setVisible(true);
             } else {
                 UIUtils.setFieldErrorState(verificationCodeField);
                 UIUtils.setErrorLabelMessage(verificationCodeErrorLabel, codeValidation.getErrorMessage());
@@ -478,7 +479,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ResetPasswordEmailVerificationPage().setVisible(true);
+                new ResetPasswordEmailVerificationPage(new UserData()).setVisible(true);
             }
         });
     }

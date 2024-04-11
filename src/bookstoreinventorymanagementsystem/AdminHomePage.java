@@ -1,15 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
-
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -21,22 +10,15 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     /**
      * Creates new form Admin_homepage
+     * @param userData
      */
-    public AdminHomePage() {
+    public AdminHomePage(UserData userData) {
         initComponents();
         displayPanel.removeAll();
         welcomeText text = new welcomeText();
         displayPanel.add(text).setVisible(true);
 
-        userData = UserData.getInstance();
-//        ImageIcon icon = new ImageIcon(userData.getProfilePicture());
-//        Image image = icon.getImage();
-//        Image scaledImage = image.getScaledInstance(profilePictureLabel.getWidth(),
-//                profilePictureLabel.getHeight(), Image.SCALE_SMOOTH);
-//        profilePictureLabel.setIcon(new ImageIcon(scaledImage));
-//        profilePictureLabel.revalidate();
-//        profilePictureLabel.repaint();
-
+        this.userData = userData;
     }
 
     /**
@@ -680,7 +662,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new AdminHomePage().setVisible(true);
+                new AdminHomePage(new UserData()).setVisible(true);
             }
         });
     }

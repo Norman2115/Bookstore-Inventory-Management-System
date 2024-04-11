@@ -23,10 +23,11 @@ public class SignUpPage extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginPage
+     * @param userData
      */
-    public SignUpPage() {
+    public SignUpPage(UserData userData) {
         initComponents();
-        userData = UserData.getInstance();
+        this.userData = userData;
         isFullNameValid = false;
         isUsernameValid = false;
         isPasswordValid = false;
@@ -447,7 +448,7 @@ public class SignUpPage extends javax.swing.JFrame {
             userData.setUsername(username);
             userData.setPassword(password);
             dispose();
-            new SignUpEmailVerificationPage().setVisible(true);
+            new SignUpEmailVerificationPage(userData).setVisible(true);
         }
     }//GEN-LAST:event_signUpButtonMouseClicked
 
@@ -496,7 +497,6 @@ public class SignUpPage extends javax.swing.JFrame {
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
 
     private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
-        userData.reset();
         dispose();
         new LoginPage().setVisible(true);
     }//GEN-LAST:event_goToLoginButtonMouseClicked
@@ -556,7 +556,7 @@ public class SignUpPage extends javax.swing.JFrame {
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
         username = usernameField.getText();
         if (!username.trim().isEmpty()) {
-            ValidationResult usernameValidation = ValidationHandler.validateEmail(username);
+            ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
             if (!usernameValidation.isValid()) {
                 UIUtils.setFieldErrorState(usernameField);
                 UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
@@ -663,7 +663,7 @@ public class SignUpPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SignUpPage().setVisible(true);
+                new SignUpPage(new UserData()).setVisible(true);
             }
         });
     }

@@ -15,8 +15,6 @@ import java.sql.SQLException;
  */
 public final class UserData {
 
-    private static UserData instance;
-
     private String userID;
     private String fullName;
     private String username;
@@ -35,13 +33,10 @@ public final class UserData {
         setProfilePicture(null);
     }
 
-    public static UserData getInstance() {
-        if (instance == null) {
-            instance = new UserData();
-        }
-        return instance;
+    private String getUserID() {
+        return userID;
     }
-
+    
     private void setUserID(String userID) {
         this.userID = userID;
     }
@@ -94,16 +89,6 @@ public final class UserData {
         return profilePicture;
     }
 
-    public void reset() {
-        setUserID(null);
-        setFullName(null);
-        setUsername(null);
-        setEmail(null);
-        setPassword(null);
-        setRole(null);
-        setProfilePicture(null);
-    }
-
     private String getNextUserID() throws SQLException {
         String prefix = (role == UserRole.ADMIN) ? "A" : "S";
 
@@ -124,55 +109,18 @@ public final class UserData {
         }
     }
 
-    public static String readPasswordByUsernameOrEmail(String usernameOrEmail)
-            throws SQLException {
-        try (Connection connection = DatabaseManager.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT password FROM user WHERE username = ? OR email = ?"
-            );
-
-            statement.setString(1, usernameOrEmail);
-            statement.setString(2, usernameOrEmail);
-
-            ResultSet resultSet = statement.executeQuery();
-            
-            if (resultSet.next()) {
-                return resultSet.getString("password");
-            }
-        }
-        return "";
-    }
-
-    public void updatePasswordByUsernameOrEmail(String newPassword, String usernameOrEmail)
-            throws SQLException {
+    public void updatePassword(String newPassword) throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "UPDATE user "
                     + "SET password = ? "
-                    + "WHERE username = ? OR email = ?"
+                    + "WHERE user_id = ?"
             );
 
             statement.setString(1, newPassword);
-            statement.setString(2, usernameOrEmail);
-            statement.setString(3, usernameOrEmail);
+            statement.setString(2, getUserID());
 
             statement.executeUpdate();
-        }
-    }
-
-    public void readEmailByUsername(String username) throws SQLException {
-        try (Connection connection = DatabaseManager.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT email FROM user WHERE username = ?"
-            );
-
-            statement.setString(1, username);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                email = resultSet.getString("email");
-            }
         }
     }
 
@@ -196,7 +144,7 @@ public final class UserData {
                 password = resultSet.getString("password");
                 role = UserRole.valueOf(resultSet.getString("user_role"));
                 Blob pictureBlob = resultSet.getBlob("profile_picture");
-                profilePicture = ImageUtils.convertBlobToByteArray(pictureBlob);         
+                profilePicture = ImageUtils.convertBlobToByteArray(pictureBlob);
             }
         }
     }
