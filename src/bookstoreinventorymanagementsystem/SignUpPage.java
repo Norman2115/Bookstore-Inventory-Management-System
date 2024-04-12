@@ -23,10 +23,11 @@ public class SignUpPage extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginPage
+     * @param userData
      */
-    public SignUpPage() {
+    public SignUpPage(UserData userData) {
         initComponents();
-        userData = UserData.getInstance();
+        this.userData = userData;
         isFullNameValid = false;
         isUsernameValid = false;
         isPasswordValid = false;
@@ -424,10 +425,21 @@ public class SignUpPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
-        UIUtils.markFieldAsRequired(fullNameField, fullNameErrorLabel);
-        UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
-        UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
-        UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
+        if (fullNameField.getText().trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(fullNameField, fullNameErrorLabel);
+        }
+
+        if (emailField.getText().trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
+        }
+
+        if (usernameField.getText().trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
+        }
+
+        if (new String(passwordField.getPassword()).trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
+        }
 
         if (isFullNameValid && isEmailValid && isUsernameValid
                 && isPasswordValid) {
@@ -436,7 +448,7 @@ public class SignUpPage extends javax.swing.JFrame {
             userData.setUsername(username);
             userData.setPassword(password);
             dispose();
-            new SignUpEmailVerificationPage().setVisible(true);
+            new SignUpEmailVerificationPage(userData).setVisible(true);
         }
     }//GEN-LAST:event_signUpButtonMouseClicked
 
@@ -485,7 +497,6 @@ public class SignUpPage extends javax.swing.JFrame {
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
 
     private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
-        userData.reset();
         dispose();
         new LoginPage().setVisible(true);
     }//GEN-LAST:event_goToLoginButtonMouseClicked
@@ -508,39 +519,87 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void fullNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyReleased
         fullName = fullNameField.getText();
-        ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
-        UIUtils.setFieldErrorState(fullNameField, fullNameErrorLabel, fullNameValidation);
-        isFullNameValid = fullNameValidation.isValid();
+        if (!fullName.trim().isEmpty()) {
+            ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
+            isFullNameValid = fullNameValidation.isValid();
+            if (!fullNameValidation.isValid()) {
+                UIUtils.setFieldErrorState(fullNameField);
+                UIUtils.setErrorLabelMessage(fullNameErrorLabel, fullNameValidation.getErrorMessage());
+            } else {
+                UIUtils.resetFieldState(fullNameField);
+                UIUtils.resetErrorLabel(fullNameErrorLabel);
+            }
+        } else {
+            UIUtils.resetFieldState(emailField);
+            UIUtils.resetErrorLabel(emailErrorLabel);
+        }
     }//GEN-LAST:event_fullNameFieldKeyReleased
 
     private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
         email = emailField.getText();
-        ValidationResult emailValidation = ValidationHandler.validateEmail(email);
-        UIUtils.setFieldErrorState(emailField, emailErrorLabel, emailValidation);
-        isEmailValid = emailValidation.isValid();
+        if (!email.trim().isEmpty()) {
+            ValidationResult emailValidation = ValidationHandler.validateEmail(email);
+            isEmailValid = emailValidation.isValid();
+            if (!emailValidation.isValid()) {
+                UIUtils.setFieldErrorState(emailField);
+                UIUtils.setErrorLabelMessage(emailErrorLabel, emailValidation.getErrorMessage());
+            } else {
+                UIUtils.resetFieldState(emailField);
+                UIUtils.resetErrorLabel(emailErrorLabel);
+            }
+        } else {
+            UIUtils.resetFieldState(emailField);
+            UIUtils.resetErrorLabel(emailErrorLabel);
+        }
     }//GEN-LAST:event_emailFieldKeyReleased
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
         username = usernameField.getText();
-        ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
-        UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameValidation);
-        if (usernameValidation.isValid()) {
-            try {
-                ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
-                UIUtils.setFieldErrorState(usernameField, usernameErrorLabel, usernameUniqueValidation);
-                isUsernameValid = usernameUniqueValidation.isValid();
-            } catch (SQLException se) {
-                UIUtils.displayErrorMessage(se.getMessage());
-                Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, null, se);
+        if (!username.trim().isEmpty()) {
+            ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
+            if (!usernameValidation.isValid()) {
+                UIUtils.setFieldErrorState(usernameField);
+                UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
+            } else {
+                UIUtils.setFieldErrorState(usernameField);
+                UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
+                try {
+                    ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
+                    isUsernameValid = usernameUniqueValidation.isValid();
+                    if (!usernameUniqueValidation.isValid()) {
+                        UIUtils.setFieldErrorState(usernameField);
+                        UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
+                    } else {
+                        UIUtils.resetFieldState(usernameField);
+                        UIUtils.resetErrorLabel(usernameErrorLabel);
+                    }
+                } catch (SQLException ex) {
+                    UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                    Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, "Database connection error", ex);
+                }
             }
+        } else {
+            UIUtils.resetFieldState(usernameField);
+            UIUtils.resetErrorLabel(usernameErrorLabel);
         }
     }//GEN-LAST:event_usernameFieldKeyReleased
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         password = new String(passwordField.getPassword());
-        ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
-        UIUtils.setFieldErrorState(passwordField, passwordErrorLabel, passwordValidation);
-        isPasswordValid = passwordValidation.isValid();
+        if (!password.trim().isEmpty()) {
+            ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
+            isPasswordValid = passwordValidation.isValid();
+            if (!passwordValidation.isValid()) {
+                UIUtils.setFieldErrorState(passwordField);
+                UIUtils.setErrorLabelMessage(passwordErrorLabel, passwordValidation.getErrorMessage());
+            } else {
+                UIUtils.resetFieldState(passwordField);
+                UIUtils.resetErrorLabel(passwordErrorLabel);
+            }
+        } else {
+            UIUtils.resetFieldState(passwordField);
+            UIUtils.resetErrorLabel(passwordErrorLabel);
+        }
     }//GEN-LAST:event_passwordFieldKeyReleased
 
     private void fullNameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyTyped
@@ -604,7 +663,7 @@ public class SignUpPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SignUpPage().setVisible(true);
+                new SignUpPage(new UserData()).setVisible(true);
             }
         });
     }

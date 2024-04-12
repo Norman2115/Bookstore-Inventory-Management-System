@@ -1,5 +1,6 @@
 package bookstoreinventorymanagementsystem;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,13 +12,16 @@ import java.util.logging.Logger;
 public class LoginPage extends javax.swing.JFrame {
 
     private final UserData userData;
+    private boolean isUsernameValid;
+    private boolean isPasswordValid;
 
     /**
      * Creates new form LoginPage
      */
     public LoginPage() {
-        userData = UserData.getInstance();
-        userData.reset();
+        userData = new UserData();
+        isUsernameValid = false;
+        isPasswordValid = false;
         initComponents();
     }
 
@@ -49,6 +53,8 @@ public class LoginPage extends javax.swing.JFrame {
         dontHaveAccountLabel = new javax.swing.JLabel();
         goToSignUpButton = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
+        passwordErrorLabel = new javax.swing.JLabel();
+        usernameErrorLabel = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -108,7 +114,7 @@ public class LoginPage extends javax.swing.JFrame {
 
         usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(0, 100, 0));
-        usernameLabel.setText("Username");
+        usernameLabel.setText("Username or Email");
 
         usernameField.setBackground(new java.awt.Color(253, 252, 248));
         usernameField.setForeground(new java.awt.Color(0, 100, 0));
@@ -116,6 +122,11 @@ public class LoginPage extends javax.swing.JFrame {
         usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usernameFieldActionPerformed(evt);
+            }
+        });
+        usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyReleased(evt);
             }
         });
 
@@ -233,6 +244,11 @@ public class LoginPage extends javax.swing.JFrame {
                 passwordFieldActionPerformed(evt);
             }
         });
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
@@ -250,10 +266,6 @@ public class LoginPage extends javax.swing.JFrame {
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addComponent(dontHaveAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(goToSignUpButton))
-                            .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(usernameIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -263,7 +275,13 @@ public class LoginPage extends javax.swing.JFrame {
                                 .addComponent(showHidePasswordIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(forgotPasswordButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(dontHaveAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(goToSignUpButton))
+                            .addComponent(passwordErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(usernameErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 26, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -280,13 +298,17 @@ public class LoginPage extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(usernameField)
                     .addComponent(usernameIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-                .addGap(19, 19, 19)
+                .addGap(2, 2, 2)
+                .addComponent(usernameErrorLabel)
+                .addGap(17, 17, 17)
                 .addComponent(passwordLabel)
                 .addGap(13, 13, 13)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(showHidePasswordIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(passwordField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(2, 2, 2)
+                .addComponent(passwordErrorLabel)
+                .addGap(10, 10, 10)
                 .addComponent(forgotPasswordButton)
                 .addGap(18, 18, 18)
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -333,7 +355,70 @@ public class LoginPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-        // Navigate
+        String usernameOrEmail = usernameField.getText();
+        String email = "";
+
+        if (!usernameOrEmail.trim().isEmpty()) {
+            try {
+                ValidationResult usernameOrEmailValidation = ValidationHandler
+                        .validateUsernameOrEmail(usernameOrEmail);
+                isUsernameValid = usernameOrEmailValidation.isValid();
+
+                if (usernameOrEmailValidation.isValid()) {
+                    if (!usernameOrEmail.contains("@")) {
+                        email = UserDAO.readEmailByUsername(usernameOrEmail);
+                    } else {
+                        email = usernameOrEmail;
+                    }
+                } else {
+                    UIUtils.setFieldErrorState(usernameField);
+                    UIUtils.setErrorLabelMessage(usernameErrorLabel,
+                            usernameOrEmailValidation.getErrorMessage());
+                }
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
+        }
+
+        String password = new String(passwordField.getPassword());
+
+        if (!password.trim().isEmpty()) {
+            try {
+                String actualPassword = UserDAO.readPasswordByUsernameOrEmail(email);
+                ValidationResult passwordMatchValidation = ValidationHandler
+                        .checkPasswordMatches(password, actualPassword);
+                isPasswordValid = passwordMatchValidation.isValid();
+
+                if (!passwordMatchValidation.isValid()) {
+                    UIUtils.setFieldErrorState(passwordField);
+                    UIUtils.setErrorLabelMessage(passwordErrorLabel,
+                            passwordMatchValidation.getErrorMessage());
+                }
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
+        }
+
+        if (isUsernameValid && isPasswordValid) {
+            try {
+                userData.readUserDataFromDatabase(usernameOrEmail);
+                dispose();
+                if (userData.getRole() == UserRole.ADMIN) {
+                    new AdminHomePage(userData).setVisible(true);
+                } else {
+                    new SalespersonHomePage().setVisible(true);
+                }
+            } catch (SQLException | IOException ex) {
+                UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_loginButtonMouseClicked
 
     private void loginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseEntered
@@ -398,7 +483,7 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void goToSignUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMouseClicked
         dispose();
-        new RoleSelectionPage().setVisible(true);
+        new RoleSelectionPage(userData).setVisible(true);
     }//GEN-LAST:event_goToSignUpButtonMouseClicked
 
     private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
@@ -413,6 +498,16 @@ public class LoginPage extends javax.swing.JFrame {
         dispose();
         new UsernameValidationPage().setVisible(true);
     }//GEN-LAST:event_forgotPasswordButtonMouseClicked
+
+    private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
+        UIUtils.resetFieldState(usernameField);
+        UIUtils.resetErrorLabel(usernameErrorLabel);
+    }//GEN-LAST:event_usernameFieldKeyReleased
+
+    private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
+        UIUtils.resetFieldState(passwordField);
+        UIUtils.resetErrorLabel(passwordErrorLabel);
+    }//GEN-LAST:event_passwordFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -468,11 +563,13 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel loginButton;
     private javax.swing.JLabel loginLabel;
+    private javax.swing.JLabel passwordErrorLabel;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel showHidePasswordIcon;
     private javax.swing.JLabel subTitleLabel;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JLabel usernameErrorLabel;
     private javax.swing.JTextField usernameField;
     private javax.swing.JLabel usernameIcon;
     private javax.swing.JLabel usernameLabel;

@@ -161,11 +161,6 @@
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="usernameLabel" alignment="0" min="-2" pref="380" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="dontHaveAccountLabel" min="-2" pref="227" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="goToSignUpButton" min="-2" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="usernameField" min="-2" pref="351" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
@@ -179,6 +174,13 @@
                                   <Component id="passwordLabel" alignment="0" min="-2" pref="360" max="-2" attributes="0"/>
                                   <Component id="forgotPasswordButton" alignment="0" min="-2" pref="105" max="-2" attributes="0"/>
                                   <Component id="loginButton" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="dontHaveAccountLabel" min="-2" pref="227" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="goToSignUpButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="passwordErrorLabel" max="32767" attributes="0"/>
+                                  <Component id="usernameErrorLabel" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                           </Group>
@@ -201,14 +203,18 @@
                           <Component id="usernameField" max="32767" attributes="0"/>
                           <Component id="usernameIcon" pref="35" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Component id="usernameErrorLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="passwordLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="showHidePasswordIcon" pref="35" max="32767" attributes="0"/>
                           <Component id="passwordField" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                      <Component id="passwordErrorLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="forgotPasswordButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="loginButton" min="-2" max="-2" attributes="0"/>
@@ -254,7 +260,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="64" red="0" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Username"/>
+                <Property name="text" type="java.lang.String" value="Username or Email"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="usernameField">
@@ -275,6 +281,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usernameFieldActionPerformed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="usernameFieldKeyReleased"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="passwordLabel">
@@ -436,10 +443,15 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordFieldActionPerformed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="passwordFieldKeyReleased"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="passwordField.setEchoChar(&apos;\u2022&apos;);"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="passwordErrorLabel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="usernameErrorLabel">
             </Component>
           </SubComponents>
         </Container>

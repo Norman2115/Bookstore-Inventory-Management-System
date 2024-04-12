@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  * @author Teo Chung Henn
  */
 public class ValidationHandler {
-    
+
     /**
      * Validates username to ensure it meets length requirements. Usernames must
      * be between 6 and 16 characters long and contain only underscores.
@@ -241,12 +241,20 @@ public class ValidationHandler {
 
         return new ValidationResult(true, null);
     }
-    
+
     public static ValidationResult checkIfNewPasswordMatchesOld(String newPassword, String oldPassword) {
         if (newPassword.equals(oldPassword)) {
             return new ValidationResult(false, "New password must be different from the old password");
         }
-        
+
+        return new ValidationResult(true, null);
+    }
+
+    public static ValidationResult checkPasswordMatches(String entered, String actual) {
+        if (!entered.equals(actual)) {
+            return new ValidationResult(false, "Incorrect password");
+        }
+
         return new ValidationResult(true, null);
     }
 

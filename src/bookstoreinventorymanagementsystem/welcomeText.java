@@ -70,12 +70,13 @@ public class welcomeText extends javax.swing.JInternalFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         displayPanel1.setBackground(new java.awt.Color(253, 252, 248));
+        displayPanel1.setPreferredSize(new java.awt.Dimension(942, 630));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel4.setText("Inventory Management System");
+        jLabel4.setText("User Norman2115!");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 60)); // NOI18N
-        jLabel5.setText("Family Bookstore ");
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel5.setText("Hi, Catherine");
 
         javax.swing.GroupLayout displayPanel1Layout = new javax.swing.GroupLayout(displayPanel1);
         displayPanel1.setLayout(displayPanel1Layout);
@@ -84,16 +85,16 @@ public class welcomeText extends javax.swing.JInternalFrame {
             .addGroup(displayPanel1Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
                 .addGroup(displayPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addContainerGap(165, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap(266, Short.MAX_VALUE))
         );
         displayPanel1Layout.setVerticalGroup(
             displayPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayPanel1Layout.createSequentialGroup()
-                .addContainerGap(165, Short.MAX_VALUE)
+                .addGap(47, 47, 47)
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(253, 253, 253))
         );

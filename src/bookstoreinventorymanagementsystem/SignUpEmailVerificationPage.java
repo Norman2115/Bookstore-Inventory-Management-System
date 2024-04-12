@@ -14,15 +14,15 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
     private final UserData userData;
     private final EmailHandler emailHandler;
-    private String verificationCode;
     private final Timer resendCodeButtonTimer;
 
     /**
      * Creates new form LoginPage
+     * @param userData
      */
-    public SignUpEmailVerificationPage() {
+    public SignUpEmailVerificationPage(UserData userData) {
+        this.userData = userData;
         initComponents();
-        userData = UserData.getInstance();
         LeftPanel.grabFocus();
         emailHandler = new EmailHandler();
         sendVerificationEmailAsync(userData.getEmail());
@@ -35,7 +35,6 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
         Thread emailThread = new Thread(() -> {
             try {
                 emailHandler.sendRegistrationVerificationEmail(toEmail);
-                verificationCode = emailHandler.getVerificationCode();
             } catch (MessagingException | UnsupportedEncodingException ex) {
                 UIUtils.displayErrorMessage(ex.getMessage());
                 dispose();
@@ -129,7 +128,7 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
         subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));
         subTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subTitleLabel.setText("We sent an email to " + UserData.getInstance().getEmail());
+        subTitleLabel.setText("We sent an email to " + userData.getEmail());
 
         verificationCodeLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         verificationCodeLabel.setForeground(new java.awt.Color(0, 100, 0));
@@ -367,20 +366,19 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
     private void finishButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseClicked
         String enteredCode = verificationCodeField.getText();
 
-        if (enteredCode.trim().isEmpty()) {
-            UIUtils.markFieldAsRequired(verificationCodeField,
-                    verificationCodeErrorLabel);
-            return;
-        }
+        if (!enteredCode.trim().isEmpty()) {
+            ValidationResult codeValidation = ValidationHandler
+                    .validateVerificationCode(enteredCode, emailHandler.getVerificationCode());
 
-        ValidationResult codeValidation = ValidationHandler
-                .validateVerificationCode(enteredCode, verificationCode);
-        UIUtils.setFieldErrorState(verificationCodeField,
-                verificationCodeErrorLabel, codeValidation);
-
-        if (codeValidation.isValid()) {
-            dispose();
-            new ProfilePicturePage().setVisible(true);
+            if (codeValidation.isValid()) {
+                dispose();
+                new ProfilePicturePage(userData).setVisible(true);
+            } else {
+                UIUtils.setFieldErrorState(verificationCodeField);
+                UIUtils.setErrorLabelMessage(verificationCodeErrorLabel, codeValidation.getErrorMessage());
+            }
+        } else {
+            UIUtils.markFieldAsRequired(verificationCodeField, verificationCodeErrorLabel);
         }
     }//GEN-LAST:event_finishButtonMouseClicked
 
@@ -436,16 +434,13 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
     }//GEN-LAST:event_verificationCodeFieldKeyPressed
 
     private void verificationCodeFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyReleased
-        if (verificationCodeField.getText().trim().isEmpty()) {
-            UIUtils.resetFieldState(verificationCodeField);
-            UIUtils.resetErrorLabel(verificationCodeErrorLabel);
-        }
+        UIUtils.resetFieldState(verificationCodeField);
+        UIUtils.resetErrorLabel(verificationCodeErrorLabel);
     }//GEN-LAST:event_verificationCodeFieldKeyReleased
 
     private void verificationCodeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyTyped
         char c = evt.getKeyChar();
-        if (!Character.isDigit(c)
-                || verificationCodeField.getText().length() >= 6) {
+        if (!Character.isDigit(c) || verificationCodeField.getText().length() >= 6) {
             evt.consume();
         }
     }//GEN-LAST:event_verificationCodeFieldKeyTyped
@@ -529,7 +524,7 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SignUpEmailVerificationPage().setVisible(true);
+                new SignUpEmailVerificationPage(new UserData()).setVisible(true);
             }
         });
     }

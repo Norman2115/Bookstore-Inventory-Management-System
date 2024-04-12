@@ -11,12 +11,12 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
     /**
      * Creates new form RoleSelectionPage
+     * @param userData
      */
-    public RoleSelectionPage() {
+    public RoleSelectionPage(UserData userData) {
         initComponents();
         userRole = null;
-        userData = UserData.getInstance();
-        userData.reset();
+        this.userData = userData;
     }
 
     private void handleRoleSelection(UserRole userRole) {
@@ -392,10 +392,9 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         if (userRole != null) {
             userData.setRole(userRole);
             dispose();
-            new SignUpPage().setVisible(true);
+            new SignUpPage(userData).setVisible(true);
         } else {
-            UIUtils.setErrorLabelMessage(roleErrorLabel,
-                    new ValidationResult(false, "Must select a role"));
+            UIUtils.setErrorLabelMessage(roleErrorLabel, "Must select a role");
         }
     }//GEN-LAST:event_continueButtonMouseClicked
 
@@ -534,7 +533,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RoleSelectionPage().setVisible(true);
+                new RoleSelectionPage(new UserData()).setVisible(true);
             }
         });
     }
