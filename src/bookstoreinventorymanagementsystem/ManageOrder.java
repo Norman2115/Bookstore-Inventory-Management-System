@@ -64,7 +64,6 @@ public class ManageOrder extends javax.swing.JFrame {
         homeIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -98,6 +97,7 @@ public class ManageOrder extends javax.swing.JFrame {
         CartPanel1.setForeground(new java.awt.Color(153, 153, 153));
         CartPanel1.setOpaque(false);
         CartPanel1.setPreferredSize(new java.awt.Dimension(380, 420));
+        CartPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         productTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -139,20 +139,27 @@ public class ManageOrder extends javax.swing.JFrame {
             productTable.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        CartPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 79, 332, 207));
+
         CartLabel1.setBackground(new java.awt.Color(102, 204, 255));
         CartLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         CartLabel1.setForeground(new java.awt.Color(0, 140, 214));
         CartLabel1.setText("Checkout");
+        CartPanel1.add(CartLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 14, -1, -1));
+        CartPanel1.add(finalTotalPriceLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 417, -1, -1));
 
         QuantityLabel1.setText("Customer:");
+        CartPanel1.add(QuantityLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 49, -1, -1));
 
         QuantityLabel3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         QuantityLabel3.setForeground(new java.awt.Color(0, 100, 0));
         QuantityLabel3.setText("Quantity: ");
+        CartPanel1.add(QuantityLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 302, -1, -1));
 
         QuantityTxt3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         QuantityTxt3.setForeground(new java.awt.Color(0, 100, 0));
         QuantityTxt3.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        CartPanel1.add(QuantityTxt3, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 299, 75, -1));
 
         addToCartButton.setBackground(new java.awt.Color(0, 140, 214));
         addToCartButton.setPreferredSize(new java.awt.Dimension(136, 33));
@@ -185,87 +192,39 @@ public class ManageOrder extends javax.swing.JFrame {
             .addGroup(addToCartButtonLayout.createSequentialGroup()
                 .addGap(127, 127, 127)
                 .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         addToCartButtonLayout.setVerticalGroup(
             addToCartButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
 
-        choice1.setName(""); // NOI18N
+        CartPanel1.add(addToCartButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 336, 345, -1));
 
-        javax.swing.GroupLayout CartPanel1Layout = new javax.swing.GroupLayout(CartPanel1);
-        CartPanel1.setLayout(CartPanel1Layout);
-        CartPanel1Layout.setHorizontalGroup(
-            CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CartPanel1Layout.createSequentialGroup()
-                .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CartPanel1Layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addComponent(CartLabel1))
-                    .addGroup(CartPanel1Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(QuantityLabel1)
-                        .addGap(20, 20, 20)
-                        .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(CartPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CartPanel1Layout.createSequentialGroup()
-                                .addGap(0, 85, Short.MAX_VALUE)
-                                .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(finalTotalPriceLabel1)
-                                    .addGroup(CartPanel1Layout.createSequentialGroup()
-                                        .addComponent(QuantityLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(QuantityTxt3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(96, 96, 96)))
-                                .addGap(19, 19, 19))
-                            .addComponent(addToCartButton, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(9, Short.MAX_VALUE))
-        );
-        CartPanel1Layout.setVerticalGroup(
-            CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CartPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(CartLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(QuantityLabel1)
-                    .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(QuantityTxt3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(QuantityLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(finalTotalPriceLabel1))
-        );
+        choice1.setName(""); // NOI18N
+        CartPanel1.add(choice1, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 49, 226, -1));
 
         CartPanel.setBackground(new java.awt.Color(255, 255, 255));
         CartPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         CartPanel.setPreferredSize(new java.awt.Dimension(380, 420));
+        CartPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         CartTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "No.", "Book Name", "Quantity", "Sub Total"
+                "No.", "Book Name", "Quantity", "Price", "Sub Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -279,23 +238,30 @@ public class ManageOrder extends javax.swing.JFrame {
         jScrollPane2.setViewportView(CartTable);
         if (CartTable.getColumnModel().getColumnCount() > 0) {
             CartTable.getColumnModel().getColumn(0).setResizable(false);
-            CartTable.getColumnModel().getColumn(0).setPreferredWidth(80);
+            CartTable.getColumnModel().getColumn(0).setPreferredWidth(40);
             CartTable.getColumnModel().getColumn(1).setResizable(false);
             CartTable.getColumnModel().getColumn(2).setResizable(false);
             CartTable.getColumnModel().getColumn(3).setResizable(false);
+            CartTable.getColumnModel().getColumn(4).setResizable(false);
         }
+
+        CartPanel.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 50, 327, 235));
 
         TotalLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         TotalLabel.setForeground(new java.awt.Color(0, 100, 0));
         TotalLabel.setText("Total Payment: RM");
+        CartPanel.add(TotalLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 303, -1, -1));
 
         CartLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         CartLabel.setForeground(new java.awt.Color(0, 140, 214));
         CartLabel.setText("Cart");
+        CartPanel.add(CartLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 12, -1, -1));
+        CartPanel.add(finalTotalPriceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 328, -1, -1));
 
         finalPriceLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         finalPriceLabel.setForeground(new java.awt.Color(0, 100, 0));
         finalPriceLabel.setText("00.0");
+        CartPanel.add(finalPriceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(236, 303, -1, -1));
 
         placeOrderButton.setBackground(new java.awt.Color(0, 140, 214));
         placeOrderButton.setPreferredSize(new java.awt.Dimension(136, 33));
@@ -335,50 +301,7 @@ public class ManageOrder extends javax.swing.JFrame {
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout CartPanelLayout = new javax.swing.GroupLayout(CartPanel);
-        CartPanel.setLayout(CartPanelLayout);
-        CartPanelLayout.setHorizontalGroup(
-            CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CartPanelLayout.createSequentialGroup()
-                .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(TotalLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(finalPriceLabel))
-                    .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(finalTotalPriceLabel))
-                    .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(placeOrderButton, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)))
-                    .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(CartLabel)))
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-        CartPanelLayout.setVerticalGroup(
-            CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CartPanelLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(CartLabel)
-                .addGap(39, 39, 39)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(finalPriceLabel)
-                        .addGap(7, 7, 7))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                        .addComponent(TotalLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(finalTotalPriceLabel)
-                .addGap(18, 18, 18)
-                .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        CartPanel.add(placeOrderButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 336, 327, -1));
 
         lblBlueStrip.setBackground(new java.awt.Color(0, 140, 214));
         lblBlueStrip.setForeground(new java.awt.Color(51, 102, 255));
@@ -434,13 +357,13 @@ public class ManageOrder extends javax.swing.JFrame {
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblGreenStrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
-                .addGap(0, 366, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(HomePage)
                 .addGap(367, 367, 367))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(CartPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(CartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
             .addComponent(lblBlueStrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -459,18 +382,18 @@ public class ManageOrder extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblGreenStrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CartPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(CartPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, Short.MAX_VALUE)
+                    .addComponent(CartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
             .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(basePanelLayout.createSequentialGroup()
-                    .addGap(0, 259, Short.MAX_VALUE)
+                    .addGap(0, 268, Short.MAX_VALUE)
                     .addComponent(DateLabel)
-                    .addGap(0, 259, Short.MAX_VALUE)))
+                    .addGap(0, 268, Short.MAX_VALUE)))
         );
 
-        getContentPane().add(basePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 500));
+        getContentPane().add(basePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
