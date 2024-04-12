@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
+import org.apache.commons.dbutils.DbUtils;
 
 /**
  *
@@ -17,6 +17,9 @@ import java.util.Vector;
 public class ManageCustomer extends javax.swing.JFrame {
 
     private int customerID = 1001;
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
 
     /**
      * Creates new form ManageCustomer
@@ -24,6 +27,7 @@ public class ManageCustomer extends javax.swing.JFrame {
     public ManageCustomer() {
         initComponents();
         setLocationRelativeTo(null);
+
     }
 
     private boolean validateFields() {
@@ -34,6 +38,25 @@ public class ManageCustomer extends javax.swing.JFrame {
         }
     }
 
+    //Customer table is updated
+    private void updateTable() {
+        String sql = "select *from customer";
+        try {
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            customerTable.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e);
+    }
+    }
+     // Clear text fields
+    public void clearFields(){
+    
+            customerNameTxt.setText(null);
+            customerMNumberTxt.setText(null);
+            customerEmailTxt.setText(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -373,28 +396,28 @@ public class ManageCustomer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-         try {
-        // Fetch data from the database
-        Connection con = DatabaseManager.getConnection();
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM customer");
+        try {
+            // Fetch data from the database
+            Connection con = DatabaseManager.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM customer");
 
-        // Populate the table model
-        DefaultTableModel model = (DefaultTableModel) customerTable.getModel();
-        model.setRowCount(0); // Clear existing rows
-        while (rs.next()) {
-            String[] rowData = {
-                rs.getString("customer_id"),
-                rs.getString("name"),
-                rs.getString("mobileNumber"),
-                rs.getString("email")
-            };
-            model.addRow(rowData);
+            // Populate the table model
+            DefaultTableModel model = (DefaultTableModel) customerTable.getModel();
+            model.setRowCount(0); // Clear existing rows
+            while (rs.next()) {
+                String[] rowData = {
+                    rs.getString("customer_id"),
+                    rs.getString("name"),
+                    rs.getString("mobileNumber"),
+                    rs.getString("email")
+                };
+                model.addRow(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Print stack trace for debugging
+            JOptionPane.showMessageDialog(null, "Error: Unable to fetch data from the database: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        e.printStackTrace(); // Print stack trace for debugging
-        JOptionPane.showMessageDialog(null, "Error: Unable to fetch data from the database: " + e.getMessage());
-    }
     }//GEN-LAST:event_formComponentShown
 
     private void customerEmailTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerEmailTxtActionPerformed
@@ -447,12 +470,8 @@ public class ManageCustomer extends javax.swing.JFrame {
 
             // Display success message
             JOptionPane.showMessageDialog(null, "Customer Added Successfully");
-
-            // Reset fields or perform any other necessary actions
-            // For example, clear text fields
-            customerNameTxt.setText("");
-            customerMNumberTxt.setText("");
-            customerEmailTxt.setText("");
+            
+            clearFields();
         } catch (Exception e) {
             // Handle any exceptions
             JOptionPane.showMessageDialog(null, e);
@@ -514,12 +533,8 @@ public class ManageCustomer extends javax.swing.JFrame {
                 if (rowsAffected > 0) {
                     // Display success message
                     JOptionPane.showMessageDialog(null, "Customer Updated Successfully");
-
-                    // Reset fields or perform any other necessary actions
-                    // For example, clear text fields
-                    customerNameTxt.setText("");
-                    customerMNumberTxt.setText("");
-                    customerEmailTxt.setText("");
+                    updateTable();
+                    clearFields();
                 } else {
                     JOptionPane.showMessageDialog(null, "Failed to update customer");
                 }
@@ -569,19 +584,19 @@ public class ManageCustomer extends javax.swing.JFrame {
 
     private void customerNameTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerNameTxtKeyReleased
         String customerName = customerNameTxt.getText().trim(); // Retrieve the input value
-    
-    // Validate the input value using the validation logic
-    ValidationResult validationResult = ValidationHandler.validateFullName(customerName);
-    
-    if (validationResult.isValid()) {
-        // If the input is valid, reset error states and labels
-        UIUtils.resetFieldState(customerNameTxt);
-        UIUtils.resetErrorLabel(fullNameErrorLabel);
-    } else {
-        // If the input is invalid, set error states and display error message
-        UIUtils.setFieldErrorState(customerNameTxt);
-        UIUtils.setErrorLabelMessage(fullNameErrorLabel, validationResult.getErrorMessage());
-    }
+
+        // Validate the input value using the validation logic
+        ValidationResult validationResult = ValidationHandler.validateFullName(customerName);
+
+        if (validationResult.isValid()) {
+            // If the input is valid, reset error states and labels
+            UIUtils.resetFieldState(customerNameTxt);
+            UIUtils.resetErrorLabel(fullNameErrorLabel);
+        } else {
+            // If the input is invalid, set error states and display error message
+            UIUtils.setFieldErrorState(customerNameTxt);
+            UIUtils.setErrorLabelMessage(fullNameErrorLabel, validationResult.getErrorMessage());
+        }
     }//GEN-LAST:event_customerNameTxtKeyReleased
 
     /**
