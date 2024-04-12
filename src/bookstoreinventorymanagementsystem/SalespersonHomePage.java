@@ -44,9 +44,9 @@ public class SalespersonHomePage extends javax.swing.JFrame {
         orderIcon = new javax.swing.JLabel();
         Book2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        pnlInvoice = new javax.swing.JLayeredPane();
-        lblInvoice = new javax.swing.JLabel();
-        invoiceIcon = new javax.swing.JLabel();
+        pnlReceipt = new javax.swing.JLayeredPane();
+        lblReceipt = new javax.swing.JLabel();
+        invoiceReceipt = new javax.swing.JLabel();
         Book3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         pnlDashboard = new javax.swing.JLayeredPane();
@@ -59,7 +59,6 @@ public class SalespersonHomePage extends javax.swing.JFrame {
         Bookshelf = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         basePanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -166,31 +165,31 @@ public class SalespersonHomePage extends javax.swing.JFrame {
         jPanel4.setOpaque(false);
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnlInvoice.setBackground(new java.awt.Color(255, 255, 255));
-        pnlInvoice.setOpaque(true);
-        pnlInvoice.setPreferredSize(new java.awt.Dimension(150, 160));
-        pnlInvoice.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnlReceipt.setBackground(new java.awt.Color(255, 255, 255));
+        pnlReceipt.setOpaque(true);
+        pnlReceipt.setPreferredSize(new java.awt.Dimension(150, 160));
+        pnlReceipt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnlInvoiceMouseClicked(evt);
+                pnlReceiptMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pnlInvoiceMouseEntered(evt);
+                pnlReceiptMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                pnlInvoiceMouseExited(evt);
+                pnlReceiptMouseExited(evt);
             }
         });
-        pnlInvoice.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlReceipt.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblInvoice.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblInvoice.setForeground(new java.awt.Color(0, 140, 214));
-        lblInvoice.setText("Invoice");
-        pnlInvoice.add(lblInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 70, 30));
+        lblReceipt.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblReceipt.setForeground(new java.awt.Color(0, 140, 214));
+        lblReceipt.setText("Receipt");
+        pnlReceipt.add(lblReceipt, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 70, 30));
 
-        invoiceIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Invoice(icon).png"))); // NOI18N
-        pnlInvoice.add(invoiceIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 7, 110, 130));
+        invoiceReceipt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Invoice(icon).png"))); // NOI18N
+        pnlReceipt.add(invoiceReceipt, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 7, 110, 130));
 
-        jPanel4.add(pnlInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 141, 165));
+        jPanel4.add(pnlReceipt, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 141, 165));
 
         Book3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Book (icon).png"))); // NOI18N
         Book3.setText("jLabel2");
@@ -340,14 +339,14 @@ public class SalespersonHomePage extends javax.swing.JFrame {
         pnlOrder.setBackground(ColorManager.LIGHT_BLUE);
     }//GEN-LAST:event_pnlOrderMouseEntered
 
-    private void pnlInvoiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlInvoiceMouseClicked
+    private void pnlReceiptMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlReceiptMouseClicked
         new ManageInvoice().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_pnlInvoiceMouseClicked
+    }//GEN-LAST:event_pnlReceiptMouseClicked
 
-    private void pnlInvoiceMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlInvoiceMouseEntered
-        pnlInvoice.setBackground(ColorManager.LIGHT_BLUE);
-    }//GEN-LAST:event_pnlInvoiceMouseEntered
+    private void pnlReceiptMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlReceiptMouseEntered
+        pnlReceipt.setBackground(ColorManager.LIGHT_BLUE);
+    }//GEN-LAST:event_pnlReceiptMouseEntered
 
     private void pnlDashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlDashboardMouseClicked
         new ManageDashboard().setVisible(true);
@@ -366,9 +365,9 @@ public class SalespersonHomePage extends javax.swing.JFrame {
         pnlOrder.setBackground(ColorManager.PRIMARY_WHITE);
     }//GEN-LAST:event_pnlOrderMouseExited
 
-    private void pnlInvoiceMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlInvoiceMouseExited
-        pnlInvoice.setBackground(ColorManager.PRIMARY_WHITE);
-    }//GEN-LAST:event_pnlInvoiceMouseExited
+    private void pnlReceiptMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlReceiptMouseExited
+        pnlReceipt.setBackground(ColorManager.PRIMARY_WHITE);
+    }//GEN-LAST:event_pnlReceiptMouseExited
 
     private void pnlDashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlDashboardMouseExited
         pnlDashboard.setBackground(ColorManager.PRIMARY_WHITE);
@@ -439,7 +438,7 @@ public class SalespersonHomePage extends javax.swing.JFrame {
     private javax.swing.JPanel basePanel;
     private javax.swing.JLabel customerIcon;
     private javax.swing.JLabel iconDashboard;
-    private javax.swing.JLabel invoiceIcon;
+    private javax.swing.JLabel invoiceReceipt;
     private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -449,14 +448,14 @@ public class SalespersonHomePage extends javax.swing.JFrame {
     private javax.swing.JLabel lblCustomer;
     private javax.swing.JLabel lblDashboard;
     private javax.swing.JPanel lblGreenStrip;
-    private javax.swing.JLabel lblInvoice;
     private javax.swing.JLabel lblOrder;
+    private javax.swing.JLabel lblReceipt;
     private javax.swing.JPanel logoutButton;
     private javax.swing.JLabel logoutLabel;
     private javax.swing.JLabel orderIcon;
     private javax.swing.JLayeredPane pnlCustomer;
     private javax.swing.JLayeredPane pnlDashboard;
-    private javax.swing.JLayeredPane pnlInvoice;
     private javax.swing.JLayeredPane pnlOrder;
+    private javax.swing.JLayeredPane pnlReceipt;
     // End of variables declaration//GEN-END:variables
 }
