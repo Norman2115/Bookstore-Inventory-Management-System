@@ -20,7 +20,7 @@ public class ManageCustomer extends javax.swing.JFrame {
     }
 
     private boolean validateFields() {
-        if (!customerNameTxt.getText().equals("") && !customerMNumberTxt.getText().equals("") && !customerEmailTxt.getText().equals("")) {
+        if (!txtCustomerName.getText().equals("") && !txtCustomerMobileNumber.getText().equals("") && !txtCustomerEmail.getText().equals("")) {
             return false;
         } else {
             return true;
@@ -47,9 +47,9 @@ public class ManageCustomer extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        customerNameTxt = new javax.swing.JTextField();
-        customerMNumberTxt = new javax.swing.JTextField();
-        customerEmailTxt = new javax.swing.JTextField();
+        txtCustomerName = new javax.swing.JTextField();
+        txtCustomerMobileNumber = new javax.swing.JTextField();
+        txtCustomerEmail = new javax.swing.JTextField();
         saveButton = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         updateButton = new javax.swing.JPanel();
@@ -187,27 +187,27 @@ public class ManageCustomer extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 100, 0));
         jLabel3.setText("Email");
 
-        customerNameTxt.setForeground(new java.awt.Color(153, 153, 153));
-        customerNameTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        customerNameTxt.addActionListener(new java.awt.event.ActionListener() {
+        txtCustomerName.setForeground(new java.awt.Color(153, 153, 153));
+        txtCustomerName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtCustomerName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customerNameTxtActionPerformed(evt);
+                txtCustomerNameActionPerformed(evt);
             }
         });
 
-        customerMNumberTxt.setForeground(new java.awt.Color(0, 100, 0));
-        customerMNumberTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        customerMNumberTxt.addActionListener(new java.awt.event.ActionListener() {
+        txtCustomerMobileNumber.setForeground(new java.awt.Color(0, 100, 0));
+        txtCustomerMobileNumber.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtCustomerMobileNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customerMNumberTxtActionPerformed(evt);
+                txtCustomerMobileNumberActionPerformed(evt);
             }
         });
 
-        customerEmailTxt.setForeground(new java.awt.Color(0, 100, 0));
-        customerEmailTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        customerEmailTxt.addActionListener(new java.awt.event.ActionListener() {
+        txtCustomerEmail.setForeground(new java.awt.Color(0, 100, 0));
+        txtCustomerEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        txtCustomerEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customerEmailTxtActionPerformed(evt);
+                txtCustomerEmailActionPerformed(evt);
             }
         });
 
@@ -303,9 +303,9 @@ public class ManageCustomer extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(customerEmailTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(customerMNumberTxt, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(customerNameTxt, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCustomerEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCustomerMobileNumber, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCustomerName, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -327,15 +327,15 @@ public class ManageCustomer extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(customerNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(customerMNumberTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCustomerMobileNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(customerEmailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCustomerEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -366,17 +366,17 @@ public class ManageCustomer extends javax.swing.JFrame {
         */
     }//GEN-LAST:event_formComponentShown
 
-    private void customerEmailTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerEmailTxtActionPerformed
+    private void txtCustomerEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_customerEmailTxtActionPerformed
+    }//GEN-LAST:event_txtCustomerEmailActionPerformed
 
-    private void customerMNumberTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerMNumberTxtActionPerformed
+    private void txtCustomerMobileNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerMobileNumberActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_customerMNumberTxtActionPerformed
+    }//GEN-LAST:event_txtCustomerMobileNumberActionPerformed
 
-    private void customerNameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerNameTxtActionPerformed
+    private void txtCustomerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustomerNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_customerNameTxtActionPerformed
+    }//GEN-LAST:event_txtCustomerNameActionPerformed
 
     private void customerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseClicked
         int index = customerTable.getSelectedRow();
@@ -385,13 +385,13 @@ public class ManageCustomer extends javax.swing.JFrame {
         customerPk = Integer.parseInt(id);
         
         String name = model.getValueAt(index,1).toString();
-        customerNameTxt.setText(name);
+        txtCustomerName.setText(name);
         
         String mobileNumber = model.getValueAt(index,2).toString();
-        customerMNumberTxt.setText(mobileNumber);
+        txtCustomerMobileNumber.setText(mobileNumber);
         
         String email = model.getValueAt(index,3).toString();
-        customerEmailTxt.setText(email);
+        txtCustomerEmail.setText(email);
         
         saveButton.setEnabled(false);
         updateButton.setEnabled(true);
@@ -400,9 +400,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_customerTableMouseClicked
 
     private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseClicked
-       String name = customerNameTxt.getText();
-        String mobileNumber = customerMNumberTxt.getText();
-        String email = customerEmailTxt.getText();
+       String name = txtCustomerName.getText();
+        String mobileNumber = txtCustomerMobileNumber.getText();
+        String email = txtCustomerEmail.getText();
         
         if (validateFields()){
             JOptionPane.showMessageDialog(null,"All fields are required");
@@ -444,9 +444,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_saveButtonMouseReleased
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
-        String name = customerNameTxt.getText();
-        String mobileNumber = customerMNumberTxt.getText();
-        String email = customerEmailTxt.getText();
+        String name = txtCustomerName.getText();
+        String mobileNumber = txtCustomerMobileNumber.getText();
+        String email = txtCustomerEmail.getText();
         
         if (validateFields()){
             JOptionPane.showMessageDialog(null,"All fields are required");
@@ -545,9 +545,6 @@ public class ManageCustomer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField customerEmailTxt;
-    private javax.swing.JTextField customerMNumberTxt;
-    private javax.swing.JTextField customerNameTxt;
     private javax.swing.JTable customerTable;
     private javax.swing.JPanel homeButton;
     private javax.swing.JLabel homeIcon;
@@ -562,6 +559,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     private javax.swing.JLabel lblCustomer;
     private javax.swing.JPanel lblGreenStrip;
     private javax.swing.JPanel saveButton;
+    private javax.swing.JTextField txtCustomerEmail;
+    private javax.swing.JTextField txtCustomerMobileNumber;
+    private javax.swing.JTextField txtCustomerName;
     private javax.swing.JPanel updateButton;
     // End of variables declaration//GEN-END:variables
 }

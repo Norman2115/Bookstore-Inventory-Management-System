@@ -26,21 +26,144 @@ public class manageReceipts extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        lblBlueStrip = new javax.swing.JPanel();
+        homeButton = new javax.swing.JPanel();
+        homeIcon = new javax.swing.JLabel();
+        HomePage = new javax.swing.JLabel();
+        lblGreenStrip = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(900, 500));
+
+        lblBlueStrip.setBackground(new java.awt.Color(0, 140, 214));
+        lblBlueStrip.setForeground(new java.awt.Color(51, 102, 255));
+        lblBlueStrip.setPreferredSize(new java.awt.Dimension(45, 28));
+        lblBlueStrip.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        homeButton.setBackground(new java.awt.Color(0, 140, 214));
+        homeButton.setPreferredSize(new java.awt.Dimension(136, 33));
+        homeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                homeButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                homeButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                homeButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                homeButtonMouseReleased(evt);
+            }
+        });
+
+        homeIcon.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        homeIcon.setForeground(new java.awt.Color(255, 255, 255));
+        homeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Home Icon.png"))); // NOI18N
+        homeIcon.setPreferredSize(new java.awt.Dimension(33, 30));
+
+        javax.swing.GroupLayout homeButtonLayout = new javax.swing.GroupLayout(homeButton);
+        homeButton.setLayout(homeButtonLayout);
+        homeButtonLayout.setHorizontalGroup(
+            homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(homeIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        homeButtonLayout.setVerticalGroup(
+            homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeButtonLayout.createSequentialGroup()
+                .addComponent(homeIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        lblBlueStrip.add(homeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 28));
+
+        HomePage.setBackground(new java.awt.Color(0, 140, 214));
+        HomePage.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        HomePage.setForeground(new java.awt.Color(0, 140, 214));
+        HomePage.setText("Receipts");
+
+        lblGreenStrip.setBackground(new java.awt.Color(62, 164, 52));
+
+        javax.swing.GroupLayout lblGreenStripLayout = new javax.swing.GroupLayout(lblGreenStrip);
+        lblGreenStrip.setLayout(lblGreenStripLayout);
+        lblGreenStripLayout.setHorizontalGroup(
+            lblGreenStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        lblGreenStripLayout.setVerticalGroup(
+            lblGreenStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblGreenStrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblBlueStrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 396, Short.MAX_VALUE)
+                .addComponent(HomePage)
+                .addGap(408, 408, 408))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(lblBlueStrip, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(HomePage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblGreenStrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 416, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
+        setVisible(false);
+        new SalespersonHomePage().setVisible(true);
+    }//GEN-LAST:event_homeButtonMouseClicked
+
+    private void homeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseEntered
+        homeButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_homeButtonMouseEntered
+
+    private void homeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseExited
+        homeButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_homeButtonMouseExited
+
+    private void homeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMousePressed
+        homeButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_homeButtonMousePressed
+
+    private void homeButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseReleased
+        homeButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_homeButtonMouseReleased
 
     /**
      * @param args the command line arguments
@@ -78,5 +201,11 @@ public class manageReceipts extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel HomePage;
+    private javax.swing.JPanel homeButton;
+    private javax.swing.JLabel homeIcon;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel lblBlueStrip;
+    private javax.swing.JPanel lblGreenStrip;
     // End of variables declaration//GEN-END:variables
 }
