@@ -23,6 +23,7 @@ public class SignUpPage extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginPage
+     *
      * @param userData
      */
     public SignUpPage(UserData userData) {
@@ -522,6 +523,7 @@ public class SignUpPage extends javax.swing.JFrame {
         if (!fullName.trim().isEmpty()) {
             ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
             isFullNameValid = fullNameValidation.isValid();
+
             if (!fullNameValidation.isValid()) {
                 UIUtils.setFieldErrorState(fullNameField);
                 UIUtils.setErrorLabelMessage(fullNameErrorLabel, fullNameValidation.getErrorMessage());
@@ -540,6 +542,7 @@ public class SignUpPage extends javax.swing.JFrame {
         if (!email.trim().isEmpty()) {
             ValidationResult emailValidation = ValidationHandler.validateEmail(email);
             isEmailValid = emailValidation.isValid();
+
             if (!emailValidation.isValid()) {
                 UIUtils.setFieldErrorState(emailField);
                 UIUtils.setErrorLabelMessage(emailErrorLabel, emailValidation.getErrorMessage());
@@ -557,15 +560,18 @@ public class SignUpPage extends javax.swing.JFrame {
         username = usernameField.getText();
         if (!username.trim().isEmpty()) {
             ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
+
             if (!usernameValidation.isValid()) {
                 UIUtils.setFieldErrorState(usernameField);
                 UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
             } else {
                 UIUtils.setFieldErrorState(usernameField);
                 UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
+
                 try {
                     ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
                     isUsernameValid = usernameUniqueValidation.isValid();
+
                     if (!usernameUniqueValidation.isValid()) {
                         UIUtils.setFieldErrorState(usernameField);
                         UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
@@ -574,8 +580,8 @@ public class SignUpPage extends javax.swing.JFrame {
                         UIUtils.resetErrorLabel(usernameErrorLabel);
                     }
                 } catch (SQLException ex) {
-                    UIUtils.displayErrorMessage("An error occured while connecting to the database");
-                    Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, "Database connection error", ex);
+                    UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+                    Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
@@ -589,6 +595,7 @@ public class SignUpPage extends javax.swing.JFrame {
         if (!password.trim().isEmpty()) {
             ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
             isPasswordValid = passwordValidation.isValid();
+            
             if (!passwordValidation.isValid()) {
                 UIUtils.setFieldErrorState(passwordField);
                 UIUtils.setErrorLabelMessage(passwordErrorLabel, passwordValidation.getErrorMessage());

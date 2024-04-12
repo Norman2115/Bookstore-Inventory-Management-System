@@ -3,6 +3,8 @@ package bookstoreinventorymanagementsystem;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.swing.Timer;
 
@@ -36,7 +38,8 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
             try {
                 emailHandler.sendRegistrationVerificationEmail(toEmail);
             } catch (MessagingException | UnsupportedEncodingException ex) {
-                UIUtils.displayErrorMessage(ex.getMessage());
+                UIUtils.displayErrorMessage(ExceptionMessages.EMAIL_ERROR);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
                 dispose();
                 new LoginPage().setVisible(true);
             }

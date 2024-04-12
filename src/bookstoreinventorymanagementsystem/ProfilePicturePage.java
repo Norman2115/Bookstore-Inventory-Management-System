@@ -5,9 +5,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.Image;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Logger;
@@ -25,6 +22,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginPage
+     *
      * @param userData
      */
     public ProfilePicturePage(UserData userData) {
@@ -41,23 +39,6 @@ public class ProfilePicturePage extends javax.swing.JFrame {
         pictureLabel.setSize(uploadPicturePanel.getSize());
         pictureLabel.revalidate();
         pictureLabel.repaint();
-    }
-
-    private byte[] convertFileToByteArray(File file) {
-        byte[] byteArray = null;
-        try (BufferedInputStream bis = new BufferedInputStream(
-                new FileInputStream(file)); ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = bis.read(buffer)) != -1) {
-                baos.write(buffer, 0, bytesRead);
-            }
-            byteArray = baos.toByteArray();
-        } catch (IOException ex) {
-            Logger.getLogger(ProfilePicturePage.class.getName())
-                    .log(Level.SEVERE, null, ex);
-        }
-        return byteArray;
     }
 
     /**
@@ -323,14 +304,20 @@ public class ProfilePicturePage extends javax.swing.JFrame {
 
     private void finishButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseClicked
         if (selectedFile != null) {
-            byte[] profilePicture = convertFileToByteArray(selectedFile);
-            userData.setProfilePicture(profilePicture);
             try {
-                userData.saveUserDataToDatabase();
-                dispose();
-                new SignUpSuccessfulPage().setVisible(true);
-            } catch (SQLException ex) {
-                UIUtils.displayErrorMessage(ex.getMessage());
+                byte[] profilePicture = ImageUtils.convertFileToByteArray(selectedFile);
+                userData.setProfilePicture(profilePicture);
+
+                try {
+                    userData.saveUserDataToDatabase();
+                    dispose();
+                    new SignUpSuccessfulPage().setVisible(true);
+                } catch (SQLException ex) {
+                    UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+                    Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
                 Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {

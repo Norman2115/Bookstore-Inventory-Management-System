@@ -376,7 +376,7 @@ public class LoginPage extends javax.swing.JFrame {
                             usernameOrEmailValidation.getErrorMessage());
                 }
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
                 Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -398,7 +398,7 @@ public class LoginPage extends javax.swing.JFrame {
                             passwordMatchValidation.getErrorMessage());
                 }
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
                 Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -414,8 +414,11 @@ public class LoginPage extends javax.swing.JFrame {
                 } else {
                     new SalespersonHomePage().setVisible(true);
                 }
-            } catch (SQLException | IOException ex) {
-                UIUtils.displayErrorMessage("An error occured while connecting to the database");
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
                 Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -539,7 +542,7 @@ public class LoginPage extends javax.swing.JFrame {
         try {
             DatabaseManager.getConnection().close();
         } catch (ExceptionInInitializerError | SQLException ex) {
-            UIUtils.displayErrorMessage(ex.getMessage());
+            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
             Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
         }
 
