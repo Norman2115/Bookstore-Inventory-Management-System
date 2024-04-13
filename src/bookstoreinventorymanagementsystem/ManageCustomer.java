@@ -19,12 +19,9 @@ import java.util.logging.Logger;
 public class ManageCustomer extends javax.swing.JFrame {
 
     private String customerID = "";
-    Connection con = null;
-    PreparedStatement pst = null;
-    ResultSet rs = null;
-    private String email;
     private String name;
     private String mobileNumber;
+    private String email;
     private boolean isFullNameValid = false;
     private boolean isEmailValid = false;
     private boolean isMobileNumberValid = false;
@@ -35,22 +32,66 @@ public class ManageCustomer extends javax.swing.JFrame {
     public ManageCustomer() {
         initComponents();
         setLocationRelativeTo(null);
-
+        /*
         try {
-            con = DatabaseManager.getConnection();
             updateTable();
         } catch (SQLException ex) {
 
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Failed to update table.");
+            UIUtils.displayErrorMessage("Failed to update table.");
+            Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to update table.", ex);
+        }
+*/
+    }
+
+    private void validateFullName(String name) {
+        ValidationResult fullNameValidation = ValidationHandler.validateFullName(name);
+        isFullNameValid = fullNameValidation.isValid();
+        if (!isFullNameValid) {
+            UIUtils.setFieldErrorState(customerNameTxt);
+            UIUtils.setErrorLabelMessage(fullNameErrorLabel, fullNameValidation.getErrorMessage());
+        } else {
+            UIUtils.resetFieldState(customerNameTxt);
+            UIUtils.resetErrorLabel(fullNameErrorLabel);
+        }
+    }
+
+    private void validateEmail(String email) {
+        ValidationResult emailValidation = ValidationHandler.validateEmail(email);
+        isEmailValid = emailValidation.isValid();
+        if (!isEmailValid) {
+            UIUtils.setFieldErrorState(customerEmailTxt);
+            UIUtils.setErrorLabelMessage(emailErrorLabel, emailValidation.getErrorMessage());
+        } else {
+            UIUtils.resetFieldState(customerEmailTxt);
+            UIUtils.resetErrorLabel(emailErrorLabel);
+        }
+    }
+
+    private void validateMobileNumber(String mobileNumber) {
+        ValidationResult mobileNumberValidation = ValidationHandler.validateMobileNumber(mobileNumber);
+        isMobileNumberValid = mobileNumberValidation.isValid();
+        if (!isMobileNumberValid) {
+            UIUtils.setFieldErrorState(customerMNumberTxt);
+            UIUtils.setErrorLabelMessage(mobileNumberErrorLabel, mobileNumberValidation.getErrorMessage());
+        } else {
+            UIUtils.resetFieldState(customerMNumberTxt);
+            UIUtils.resetErrorLabel(mobileNumberErrorLabel);
         }
     }
 
     private boolean validateFields() {
-        // Reset validation flags
-        isFullNameValid = true;
-        isEmailValid = true;
-        isMobileNumberValid = true;
+        name = customerNameTxt.getText().trim();
+        mobileNumber = customerMNumberTxt.getText().trim();
+        email = customerEmailTxt.getText().trim();
+
+        validateFullName(name);
+        validateEmail(email);
+        validateMobileNumber(mobileNumber);
+
+        return (isFullNameValid && isEmailValid && isMobileNumberValid);
+    }
+
+    /*private boolean validateFields() {
 
         if (customerNameTxt.getText().trim().isEmpty()) {
             UIUtils.markFieldAsRequired(customerNameTxt, fullNameErrorLabel);
@@ -69,14 +110,15 @@ public class ManageCustomer extends javax.swing.JFrame {
 
         return (isFullNameValid && isEmailValid && isMobileNumberValid);
     }
-
+     */
     //Customer table is updated
     private void updateTable() throws SQLException {
-        String sql = "select *from customer";
-
-        pst = con.prepareStatement(sql);
-        rs = pst.executeQuery();
-        customerTable.setModel(DbUtils.resultSetToTableModel(rs));
+        try (Connection con = DatabaseManager.getConnection();) {
+            String sql = "select *from customer";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            customerTable.setModel(DbUtils.resultSetToTableModel(rs));
+        }
     }
 
     // Clear text fields
@@ -88,13 +130,12 @@ public class ManageCustomer extends javax.swing.JFrame {
     }
 
     private String generateCustomerID() throws SQLException {
-        PreparedStatement ps = null;
 
-        try {
+        try (Connection con = DatabaseManager.getConnection();) {
             // Get the current customer ID counter value
-            String query = "SELECT current_customer_id FROM customer_id_counter WHERE prefix = 'C'";
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
+            String query = "SELECT current_customer_id FROM customer_id_counter";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 int currentID = rs.getInt("current_customer_id");
@@ -103,49 +144,37 @@ public class ManageCustomer extends javax.swing.JFrame {
                 customerID = "C" + String.format("%04d", currentID);
 
                 // Increment the counter
-                query = "UPDATE customer_id_counter SET current_customer_id = ? WHERE prefix = 'C'";
+                query = "UPDATE customer_id_counter SET current_customer_id = ? ";
                 ps = con.prepareStatement(query);
                 ps.setInt(1, currentID + 1);
                 ps.executeUpdate();
             }
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
         }
-
         return customerID;
     }
 
     private void saveCustomerToDatabase(String name, String mobileNumber, String email) throws SQLException {
-        con = DatabaseManager.getConnection();
+        try (Connection con = DatabaseManager.getConnection();) {
+            String query = "INSERT INTO customer (customer_id, name, mobileNumber, email) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            // Generate the customer ID
+            customerID = generateCustomerID();
 
-        String query = "INSERT INTO customer (customer_id, name, mobileNumber, email) VALUES (?, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(query);
-        // Generate the customer ID
-        customerID = generateCustomerID();
+            ps.setString(1, customerID);
+            ps.setString(2, name);
+            ps.setString(3, mobileNumber);
+            ps.setString(4, email);
 
-        ps.setString(1, customerID);
-        ps.setString(2, name);
-        ps.setString(3, mobileNumber);
-        ps.setString(4, email);
+            int rowsAffected = ps.executeUpdate();
 
-        int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                UIUtils.displaySuccessMessage("Customer saved successfully with ID: " + customerID);
+                clearFields();
+                updateTable();
 
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "Customer saved successfully with ID: " + customerID);
-            clearFields();
-            updateTable();
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Failed to save customer record.");
+            } else {
+                UIUtils.displayErrorMessage("Failed to save customer record.");
+            }
         }
     }
 
@@ -603,12 +632,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        try {
-            // Fetch data from the database
-            con = DatabaseManager.getConnection();
+        try (Connection con = DatabaseManager.getConnection();) {
             Statement st = con.createStatement();
-            rs = st.executeQuery("SELECT * FROM customer");
-
+            ResultSet rs = st.executeQuery("SELECT * FROM customer");
             DefaultTableModel model = (DefaultTableModel) customerTable.getModel();
 
             model.setRowCount(0); // Clear existing rows
@@ -622,8 +648,8 @@ public class ManageCustomer extends javax.swing.JFrame {
                 model.addRow(rowData);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error: Unable to fetch data from the database: " + e.getMessage());
+            UIUtils.displayErrorMessage("Unable to fetch data from the database");
+            Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Unable to fetch data from the database", e);
         }
     }//GEN-LAST:event_formComponentShown
 
@@ -665,7 +691,7 @@ public class ManageCustomer extends javax.swing.JFrame {
         email = customerEmailTxt.getText();
 
         // Check if all fields are valid
-        if (isFullNameValid && isEmailValid && isMobileNumberValid) {
+        if (validateFields()) {
             try {
                 saveCustomerToDatabase(name, mobileNumber, email);
                 updateTable();
@@ -674,7 +700,7 @@ public class ManageCustomer extends javax.swing.JFrame {
                 Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to save customer record: ", ex);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Please correct the errors in the fields.");
+            UIUtils.displayErrorMessage("Please correct the errors in the fields.");
         }
     }//GEN-LAST:event_saveButtonMouseClicked
 
@@ -700,7 +726,7 @@ public class ManageCustomer extends javax.swing.JFrame {
         email = customerEmailTxt.getText();
 
         if (validateFields() == false) {
-            JOptionPane.showMessageDialog(null, "All fields are required");
+            UIUtils.displayErrorMessage("Please correct the errors in the fields.");
         } else {
             try (Connection con = DatabaseManager.getConnection();) {
 
@@ -714,12 +740,11 @@ public class ManageCustomer extends javax.swing.JFrame {
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected > 0) {
-
-                    JOptionPane.showMessageDialog(null, "Customer Updated Successfully");
+                    UIUtils.displaySuccessMessage("Customer Updated Successfully");
                     updateTable();
                     clearFields();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Failed to update customer");
+                    UIUtils.displaySuccessMessage("Failed to update customer");
                 }
             } catch (SQLException ex) {
 
@@ -861,7 +886,7 @@ public class ManageCustomer extends javax.swing.JFrame {
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(null, "Record deleted successfully.");
+                    UIUtils.displaySuccessMessage("Record deleted successfully.");
                     try {
                         updateTable();
                     } catch (SQLException ex) {
@@ -875,7 +900,6 @@ public class ManageCustomer extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage("Failed to delete record.");
                 Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to delete record.", ex);
-
             }
         }
     }//GEN-LAST:event_deleteButtonMouseClicked
