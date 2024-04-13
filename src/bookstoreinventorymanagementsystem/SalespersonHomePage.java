@@ -1,14 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package bookstoreinventorymanagementsystem;
 
 import java.awt.Color;
 
 /**
  *
- * @author User
+ * @author Liew Wen Yen
  */
 public class SalespersonHomePage extends javax.swing.JFrame {
 

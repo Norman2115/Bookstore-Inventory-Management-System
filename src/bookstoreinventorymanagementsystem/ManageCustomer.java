@@ -32,11 +32,18 @@ public class ManageCustomer extends javax.swing.JFrame {
     /**
      * Creates new form ManageCustomer
      */
-    public ManageCustomer() throws SQLException {
+    public ManageCustomer() {
         initComponents();
         setLocationRelativeTo(null);
-        con = DatabaseManager.getConnection();
-        updateTable();
+
+        try {
+            con = DatabaseManager.getConnection();
+            updateTable();
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Failed to update table.");
+        }
     }
 
     private boolean validateFields() {
@@ -64,16 +71,12 @@ public class ManageCustomer extends javax.swing.JFrame {
     }
 
     //Customer table is updated
-    private void updateTable() {
+    private void updateTable() throws SQLException {
         String sql = "select *from customer";
-        try {
-            pst = con.prepareStatement(sql);
-            rs = pst.executeQuery();
-            customerTable.setModel(DbUtils.resultSetToTableModel(rs));
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+        pst = con.prepareStatement(sql);
+        rs = pst.executeQuery();
+        customerTable.setModel(DbUtils.resultSetToTableModel(rs));
     }
 
     // Clear text fields
@@ -85,7 +88,6 @@ public class ManageCustomer extends javax.swing.JFrame {
     }
 
     private String generateCustomerID() throws SQLException {
-
         PreparedStatement ps = null;
 
         try {
@@ -107,7 +109,6 @@ public class ManageCustomer extends javax.swing.JFrame {
                 ps.executeUpdate();
             }
         } finally {
-            // Close resources
             try {
                 if (rs != null) {
                     rs.close();
@@ -116,7 +117,6 @@ public class ManageCustomer extends javax.swing.JFrame {
                     ps.close();
                 }
             } catch (SQLException e) {
-                // Handle exception
                 JOptionPane.showMessageDialog(null, e);
             }
         }
@@ -124,36 +124,28 @@ public class ManageCustomer extends javax.swing.JFrame {
         return customerID;
     }
 
-    private void saveCustomerToDatabase(String name, String mobileNumber, String email) {
-        try {
-            // Establish connection to the database
-            con = DatabaseManager.getConnection();
+    private void saveCustomerToDatabase(String name, String mobileNumber, String email) throws SQLException {
+        con = DatabaseManager.getConnection();
 
-            // Prepare SQL statement with parameters
-            String query = "INSERT INTO customer (customer_id, name, mobileNumber, email) VALUES (?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(query);
-            // Generate the customer ID
-            customerID = generateCustomerID();
+        String query = "INSERT INTO customer (customer_id, name, mobileNumber, email) VALUES (?, ?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(query);
+        // Generate the customer ID
+        customerID = generateCustomerID();
 
-            // Set parameters
-            ps.setString(1, customerID);
-            ps.setString(2, name);
-            ps.setString(3, mobileNumber);
-            ps.setString(4, email);
+        ps.setString(1, customerID);
+        ps.setString(2, name);
+        ps.setString(3, mobileNumber);
+        ps.setString(4, email);
 
-            // Execute the SQL statement
-            int rowsAffected = ps.executeUpdate();
+        int rowsAffected = ps.executeUpdate();
 
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Customer saved successfully with ID: " + customerID);
-                clearFields();
-                updateTable();
-            } else {
-                JOptionPane.showMessageDialog(null, "Failed to save customer record.");
-            }
-        } catch (SQLException e) {
-            // Handle any exceptions
-            JOptionPane.showMessageDialog(null, e);
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Customer saved successfully with ID: " + customerID);
+            clearFields();
+            updateTable();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Failed to save customer record.");
         }
     }
 
@@ -617,9 +609,8 @@ public class ManageCustomer extends javax.swing.JFrame {
             Statement st = con.createStatement();
             rs = st.executeQuery("SELECT * FROM customer");
 
-            // Populate the table model
             DefaultTableModel model = (DefaultTableModel) customerTable.getModel();
-            
+
             model.setRowCount(0); // Clear existing rows
             while (rs.next()) {
                 String[] rowData = {
@@ -631,6 +622,7 @@ public class ManageCustomer extends javax.swing.JFrame {
                 model.addRow(rowData);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error: Unable to fetch data from the database: " + e.getMessage());
         }
     }//GEN-LAST:event_formComponentShown
@@ -674,7 +666,13 @@ public class ManageCustomer extends javax.swing.JFrame {
 
         // Check if all fields are valid
         if (isFullNameValid && isEmailValid && isMobileNumberValid) {
-            saveCustomerToDatabase(name, mobileNumber, email);
+            try {
+                saveCustomerToDatabase(name, mobileNumber, email);
+                updateTable();
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage("Failed to save customer record.");
+                Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to save customer record: ", ex);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Please correct the errors in the fields.");
         }
@@ -704,32 +702,30 @@ public class ManageCustomer extends javax.swing.JFrame {
         if (validateFields() == false) {
             JOptionPane.showMessageDialog(null, "All fields are required");
         } else {
-            try {
-                // Establish connection to the database
-                Connection con = DatabaseManager.getConnection();
+            try (Connection con = DatabaseManager.getConnection();) {
 
-                // Prepare SQL statement with parameters for updating customer data
                 String query = "UPDATE customer SET name = ?, mobileNumber = ?, email = ? WHERE customer_id = ?";
                 PreparedStatement ps = con.prepareStatement(query);
                 ps.setString(1, name);
                 ps.setString(2, mobileNumber);
                 ps.setString(3, email);
-                ps.setString(4, customerID); // assuming customerPk holds the primary key of the customer to be updated
+                ps.setString(4, customerID);
 
-                // Execute the SQL statement
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    // Display success message
+
                     JOptionPane.showMessageDialog(null, "Customer Updated Successfully");
                     updateTable();
                     clearFields();
                 } else {
                     JOptionPane.showMessageDialog(null, "Failed to update customer");
                 }
-            } catch (Exception e) {
-                // Handle any exceptions
-                JOptionPane.showMessageDialog(null, e);
+            } catch (SQLException ex) {
+
+                UIUtils.displayErrorMessage("Failed to save update customer.");
+                Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to update customer.", ex);
+
             }
         }
     }//GEN-LAST:event_updateButtonMouseClicked
@@ -846,41 +842,42 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_clearButtonMouseReleased
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
-       int selectedRow = customerTable.getSelectedRow();
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(null, "Please select a record to delete.");
-        return;
-    }
-
-    String customerIDToDelete = customerTable.getValueAt(selectedRow, 0).toString();
-
-    int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this record?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
-    if (confirmation == JOptionPane.YES_OPTION) {
-        try {
-            // Establish connection to the database
-            Connection con = DatabaseManager.getConnection();
-
-            // Prepare SQL statement for deleting the record
-            String query = "DELETE FROM customer WHERE customer_id = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, customerIDToDelete);
-
-            // Execute the SQL statement
-            int rowsAffected = ps.executeUpdate();
-
-            if (rowsAffected > 0) {
-                // Display success message
-                JOptionPane.showMessageDialog(null, "Record deleted successfully.");
-                updateTable(); // Refresh the table to reflect changes
-                clearFields(); // Clear input fields
-            } else {
-                JOptionPane.showMessageDialog(null, "Failed to delete record.");
-            }
-        } catch (Exception e) {
-            // Handle any exceptions
-            JOptionPane.showMessageDialog(null, e);
+        int selectedRow = customerTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a record to delete.");
+            return;
         }
-    }
+
+        String customerIDToDelete = customerTable.getValueAt(selectedRow, 0).toString();
+
+        int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this record?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirmation == JOptionPane.YES_OPTION) {
+            try (Connection con = DatabaseManager.getConnection();) {
+
+                String query = "DELETE FROM customer WHERE customer_id = ?";
+                PreparedStatement ps = con.prepareStatement(query);
+                ps.setString(1, customerIDToDelete);
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(null, "Record deleted successfully.");
+                    try {
+                        updateTable();
+                    } catch (SQLException ex) {
+                        UIUtils.displayErrorMessage("Failed to update table.");
+                        Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to update table.", ex);
+                    }
+                    clearFields();
+                } else {
+                    UIUtils.displayErrorMessage("Failed to delete record.");
+                }
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage("Failed to delete record.");
+                Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to delete record.", ex);
+
+            }
+        }
     }//GEN-LAST:event_deleteButtonMouseClicked
 
     private void deleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseEntered
@@ -929,11 +926,7 @@ public class ManageCustomer extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new ManageCustomer().setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new ManageCustomer().setVisible(true);
             }
         });
     }
