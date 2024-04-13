@@ -293,6 +293,20 @@ public class ValidationHandler {
         return new ValidationResult(true, null);
     }
 
+    public static ValidationResult validateMobileNumber(String mobileNumber) {
+        if (!containsOnlyNumbers(mobileNumber)) {
+            return new ValidationResult(false, "Must contain only numbers");
+        }
+        if (mobileNumber.contains(" ")) {
+            return new ValidationResult(false, "Must not contain spaces");
+        }
+        if (mobileNumber.length() < 10 || mobileNumber.length() > 11) {
+            return new ValidationResult(false, "Must be between 10 or 11 characters long");
+        }
+
+        return new ValidationResult(true, null);
+    }
+
     /**
      * Checks if the given character is a symbol.
      *
@@ -336,4 +350,16 @@ public class ValidationHandler {
     public static boolean containsOnlySingleSpace(String str) {
         return str.matches("^[a-zA-Z]+( [a-zA-z]+)*$");
     }
+
+    /**
+     * Checks if the given string contains only numeric characters (0-9).
+     *
+     * @param str the string to check.
+     * @return true if the string contains only numeric characters (0-9), false
+     * otherwise.
+     */
+    public static boolean containsOnlyNumbers(String str) {
+        return str.matches("[0-9]+");
+    }
+
 }
