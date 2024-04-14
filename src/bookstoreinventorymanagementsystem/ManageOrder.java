@@ -182,6 +182,11 @@ public class ManageOrder extends javax.swing.JFrame {
         QuantityTxt3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         QuantityTxt3.setForeground(new java.awt.Color(0, 100, 0));
         QuantityTxt3.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        QuantityTxt3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                QuantityTxt3ActionPerformed(evt);
+            }
+        });
 
         addToCartButton.setBackground(new java.awt.Color(0, 140, 214));
         addToCartButton.setPreferredSize(new java.awt.Dimension(136, 33));
@@ -276,7 +281,7 @@ public class ManageOrder extends javax.swing.JFrame {
 
         basePanel.add(CartPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 103, -1, 390));
 
-        CartPanel.setBackground(new java.awt.Color(255, 255, 255));
+        CartPanel.setBackground(java.awt.SystemColor.inactiveCaption);
         CartPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         CartPanel.setPreferredSize(new java.awt.Dimension(380, 420));
 
@@ -379,7 +384,7 @@ public class ManageOrder extends javax.swing.JFrame {
 
         selectedCustomerNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         selectedCustomerNameLabel.setForeground(new java.awt.Color(0, 100, 0));
-        selectedCustomerNameLabel.setText("customerName");
+        selectedCustomerNameLabel.setText("Customer Name");
 
         javax.swing.GroupLayout CartPanelLayout = new javax.swing.GroupLayout(CartPanel);
         CartPanel.setLayout(CartPanelLayout);
@@ -387,58 +392,51 @@ public class ManageOrder extends javax.swing.JFrame {
             CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CartPanelLayout.createSequentialGroup()
                 .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(TotalLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(finalPriceLabel))
-                    .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(CartPanelLayout.createSequentialGroup()
-                            .addGap(357, 357, 357)
-                            .addComponent(finalTotalPriceLabel))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartPanelLayout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CartPanelLayout.createSequentialGroup()
-                                .addComponent(TotalLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(selectedCustomerIDLabel))
+                    .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(CartPanelLayout.createSequentialGroup()
-                                .addComponent(TotalLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(selectedCustomerNameLabel))))
+                                .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TotalLabel2)
+                                    .addComponent(TotalLabel1))
+                                .addGap(7, 7, 7)
+                                .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(selectedCustomerIDLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(selectedCustomerNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(CartPanelLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(CartPanelLayout.createSequentialGroup()
+                                .addGap(107, 107, 107)
+                                .addComponent(TotalLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(finalPriceLabel))))
                     .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addGap(169, 169, 169)
+                        .addGap(168, 168, 168)
                         .addComponent(CartLabel)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
         CartPanelLayout.setVerticalGroup(
             CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CartPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(CartLabel)
-                .addGap(8, 8, 8)
-                .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(3, 3, 3)
+                .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TotalLabel1)
                     .addComponent(selectedCustomerIDLabel))
-                .addGap(3, 3, 3)
-                .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TotalLabel2)
                     .addComponent(selectedCustomerNameLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(19, 19, 19)
                 .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(finalPriceLabel)
-                    .addComponent(TotalLabel))
-                .addGap(18, 18, 18)
+                    .addComponent(TotalLabel)
+                    .addComponent(finalPriceLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(finalTotalPriceLabel)
-                .addGap(35, 35, 35))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         basePanel.add(CartPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(479, 103, -1, 390));
@@ -604,6 +602,10 @@ public class ManageOrder extends javax.swing.JFrame {
         ex.printStackTrace(); // Handle the exception appropriately, e.g., logging
     }
     }//GEN-LAST:event_customerSelectionComboBoxActionPerformed
+
+    private void QuantityTxt3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuantityTxt3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_QuantityTxt3ActionPerformed
 
     /**
      * @param args the command line arguments
