@@ -11,6 +11,7 @@ import net.proteanit.sql.DbUtils;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  *
@@ -89,36 +90,30 @@ public class ManageCustomer extends javax.swing.JFrame {
         customerEmailTxt.setText(null);
     }
 
-    private String generateCustomerID() throws SQLException {
+   private String generateCustomerID() throws SQLException {
+    try (Connection con = DatabaseManager.getConnection();) {
+        String query = "SELECT current_customer_id FROM customer_id_counter";
+        PreparedStatement ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
 
-        try (Connection con = DatabaseManager.getConnection();) {
-            // Get the current customer ID counter value
-            String query = "SELECT current_customer_id FROM customer_id_counter";
-            PreparedStatement ps = con.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int currentID = rs.getInt("current_customer_id");
 
-            if (rs.next()) {
-                int currentID = rs.getInt("current_customer_id");
+            customerID = "C" + String.format("%04d", currentID);
 
-                // Format the customer ID
-                customerID = "C" + String.format("%04d", currentID);
-
-                // Increment the counter
-                query = "UPDATE customer_id_counter SET current_customer_id = ? ";
-                ps = con.prepareStatement(query);
-                ps.setInt(1, currentID + 1);
-                ps.executeUpdate();
-            }
+            return customerID;
         }
-        return customerID;
     }
+    return null; // Return null if the counter retrieval fails
+}
 
     private void saveCustomerToDatabase(String name, String mobileNumber, String email) throws SQLException {
-        try (Connection con = DatabaseManager.getConnection();) {
-            String query = "INSERT INTO customer (customer_id, name, mobileNumber, email) VALUES (?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(query);
-            customerID = generateCustomerID();
+    try (Connection con = DatabaseManager.getConnection();) {
+        String query = "INSERT INTO customer (customer_id, name, mobileNumber, email) VALUES (?, ?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(query);
+        customerID = generateCustomerID(); // Retrieve the customer ID
 
+        if (customerID != null) {
             ps.setString(1, customerID);
             ps.setString(2, name);
             ps.setString(3, mobileNumber);
@@ -130,12 +125,16 @@ public class ManageCustomer extends javax.swing.JFrame {
                 UIUtils.displaySuccessMessage("Customer saved successfully with ID: " + customerID);
                 clearFields();
                 updateTable();
-
             } else {
                 UIUtils.displayErrorMessage("Failed to save customer record.");
             }
+        } else {
+            UIUtils.displayErrorMessage("Failed to generate customer ID.");
         }
+    } catch (SQLIntegrityConstraintViolationException e) {
+        UIUtils.displayErrorMessage("Failed to save customer record: Non-unique data.\nPlease ensure that name, mobile number, and email are unique.");
     }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -295,7 +294,7 @@ public class ManageCustomer extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 100, 0));
-        jLabel1.setText("Name");
+        jLabel1.setText("Full Name");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 100, 0));

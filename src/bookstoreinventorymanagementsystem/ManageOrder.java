@@ -64,7 +64,6 @@ public class ManageOrder extends javax.swing.JFrame {
         homeIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -73,11 +72,15 @@ public class ManageOrder extends javax.swing.JFrame {
 
         basePanel.setBackground(new java.awt.Color(255, 255, 255));
         basePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        basePanel.setPreferredSize(new java.awt.Dimension(900, 500));
+        basePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        basePanel.add(DateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 277, -1, -1));
 
         HomePage.setBackground(new java.awt.Color(0, 140, 214));
         HomePage.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         HomePage.setForeground(new java.awt.Color(0, 140, 214));
         HomePage.setText("Manage Order");
+        basePanel.add(HomePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(367, 36, -1, -1));
 
         lblGreenStrip.setBackground(new java.awt.Color(62, 164, 52));
 
@@ -91,6 +94,8 @@ public class ManageOrder extends javax.swing.JFrame {
             lblGreenStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        basePanel.add(lblGreenStrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 75, 898, -1));
 
         CartPanel1.setBackground(new java.awt.Color(0, 153, 255));
         CartPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -211,17 +216,17 @@ public class ManageOrder extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(CartPanel1Layout.createSequentialGroup()
-                                .addGap(0, 82, Short.MAX_VALUE)
-                                .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(finalTotalPriceLabel1)
-                                    .addGroup(CartPanel1Layout.createSequentialGroup()
-                                        .addComponent(QuantityLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(QuantityTxt3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(96, 96, 96)))
+                                .addGap(0, 326, Short.MAX_VALUE)
+                                .addComponent(finalTotalPriceLabel1)
                                 .addGap(19, 19, 19))
                             .addComponent(addToCartButton, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(CartPanel1Layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addComponent(QuantityLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(QuantityTxt3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         CartPanel1Layout.setVerticalGroup(
@@ -235,15 +240,17 @@ public class ManageOrder extends javax.swing.JFrame {
                     .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(QuantityTxt3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(QuantityLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addComponent(finalTotalPriceLabel1))
         );
+
+        basePanel.add(CartPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 103, -1, 380));
 
         CartPanel.setBackground(new java.awt.Color(255, 255, 255));
         CartPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -346,38 +353,39 @@ public class ManageOrder extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(finalPriceLabel))
                     .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(finalTotalPriceLabel))
+                        .addGap(171, 171, 171)
+                        .addComponent(CartLabel))
+                    .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(CartPanelLayout.createSequentialGroup()
+                            .addGap(357, 357, 357)
+                            .addComponent(finalTotalPriceLabel))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartPanelLayout.createSequentialGroup()
+                            .addGap(25, 25, 25)
+                            .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(CartPanelLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(placeOrderButton, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)))
-                    .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(CartLabel)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         CartPanelLayout.setVerticalGroup(
             CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CartPanelLayout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addComponent(CartLabel)
-                .addGap(39, 39, 39)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CartPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(finalPriceLabel)
-                        .addGap(7, 7, 7))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CartPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TotalLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(finalTotalPriceLabel)
+                    .addComponent(finalPriceLabel)
+                    .addComponent(TotalLabel))
                 .addGap(18, 18, 18)
-                .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(finalTotalPriceLabel)
+                .addGap(35, 35, 35))
         );
+
+        basePanel.add(CartPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(479, 103, -1, 380));
 
         lblBlueStrip.setBackground(new java.awt.Color(0, 140, 214));
         lblBlueStrip.setForeground(new java.awt.Color(51, 102, 255));
@@ -427,47 +435,7 @@ public class ManageOrder extends javax.swing.JFrame {
 
         lblBlueStrip.add(homeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 28));
 
-        javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
-        basePanel.setLayout(basePanelLayout);
-        basePanelLayout.setHorizontalGroup(
-            basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblGreenStrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(HomePage)
-                .addGap(367, 367, 367))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, basePanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(CartPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
-                .addComponent(CartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
-            .addComponent(lblBlueStrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(basePanelLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(DateLabel)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        basePanelLayout.setVerticalGroup(
-            basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(basePanelLayout.createSequentialGroup()
-                .addComponent(lblBlueStrip, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(HomePage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblGreenStrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CartPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(basePanelLayout.createSequentialGroup()
-                    .addGap(0, 259, Short.MAX_VALUE)
-                    .addComponent(DateLabel)
-                    .addGap(0, 259, Short.MAX_VALUE)))
-        );
+        basePanel.add(lblBlueStrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 898, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -477,7 +445,7 @@ public class ManageOrder extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(basePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
