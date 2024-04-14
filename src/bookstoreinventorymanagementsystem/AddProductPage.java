@@ -4,9 +4,15 @@
  */
 package bookstoreinventorymanagementsystem;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
@@ -15,7 +21,16 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  * @author User
  */
 public class AddProductPage extends javax.swing.JInternalFrame {
-
+    
+    private final ProductData productData;
+    private boolean isBookTitleValid = false;
+    private boolean isAuthorValid = false;
+    private boolean isPublisherValid = false;
+    private boolean isYearValid = false;
+    private boolean isQuantityValid = false;
+    private boolean isUnitPriceValid = false;
+    private boolean isDiscountValid = true;
+    
     /**
      * Creates new form welcomeText
      */
@@ -24,6 +39,36 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
+        
+        productData  = new ProductData();
+    }
+    
+    private void reset(){
+        UIUtils.resetFieldState(bookTitle);
+        UIUtils.resetFieldState(author);
+        UIUtils.resetFieldState(publisher);
+        UIUtils.resetFieldState(year);
+        UIUtils.resetFieldState(quantity);
+        UIUtils.resetFieldState(unitPrice);
+        UIUtils.resetFieldState(discount);
+        UIUtils.resetFieldState(netPrice);
+        
+        UIUtils.resetErrorLabel(bookTitleErrorLabel);
+        UIUtils.resetErrorLabel(authorErrorLabel);
+        UIUtils.resetErrorLabel(publisherErrorLabel);
+        UIUtils.resetErrorLabel(yearErrorLabel);
+        UIUtils.resetErrorLabel(quantityErrorLabel);
+        UIUtils.resetErrorLabel(unitPriceErrorLabel);
+        
+        bookTitle.setText(" ");
+        author.setText(" ");
+        publisher.setText(" ");
+        year.setText(" ");
+        quantity.setText(" ");
+        unitPrice.setText(" ");
+        discount.setText(" ");
+        netPrice.setText(" ");
+        productData.reset();
     }
     
     /**
@@ -35,71 +80,43 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        displayPanel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         background = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        publicationYear2 = new javax.swing.JTextField();
+        bookTitle = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        publicationYear3 = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        publicationYear4 = new javax.swing.JTextField();
-        publicationYear5 = new javax.swing.JTextField();
+        author = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        publicationYear6 = new javax.swing.JTextField();
+        publisher = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        publicationYear7 = new javax.swing.JTextField();
-        publicationYear8 = new javax.swing.JTextField();
-        publicationYear9 = new javax.swing.JTextField();
-        publicationYear11 = new javax.swing.JTextField();
+        year = new javax.swing.JTextField();
+        quantity = new javax.swing.JTextField();
+        unitPrice = new javax.swing.JTextField();
+        netPrice = new javax.swing.JTextField();
         uploadPicturePanel = new javax.swing.JPanel();
         pictureLabel = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        addProductButton1 = new javax.swing.JPanel();
+        addProductButton = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
-        addProductButton2 = new javax.swing.JPanel();
+        clearButton = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
-        publicationYear12 = new javax.swing.JTextField();
-
-        displayPanel.setBackground(new java.awt.Color(253, 252, 248));
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel2.setText("Inventory Management System");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 60)); // NOI18N
-        jLabel3.setText("Family Bookstore ");
-
-        javax.swing.GroupLayout displayPanelLayout = new javax.swing.GroupLayout(displayPanel);
-        displayPanel.setLayout(displayPanelLayout);
-        displayPanelLayout.setHorizontalGroup(
-            displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(displayPanelLayout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addGroup(displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        displayPanelLayout.setVerticalGroup(
-            displayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayPanelLayout.createSequentialGroup()
-                .addContainerGap(165, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addGap(253, 253, 253))
-        );
-
-        jLabel4.setText("jLabel4");
+        discount = new javax.swing.JTextField();
+        genre = new javax.swing.JComboBox<>();
+        language = new javax.swing.JComboBox<>();
+        unitPriceErrorLabel = new javax.swing.JLabel();
+        discountErrorLabel = new javax.swing.JLabel();
+        bookTitleErrorLabel = new javax.swing.JLabel();
+        authorErrorLabel = new javax.swing.JLabel();
+        publisherErrorLabel = new javax.swing.JLabel();
+        yearErrorLabel = new javax.swing.JLabel();
+        quantityErrorLabel = new javax.swing.JLabel();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(951, 630));
@@ -116,11 +133,16 @@ public class AddProductPage extends javax.swing.JInternalFrame {
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        publicationYear2.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear2.addActionListener(new java.awt.event.ActionListener() {
+        bookTitle.setBackground(new java.awt.Color(253, 252, 248));
+        bookTitle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        bookTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear2ActionPerformed(evt);
+                bookTitleActionPerformed(evt);
+            }
+        });
+        bookTitle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                bookTitleKeyReleased(evt);
             }
         });
 
@@ -128,31 +150,20 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         jLabel10.setForeground(new java.awt.Color(0, 113, 176));
         jLabel10.setText("Genre");
 
-        publicationYear3.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear3ActionPerformed(evt);
-            }
-        });
-
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(0, 113, 176));
         jLabel19.setText("Language");
 
-        publicationYear4.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear4.addActionListener(new java.awt.event.ActionListener() {
+        author.setBackground(new java.awt.Color(253, 252, 248));
+        author.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        author.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear4ActionPerformed(evt);
+                authorActionPerformed(evt);
             }
         });
-
-        publicationYear5.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear5ActionPerformed(evt);
+        author.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                authorKeyReleased(evt);
             }
         });
 
@@ -160,11 +171,16 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         jLabel20.setForeground(new java.awt.Color(0, 113, 176));
         jLabel20.setText("Author");
 
-        publicationYear6.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear6.addActionListener(new java.awt.event.ActionListener() {
+        publisher.setBackground(new java.awt.Color(253, 252, 248));
+        publisher.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        publisher.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear6ActionPerformed(evt);
+                publisherActionPerformed(evt);
+            }
+        });
+        publisher.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                publisherKeyReleased(evt);
             }
         });
 
@@ -192,35 +208,51 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         jLabel24.setForeground(new java.awt.Color(0, 113, 176));
         jLabel24.setText("Net Price (RM)");
 
-        publicationYear7.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear7.addActionListener(new java.awt.event.ActionListener() {
+        year.setBackground(new java.awt.Color(253, 252, 248));
+        year.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        year.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear7ActionPerformed(evt);
+                yearActionPerformed(evt);
+            }
+        });
+        year.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                yearKeyReleased(evt);
             }
         });
 
-        publicationYear8.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear8.addActionListener(new java.awt.event.ActionListener() {
+        quantity.setBackground(new java.awt.Color(253, 252, 248));
+        quantity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        quantity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear8ActionPerformed(evt);
+                quantityActionPerformed(evt);
+            }
+        });
+        quantity.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                quantityKeyReleased(evt);
             }
         });
 
-        publicationYear9.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear9.addActionListener(new java.awt.event.ActionListener() {
+        unitPrice.setBackground(new java.awt.Color(253, 252, 248));
+        unitPrice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        unitPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear9ActionPerformed(evt);
+                unitPriceActionPerformed(evt);
+            }
+        });
+        unitPrice.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                unitPriceKeyReleased(evt);
             }
         });
 
-        publicationYear11.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear11.addActionListener(new java.awt.event.ActionListener() {
+        netPrice.setBackground(new java.awt.Color(253, 252, 248));
+        netPrice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        netPrice.setEnabled(false);
+        netPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear11ActionPerformed(evt);
+                netPriceActionPerformed(evt);
             }
         });
 
@@ -257,23 +289,23 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         jLabel25.setForeground(new java.awt.Color(0, 113, 176));
         jLabel25.setText("Cover Page");
 
-        addProductButton1.setBackground(new java.awt.Color(0, 140, 214));
-        addProductButton1.setPreferredSize(new java.awt.Dimension(120, 52));
-        addProductButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        addProductButton.setBackground(new java.awt.Color(0, 140, 214));
+        addProductButton.setPreferredSize(new java.awt.Dimension(120, 52));
+        addProductButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseClicked(evt);
+                addProductButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseEntered(evt);
+                addProductButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseExited(evt);
+                addProductButtonMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                addProductButton1MousePressed(evt);
+                addProductButtonMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseReleased(evt);
+                addProductButtonMouseReleased(evt);
             }
         });
 
@@ -282,40 +314,40 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel26.setText("ADD ");
 
-        javax.swing.GroupLayout addProductButton1Layout = new javax.swing.GroupLayout(addProductButton1);
-        addProductButton1.setLayout(addProductButton1Layout);
-        addProductButton1Layout.setHorizontalGroup(
-            addProductButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButton1Layout.createSequentialGroup()
+        javax.swing.GroupLayout addProductButtonLayout = new javax.swing.GroupLayout(addProductButton);
+        addProductButton.setLayout(addProductButtonLayout);
+        addProductButtonLayout.setHorizontalGroup(
+            addProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        addProductButton1Layout.setVerticalGroup(
-            addProductButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButton1Layout.createSequentialGroup()
+        addProductButtonLayout.setVerticalGroup(
+            addProductButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        addProductButton2.setBackground(new java.awt.Color(62, 164, 52));
-        addProductButton2.setPreferredSize(new java.awt.Dimension(120, 52));
-        addProductButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        clearButton.setBackground(new java.awt.Color(62, 164, 52));
+        clearButton.setPreferredSize(new java.awt.Dimension(120, 52));
+        clearButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addProductButton2MouseClicked(evt);
+                clearButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addProductButton2MouseEntered(evt);
+                clearButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                addProductButton2MouseExited(evt);
+                clearButtonMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                addProductButton2MousePressed(evt);
+                clearButtonMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                addProductButton2MouseReleased(evt);
+                clearButtonMouseReleased(evt);
             }
         });
 
@@ -324,30 +356,69 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel27.setText("CLEAR");
 
-        javax.swing.GroupLayout addProductButton2Layout = new javax.swing.GroupLayout(addProductButton2);
-        addProductButton2.setLayout(addProductButton2Layout);
-        addProductButton2Layout.setHorizontalGroup(
-            addProductButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(addProductButton2Layout.createSequentialGroup()
+        javax.swing.GroupLayout clearButtonLayout = new javax.swing.GroupLayout(clearButton);
+        clearButton.setLayout(clearButtonLayout);
+        clearButtonLayout.setHorizontalGroup(
+            clearButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(clearButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        addProductButton2Layout.setVerticalGroup(
-            addProductButton2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButton2Layout.createSequentialGroup()
+        clearButtonLayout.setVerticalGroup(
+            clearButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, clearButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        publicationYear12.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear12.addActionListener(new java.awt.event.ActionListener() {
+        discount.setBackground(new java.awt.Color(253, 252, 248));
+        discount.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        discount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear12ActionPerformed(evt);
+                discountActionPerformed(evt);
             }
         });
+        discount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                discountKeyReleased(evt);
+            }
+        });
+
+        genre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        genre.setPreferredSize(new java.awt.Dimension(235, 29));
+
+        language.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        language.setPreferredSize(new java.awt.Dimension(235, 29));
+
+        unitPriceErrorLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        unitPriceErrorLabel.setForeground(new java.awt.Color(253, 252, 248));
+        unitPriceErrorLabel.setText("jLabel7");
+
+        discountErrorLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        discountErrorLabel.setForeground(new java.awt.Color(253, 252, 248));
+        discountErrorLabel.setText("jLabel7");
+
+        bookTitleErrorLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        bookTitleErrorLabel.setForeground(new java.awt.Color(253, 252, 248));
+        bookTitleErrorLabel.setText("jLabel7");
+
+        authorErrorLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        authorErrorLabel.setForeground(new java.awt.Color(253, 252, 248));
+        authorErrorLabel.setText("jLabel7");
+
+        publisherErrorLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        publisherErrorLabel.setForeground(new java.awt.Color(253, 252, 248));
+        publisherErrorLabel.setText("jLabel7");
+
+        yearErrorLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        yearErrorLabel.setForeground(new java.awt.Color(253, 252, 248));
+        yearErrorLabel.setText("jLabel7");
+
+        quantityErrorLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        quantityErrorLabel.setForeground(new java.awt.Color(253, 252, 248));
+        quantityErrorLabel.setText("jLabel7");
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -360,39 +431,47 @@ public class AddProductPage extends javax.swing.JInternalFrame {
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(677, 677, 677))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(backgroundLayout.createSequentialGroup()
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(publicationYear7, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(backgroundLayout.createSequentialGroup()
                                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(publicationYear6, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(publisherErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(publisher, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(backgroundLayout.createSequentialGroup()
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(publicationYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(backgroundLayout.createSequentialGroup()
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(publicationYear3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(bookTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(backgroundLayout.createSequentialGroup()
                                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(publicationYear4, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(language, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(backgroundLayout.createSequentialGroup()
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(genre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(backgroundLayout.createSequentialGroup()
                                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(publicationYear5, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(authorErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(author, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(publicationYear8, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(quantityErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(quantity, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)))
+                            .addComponent(bookTitleErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(yearErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(91, 91, 91)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -401,79 +480,95 @@ public class AddProductPage extends javax.swing.JInternalFrame {
                             .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(publicationYear9)
-                            .addComponent(publicationYear11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(unitPrice)
+                            .addComponent(netPrice, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(uploadPicturePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(backgroundLayout.createSequentialGroup()
-                                .addComponent(addProductButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(addProductButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
-                            .addComponent(publicationYear12, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addComponent(clearButton, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
+                            .addComponent(discount, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(unitPriceErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(discountErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(185, 185, 185))))
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
-                .addContainerGap(478, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel16)
                 .addGap(152, 152, 152))
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(jLabel1)
-                .addGap(36, 36, 36)
+                .addGap(38, 38, 38)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(publicationYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(publicationYear3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(publicationYear12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(22, 22, 22)
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(publicationYear4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(publicationYear9, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(73, 73, 73)
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(publicationYear11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(22, 22, 22)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(unitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bookTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(unitPriceErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bookTitleErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(genre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(discount, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(2, 2, 2)
+                .addComponent(discountErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(language, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(netPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(backgroundLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(uploadPicturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addGap(18, 26, Short.MAX_VALUE)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(publicationYear5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(backgroundLayout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(publicationYear6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(author, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addGap(43, 43, 43)
-                                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(backgroundLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(authorErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(publisher, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(publisherErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(publicationYear7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
+                            .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(yearErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(publicationYear8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(uploadPicturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addProductButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addProductButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(quantityErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -494,41 +589,33 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void publicationYear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear2ActionPerformed
+    private void bookTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookTitleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear2ActionPerformed
+    }//GEN-LAST:event_bookTitleActionPerformed
 
-    private void publicationYear3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear3ActionPerformed
+    private void authorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear3ActionPerformed
+    }//GEN-LAST:event_authorActionPerformed
 
-    private void publicationYear4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear4ActionPerformed
+    private void publisherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publisherActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear4ActionPerformed
+    }//GEN-LAST:event_publisherActionPerformed
 
-    private void publicationYear5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear5ActionPerformed
+    private void yearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear5ActionPerformed
+    }//GEN-LAST:event_yearActionPerformed
 
-    private void publicationYear6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear6ActionPerformed
+    private void quantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear6ActionPerformed
+    }//GEN-LAST:event_quantityActionPerformed
 
-    private void publicationYear7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear7ActionPerformed
+    private void unitPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unitPriceActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear7ActionPerformed
+    }//GEN-LAST:event_unitPriceActionPerformed
 
-    private void publicationYear8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear8ActionPerformed
+    private void netPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_netPriceActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear8ActionPerformed
-
-    private void publicationYear9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear9ActionPerformed
-
-    private void publicationYear11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear11ActionPerformed
+    }//GEN-LAST:event_netPriceActionPerformed
 
     private void uploadPicturePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadPicturePanelMouseClicked
         JFileChooser fileChooser = new JFileChooser();
@@ -540,68 +627,230 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         fileChooser.addChoosableFileFilter(filter);
 
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            // selectedFile = fileChooser.getSelectedFile();
-            // displayProfilePicture(selectedFile);
-            // UIUtils.resetErrorLabel(noPictureErrorLabel);
+            File selectedFile = fileChooser.getSelectedFile();
+            ImageIcon imageIcon = new ImageIcon(selectedFile.getPath());
+            // change image size
+            Image scaledImage = imageIcon.getImage().getScaledInstance(196, 176, Image.SCALE_SMOOTH);
+            ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
+            
+            // insert image into label
+            pictureLabel.setIcon(scaledImageIcon);
+            
+            try {
+                //convert image into BLOB
+                byte[] image = ImageUtils.convertFileToByteArray(selectedFile);
+                productData.setImage(image);
+            } catch (IOException ex) {
+                Logger.getLogger(AddProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_uploadPicturePanelMouseClicked
 
-    private void addProductButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseClicked
+    private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
+        boolean valid = true;
+        productData.setGenre(genre.getSelectedItem().toString());
+        productData.setLanguage(language.getSelectedItem().toString());
+        
+        if (!isBookTitleValid){
+            valid = false;
+            UIUtils.markFieldAsRequired(bookTitle,bookTitleErrorLabel);
+        }
+        if (!isAuthorValid){
+            valid = false;
+            UIUtils.markFieldAsRequired(author,authorErrorLabel);
+        }
+        if (!isPublisherValid){
+            valid = false;
+            UIUtils.markFieldAsRequired(publisher,publisherErrorLabel);
+        }
+        if (productData.getPublicatioYear()==0){
+            valid = false;
+            UIUtils.markFieldAsRequired(year,yearErrorLabel);
+        }
+        if (productData.getStockQuantity()==0){
+            valid = false;
+            UIUtils.markFieldAsRequired(quantity,quantityErrorLabel);
+        }
+        if (productData.getUnitPrice()==0.0){
+            valid = false;
+            UIUtils.markFieldAsRequired(unitPrice,unitPriceErrorLabel);
+        }
+        if (!isDiscountValid){
+             valid = false;
+        }
 
-    private void addProductButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseEntered
+        if (valid)
+        {
+            try {
+                productData.saveUserDataToDatabase();
+                reset();
+            } catch (SQLException ex) {
+                Logger.getLogger(AddProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_addProductButtonMouseClicked
 
-    private void addProductButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseExited
+    private void addProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseEntered
+        addProductButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_addProductButtonMouseEntered
 
-    private void addProductButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MousePressed
+    private void addProductButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseExited
+        addProductButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_addProductButtonMouseExited
 
-    private void addProductButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseReleased
+    private void addProductButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMousePressed
+        addProductButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_addProductButtonMousePressed
 
-    private void addProductButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton2MouseClicked
+    private void addProductButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseReleased
+        addProductButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_addProductButtonMouseReleased
 
-    private void addProductButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton2MouseEntered
+    private void clearButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseClicked
+        reset();
+    }//GEN-LAST:event_clearButtonMouseClicked
 
-    private void addProductButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton2MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton2MouseExited
+    private void clearButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseEntered
+        clearButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_clearButtonMouseEntered
 
-    private void addProductButton2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton2MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton2MousePressed
+    private void clearButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseExited
+        clearButton.setBackground(ColorManager.PRIMARY_GREEN);
+    }//GEN-LAST:event_clearButtonMouseExited
 
-    private void addProductButton2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton2MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton2MouseReleased
+    private void clearButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMousePressed
+        clearButton.setBackground(ColorManager.DEEP_GREEN);
+    }//GEN-LAST:event_clearButtonMousePressed
 
-    private void publicationYear12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear12ActionPerformed
+    private void clearButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseReleased
+        clearButton.setBackground(ColorManager.MEDIUM_GREEN);
+    }//GEN-LAST:event_clearButtonMouseReleased
+
+    private void discountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_discountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear12ActionPerformed
+    }//GEN-LAST:event_discountActionPerformed
+
+    private void bookTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bookTitleKeyReleased
+        productData.setBookTitle(bookTitle.getText());
+        if (productData.getBookTitle().isEmpty()){
+            UIUtils.markFieldAsRequired(bookTitle,bookTitleErrorLabel);
+            isBookTitleValid = false;
+        }else{
+            isBookTitleValid = true;
+            UIUtils.resetFieldState(bookTitle);
+            bookTitleErrorLabel.setForeground(ColorManager.WHITE);
+        }
+    }//GEN-LAST:event_bookTitleKeyReleased
+
+    private void authorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_authorKeyReleased
+        productData.setAuthor(author.getText());
+        if (productData.getAuthor().isEmpty()){
+            UIUtils.markFieldAsRequired(author,authorErrorLabel);
+            isAuthorValid = false;
+        }else{
+            UIUtils.resetFieldState(author);
+            authorErrorLabel.setForeground(ColorManager.WHITE);
+            isAuthorValid  = true;
+        }
+    }//GEN-LAST:event_authorKeyReleased
+
+    private void publisherKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_publisherKeyReleased
+        productData.setPublisher(publisher.getText());
+        if (productData.getPublisher().isEmpty()){
+            UIUtils.markFieldAsRequired(publisher,publisherErrorLabel);
+            isPublisherValid = false;
+        }else{
+            UIUtils.resetFieldState(publisher);
+            publisherErrorLabel.setForeground(ColorManager.WHITE);
+            isPublisherValid  = true;
+        }        
+    }//GEN-LAST:event_publisherKeyReleased
+
+    private void yearKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_yearKeyReleased
+        ValidationResult yearContaintDigit  = ValidationHandler.containsOnlyDigital(year.getText());
+        if (yearContaintDigit.isValid()&&year.getText().length()==4){
+            productData.setPublicationYear(Integer.parseInt(year.getText()));
+            isYearValid  =  true;
+            UIUtils.resetFieldState(year);
+            yearErrorLabel.setForeground(ColorManager.WHITE);
+        }else{
+            UIUtils.setFieldErrorState(year);
+            UIUtils.setErrorLabelMessage(yearErrorLabel, "Invalid year format");
+            isYearValid  =  false;
+        }      
+    }//GEN-LAST:event_yearKeyReleased
+
+    private void quantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityKeyReleased
+        ValidationResult quantityContaintDigit  = ValidationHandler.containsOnlyDigital(quantity.getText());
+        if (quantityContaintDigit.isValid()){
+            productData.setStockQuantity(Integer.parseInt(quantity.getText()));
+            isQuantityValid  =  true;
+            UIUtils.resetFieldState(quantity);
+            quantityErrorLabel.setForeground(ColorManager.WHITE);
+        }else{
+            UIUtils.setFieldErrorState(quantity);
+            UIUtils.setErrorLabelMessage(quantityErrorLabel, quantityContaintDigit.getErrorMessage());
+            isQuantityValid  =  false;
+        }    
+    }//GEN-LAST:event_quantityKeyReleased
+
+    private void unitPriceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_unitPriceKeyReleased
+        ValidationResult valid = ValidationHandler.isValidPrice(unitPrice.getText());
+        if (valid.isValid()){
+            productData.setUnitPrice(Double.parseDouble(unitPrice.getText()));
+            isUnitPriceValid  =  true;
+            UIUtils.resetFieldState(unitPrice);
+            unitPriceErrorLabel.setForeground(ColorManager.WHITE);
+            
+            if(productData.getDiscount()==0.0){
+                netPrice.setText(Double.toString(productData.getUnitPrice()));
+            }else{
+                double price = productData.getUnitPrice()-productData.getUnitPrice()*productData.getDiscount()/100;
+                netPrice.setText(Double.toString(price));
+            }
+            
+        }else{
+            UIUtils.setFieldErrorState(unitPrice);
+            UIUtils.setErrorLabelMessage(unitPriceErrorLabel, valid.getErrorMessage());
+            isUnitPriceValid  =  false;
+        }    
+    }//GEN-LAST:event_unitPriceKeyReleased
+
+    private void discountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_discountKeyReleased
+        ValidationResult valid = ValidationHandler.isValidPrice(discount.getText());
+        if (valid.isValid()){
+            productData.setDiscount(Double.parseDouble(discount.getText()));
+            isDiscountValid  =  true;
+            UIUtils.resetFieldState(discount);
+            discountErrorLabel.setForeground(ColorManager.WHITE);
+            
+            double price = productData.getUnitPrice()-productData.getUnitPrice()*productData.getDiscount()/100;
+            String formattedPrice = String.format("%.2f", price);
+            netPrice.setText(formattedPrice);   
+        }else{
+            UIUtils.setFieldErrorState(discount);
+            UIUtils.setErrorLabelMessage(discountErrorLabel, valid.getErrorMessage());
+            isDiscountValid  =  false;
+        }    
+    }//GEN-LAST:event_discountKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel addProductButton1;
-    private javax.swing.JPanel addProductButton2;
+    private javax.swing.JPanel addProductButton;
+    private javax.swing.JTextField author;
+    private javax.swing.JLabel authorErrorLabel;
     private javax.swing.JPanel background;
-    private javax.swing.JPanel displayPanel;
+    private javax.swing.JTextField bookTitle;
+    private javax.swing.JLabel bookTitleErrorLabel;
+    private javax.swing.JPanel clearButton;
+    private javax.swing.JTextField discount;
+    private javax.swing.JLabel discountErrorLabel;
+    private javax.swing.JComboBox<String> genre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -610,21 +859,19 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JComboBox<String> language;
+    private javax.swing.JTextField netPrice;
     private javax.swing.JLabel pictureLabel;
-    private javax.swing.JTextField publicationYear11;
-    private javax.swing.JTextField publicationYear12;
-    private javax.swing.JTextField publicationYear2;
-    private javax.swing.JTextField publicationYear3;
-    private javax.swing.JTextField publicationYear4;
-    private javax.swing.JTextField publicationYear5;
-    private javax.swing.JTextField publicationYear6;
-    private javax.swing.JTextField publicationYear7;
-    private javax.swing.JTextField publicationYear8;
-    private javax.swing.JTextField publicationYear9;
+    private javax.swing.JTextField publisher;
+    private javax.swing.JLabel publisherErrorLabel;
+    private javax.swing.JTextField quantity;
+    private javax.swing.JLabel quantityErrorLabel;
+    private javax.swing.JTextField unitPrice;
+    private javax.swing.JLabel unitPriceErrorLabel;
     private javax.swing.JPanel uploadPicturePanel;
+    private javax.swing.JTextField year;
+    private javax.swing.JLabel yearErrorLabel;
     // End of variables declaration//GEN-END:variables
 }
