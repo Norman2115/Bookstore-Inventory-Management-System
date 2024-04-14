@@ -104,14 +104,14 @@ public class ManageCustomer extends javax.swing.JFrame {
             return customerID;
         }
     }
-    return null; // Return null if the counter retrieval fails
+    return null; 
 }
 
     private void saveCustomerToDatabase(String name, String mobileNumber, String email) throws SQLException {
     try (Connection con = DatabaseManager.getConnection();) {
         String query = "INSERT INTO customer (customer_id, name, mobileNumber, email) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = con.prepareStatement(query);
-        customerID = generateCustomerID(); // Retrieve the customer ID
+        customerID = generateCustomerID(); 
 
         if (customerID != null) {
             ps.setString(1, customerID);
