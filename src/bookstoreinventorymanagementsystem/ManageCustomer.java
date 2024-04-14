@@ -19,12 +19,12 @@ import java.util.logging.Logger;
 public class ManageCustomer extends javax.swing.JFrame {
 
     private String customerID = "";
-    private String name;
+    private String fullName;
     private String mobileNumber;
     private String email;
-    private boolean isFullNameValid = false;
-    private boolean isEmailValid = false;
-    private boolean isMobileNumberValid = false;
+    private boolean isFullNameValid = true;
+    private boolean isEmailValid = true;
+    private boolean isMobileNumberValid = true;
 
     /**
      * Creates new form ManageCustomer
@@ -32,85 +32,45 @@ public class ManageCustomer extends javax.swing.JFrame {
     public ManageCustomer() {
         initComponents();
         setLocationRelativeTo(null);
-        /*
-        try {
-            updateTable();
-        } catch (SQLException ex) {
-
-            UIUtils.displayErrorMessage("Failed to update table.");
-            Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to update table.", ex);
-        }
-*/
     }
 
-    private void validateFullName(String name) {
-        ValidationResult fullNameValidation = ValidationHandler.validateFullName(name);
-        isFullNameValid = fullNameValidation.isValid();
-        if (!isFullNameValid) {
-            UIUtils.setFieldErrorState(customerNameTxt);
-            UIUtils.setErrorLabelMessage(fullNameErrorLabel, fullNameValidation.getErrorMessage());
-        } else {
-            UIUtils.resetFieldState(customerNameTxt);
-            UIUtils.resetErrorLabel(fullNameErrorLabel);
-        }
+    public String getCustomerID() {
+        return customerID;
     }
 
-    private void validateEmail(String email) {
-        ValidationResult emailValidation = ValidationHandler.validateEmail(email);
-        isEmailValid = emailValidation.isValid();
-        if (!isEmailValid) {
-            UIUtils.setFieldErrorState(customerEmailTxt);
-            UIUtils.setErrorLabelMessage(emailErrorLabel, emailValidation.getErrorMessage());
-        } else {
-            UIUtils.resetFieldState(customerEmailTxt);
-            UIUtils.resetErrorLabel(emailErrorLabel);
-        }
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
     }
 
-    private void validateMobileNumber(String mobileNumber) {
-        ValidationResult mobileNumberValidation = ValidationHandler.validateMobileNumber(mobileNumber);
-        isMobileNumberValid = mobileNumberValidation.isValid();
-        if (!isMobileNumberValid) {
-            UIUtils.setFieldErrorState(customerMNumberTxt);
-            UIUtils.setErrorLabelMessage(mobileNumberErrorLabel, mobileNumberValidation.getErrorMessage());
-        } else {
-            UIUtils.resetFieldState(customerMNumberTxt);
-            UIUtils.resetErrorLabel(mobileNumberErrorLabel);
-        }
+    public String getFullName() {
+        return fullName;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    //Validates all input fields related to customer information.
     private boolean validateFields() {
-        name = customerNameTxt.getText().trim();
-        mobileNumber = customerMNumberTxt.getText().trim();
-        email = customerEmailTxt.getText().trim();
-
-        validateFullName(name);
-        validateEmail(email);
-        validateMobileNumber(mobileNumber);
-
         return (isFullNameValid && isEmailValid && isMobileNumberValid);
     }
 
-    /*private boolean validateFields() {
-
-        if (customerNameTxt.getText().trim().isEmpty()) {
-            UIUtils.markFieldAsRequired(customerNameTxt, fullNameErrorLabel);
-            isFullNameValid = false;
-        }
-
-        if (customerMNumberTxt.getText().trim().isEmpty()) {
-            UIUtils.markFieldAsRequired(customerMNumberTxt, mobileNumberErrorLabel);
-            isMobileNumberValid = false;
-        }
-
-        if (customerEmailTxt.getText().trim().isEmpty()) {
-            UIUtils.markFieldAsRequired(customerEmailTxt, emailErrorLabel);
-            isEmailValid = false;
-        }
-
-        return (isFullNameValid && isEmailValid && isMobileNumberValid);
-    }
-     */
     //Customer table is updated
     private void updateTable() throws SQLException {
         try (Connection con = DatabaseManager.getConnection();) {
@@ -157,7 +117,6 @@ public class ManageCustomer extends javax.swing.JFrame {
         try (Connection con = DatabaseManager.getConnection();) {
             String query = "INSERT INTO customer (customer_id, name, mobileNumber, email) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
-            // Generate the customer ID
             customerID = generateCustomerID();
 
             ps.setString(1, customerID);
@@ -671,29 +630,27 @@ public class ManageCustomer extends javax.swing.JFrame {
         String id = model.getValueAt(index, 0).toString();
         customerID = id;
 
-        name = model.getValueAt(index, 1).toString();
-        customerNameTxt.setText(name);
+        setFullName(model.getValueAt(index, 1).toString());
+        setMobileNumber(model.getValueAt(index, 2).toString());
+        setEmail(model.getValueAt(index, 3).toString());
 
-        mobileNumber = model.getValueAt(index, 2).toString();
-        customerMNumberTxt.setText(mobileNumber);
-
-        email = model.getValueAt(index, 3).toString();
-        customerEmailTxt.setText(email);
+        customerNameTxt.setText(getFullName());
+        customerMNumberTxt.setText(getMobileNumber());
+        customerEmailTxt.setText(getEmail());
 
         saveButton.setEnabled(false);
-        saveButton.setBackground(ColorManager.DEEP_BLUE);
         updateButton.setEnabled(true);
+        saveButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_customerTableMouseClicked
 
     private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseClicked
-        name = customerNameTxt.getText();
-        mobileNumber = customerMNumberTxt.getText();
-        email = customerEmailTxt.getText();
+        setFullName(customerNameTxt.getText());
+        setMobileNumber(customerMNumberTxt.getText());
+        setEmail(customerEmailTxt.getText());
 
-        // Check if all fields are valid
         if (validateFields()) {
             try {
-                saveCustomerToDatabase(name, mobileNumber, email);
+                saveCustomerToDatabase(fullName, mobileNumber, email);
                 updateTable();
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage("Failed to save customer record.");
@@ -721,9 +678,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_saveButtonMouseReleased
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
-        name = customerNameTxt.getText();
-        mobileNumber = customerMNumberTxt.getText();
-        email = customerEmailTxt.getText();
+        setFullName(customerNameTxt.getText());
+        setMobileNumber(customerMNumberTxt.getText());
+        setEmail(customerEmailTxt.getText());
 
         if (validateFields() == false) {
             UIUtils.displayErrorMessage("Please correct the errors in the fields.");
@@ -732,7 +689,7 @@ public class ManageCustomer extends javax.swing.JFrame {
 
                 String query = "UPDATE customer SET name = ?, mobileNumber = ?, email = ? WHERE customer_id = ?";
                 PreparedStatement ps = con.prepareStatement(query);
-                ps.setString(1, name);
+                ps.setString(1, fullName);
                 ps.setString(2, mobileNumber);
                 ps.setString(3, email);
                 ps.setString(4, customerID);
@@ -747,10 +704,8 @@ public class ManageCustomer extends javax.swing.JFrame {
                     UIUtils.displaySuccessMessage("Failed to update customer");
                 }
             } catch (SQLException ex) {
-
                 UIUtils.displayErrorMessage("Failed to save update customer.");
                 Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to update customer.", ex);
-
             }
         }
     }//GEN-LAST:event_updateButtonMouseClicked
@@ -793,9 +748,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_homeButtonMouseReleased
 
     private void customerNameTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerNameTxtKeyReleased
-        name = customerNameTxt.getText();
-        if (!name.trim().isEmpty()) {
-            ValidationResult fullNameValidation = ValidationHandler.validateFullName(name);
+        setFullName(customerNameTxt.getText());
+        if (!fullName.trim().isEmpty()) {
+            ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
             isFullNameValid = fullNameValidation.isValid();
             if (!fullNameValidation.isValid()) {
                 UIUtils.setFieldErrorState(customerNameTxt);
@@ -811,7 +766,7 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_customerNameTxtKeyReleased
 
     private void customerEmailTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerEmailTxtKeyReleased
-        email = customerEmailTxt.getText();
+        setEmail(customerEmailTxt.getText());
         if (!email.trim().isEmpty()) {
             ValidationResult emailValidation = ValidationHandler.validateEmail(email);
             isEmailValid = emailValidation.isValid();
@@ -829,7 +784,7 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_customerEmailTxtKeyReleased
 
     private void customerMNumberTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerMNumberTxtKeyReleased
-        mobileNumber = customerMNumberTxt.getText();
+        setMobileNumber(customerMNumberTxt.getText());
         if (!mobileNumber.trim().isEmpty()) {
             ValidationResult mobileNumberValidation = ValidationHandler.validateMobileNumber(mobileNumber);
             isMobileNumberValid = mobileNumberValidation.isValid();
@@ -851,19 +806,19 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_clearButtonMouseClicked
 
     private void clearButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseEntered
-        // TODO add your handling code here:
+        clearButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_clearButtonMouseEntered
 
     private void clearButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseExited
-        // TODO add your handling code here:
+        clearButton.setBackground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_clearButtonMouseExited
 
     private void clearButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMousePressed
-        // TODO add your handling code here:
+        clearButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_clearButtonMousePressed
 
     private void clearButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseReleased
-        // TODO add your handling code here:
+        clearButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_clearButtonMouseReleased
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
@@ -905,19 +860,19 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteButtonMouseClicked
 
     private void deleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseEntered
-        // TODO add your handling code here:
+        deleteButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_deleteButtonMouseEntered
 
     private void deleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseExited
-        // TODO add your handling code here:
+        deleteButton.setBackground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_deleteButtonMouseExited
 
     private void deleteButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMousePressed
-        // TODO add your handling code here:
+        deleteButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_deleteButtonMousePressed
 
     private void deleteButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseReleased
-        // TODO add your handling code here:
+        deleteButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_deleteButtonMouseReleased
 
     /**
