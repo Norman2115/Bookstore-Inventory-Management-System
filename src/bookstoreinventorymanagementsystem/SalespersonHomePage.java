@@ -1,7 +1,7 @@
-
 package bookstoreinventorymanagementsystem;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -319,7 +319,7 @@ public class SalespersonHomePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pnlCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlCustomerMouseClicked
-        new ManageCustomer().setVisible(true);
+        new ManageCustomer(new CustomerData()).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_pnlCustomerMouseClicked
 
@@ -371,7 +371,10 @@ public class SalespersonHomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlDashboardMouseExited
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        System.exit(0);
+        int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void logoutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseEntered
