@@ -386,10 +386,10 @@ public class AddProductPage extends javax.swing.JInternalFrame {
             }
         });
 
-        genre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        genre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fantasy", "Science Fiction", "Mystery/Thriller", "Romance", "Historical Fiction", "Horror", "Adventure", "Non-fiction", "Crime", "Young Adult" }));
         genre.setPreferredSize(new java.awt.Dimension(235, 29));
 
-        language.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        language.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "English", "Malay", "Chinese", "Spanish", "French", "Russian", "Japanese", "Arabic" }));
         language.setPreferredSize(new java.awt.Dimension(235, 29));
 
         unitPriceErrorLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
