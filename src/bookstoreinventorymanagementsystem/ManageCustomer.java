@@ -7,11 +7,9 @@ import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
-import net.proteanit.sql.DbUtils;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  *
@@ -19,66 +17,41 @@ import java.sql.SQLIntegrityConstraintViolationException;
  */
 public class ManageCustomer extends javax.swing.JFrame {
 
-    private String customerID = "";
-    private String fullName;
-    private String mobileNumber;
-    private String email;
+    private final CustomerData customerData;
     private boolean isFullNameValid = true;
     private boolean isEmailValid = true;
     private boolean isMobileNumberValid = true;
 
     /**
      * Creates new form ManageCustomer
+     *
+     * @param customerData
      */
-    public ManageCustomer() {
+    public ManageCustomer(CustomerData customerData) {
         initComponents();
         setLocationRelativeTo(null);
-    }
-
-    public String getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(String customerID) {
-        this.customerID = customerID;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    //Validates all input fields related to customer information.
-    private boolean validateFields() {
-        return (isFullNameValid && isEmailValid && isMobileNumberValid);
+        this.customerData = customerData;
     }
 
     //Customer table is updated
     private void updateTable() throws SQLException {
         try (Connection con = DatabaseManager.getConnection();) {
-            String sql = "select *from customer";
+            String sql = "SELECT * FROM customer";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
-            customerTable.setModel(DbUtils.resultSetToTableModel(rs));
+
+            // Create a table model with specific column names
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Customer ID", "Name", "Mobile Number", "Email"}, 0);
+
+            while (rs.next()) {
+                String customerID = rs.getString("customer_id");
+                String name = rs.getString("name");
+                String mobileNumber = rs.getString("mobileNumber");
+                String email = rs.getString("email");
+                model.addRow(new Object[]{customerID, name, mobileNumber, email});
+            }
+
+            customerTable.setModel(model);
         }
     }
 
@@ -89,52 +62,6 @@ public class ManageCustomer extends javax.swing.JFrame {
         customerMNumberTxt.setText(null);
         customerEmailTxt.setText(null);
     }
-
-   private String generateCustomerID() throws SQLException {
-    try (Connection con = DatabaseManager.getConnection();) {
-        String query = "SELECT current_customer_id FROM customer_id_counter";
-        PreparedStatement ps = con.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            int currentID = rs.getInt("current_customer_id");
-
-            customerID = "C" + String.format("%04d", currentID);
-
-            return customerID;
-        }
-    }
-    return null; 
-}
-
-    private void saveCustomerToDatabase(String name, String mobileNumber, String email) throws SQLException {
-    try (Connection con = DatabaseManager.getConnection();) {
-        String query = "INSERT INTO customer (customer_id, name, mobileNumber, email) VALUES (?, ?, ?, ?)";
-        PreparedStatement ps = con.prepareStatement(query);
-        customerID = generateCustomerID(); 
-
-        if (customerID != null) {
-            ps.setString(1, customerID);
-            ps.setString(2, name);
-            ps.setString(3, mobileNumber);
-            ps.setString(4, email);
-
-            int rowsAffected = ps.executeUpdate();
-
-            if (rowsAffected > 0) {
-                UIUtils.displaySuccessMessage("Customer saved successfully with ID: " + customerID);
-                clearFields();
-                updateTable();
-            } else {
-                UIUtils.displayErrorMessage("Failed to save customer record.");
-            }
-        } else {
-            UIUtils.displayErrorMessage("Failed to generate customer ID.");
-        }
-    } catch (SQLIntegrityConstraintViolationException e) {
-        UIUtils.displayErrorMessage("Failed to save customer record: Non-unique data.\nPlease ensure that name, mobile number, and email are unique.");
-    }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -261,11 +188,11 @@ public class ManageCustomer extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Mobile Number", "Email"
+                "Customer ID", "Name", "Mobile Number", "Email"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -284,11 +211,8 @@ public class ManageCustomer extends javax.swing.JFrame {
         jScrollPane1.setViewportView(customerTable);
         if (customerTable.getColumnModel().getColumnCount() > 0) {
             customerTable.getColumnModel().getColumn(0).setResizable(false);
-            customerTable.getColumnModel().getColumn(0).setPreferredWidth(3);
             customerTable.getColumnModel().getColumn(1).setResizable(false);
-            customerTable.getColumnModel().getColumn(1).setPreferredWidth(70);
             customerTable.getColumnModel().getColumn(2).setResizable(false);
-            customerTable.getColumnModel().getColumn(2).setPreferredWidth(50);
             customerTable.getColumnModel().getColumn(3).setResizable(false);
         }
 
@@ -512,18 +436,18 @@ public class ManageCustomer extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(customerNameTxt)
                     .addComponent(customerEmailTxt)
                     .addComponent(customerMNumberTxt)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(customerNameTxt))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -627,15 +551,15 @@ public class ManageCustomer extends javax.swing.JFrame {
         int index = customerTable.getSelectedRow();
         TableModel model = customerTable.getModel();
         String id = model.getValueAt(index, 0).toString();
-        customerID = id;
+        customerData.setCustomerID(id);
 
-        setFullName(model.getValueAt(index, 1).toString());
-        setMobileNumber(model.getValueAt(index, 2).toString());
-        setEmail(model.getValueAt(index, 3).toString());
+        customerData.setFullName(model.getValueAt(index, 1).toString());
+        customerData.setMobileNumber(model.getValueAt(index, 2).toString());
+        customerData.setEmail(model.getValueAt(index, 3).toString());
 
-        customerNameTxt.setText(getFullName());
-        customerMNumberTxt.setText(getMobileNumber());
-        customerEmailTxt.setText(getEmail());
+        customerNameTxt.setText(customerData.getFullName());
+        customerMNumberTxt.setText(customerData.getMobileNumber());
+        customerEmailTxt.setText(customerData.getEmail());
 
         saveButton.setEnabled(false);
         updateButton.setEnabled(true);
@@ -643,13 +567,14 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_customerTableMouseClicked
 
     private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseClicked
-        setFullName(customerNameTxt.getText());
-        setMobileNumber(customerMNumberTxt.getText());
-        setEmail(customerEmailTxt.getText());
+        customerData.setFullName(customerNameTxt.getText());
+        customerData.setMobileNumber(customerMNumberTxt.getText());
+        customerData.setEmail(customerEmailTxt.getText());
 
-        if (validateFields()) {
+        if (isFullNameValid && isEmailValid && isMobileNumberValid) {
             try {
-                saveCustomerToDatabase(fullName, mobileNumber, email);
+                customerData.saveCustomerDataToDatabase();
+                clearFields();
                 updateTable();
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage("Failed to save customer record.");
@@ -677,21 +602,19 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_saveButtonMouseReleased
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
-        setFullName(customerNameTxt.getText());
-        setMobileNumber(customerMNumberTxt.getText());
-        setEmail(customerEmailTxt.getText());
+        customerData.setFullName(customerNameTxt.getText());
+        customerData.setMobileNumber(customerMNumberTxt.getText());
+        customerData.setEmail(customerEmailTxt.getText());
 
-        if (validateFields() == false) {
-            UIUtils.displayErrorMessage("Please correct the errors in the fields.");
-        } else {
+        if (isFullNameValid && isEmailValid && isMobileNumberValid) {
             try (Connection con = DatabaseManager.getConnection();) {
 
                 String query = "UPDATE customer SET name = ?, mobileNumber = ?, email = ? WHERE customer_id = ?";
                 PreparedStatement ps = con.prepareStatement(query);
-                ps.setString(1, fullName);
-                ps.setString(2, mobileNumber);
-                ps.setString(3, email);
-                ps.setString(4, customerID);
+                ps.setString(1, customerData.getFullName());
+                ps.setString(2, customerData.getMobileNumber());
+                ps.setString(3, customerData.getEmail());
+                ps.setString(4, customerData.getCustomerID());
 
                 int rowsAffected = ps.executeUpdate();
 
@@ -706,6 +629,8 @@ public class ManageCustomer extends javax.swing.JFrame {
                 UIUtils.displayErrorMessage("Failed to save update customer.");
                 Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to update customer.", ex);
             }
+        } else {
+            UIUtils.displayErrorMessage("Please correct the errors in the fields.");
         }
     }//GEN-LAST:event_updateButtonMouseClicked
 
@@ -747,9 +672,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_homeButtonMouseReleased
 
     private void customerNameTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerNameTxtKeyReleased
-        setFullName(customerNameTxt.getText());
-        if (!fullName.trim().isEmpty()) {
-            ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
+        customerData.setFullName(customerNameTxt.getText());
+        if (!customerData.getFullName().trim().isEmpty()) {
+            ValidationResult fullNameValidation = ValidationHandler.validateFullName(customerData.getFullName());
             isFullNameValid = fullNameValidation.isValid();
             if (!fullNameValidation.isValid()) {
                 UIUtils.setFieldErrorState(customerNameTxt);
@@ -765,9 +690,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_customerNameTxtKeyReleased
 
     private void customerEmailTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerEmailTxtKeyReleased
-        setEmail(customerEmailTxt.getText());
-        if (!email.trim().isEmpty()) {
-            ValidationResult emailValidation = ValidationHandler.validateEmail(email);
+        customerData.setEmail(customerEmailTxt.getText());
+        if (!customerData.getEmail().trim().isEmpty()) {
+            ValidationResult emailValidation = ValidationHandler.validateEmail(customerData.getEmail());
             isEmailValid = emailValidation.isValid();
             if (!emailValidation.isValid()) {
                 UIUtils.setFieldErrorState(customerEmailTxt);
@@ -783,9 +708,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_customerEmailTxtKeyReleased
 
     private void customerMNumberTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerMNumberTxtKeyReleased
-        setMobileNumber(customerMNumberTxt.getText());
-        if (!mobileNumber.trim().isEmpty()) {
-            ValidationResult mobileNumberValidation = ValidationHandler.validateMobileNumber(mobileNumber);
+        customerData.setMobileNumber(customerMNumberTxt.getText());
+        if (!customerData.getMobileNumber().trim().isEmpty()) {
+            ValidationResult mobileNumberValidation = ValidationHandler.validateMobileNumber(customerData.getMobileNumber());
             isMobileNumberValid = mobileNumberValidation.isValid();
             if (!mobileNumberValidation.isValid()) {
                 UIUtils.setFieldErrorState(customerMNumberTxt);
@@ -907,7 +832,7 @@ public class ManageCustomer extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageCustomer().setVisible(true);
+                new ManageCustomer(new CustomerData()).setVisible(true);
             }
         });
     }
