@@ -368,5 +368,63 @@ public class ValidationHandler {
     public static boolean containsOnlyNumbers(String str) {
         return str.matches("[0-9]+");
     }
+    
+    /**
+     * Checks if a ISBN already exits in the database.
+     * This method queries the database to determine if the provided ISBN is already exist.
+     * @param isbn the ISBN code to be check for uniqueness.
+     * @return a ValidtationResult indicating whether the ISBN code is unique.
+     * @throws java.sql.SQLException if  a database access error occurs.
+     */
+    public static ValidationResult checkUniqueISBN(String isbn) throws SQLException {
+        try (Connection connection = DatabaseManager.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM user WHERE isbn = ?"
+            );
 
+            statement.setString(1, isbn);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new ValidationResult(false, "Already exists in the database.");
+            }
+
+            return new ValidationResult(true, null);
+        }
+    }
+    
+    /**
+     * Checks if the given string contains only digital.
+     * 
+     * @param str the string to check
+     * @return a ValidtationResult indicate whether the string only contains digital.
+     */
+    public static ValidationResult containsOnlyDigital (String str) {
+        if(str.matches("\\d+"))
+            return new ValidationResult(true, null);
+        
+        return new ValidationResult(false, "Only digital are accepted");
+    }
+    
+    /**
+     * Checks is the format of the string is valid as a normal format of price which is decimal and not more than two decimal place.
+     * 
+     * @param str the string to check
+     * @return 
+     */
+    public static ValidationResult isValidPrice (String str){
+        String regex1 = "\\d+\\.?";
+        String regex2 = "\\d+\\.\\d{1,2}$";
+        double price =  Double.parseDouble(str);
+        if ((str.matches(regex1)||str.matches(regex2))&&price>0.0)
+            return new ValidationResult(true, null);
+        
+        if(price<=0.0)
+            return new ValidationResult(false, "Not accepted zero as a value of price");        
+        if (!str.matches(regex1))
+            return new ValidationResult(false, "Only accepts decimal");
+        
+        return new ValidationResult(false, "Only one or two decimal places are accepted");
+    }
 }
