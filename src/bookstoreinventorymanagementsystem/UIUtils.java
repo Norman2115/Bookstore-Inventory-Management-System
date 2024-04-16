@@ -10,6 +10,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
 /**
+ * Utility class for common UI-related operations.
  *
  * @author Teo Chung Henn
  */
@@ -34,8 +35,8 @@ public class UIUtils {
     }
 
     /**
-     * Resets the state of a text field by setting the border color of the text
-     * field back to its original color.
+     * Resets the state of a text field by setting the border color of the field
+     * back to its original color.
      *
      * @param field the text field to reset.
      */
@@ -44,8 +45,7 @@ public class UIUtils {
     }
 
     /**
-     * Resets the error label to its default state by clearing the error
-     * message.
+     * Resets the error label by clearing the error message.
      *
      * @param errorLabel the error label to reset.
      */
@@ -53,6 +53,12 @@ public class UIUtils {
         errorLabel.setText("");
     }
 
+    /**
+     * Sets an error message to be displayed on the error label with red color.
+     *
+     * @param errorLabel the error label to set the message on.
+     * @param errorMessage the error message to display.
+     */
     public static void setErrorLabelMessage(JLabel errorLabel, String errorMessage) {
         errorLabel.setText(errorMessage);
         errorLabel.setForeground(ColorManager.MEDIUM_RED);
@@ -61,10 +67,23 @@ public class UIUtils {
         errorLabel.setMaximumSize(new Dimension(errorLabel.getWidth(), font.getSize()));
     }
 
+    /**
+     * Sets the error state of the text field by changing the border color of
+     * the field to red.
+     *
+     * @param field the text field to mark as error.
+     */
     public static void setFieldErrorState(JTextComponent field) {
         field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
     }
 
+    /**
+     * Marks the text field as required by setting an field border to red and
+     * display a required field message on the error label.
+     *
+     * @param field the text field to mark as required.
+     * @param errorLabel the label to display the error message.
+     */
     public static void markFieldAsRequired(JTextComponent field, JLabel errorLabel) {
         field.setBorder(new LineBorder(ColorManager.LIGHT_RED));
         setErrorLabelMessage(errorLabel, "Field is required");

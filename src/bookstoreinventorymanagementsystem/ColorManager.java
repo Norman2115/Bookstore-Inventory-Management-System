@@ -3,8 +3,10 @@ package bookstoreinventorymanagementsystem;
 import java.awt.Color;
 
 /**
+ * Utility class for managing colors used in the application's user interface.
+ * It provides a set of predefined color constants for consistent styling.
  *
- * @author Norman
+ * @author Teo Chung Henn
  */
 public class ColorManager {
 
@@ -44,7 +46,7 @@ public class ColorManager {
     public static final Color DEEP_GREEN = new Color(32, 104, 22);
     // Used for text color
     public static final Color DARK_GREEN = new Color(0, 100, 0);
-    
+
     // RED
     public static final Color LIGHT_RED = new Color(255, 127, 127);
     public static final Color MEDIUM_RED = new Color(255, 60, 60);

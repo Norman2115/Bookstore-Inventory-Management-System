@@ -95,9 +95,6 @@
               <Dimension value="[450, 500]"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="RightPanelMouseClicked"/>
-          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -139,9 +136,6 @@
               <Dimension value="[450, 500]"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="LeftPanelMouseClicked"/>
-          </Events>
 
           <Layout>
             <DimensionLayout dim="0">

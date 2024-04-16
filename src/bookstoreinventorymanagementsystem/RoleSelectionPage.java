@@ -1,8 +1,14 @@
 package bookstoreinventorymanagementsystem;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+
 /**
+ * The class represents the user interface for selecting a user role. Users are
+ * required to choose between the roles of ADMIN and SALESPERSON. This page
+ * serves as the first step and a part of the sign-up process.
  *
- * @author Norman
+ * @author Teo Chung Henn
  */
 public class RoleSelectionPage extends javax.swing.JFrame {
 
@@ -11,42 +17,45 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
     /**
      * Creates new form RoleSelectionPage
-     * @param userData
      */
-    public RoleSelectionPage(UserData userData) {
+    public RoleSelectionPage() {
         initComponents();
-        userRole = null;
-        this.userData = userData;
+        userData = new UserData();
     }
 
+    /**
+     * Handles the visual representation of user role selection. If the selected
+     * role is ADMIN, the admin selection panel is highlighted, and the
+     * salesperson selection panel is unselected. If the selected role is
+     * SALESPERSON, the salesperson selection panel is highlighted.
+     *
+     * @param userRole The selected user role (ADMIN or SALESPERSON).
+     */
     private void handleRoleSelection(UserRole userRole) {
         this.userRole = userRole;
 
+        // Update the selection panels visual based on the selected role
         if (userRole == UserRole.ADMIN) {
-            salespersonSelectionPanel.setBorder(javax.swing.BorderFactory
-                    .createLineBorder(ColorManager.MEDIUM_GREY));
-            salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/salesperson_unselected.png")));
+            // If ADMIN is selected, unselect the salesperson selection panel
+            salespersonSelectionPanel.setBorder(BorderFactory.createLineBorder(ColorManager.MEDIUM_GREY));
+            salespersonIcon.setIcon(new ImageIcon(getClass().getResource("/icon/salesperson_unselected.png")));
             salespersonLabel.setForeground(ColorManager.LIGHT_GREY);
 
-            adminSelectionPanel.setBorder(javax.swing.BorderFactory
-                    .createLineBorder(new java.awt.Color(62, 164, 52)));
+            // Highlight the admin selection panel
+            adminSelectionPanel.setBorder(BorderFactory.createLineBorder(ColorManager.PRIMARY_GREEN));
             adminSelectionPanel.setBackground(ColorManager.PRIMARY_WHITE);
-            adminIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/admin_selected.png")));
+            adminIcon.setIcon(new ImageIcon(getClass().getResource("/icon/admin_selected.png")));
             adminLabel.setForeground(ColorManager.DARK_GREEN);
         } else {
-            adminSelectionPanel.setBorder(javax.swing.BorderFactory
-                    .createLineBorder(ColorManager.MEDIUM_GREY));
-            adminIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/admin_unselected.png")));
+            // If SALESPERSON is selected, unselect the admin selection panel
+            adminSelectionPanel.setBorder(BorderFactory.createLineBorder(ColorManager.MEDIUM_GREY));
+            adminIcon.setIcon(new ImageIcon(getClass().getResource("/icon/admin_unselected.png")));
             adminLabel.setForeground(ColorManager.LIGHT_GREY);
 
-            salespersonSelectionPanel.setBorder(javax.swing.BorderFactory
-                    .createLineBorder(new java.awt.Color(62, 164, 52)));
+            // Highlight the salesperson selection panel
+            salespersonSelectionPanel.setBorder(BorderFactory.createLineBorder(ColorManager.PRIMARY_GREEN));
             salespersonSelectionPanel.setBackground(ColorManager.PRIMARY_WHITE);
-            salespersonIcon.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/icon/salesperson_selected.png")));
+            salespersonIcon.setIcon(new ImageIcon(getClass().getResource("/icon/salesperson_selected.png")));
             salespersonLabel.setForeground(ColorManager.DARK_GREEN);
         }
     }
@@ -389,11 +398,14 @@ public class RoleSelectionPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
+        // Check if a user role is selected
         if (userRole != null) {
+            // Set the selected role in the user data
             userData.setRole(userRole);
             dispose();
             new SignUpPage(userData).setVisible(true);
         } else {
+            // Display error message if no role is selected
             UIUtils.setErrorLabelMessage(roleErrorLabel, "Must select a role");
         }
     }//GEN-LAST:event_continueButtonMouseClicked
@@ -531,10 +543,8 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RoleSelectionPage(new UserData()).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new RoleSelectionPage().setVisible(true);
         });
     }
 
