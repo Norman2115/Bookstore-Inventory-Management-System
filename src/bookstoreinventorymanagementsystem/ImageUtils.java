@@ -10,11 +10,20 @@ import java.io.InputStream;
 import java.sql.SQLException;
 
 /**
+ * Utility class for common image-related operations.
  *
- * @author coco1
+ * @author Teo Chung Henn
  */
 public class ImageUtils {
 
+    /**
+     * Converts a Blob object to a byte array.
+     *
+     * @param blob the Blob object to convert.
+     * @return a byte array representing the data in the Blob.
+     * @throws IOException if an I/O error occurs.
+     * @throws SQLException if a SQL error occurs.
+     */
     public static byte[] convertBlobToByteArray(Blob blob) throws IOException, SQLException {
         byte[] byteArray;
         try (InputStream inputStream = blob.getBinaryStream(); ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -28,6 +37,13 @@ public class ImageUtils {
         return byteArray;
     }
 
+    /**
+     * Converts a file to a byte array.
+     *
+     * @param file the file to convert.
+     * @return a byte array representing the data stored in the file.
+     * @throws IOException if an I/O error occurs.
+     */
     public static byte[] convertFileToByteArray(File file) throws IOException {
         byte[] byteArray;
         try (BufferedInputStream bis = new BufferedInputStream(

@@ -486,7 +486,7 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void goToSignUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMouseClicked
         dispose();
-        new RoleSelectionPage(userData).setVisible(true);
+        new RoleSelectionPage().setVisible(true);
     }//GEN-LAST:event_goToSignUpButtonMouseClicked
 
     private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
@@ -547,10 +547,8 @@ public class LoginPage extends javax.swing.JFrame {
         }
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginPage().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new LoginPage().setVisible(true);
         });
     }
 

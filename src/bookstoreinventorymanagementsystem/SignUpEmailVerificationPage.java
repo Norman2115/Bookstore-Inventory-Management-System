@@ -9,8 +9,12 @@ import javax.mail.MessagingException;
 import javax.swing.Timer;
 
 /**
+ * The class represents the user interface for verifying the user's email during
+ * the sign-up process. Users are required to enter a verification code sent to
+ * their email address. If the email is not received, users can request a resend
+ * of the verification code.
  *
- * @author Norman
+ * @author Teo Chung Henn
  */
 public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
@@ -19,20 +23,33 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
     private final Timer resendCodeButtonTimer;
 
     /**
-     * Creates new form LoginPage
-     * @param userData
+     * Creates new form SignUpEmailVerificationPage.
+     *
+     * @param userData the UserData object containing user information, passed
+     * from SignUpPage class.
      */
     public SignUpEmailVerificationPage(UserData userData) {
         this.userData = userData;
         initComponents();
-        LeftPanel.grabFocus();
         emailHandler = new EmailHandler();
+
+        // Send verification email asynchronously
         sendVerificationEmailAsync(userData.getEmail());
+
+        // Create a resend code button timer to enable the button after timeout
         resendCodeButtonTimer = new Timer(10000, (ActionEvent e) -> {
             resendCodeButton.setEnabled(true);
         });
     }
 
+    /**
+     * Sends a sign-up verification email asynchronously to the specified email
+     * address. It allows the GUI to load first without waiting for the email to
+     * be sent.
+     *
+     * @param toEmail the email address to which the verification email will be
+     * sent.
+     */
     private void sendVerificationEmailAsync(String toEmail) {
         Thread emailThread = new Thread(() -> {
             try {
@@ -40,8 +57,6 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
             } catch (MessagingException | UnsupportedEncodingException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.EMAIL_ERROR);
                 Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-                dispose();
-                new LoginPage().setVisible(true);
             }
         });
         emailThread.start();
@@ -369,18 +384,23 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
     private void finishButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseClicked
         String enteredCode = verificationCodeField.getText();
 
+        // Check if the entered code is empty
         if (!enteredCode.trim().isEmpty()) {
+            // Validate the verification code
             ValidationResult codeValidation = ValidationHandler
                     .validateVerificationCode(enteredCode, emailHandler.getVerificationCode());
 
+            // If the code is valid, proceed to profile picture upload page
             if (codeValidation.isValid()) {
                 dispose();
                 new ProfilePicturePage(userData).setVisible(true);
             } else {
+                // If the code is invalid, mark the field as errorneous and display error message
                 UIUtils.setFieldErrorState(verificationCodeField);
                 UIUtils.setErrorLabelMessage(verificationCodeErrorLabel, codeValidation.getErrorMessage());
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.markFieldAsRequired(verificationCodeField, verificationCodeErrorLabel);
         }
     }//GEN-LAST:event_finishButtonMouseClicked
@@ -443,6 +463,8 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
     private void verificationCodeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyTyped
         char c = evt.getKeyChar();
+
+        // Only accepts digits and limits the length of entered code to 6 characters.
         if (!Character.isDigit(c) || verificationCodeField.getText().length() >= 6) {
             evt.consume();
         }
@@ -450,7 +472,11 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
     private void resendCodeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButtonMouseClicked
         sendVerificationEmailAsync(userData.getEmail());
+
+        // Disable the resend code button
         resendCodeButton.setEnabled(false);
+
+        // Start the timer to enable the button after a timeout
         resendCodeButtonTimer.start();
     }//GEN-LAST:event_resendCodeButtonMouseClicked
 
@@ -525,10 +551,8 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SignUpEmailVerificationPage(new UserData()).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new SignUpEmailVerificationPage(new UserData()).setVisible(true);
         });
     }
 

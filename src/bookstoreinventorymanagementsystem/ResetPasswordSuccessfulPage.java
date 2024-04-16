@@ -1,13 +1,15 @@
 package bookstoreinventorymanagementsystem;
 
 /**
+ * The class represents the user interface indicating user that the password
+ * reset was successful.
  *
- * @author Norman
+ * @author Teo Chung Henn
  */
 public class ResetPasswordSuccessfulPage extends javax.swing.JFrame {
 
     /**
-     * Creates new form LoginPage
+     * Creates new form ResetPasswordSuccessfulPage
      */
     public ResetPasswordSuccessfulPage() {
         initComponents();

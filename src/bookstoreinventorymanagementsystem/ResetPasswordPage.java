@@ -5,6 +5,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * The class represents user interface for resetting the password. Users are
+ * required to provide a new password that is different from the old password.
  *
  * @author Norman
  */
@@ -16,9 +18,10 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     private String newPassword;
 
     /**
-     * Creates new form LoginPage
+     * Creates new form ResetPasswordPage
      *
-     * @param userData
+     * @param userData the UserData object containing user information, passed
+     * from ResetPasswordEmailVerificationPage class.
      */
     public ResetPasswordPage(UserData userData) {
         initComponents();
@@ -339,13 +342,15 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void confirmButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmButtonMouseClicked
+        // Check if both password and confirm password fields are valid
         if (isPasswordValid && isConfirmPasswordValid) {
             try {
+                // Proceed to update the password for the user
                 userData.updatePassword(newPassword);
                 dispose();
                 new ResetPasswordSuccessfulPage().setVisible(true);
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
                 Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -415,50 +420,64 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         newPassword = new String(passwordField.getPassword());
 
+        // Check if the entered new password is not empty
         if (!newPassword.trim().isEmpty()) {
+            // Validate the new password
             ValidationResult passwordValidation = ValidationHandler.validatePassword(newPassword);
 
+            // If the new password is valid
             if (passwordValidation.isValid()) {
+                // Check if the new password matches the old password
                 ValidationResult matchValidation = ValidationHandler
                         .checkIfNewPasswordMatchesOld(newPassword, userData.getPassword());
                 isPasswordValid = matchValidation.isValid();
 
+                // If the new password matches old one, mark the field as errorneous and display error message
                 if (!matchValidation.isValid()) {
                     UIUtils.setFieldErrorState(passwordField);
                     UIUtils.setErrorLabelMessage(passwordErrorLabel, matchValidation.getErrorMessage());
                 } else {
+                    // If the new password does not matches the old one, reset the field state and clear error message 
                     UIUtils.resetFieldState(passwordField);
                     UIUtils.resetErrorLabel(passwordErrorLabel);
                 }
             } else {
+                // If the new password is invalid, reset the field state and clear error message
                 UIUtils.setFieldErrorState(passwordField);
                 UIUtils.setErrorLabelMessage(passwordErrorLabel, passwordValidation.getErrorMessage());
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(passwordField);
             UIUtils.resetErrorLabel(passwordErrorLabel);
         }
 
+        // Check if the confirm password matches the current new password
         confirmPasswordFieldKeyReleased(evt);
     }//GEN-LAST:event_passwordFieldKeyReleased
 
     private void confirmPasswordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordFieldKeyReleased
         String confirmPassword = new String(confirmPasswordField.getPassword());
 
+        // Check if the entered confirm password is not empty
         if (!confirmPassword.trim().isEmpty()) {
+            // Check if the confirm password matches the current new password
             ValidationResult confirmPasswordValidation = ValidationHandler
                     .confirmPasswordMatches(newPassword, confirmPassword);
             isConfirmPasswordValid = confirmPasswordValidation.isValid();
 
+            // If the confirm password is invalid, mark the field as errorneous and display error message
             if (!confirmPasswordValidation.isValid()) {
                 UIUtils.setFieldErrorState(confirmPasswordField);
                 UIUtils.setErrorLabelMessage(confirmPasswordErrorLabel,
                         confirmPasswordValidation.getErrorMessage());
             } else {
+                // If the confirm password is valid, reset the field state and clear error message
                 UIUtils.resetFieldState(confirmPasswordField);
                 UIUtils.resetErrorLabel(confirmPasswordErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(confirmPasswordField);
             UIUtils.resetErrorLabel(confirmPasswordErrorLabel);
         }
@@ -497,10 +516,8 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ResetPasswordPage(new UserData()).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ResetPasswordPage(new UserData()).setVisible(true);
         });
     }
 

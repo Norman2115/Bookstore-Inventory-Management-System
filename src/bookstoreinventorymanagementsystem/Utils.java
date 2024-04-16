@@ -1,15 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
 
-import javax.swing.JOptionPane;
-
 /**
+ * Utility class for common methods.
  *
- * @author coco1
+ * @author Teo Chung Henn
  */
 public class Utils {
-    
+
 }

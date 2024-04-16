@@ -7,15 +7,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * The class represents user interface for confirming user identity by during
+ * the password reset process. Users are required to provide their account
+ * username or email for validation
  *
- * @author Norman
+ * @author Teo Chung Henn
  */
 public class UsernameValidationPage extends javax.swing.JFrame {
 
     private final UserData userData;
 
     /**
-     * Creates new form LoginPage
+     * Creates new form UsernameValidationPage
      */
     public UsernameValidationPage() {
         initComponents();
@@ -281,35 +284,35 @@ public class UsernameValidationPage extends javax.swing.JFrame {
 
     private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
         String usernameOrEmail = usernameOrEmailField.getText();
-        String email = "";
 
+        // Check if the entered username or email is not empty
         if (!usernameOrEmail.trim().isEmpty()) {
             try {
+                // Validate the username or email
                 ValidationResult usernameOrEmailValidation = ValidationHandler.validateUsernameOrEmail(usernameOrEmail);
 
+                // If the username or email is valid, retrieve the userdata from the database
                 if (usernameOrEmailValidation.isValid()) {
-                    if (!usernameOrEmail.contains("@")) {
-                        email = UserDAO.readEmailByUsername(usernameOrEmail);
-                    } else {
-                        email = usernameOrEmail;
-                    }
                     try {
                         userData.readUserDataFromDatabase(usernameOrEmail);
                         dispose();
+                        // Proceed to reset password email verification page
                         new ResetPasswordEmailVerificationPage(userData).setVisible(true);
                     } catch (IOException ex) {
-                        UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                        UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
                         Logger.getLogger(UsernameValidationPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
+                    // If the username or email is invalid, mark the field as errorneous and display error message
                     UIUtils.setFieldErrorState(usernameOrEmailField);
                     UIUtils.setErrorLabelMessage(usernameOrEmailErrorLabel, usernameOrEmailValidation.getErrorMessage());
                 }
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage("An error occured while connecting to the database");
+                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
                 Logger.getLogger(UsernameValidationPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.markFieldAsRequired(usernameOrEmailField, usernameOrEmailErrorLabel);
         }
     }//GEN-LAST:event_continueButtonMouseClicked
@@ -399,10 +402,8 @@ public class UsernameValidationPage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UsernameValidationPage().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new UsernameValidationPage().setVisible(true);
         });
     }
 

@@ -1,13 +1,15 @@
 package bookstoreinventorymanagementsystem;
 
 /**
+ * The class represents the user interface indicating user that the account
+ * creation has successful.
  *
- * @author Norman
+ * @author Teo Chung Henn
  */
 public class SignUpSuccessfulPage extends javax.swing.JFrame {
 
     /**
-     * Creates new form LoginPage
+     * Creates new form SignUpSuccessfulPage
      */
     public SignUpSuccessfulPage() {
         initComponents();

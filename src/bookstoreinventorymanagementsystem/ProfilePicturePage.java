@@ -12,6 +12,9 @@ import java.util.logging.Level;
 import javax.swing.ImageIcon;
 
 /**
+ * The class represents the user interface for selecting and displaying a
+ * profile picture. Users are required to provide their own profile picture.
+ * This page serves as the last step of the sign-up process.
  *
  * @author Teo Chung Henn
  */
@@ -21,15 +24,22 @@ public class ProfilePicturePage extends javax.swing.JFrame {
     private File selectedFile;
 
     /**
-     * Creates new form LoginPage
+     * Creates new form ProfilePicturePage
      *
-     * @param userData
+     * @param userData the UserData object containing user information, passed
+     * from SignUpEmailVerificationPage class.
      */
     public ProfilePicturePage(UserData userData) {
         initComponents();
         this.userData = userData;
     }
 
+    /**
+     * Displays the profile picture in the label component. This method scales
+     * the image to fit the label's size.
+     *
+     * @param file the File object representing the profile picture file.
+     */
     private void displayProfilePicture(File file) {
         ImageIcon icon = new ImageIcon(file.getPath());
         Image image = icon.getImage();
@@ -303,12 +313,14 @@ public class ProfilePicturePage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void finishButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMouseClicked
+        // Check if a profile picture file is selected
         if (selectedFile != null) {
             try {
                 byte[] profilePicture = ImageUtils.convertFileToByteArray(selectedFile);
                 userData.setProfilePicture(profilePicture);
 
                 try {
+                    // Save the user's sign-up data to the database as the final step
                     userData.saveUserDataToDatabase();
                     dispose();
                     new SignUpSuccessfulPage().setVisible(true);
@@ -321,6 +333,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                 Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+            // If no profile picture is selected, display error message
             UIUtils.setErrorLabelMessage(noPictureErrorLabel, "Must upload a picture");
         }
     }//GEN-LAST:event_finishButtonMouseClicked
@@ -371,14 +384,18 @@ public class ProfilePicturePage extends javax.swing.JFrame {
     }//GEN-LAST:event_LeftPanelMouseClicked
 
     private void uploadPicturePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadPicturePanelMouseClicked
+        // Create a file chooser for user to select a picture file
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choose Profile Picture");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.setAcceptAllFileFilterUsed(false);
+
+        // Create a file filter for image files only
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Image Files", "jpg", "jpeg", "png");
         fileChooser.addChoosableFileFilter(filter);
 
+        // Check if a file is chosen
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileChooser.getSelectedFile();
             displayProfilePicture(selectedFile);
@@ -415,10 +432,8 @@ public class ProfilePicturePage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ProfilePicturePage(new UserData()).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ProfilePicturePage(new UserData()).setVisible(true);
         });
     }
 

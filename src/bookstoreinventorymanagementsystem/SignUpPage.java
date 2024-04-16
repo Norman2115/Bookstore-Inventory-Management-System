@@ -6,6 +6,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * The class represents the user interface for signing up to the bookstore
+ * inventory management system. Users are required to provide their full name,
+ * email address, username, and password for registration.
  *
  * @author Teo Chung Henn
  */
@@ -22,9 +25,10 @@ public class SignUpPage extends javax.swing.JFrame {
     private String email;
 
     /**
-     * Creates new form LoginPage
+     * Creates new form SignUpPage.
      *
-     * @param userData
+     * @param userData UserData object to store user data, passed from
+     * RoleSelectionPage class.
      */
     public SignUpPage(UserData userData) {
         initComponents();
@@ -90,11 +94,6 @@ public class SignUpPage extends javax.swing.JFrame {
 
         RightPanel.setBackground(new java.awt.Color(62, 164, 52));
         RightPanel.setPreferredSize(new java.awt.Dimension(450, 500));
-        RightPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                RightPanelMouseClicked(evt);
-            }
-        });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/bookstore_banner.png"))); // NOI18N
@@ -118,11 +117,6 @@ public class SignUpPage extends javax.swing.JFrame {
 
         LeftPanel.setBackground(new java.awt.Color(253, 252, 248));
         LeftPanel.setPreferredSize(new java.awt.Dimension(450, 500));
-        LeftPanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LeftPanelMouseClicked(evt);
-            }
-        });
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -426,6 +420,7 @@ public class SignUpPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
+        // Check if any required field is empty and mark it as required if so
         if (fullNameField.getText().trim().isEmpty()) {
             UIUtils.markFieldAsRequired(fullNameField, fullNameErrorLabel);
         }
@@ -442,8 +437,8 @@ public class SignUpPage extends javax.swing.JFrame {
             UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
         }
 
-        if (isFullNameValid && isEmailValid && isUsernameValid
-                && isPasswordValid) {
+        // If all fields are valid, set user data and proceed to sign-up email verification
+        if (isFullNameValid && isEmailValid && isUsernameValid && isPasswordValid) {
             userData.setFullName(fullName);
             userData.setEmail(email);
             userData.setUsername(username);
@@ -502,14 +497,6 @@ public class SignUpPage extends javax.swing.JFrame {
         new LoginPage().setVisible(true);
     }//GEN-LAST:event_goToLoginButtonMouseClicked
 
-    private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
-        RightPanel.grabFocus();
-    }//GEN-LAST:event_RightPanelMouseClicked
-
-    private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
-        LeftPanel.grabFocus();
-    }//GEN-LAST:event_LeftPanelMouseClicked
-
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailFieldActionPerformed
@@ -520,18 +507,24 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void fullNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyReleased
         fullName = fullNameField.getText();
+
+        // Check if the entered full name is not empty
         if (!fullName.trim().isEmpty()) {
+            // Validate the full name
             ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
             isFullNameValid = fullNameValidation.isValid();
 
+            // If full name is invalid, mark the field as errorneous and display error message
             if (!fullNameValidation.isValid()) {
                 UIUtils.setFieldErrorState(fullNameField);
                 UIUtils.setErrorLabelMessage(fullNameErrorLabel, fullNameValidation.getErrorMessage());
             } else {
+                // If the full name is valid, reset the field state and clear error message
                 UIUtils.resetFieldState(fullNameField);
                 UIUtils.resetErrorLabel(fullNameErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(emailField);
             UIUtils.resetErrorLabel(emailErrorLabel);
         }
@@ -539,18 +532,24 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
         email = emailField.getText();
+
+        // Check if the entered email is not empty
         if (!email.trim().isEmpty()) {
+            // Validate the email
             ValidationResult emailValidation = ValidationHandler.validateEmail(email);
             isEmailValid = emailValidation.isValid();
 
+            // If the email is invalid, mark the field as errorneous and display error message
             if (!emailValidation.isValid()) {
                 UIUtils.setFieldErrorState(emailField);
                 UIUtils.setErrorLabelMessage(emailErrorLabel, emailValidation.getErrorMessage());
             } else {
+                // If the email is valid, reset the field state and clear error message
                 UIUtils.resetFieldState(emailField);
                 UIUtils.resetErrorLabel(emailErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(emailField);
             UIUtils.resetErrorLabel(emailErrorLabel);
         }
@@ -558,24 +557,32 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
         username = usernameField.getText();
+
+        // Check if the entered username is not empty
         if (!username.trim().isEmpty()) {
+            // Validate the username
             ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
 
+            // If the username is invalid, mark the field as errorneous and display error message
             if (!usernameValidation.isValid()) {
                 UIUtils.setFieldErrorState(usernameField);
                 UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
             } else {
+                // If the username is valid, reset the field state and clear error message
                 UIUtils.setFieldErrorState(usernameField);
                 UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
 
                 try {
+                    // Check if the username is unique
                     ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
                     isUsernameValid = usernameUniqueValidation.isValid();
 
+                    // If the username is not unique, mark the field as errorneous and display error message
                     if (!usernameUniqueValidation.isValid()) {
                         UIUtils.setFieldErrorState(usernameField);
                         UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
                     } else {
+                        // If the username is unique, reset the field state and clear error message
                         UIUtils.resetFieldState(usernameField);
                         UIUtils.resetErrorLabel(usernameErrorLabel);
                     }
@@ -585,6 +592,7 @@ public class SignUpPage extends javax.swing.JFrame {
                 }
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(usernameField);
             UIUtils.resetErrorLabel(usernameErrorLabel);
         }
@@ -592,18 +600,24 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
         password = new String(passwordField.getPassword());
+
+        // Check if the entered password is not empty
         if (!password.trim().isEmpty()) {
+            // Validate the password
             ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
             isPasswordValid = passwordValidation.isValid();
-            
+
+            // If the password is invalid, mark the field as errorneous and display error message
             if (!passwordValidation.isValid()) {
                 UIUtils.setFieldErrorState(passwordField);
                 UIUtils.setErrorLabelMessage(passwordErrorLabel, passwordValidation.getErrorMessage());
             } else {
+                // If the password is invalid, reset the field state and clear error message
                 UIUtils.resetFieldState(passwordField);
                 UIUtils.resetErrorLabel(passwordErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(passwordField);
             UIUtils.resetErrorLabel(passwordErrorLabel);
         }
@@ -611,25 +625,25 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void fullNameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyTyped
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            LeftPanel.requestFocusInWindow();
+            basePanel.requestFocusInWindow();
         }
     }//GEN-LAST:event_fullNameFieldKeyTyped
 
     private void emailFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyTyped
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            LeftPanel.requestFocusInWindow();
+            basePanel.requestFocusInWindow();
         }
     }//GEN-LAST:event_emailFieldKeyTyped
 
     private void usernameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyTyped
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            LeftPanel.requestFocusInWindow();
+            basePanel.requestFocusInWindow();
         }
     }//GEN-LAST:event_usernameFieldKeyTyped
 
     private void passwordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyTyped
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            LeftPanel.requestFocusInWindow();
+            basePanel.requestFocusInWindow();
         }
     }//GEN-LAST:event_passwordFieldKeyTyped
 
@@ -668,10 +682,8 @@ public class SignUpPage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SignUpPage(new UserData()).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new SignUpPage(new UserData()).setVisible(true);
         });
     }
 
