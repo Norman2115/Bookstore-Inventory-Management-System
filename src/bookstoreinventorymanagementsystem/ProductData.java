@@ -118,12 +118,14 @@ public final class ProductData {
         setGenre(null);
         setLanguage(null);
         setAuthor(null);
+        setPublisher(null);
         setPublicationYear(0);
         setISBN(0);
         setStockQuantity(0);
         setUnitPrice(0.0);
         setDiscount(0.0);
-        setImage(null);         
+        setImage(null);    
+        calculateNetPrice();
     }
     
     public void saveUserDataToDatabase() throws SQLException {

@@ -347,7 +347,7 @@ public class ValidationHandler {
     public static ValidationResult checkUniqueISBN(String isbn) throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM user WHERE isbn = ?"
+                    "SELECT * FROM product WHERE isbn = ?"
             );
 
             statement.setString(1, isbn);
@@ -355,7 +355,7 @@ public class ValidationHandler {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return new ValidationResult(false, "Already exists in the database.");
+                return new ValidationResult(false, "ISBN already exists in the database.");
             }
 
             return new ValidationResult(true, null);
@@ -371,7 +371,7 @@ public class ValidationHandler {
         if(str.matches("\\d+"))
             return new ValidationResult(true, null);
         
-        return new ValidationResult(false, "Only digital are accepted");
+        return new ValidationResult(false, "Only digit are accepted");
     }
     /**
      * Checks is the format of the string is valid as a normal format of price which is decimal and not more than two decimal place.
