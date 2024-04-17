@@ -767,7 +767,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_publisherKeyReleased
 
     private void yearKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_yearKeyReleased
-        ValidationResult yearContaintDigit  = ValidationHandler.containsOnlyDigital(year.getText());
+        ValidationResult yearContaintDigit  = ValidationHandler.containsOnlyDigit(year.getText());
         if (yearContaintDigit.isValid()&&year.getText().length()==4){
             productData.setPublicationYear(Integer.parseInt(year.getText()));
             isYearValid  =  true;
@@ -781,7 +781,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_yearKeyReleased
 
     private void quantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityKeyReleased
-        ValidationResult quantityContaintDigit  = ValidationHandler.containsOnlyDigital(quantity.getText());
+        ValidationResult quantityContaintDigit  = ValidationHandler.containsOnlyDigit(quantity.getText());
         if (quantityContaintDigit.isValid()){
             productData.setStockQuantity(Integer.parseInt(quantity.getText()));
             isQuantityValid  =  true;

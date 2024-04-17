@@ -400,7 +400,7 @@ public class ValidationHandler {
      * @param str the string to check
      * @return a ValidtationResult indicate whether the string only contains digital.
      */
-    public static ValidationResult containsOnlyDigital (String str) {
+    public static ValidationResult containsOnlyDigit (String str) {
         if(str.matches("\\d+"))
             return new ValidationResult(true, null);
         

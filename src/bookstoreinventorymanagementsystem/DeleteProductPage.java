@@ -4,16 +4,20 @@
  */
 package bookstoreinventorymanagementsystem;
 
+import java.util.Arrays;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author User
  */
 public class DeleteProductPage extends javax.swing.JInternalFrame {
-
+    private final ReadProductData input = new ReadProductData();
+    private final DeleteProductData delete = new DeleteProductData();
     /**
      * Creates new form welcomeText
      */
@@ -23,10 +27,49 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         
+        ProductData[] productData;
+        productData = input.readData("product","book_title");
+        displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
     }
     
+    private void displayRow(ProductData[] productData) {
+        ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
+        int length = productData.length;
+        if (length > 0) {
+            for (int i = 0; i < length; i++) {
+                Object[] rowData = new Object[7];
+                rowData[0] = productData[i].getBookTitle();
+                rowData[1] = productData[i].getISBN();
+                rowData[2] = productData[i].getGenre();
+                rowData[3] = productData[i].getLanguage();
+                rowData[4] = productData[i].getAuthor();
+                rowData[5] = productData[i].getPublisher();
+                rowData[6] = productData[i].getPublicatioYear();
+                //insert row
+                ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
+            }
+        } else {
+            ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
+        }
+    }
+
+    private String getSelection() {
+        String searchBy = null;
+        switch (searchType.getSelectedIndex()) {
+            case 0:
+                searchBy = "book_title";
+                break;
+            case 1:
+                searchBy = "book_title";
+                break;
+            case 2:
+                searchBy = "isbn";
+                break;
+        }
+        return searchBy;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,12 +87,12 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        publicationYear2 = new javax.swing.JTextField();
+        searchBar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        addProductButton1 = new javax.swing.JPanel();
+        displayTable = new javax.swing.JTable();
+        searchType = new javax.swing.JComboBox<>();
+        searchButton = new javax.swing.JLabel();
+        deleteButton = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -99,15 +142,15 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        publicationYear2.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear2.addActionListener(new java.awt.event.ActionListener() {
+        searchBar.setBackground(new java.awt.Color(253, 252, 248));
+        searchBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        searchBar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear2ActionPerformed(evt);
+                searchBarActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        displayTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -149,48 +192,53 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setToolTipText("");
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setFocusable(false);
-        jTable1.setRowHeight(25);
-        jTable1.setSelectionBackground(new java.awt.Color(0, 140, 214));
-        jTable1.setSelectionForeground(new java.awt.Color(253, 252, 248));
-        jTable1.setShowGrid(false);
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addInputMethodListener(new java.awt.event.InputMethodListener() {
+        displayTable.setToolTipText("");
+        displayTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        displayTable.setFocusable(false);
+        displayTable.setRowHeight(25);
+        displayTable.setSelectionBackground(new java.awt.Color(0, 140, 214));
+        displayTable.setSelectionForeground(new java.awt.Color(253, 252, 248));
+        displayTable.setShowGrid(false);
+        displayTable.getTableHeader().setResizingAllowed(false);
+        displayTable.getTableHeader().setReorderingAllowed(false);
+        displayTable.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                jTable1InputMethodTextChanged(evt);
+                displayTableInputMethodTextChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(displayTable);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
-        jComboBox1.setToolTipText("");
+        searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
+        searchType.setToolTipText("");
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_icon.png"))); // NOI18N
-        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-
-        addProductButton1.setBackground(new java.awt.Color(0, 140, 214));
-        addProductButton1.setPreferredSize(new java.awt.Dimension(120, 52));
-        addProductButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        searchButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_icon.png"))); // NOI18N
+        searchButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseClicked(evt);
+                searchButtonMouseClicked(evt);
+            }
+        });
+
+        deleteButton.setBackground(new java.awt.Color(0, 140, 214));
+        deleteButton.setPreferredSize(new java.awt.Dimension(120, 52));
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseEntered(evt);
+                deleteButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseExited(evt);
+                deleteButtonMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                addProductButton1MousePressed(evt);
+                deleteButtonMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseReleased(evt);
+                deleteButtonMouseReleased(evt);
             }
         });
 
@@ -199,18 +247,18 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel26.setText("DELETE");
 
-        javax.swing.GroupLayout addProductButton1Layout = new javax.swing.GroupLayout(addProductButton1);
-        addProductButton1.setLayout(addProductButton1Layout);
-        addProductButton1Layout.setHorizontalGroup(
-            addProductButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButton1Layout.createSequentialGroup()
+        javax.swing.GroupLayout deleteButtonLayout = new javax.swing.GroupLayout(deleteButton);
+        deleteButton.setLayout(deleteButtonLayout);
+        deleteButtonLayout.setHorizontalGroup(
+            deleteButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, deleteButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        addProductButton1Layout.setVerticalGroup(
-            addProductButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButton1Layout.createSequentialGroup()
+        deleteButtonLayout.setVerticalGroup(
+            deleteButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, deleteButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                 .addContainerGap())
@@ -235,16 +283,16 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(addProductButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(publicationYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(0, 0, 0)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(searchType, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 60, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -260,12 +308,12 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addGap(36, 36, 36)
                                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(publicationYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(searchType, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
@@ -273,7 +321,7 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
                         .addComponent(jLabel16)))
                 .addGap(18, 18, 18)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addProductButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(82, 82, 82))
         );
@@ -294,40 +342,72 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void publicationYear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear2ActionPerformed
+    private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
+        ProductData[] productData;
+        String searchBy = getSelection();
+        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
+        productData = input.readData("product",condition,searchBy);
+        displayRow(productData);
+    }//GEN-LAST:event_searchBarActionPerformed
 
-    private void jTable1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTable1InputMethodTextChanged
+    private void displayTableInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_displayTableInputMethodTextChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1InputMethodTextChanged
+    }//GEN-LAST:event_displayTableInputMethodTextChanged
 
-    private void addProductButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseClicked
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+    int deleteConfirm = JOptionPane.showConfirmDialog(null, "Data cannot be recovered once deleted! Continue delete?", "Warning!", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+        if(deleteConfirm == 0){
+            int length = displayTable.getRowCount();
+            Object deleteRow[] = new Object[length];
+            int lengthOfDeleteRow = 0;
+            for(int i = 0;i<length;i++){
+                Object value =((DefaultTableModel) displayTable.getModel()).getValueAt(i, 7);
+                boolean selected = false;
+                if (value != null){
+                    selected = (boolean) value;
+                }
+                if (selected){
+                    deleteRow[lengthOfDeleteRow] = ((DefaultTableModel) displayTable.getModel()).getValueAt(i, 1);
+                    System.out.println("Delete isbn:"+deleteRow[lengthOfDeleteRow]);
+                    lengthOfDeleteRow++;
+                }
+            }
+            deleteRow = Arrays.copyOf(deleteRow, lengthOfDeleteRow);
+            delete.deleteData("isbn",deleteRow);
+            UIUtils.displaySuccessMessage("Delete successfull");
+        }
+    }//GEN-LAST:event_deleteButtonMouseClicked
 
-    private void addProductButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseEntered
+    private void deleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseEntered
+        deleteButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_deleteButtonMouseEntered
 
-    private void addProductButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseExited
+    private void deleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseExited
+        deleteButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_deleteButtonMouseExited
 
-    private void addProductButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MousePressed
+    private void deleteButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMousePressed
+        deleteButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_deleteButtonMousePressed
 
-    private void addProductButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseReleased
+    private void deleteButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseReleased
+        deleteButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_deleteButtonMouseReleased
+
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        ProductData[] productData;
+        String searchBy = getSelection();
+        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
+        productData = input.readData("product",condition,searchBy);
+        displayRow(productData);
+    }//GEN-LAST:event_searchButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel addProductButton1;
     private javax.swing.JPanel background;
+    private javax.swing.JPanel deleteButton;
     private javax.swing.JPanel displayPanel;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTable displayTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
@@ -335,10 +415,10 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField publicationYear2;
+    private javax.swing.JTextField searchBar;
+    private javax.swing.JLabel searchButton;
+    private javax.swing.JComboBox<String> searchType;
     // End of variables declaration//GEN-END:variables
 }
