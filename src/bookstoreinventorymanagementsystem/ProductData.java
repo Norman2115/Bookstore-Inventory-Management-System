@@ -129,7 +129,7 @@ public final class ProductData {
     public void saveUserDataToDatabase() throws SQLException {
         Connection connection = DatabaseManager.getConnection();
 
-        StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,picture) VALUES (?");
+        StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,image) VALUES (?");
         for (int i = 1; i < 11; i++) {
             queryBuilder.append(", ?");
         }
