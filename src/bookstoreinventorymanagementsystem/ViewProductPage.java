@@ -4,8 +4,6 @@
  */
 package bookstoreinventorymanagementsystem;
 
-import javax.swing.JScrollBar;
-import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
