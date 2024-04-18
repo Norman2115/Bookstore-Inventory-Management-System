@@ -17,6 +17,7 @@ import javax.swing.Timer;
 public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
 
     private final UserData userData;
+    private final NavigationStack<UserData> userDataStack;
     private final EmailHandler emailHandler;
     private final Timer resendCodeButtonTimer;
 
@@ -25,9 +26,11 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
      *
      * @param userData the UserData object containing user information, passed
      * from UsernameValidationPage class.
+     * @param userDataStack
      */
-    public ResetPasswordEmailVerificationPage(UserData userData) {
+    public ResetPasswordEmailVerificationPage(UserData userData, NavigationStack<UserData> userDataStack) {
         this.userData = userData;
+        this.userDataStack = userDataStack;
         initComponents();
         emailHandler = new EmailHandler();
 
@@ -88,6 +91,8 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
         verificationCodeErrorLabel = new javax.swing.JLabel();
         didntReceiveLabel = new javax.swing.JLabel();
         resendCodeButton = new javax.swing.JLabel();
+        backButton = new javax.swing.JPanel();
+        backLabel = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -166,7 +171,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
         });
 
         verificationCodeIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        verificationCodeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        verificationCodeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/verification_code_icon_3.png"))); // NOI18N
         verificationCodeIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         finishButton.setBackground(new java.awt.Color(0, 140, 214));
@@ -199,7 +204,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
             finishButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, finishButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(finishLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(finishLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addContainerGap())
         );
         finishButtonLayout.setVerticalGroup(
@@ -261,6 +266,47 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
             }
         });
 
+        backButton.setBackground(new java.awt.Color(180, 180, 180));
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                backButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                backButtonMouseReleased(evt);
+            }
+        });
+
+        backLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backLabel.setForeground(new java.awt.Color(255, 255, 255));
+        backLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backLabel.setText("BACK");
+
+        javax.swing.GroupLayout backButtonLayout = new javax.swing.GroupLayout(backButton);
+        backButton.setLayout(backButtonLayout);
+        backButtonLayout.setHorizontalGroup(
+            backButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        backButtonLayout.setVerticalGroup(
+            backButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -281,7 +327,6 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
                                 .addComponent(rememberPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(goToLoginButton))
-                            .addComponent(finishButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(verificationCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
@@ -290,7 +335,11 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(didntReceiveLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(resendCodeButton)))
+                                .addComponent(resendCodeButton))
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -314,7 +363,9 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
                     .addComponent(didntReceiveLabel)
                     .addComponent(resendCodeButton))
                 .addGap(18, 18, 18)
-                .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rememberPasswordLabel)
@@ -367,7 +418,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
             // If the code is valid, proceed to profile picture upload page
             if (codeValidation.isValid()) {
                 dispose();
-                new ResetPasswordPage(userData).setVisible(true);
+                new ResetPasswordPage(userData, userDataStack).setVisible(true);
             } else {
                 // If the code is invalid, mark the field as errorneous and display error message
                 UIUtils.setFieldErrorState(verificationCodeField);
@@ -470,6 +521,29 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
         resendCodeButton.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_resendCodeButtonMouseReleased
 
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+        RecoverAccountPage recoverAccountPage = new RecoverAccountPage(userDataStack);
+        recoverAccountPage.onBackButtonPressed();
+        dispose();
+        recoverAccountPage.setVisible(true);
+    }//GEN-LAST:event_backButtonMouseClicked
+
+    private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
+        backButton.setBackground(ColorManager.DARK_GREY);
+    }//GEN-LAST:event_backButtonMouseEntered
+
+    private void backButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseExited
+        backButton.setBackground(ColorManager.DEEP_GREY);
+    }//GEN-LAST:event_backButtonMouseExited
+
+    private void backButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMousePressed
+        backButton.setBackground(ColorManager.CHARCOAL_GREY);
+    }//GEN-LAST:event_backButtonMousePressed
+
+    private void backButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseReleased
+        backButton.setBackground(ColorManager.DARK_GREY);
+    }//GEN-LAST:event_backButtonMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -506,13 +580,15 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new ResetPasswordEmailVerificationPage(new UserData()).setVisible(true);
+            new ResetPasswordEmailVerificationPage(new UserData(), new NavigationStack<>()).setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
+    private javax.swing.JPanel backButton;
+    private javax.swing.JLabel backLabel;
     private javax.swing.JLabel banner;
     private javax.swing.JLabel didntReceiveLabel;
     private javax.swing.JPanel finishButton;

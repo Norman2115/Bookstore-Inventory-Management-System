@@ -60,4 +60,5 @@ public class ColorManager {
     public static final Color STONE_GREY = new Color(200, 200, 200);
     public static final Color DEEP_GREY = new Color(180, 180, 180);
     public static final Color DARK_GREY = new Color(160, 160, 160);
+    public static final Color CHARCOAL_GREY = new Color(140, 140, 140);
 }
