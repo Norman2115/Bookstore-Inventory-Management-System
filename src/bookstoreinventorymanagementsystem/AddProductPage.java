@@ -7,6 +7,9 @@ package bookstoreinventorymanagementsystem;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +29,6 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     private boolean isBookTitleValid = false;
     private boolean isAuthorValid = false;
     private boolean isPublisherValid = false;
-    private boolean isYearValid = false;
     private boolean isQuantityValid = false;
     private boolean isUnitPriceValid = false;
     private boolean isDiscountValid = true;
@@ -721,15 +723,24 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         if (!isDiscountValid){
              valid = false;
         }
-
+        if(productData.getImage()==null){
+            Path imagePath = Paths.get("src", "icon", "no-image.png");
+            try {
+                byte[] imageBytes = Files.readAllBytes(imagePath);
+                 productData.setImage(imageBytes);
+            } catch (IOException ex) {
+                Logger.getLogger(AddProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         if (valid)
         {
             try {
                 productData.saveUserDataToDatabase();
-                reset();
             } catch (SQLException ex) {
                 Logger.getLogger(AddProductPage.class.getName()).log(Level.SEVERE, null, ex);
             }
+            reset();
         }
     }//GEN-LAST:event_addProductButtonMouseClicked
 
@@ -813,13 +824,11 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         ValidationResult yearContaintDigit  = ValidationHandler.containsOnlyDigit(year.getText());
         if (yearContaintDigit.isValid()&&year.getText().length()==4){
             productData.setPublicationYear(Integer.parseInt(year.getText()));
-            isYearValid  =  true;
             UIUtils.resetFieldState(year);
             yearErrorLabel.setForeground(ColorManager.WHITE);
         }else{
             UIUtils.setFieldErrorState(year);
             UIUtils.setErrorLabelMessage(yearErrorLabel, "Invalid year format");
-            isYearValid  =  false;
         }      
     }//GEN-LAST:event_yearKeyReleased
 
@@ -893,7 +902,8 @@ public class AddProductPage extends javax.swing.JInternalFrame {
             }
         }
         if (valid1.isValid()&&valid2.isValid()){
-            productData.setISBN(isbn.getText());
+            long isbnInInteger = Long.parseLong(isbn.getText());
+            productData.setISBN(isbnInInteger);
             isUnitPriceValid  =  true;
             UIUtils.resetFieldState(isbn);
             isbnErrorLabel.setForeground(ColorManager.WHITE);
