@@ -55,13 +55,14 @@ public final class ReadProductData {
                 productData[i].setAuthor(resultSet.getString("author"));
                 productData[i].setPublisher(resultSet.getString("publisher"));
                 productData[i].setPublicationYear(resultSet.getInt("publication_year"));
-                productData[i].setISBN(resultSet.getInt("isbn"));
+                productData[i].setISBN(resultSet.getLong("isbn"));
                 productData[i].setStockQuantity(resultSet.getInt("stock_quantity"));
                 productData[i].setUnitPrice(resultSet.getDouble("unit_price"));
                 productData[i].setDiscount(resultSet.getDouble("discount"));
                 try {
-                    byte[] image = ImageUtils.convertBlobToByteArray(resultSet.getBlob("picture"));
-                    productData[i].setImage(image);
+                    System.out.println("Read image");
+                    byte[] imageByte = ImageUtils.convertBlobToByteArray(resultSet.getBlob("image"));
+                    productData[i].setImage(imageByte);
                 } catch (IOException ex) {
                     Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -102,12 +103,12 @@ public final class ReadProductData {
                 productData[i].setAuthor(resultSet.getString("author"));
                 productData[i].setPublisher(resultSet.getString("publisher"));
                 productData[i].setPublicationYear(resultSet.getInt("publication_year"));
-                productData[i].setISBN(resultSet.getInt("isbn"));
+                productData[i].setISBN(resultSet.getLong("isbn"));
                 productData[i].setStockQuantity(resultSet.getInt("stock_quantity"));
                 productData[i].setUnitPrice(resultSet.getDouble("unit_price"));
                 productData[i].setDiscount(resultSet.getDouble("discount"));
                 try {
-                    byte[] image = ImageUtils.convertBlobToByteArray(resultSet.getBlob("picture"));
+                    byte[] image = ImageUtils.convertBlobToByteArray(resultSet.getBlob("image"));
                     productData[i].setImage(image);
                 } catch (IOException ex) {
                     Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);

@@ -17,7 +17,7 @@ public final class ProductData {
     private String author;
     private String publisher;
     private int publicationYear;
-    private int isbn;
+    private long isbn;
     private int stockQuantity;
     private double unitPrice;
     private double discount;
@@ -55,7 +55,7 @@ public final class ProductData {
     public void setPublicationYear(int publicationYear){
         this.publicationYear=publicationYear;
     }
-    public void setISBN(int isbn){
+    public void setISBN(long isbn){
         this.isbn=isbn;
     }
     public void setStockQuantity(int stockQuantity){
@@ -93,7 +93,7 @@ public final class ProductData {
     public int getPublicatioYear(){
         return publicationYear;
     }
-    public int getISBN(){
+    public long getISBN(){
         return isbn;
     }
     public int getStockQuantity(){
