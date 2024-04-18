@@ -4,9 +4,7 @@
  */
 package bookstoreinventorymanagementsystem;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -18,7 +16,6 @@ import java.util.logging.Logger;
  */
 public final class DeleteProductData {
     private Connection connection;
-    private int rowNumber;
     public DeleteProductData(){
         try {
             //Connect to database

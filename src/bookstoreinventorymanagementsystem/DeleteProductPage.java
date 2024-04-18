@@ -6,8 +6,6 @@ package bookstoreinventorymanagementsystem;
 
 import java.util.Arrays;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollBar;
-import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -375,6 +373,10 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
             deleteRow = Arrays.copyOf(deleteRow, lengthOfDeleteRow);
             delete.deleteData("isbn",deleteRow);
             UIUtils.displaySuccessMessage("Delete successfull");
+            
+            ProductData[] productData;
+            productData = input.readData("product","book_title");
+            displayRow(productData);
         }
     }//GEN-LAST:event_deleteButtonMouseClicked
 
