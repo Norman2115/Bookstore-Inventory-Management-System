@@ -13,16 +13,40 @@ import java.util.logging.Logger;
  *
  * @author Teo Chung Henn
  */
-public class UsernameValidationPage extends javax.swing.JFrame {
+public class RecoverAccountPage extends javax.swing.JFrame implements NavigationListener {
 
-    private final UserData userData;
+    private UserData userData;
+    private final NavigationStack<UserData> userDataStack;
 
     /**
      * Creates new form UsernameValidationPage
+     *
+     * @param userDataStack
      */
-    public UsernameValidationPage() {
+    public RecoverAccountPage(NavigationStack<UserData> userDataStack) {
         initComponents();
         userData = new UserData();
+        this.userDataStack = userDataStack;
+    }
+
+    @Override
+    public void onBackButtonPressed() {
+        if (userDataStack != null && !userDataStack.isEmpty()) {
+            userData = userDataStack.popPageData();
+
+            if (userData.isUsingUsernameForRecover()) {
+                usernameOrEmailField.setText(userData.getUsername());
+            } else {
+                usernameOrEmailField.setText(userData.getEmail());
+            }
+        }
+    }
+
+    @Override
+    public void onForwardButtonPressed() {
+        if (userDataStack != null) {
+            userDataStack.pushPageData(userData);
+        }
     }
 
     /**
@@ -100,7 +124,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titleLabel.setText("<html><font color='#3EA434'>Account</font> <font color='#008CD6'>Recovery</font></html>");
+        titleLabel.setText("<html><font color='#3EA434'>Recover</font> <font color='#008CD6'>Account</font></html>");
 
         subTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         subTitleLabel.setForeground(new java.awt.Color(0, 100, 0));
@@ -293,14 +317,21 @@ public class UsernameValidationPage extends javax.swing.JFrame {
 
                 // If the username or email is valid, retrieve the userdata from the database
                 if (usernameOrEmailValidation.isValid()) {
+                    if (usernameOrEmail.contains("@")) {
+                        userData.setUsingUsernameForRecover(false);
+                    } else {
+                        userData.setUsingUsernameForRecover(true);
+                    }
+
                     try {
                         userData.readUserDataFromDatabase(usernameOrEmail);
                         dispose();
+                        onForwardButtonPressed();
                         // Proceed to reset password email verification page
-                        new ResetPasswordEmailVerificationPage(userData).setVisible(true);
+                        new ResetPasswordEmailVerificationPage(userData, userDataStack).setVisible(true);
                     } catch (IOException ex) {
                         UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                        Logger.getLogger(UsernameValidationPage.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(RecoverAccountPage.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else {
                     // If the username or email is invalid, mark the field as errorneous and display error message
@@ -309,7 +340,7 @@ public class UsernameValidationPage extends javax.swing.JFrame {
                 }
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                Logger.getLogger(UsernameValidationPage.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RecoverAccountPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             // If field is empty, reset the field state and clear error message, if any
@@ -390,20 +421,26 @@ public class UsernameValidationPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UsernameValidationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecoverAccountPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UsernameValidationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecoverAccountPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UsernameValidationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecoverAccountPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UsernameValidationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecoverAccountPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new UsernameValidationPage().setVisible(true);
+            new RecoverAccountPage(new NavigationStack<>()).setVisible(true);
         });
     }
 

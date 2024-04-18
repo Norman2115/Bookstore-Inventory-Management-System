@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 public class ResetPasswordPage extends javax.swing.JFrame {
 
     private final UserData userData;
+    private final NavigationStack<UserData> userDataStack;
     private boolean isPasswordValid;
     private boolean isConfirmPasswordValid;
     private String newPassword;
@@ -22,10 +23,12 @@ public class ResetPasswordPage extends javax.swing.JFrame {
      *
      * @param userData the UserData object containing user information, passed
      * from ResetPasswordEmailVerificationPage class.
+     * @param userDataStack
      */
-    public ResetPasswordPage(UserData userData) {
+    public ResetPasswordPage(UserData userData, NavigationStack<UserData> userDataStack) {
         initComponents();
         this.userData = userData;
+        this.userDataStack = userDataStack;
         isPasswordValid = false;
         isConfirmPasswordValid = false;
     }
@@ -59,6 +62,8 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         showHideConfirmPasswordIcon = new javax.swing.JLabel();
         passwordErrorLabel = new javax.swing.JLabel();
         confirmPasswordErrorLabel = new javax.swing.JLabel();
+        backButton = new javax.swing.JPanel();
+        backLabel = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -159,7 +164,7 @@ public class ResetPasswordPage extends javax.swing.JFrame {
             confirmButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, confirmButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(confirmLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(confirmLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addContainerGap())
         );
         confirmButtonLayout.setVerticalGroup(
@@ -239,6 +244,47 @@ public class ResetPasswordPage extends javax.swing.JFrame {
             }
         });
 
+        backButton.setBackground(new java.awt.Color(180, 180, 180));
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                backButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                backButtonMouseReleased(evt);
+            }
+        });
+
+        backLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backLabel.setForeground(new java.awt.Color(255, 255, 255));
+        backLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backLabel.setText("BACK");
+
+        javax.swing.GroupLayout backButtonLayout = new javax.swing.GroupLayout(backButton);
+        backButton.setLayout(backButtonLayout);
+        backButtonLayout.setHorizontalGroup(
+            backButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        backButtonLayout.setVerticalGroup(
+            backButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -254,7 +300,6 @@ public class ResetPasswordPage extends javax.swing.JFrame {
                         .addGap(32, 32, 32)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(confirmButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
@@ -270,7 +315,11 @@ public class ResetPasswordPage extends javax.swing.JFrame {
                                 .addGap(19, 19, 19)
                                 .addComponent(dontHaveAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(goToLoginButton)))
+                                .addComponent(goToLoginButton))
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 26, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -298,7 +347,9 @@ public class ResetPasswordPage extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addComponent(confirmPasswordErrorLabel)
                 .addGap(25, 25, 25)
-                .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dontHaveAccountLabel)
@@ -372,22 +423,6 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         confirmButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_confirmButtonMousePressed
 
-    private void goToLoginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseEntered
-        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_goToLoginButtonMouseEntered
-
-    private void goToLoginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseExited
-        goToLoginButton.setForeground(ColorManager.DARK_GREEN);
-    }//GEN-LAST:event_goToLoginButtonMouseExited
-
-    private void goToLoginButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMousePressed
-        goToLoginButton.setForeground(ColorManager.MEDIUM_BLUE);
-    }//GEN-LAST:event_goToLoginButtonMousePressed
-
-    private void goToLoginButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseReleased
-        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_goToLoginButtonMouseReleased
-
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
@@ -395,11 +430,6 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
         UIUtils.togglePasswordVisibility(passwordField, showHidePasswordIcon);
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
-
-    private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
-        dispose();
-        new LoginPage().setVisible(true);
-    }//GEN-LAST:event_goToLoginButtonMouseClicked
 
     private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
         RightPanel.grabFocus();
@@ -414,7 +444,7 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmPasswordFieldActionPerformed
 
     private void showHideConfirmPasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHideConfirmPasswordIconMouseClicked
-        // TODO add your handling code here:
+        UIUtils.togglePasswordVisibility(confirmPasswordField, showHideConfirmPasswordIcon);
     }//GEN-LAST:event_showHideConfirmPasswordIconMouseClicked
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
@@ -483,6 +513,50 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_confirmPasswordFieldKeyReleased
 
+    private void goToLoginButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseReleased
+        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMouseReleased
+
+    private void goToLoginButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMousePressed
+        goToLoginButton.setForeground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMousePressed
+
+    private void goToLoginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseExited
+        goToLoginButton.setForeground(ColorManager.DARK_GREEN);
+    }//GEN-LAST:event_goToLoginButtonMouseExited
+
+    private void goToLoginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseEntered
+        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMouseEntered
+
+    private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
+        dispose();
+        new LoginPage().setVisible(true);
+    }//GEN-LAST:event_goToLoginButtonMouseClicked
+
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+        RecoverAccountPage recoverAccountPage = new RecoverAccountPage(userDataStack);
+        recoverAccountPage.onBackButtonPressed();
+        dispose();
+        recoverAccountPage.setVisible(true);
+    }//GEN-LAST:event_backButtonMouseClicked
+
+    private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
+        backButton.setBackground(ColorManager.DARK_GREY);
+    }//GEN-LAST:event_backButtonMouseEntered
+
+    private void backButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseExited
+        backButton.setBackground(ColorManager.DEEP_GREY);
+    }//GEN-LAST:event_backButtonMouseExited
+
+    private void backButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMousePressed
+        backButton.setBackground(ColorManager.CHARCOAL_GREY);
+    }//GEN-LAST:event_backButtonMousePressed
+
+    private void backButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseReleased
+        backButton.setBackground(ColorManager.DARK_GREY);
+    }//GEN-LAST:event_backButtonMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -517,13 +591,15 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new ResetPasswordPage(new UserData()).setVisible(true);
+            new ResetPasswordPage(new UserData(), new NavigationStack<>()).setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
+    private javax.swing.JPanel backButton;
+    private javax.swing.JLabel backLabel;
     private javax.swing.JLabel banner;
     private javax.swing.JPanel basePanel;
     private javax.swing.JPanel confirmButton;

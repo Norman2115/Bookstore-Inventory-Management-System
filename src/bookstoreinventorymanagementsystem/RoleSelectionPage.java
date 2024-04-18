@@ -10,17 +10,36 @@ import javax.swing.ImageIcon;
  *
  * @author Teo Chung Henn
  */
-public class RoleSelectionPage extends javax.swing.JFrame {
+public class RoleSelectionPage extends javax.swing.JFrame implements NavigationListener {
 
     private UserRole userRole;
-    private final UserData userData;
+    private UserData userData;
+    private final NavigationStack<UserData> userDataStack;
 
     /**
      * Creates new form RoleSelectionPage
+     *
+     * @param userDataStack
      */
-    public RoleSelectionPage() {
+    public RoleSelectionPage(NavigationStack<UserData> userDataStack) {
         initComponents();
         userData = new UserData();
+        this.userDataStack = userDataStack;
+    }
+
+    @Override
+    public void onBackButtonPressed() {
+        if (userDataStack != null && !userDataStack.isEmpty()) {
+            userData = userDataStack.popPageData();
+            handleRoleSelection(userData.getRole());
+        }
+    }
+
+    @Override
+    public void onForwardButtonPressed() {
+        if (userDataStack != null) {
+            userDataStack.pushPageData(userData);
+        }
     }
 
     /**
@@ -402,8 +421,9 @@ public class RoleSelectionPage extends javax.swing.JFrame {
         if (userRole != null) {
             // Set the selected role in the user data
             userData.setRole(userRole);
+            onForwardButtonPressed();
             dispose();
-            new SignUpPage(userData).setVisible(true);
+            new SignUpPage(userData, userDataStack).setVisible(true);
         } else {
             // Display error message if no role is selected
             UIUtils.setErrorLabelMessage(roleErrorLabel, "Must select a role");
@@ -544,7 +564,7 @@ public class RoleSelectionPage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new RoleSelectionPage().setVisible(true);
+            new RoleSelectionPage(new NavigationStack<>()).setVisible(true);
         });
     }
 

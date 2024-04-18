@@ -12,9 +12,10 @@ import java.util.logging.Logger;
  *
  * @author Teo Chung Henn
  */
-public class SignUpPage extends javax.swing.JFrame {
+public class SignUpPage extends javax.swing.JFrame implements NavigationListener {
 
-    private final UserData userData;
+    private UserData userData;
+    private final NavigationStack<UserData> userDataStack;
     private boolean isFullNameValid;
     private boolean isUsernameValid;
     private boolean isPasswordValid;
@@ -29,14 +30,42 @@ public class SignUpPage extends javax.swing.JFrame {
      *
      * @param userData UserData object to store user data, passed from
      * RoleSelectionPage class.
+     * @param userDataStack
      */
-    public SignUpPage(UserData userData) {
+    public SignUpPage(UserData userData, NavigationStack<UserData> userDataStack) {
         initComponents();
         this.userData = userData;
+        this.userDataStack = userDataStack;
         isFullNameValid = false;
         isUsernameValid = false;
         isPasswordValid = false;
         isEmailValid = false;
+    }
+
+    @Override
+    public void onBackButtonPressed() {
+        if (userDataStack != null && !userDataStack.isEmpty()) {
+            fullName = userData.getFullName();
+            email = userData.getEmail();
+            username = userData.getUsername();
+            password = userData.getPassword();
+            userData = userDataStack.popPageData();
+            fullNameField.setText(fullName);
+            emailField.setText(email);
+            usernameField.setText(username);
+            passwordField.setText(password);
+            isFullNameValid = true;
+            isUsernameValid = true;
+            isPasswordValid = true;
+            isEmailValid = true;
+        }
+    }
+
+    @Override
+    public void onForwardButtonPressed() {
+        if (userDataStack != null) {
+            userDataStack.pushPageData(userData);
+        }
     }
 
     /**
@@ -75,6 +104,8 @@ public class SignUpPage extends javax.swing.JFrame {
         usernameField = new javax.swing.JTextField();
         usernameIcon = new javax.swing.JLabel();
         passwordErrorLabel = new javax.swing.JLabel();
+        backButton = new javax.swing.JPanel();
+        backLabel = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -190,7 +221,7 @@ public class SignUpPage extends javax.swing.JFrame {
             signUpButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signUpButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(signUpLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(signUpLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addContainerGap())
         );
         signUpButtonLayout.setVerticalGroup(
@@ -267,7 +298,7 @@ public class SignUpPage extends javax.swing.JFrame {
         });
 
         emailIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        emailIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        emailIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/email_icon.png"))); // NOI18N
         emailIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         usernameLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -295,6 +326,47 @@ public class SignUpPage extends javax.swing.JFrame {
         usernameIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
         usernameIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
+        backButton.setBackground(new java.awt.Color(180, 180, 180));
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                backButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                backButtonMouseReleased(evt);
+            }
+        });
+
+        backLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backLabel.setForeground(new java.awt.Color(255, 255, 255));
+        backLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backLabel.setText("BACK");
+
+        javax.swing.GroupLayout backButtonLayout = new javax.swing.GroupLayout(backButton);
+        backButton.setLayout(backButtonLayout);
+        backButtonLayout.setHorizontalGroup(
+            backButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        backButtonLayout.setVerticalGroup(
+            backButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -308,7 +380,6 @@ public class SignUpPage extends javax.swing.JFrame {
                         .addGap(32, 32, 32)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(fullNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(signUpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(fullNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
@@ -331,7 +402,11 @@ public class SignUpPage extends javax.swing.JFrame {
                                 .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(usernameIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(passwordErrorLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(passwordErrorLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addComponent(signUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 26, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(LeftPanelLayout.createSequentialGroup()
@@ -379,7 +454,9 @@ public class SignUpPage extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addComponent(passwordErrorLabel)
                 .addGap(30, 30, 30)
-                .addComponent(signUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(signUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(alreadyHaveAnAccountLabel)
@@ -443,8 +520,9 @@ public class SignUpPage extends javax.swing.JFrame {
             userData.setEmail(email);
             userData.setUsername(username);
             userData.setPassword(password);
+            onForwardButtonPressed();
             dispose();
-            new SignUpEmailVerificationPage(userData).setVisible(true);
+            new SignUpEmailVerificationPage(userData, userDataStack).setVisible(true);
         }
     }//GEN-LAST:event_signUpButtonMouseClicked
 
@@ -651,6 +729,29 @@ public class SignUpPage extends javax.swing.JFrame {
         basePanel.requestFocusInWindow();
     }//GEN-LAST:event_basePanelMouseClicked
 
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+        RoleSelectionPage roleSelectionPage = new RoleSelectionPage(userDataStack);
+        roleSelectionPage.onBackButtonPressed();
+        dispose();
+        roleSelectionPage.setVisible(true);
+    }//GEN-LAST:event_backButtonMouseClicked
+
+    private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
+        backButton.setBackground(ColorManager.DARK_GREY);
+    }//GEN-LAST:event_backButtonMouseEntered
+
+    private void backButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseExited
+        backButton.setBackground(ColorManager.DEEP_GREY);
+    }//GEN-LAST:event_backButtonMouseExited
+
+    private void backButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMousePressed
+        backButton.setBackground(ColorManager.CHARCOAL_GREY);
+    }//GEN-LAST:event_backButtonMousePressed
+
+    private void backButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseReleased
+        backButton.setBackground(ColorManager.DARK_GREY);
+    }//GEN-LAST:event_backButtonMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -683,7 +784,7 @@ public class SignUpPage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new SignUpPage(new UserData()).setVisible(true);
+            new SignUpPage(new UserData(), new NavigationStack<>()).setVisible(true);
         });
     }
 
@@ -691,6 +792,8 @@ public class SignUpPage extends javax.swing.JFrame {
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
     private javax.swing.JLabel alreadyHaveAnAccountLabel;
+    private javax.swing.JPanel backButton;
+    private javax.swing.JLabel backLabel;
     private javax.swing.JLabel banner;
     private javax.swing.JPanel basePanel;
     private javax.swing.JLabel emailErrorLabel;

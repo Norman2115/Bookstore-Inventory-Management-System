@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 public class ProfilePicturePage extends javax.swing.JFrame {
 
     private final UserData userData;
+    private final NavigationStack<UserData> userDataStack;
     private File selectedFile;
 
     /**
@@ -28,10 +29,12 @@ public class ProfilePicturePage extends javax.swing.JFrame {
      *
      * @param userData the UserData object containing user information, passed
      * from SignUpEmailVerificationPage class.
+     * @param userDataStack
      */
-    public ProfilePicturePage(UserData userData) {
+    public ProfilePicturePage(UserData userData, NavigationStack<UserData> userDataStack) {
         initComponents();
         this.userData = userData;
+        this.userDataStack = userDataStack;
     }
 
     /**
@@ -70,11 +73,11 @@ public class ProfilePicturePage extends javax.swing.JFrame {
         subTitleLabel = new javax.swing.JLabel();
         finishButton = new javax.swing.JPanel();
         finishLabel = new javax.swing.JLabel();
-        dontHaveAccountLabel = new javax.swing.JLabel();
-        goToSignUpButton = new javax.swing.JLabel();
         uploadPicturePanel = new javax.swing.JPanel();
         pictureLabel = new javax.swing.JLabel();
         noPictureErrorLabel = new javax.swing.JLabel();
+        backButton = new javax.swing.JPanel();
+        backLabel = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -162,7 +165,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
             finishButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, finishButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(finishLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                .addComponent(finishLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addContainerGap())
         );
         finishButtonLayout.setVerticalGroup(
@@ -172,32 +175,6 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                 .addComponent(finishLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        dontHaveAccountLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        dontHaveAccountLabel.setForeground(new java.awt.Color(0, 100, 0));
-        dontHaveAccountLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        dontHaveAccountLabel.setText("Already have an account?");
-
-        goToSignUpButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        goToSignUpButton.setForeground(new java.awt.Color(0, 100, 0));
-        goToSignUpButton.setText("Login");
-        goToSignUpButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                goToSignUpButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                goToSignUpButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                goToSignUpButtonMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                goToSignUpButtonMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                goToSignUpButtonMouseReleased(evt);
-            }
-        });
 
         uploadPicturePanel.setBackground(new java.awt.Color(253, 252, 248));
         uploadPicturePanel.setBorder(BorderFactory.createDashedBorder(ColorManager.MEDIUM_GREY, 3, 3, 1, true)
@@ -230,6 +207,47 @@ public class ProfilePicturePage extends javax.swing.JFrame {
 
         noPictureErrorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        backButton.setBackground(new java.awt.Color(180, 180, 180));
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                backButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                backButtonMouseReleased(evt);
+            }
+        });
+
+        backLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backLabel.setForeground(new java.awt.Color(255, 255, 255));
+        backLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backLabel.setText("BACK");
+
+        javax.swing.GroupLayout backButtonLayout = new javax.swing.GroupLayout(backButton);
+        backButton.setLayout(backButtonLayout);
+        backButtonLayout.setHorizontalGroup(
+            backButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        backButtonLayout.setVerticalGroup(
+            backButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -243,13 +261,12 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                             .addComponent(subTitleLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(LeftPanelLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(noPictureErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addComponent(dontHaveAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(goToSignUpButton))
-                            .addComponent(finishButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(noPictureErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 26, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
@@ -269,12 +286,10 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(noPictureErrorLabel)
                 .addGap(16, 16, 16)
-                .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dontHaveAccountLabel)
-                    .addComponent(goToSignUpButton))
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -354,27 +369,6 @@ public class ProfilePicturePage extends javax.swing.JFrame {
         finishButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_finishButtonMousePressed
 
-    private void goToSignUpButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMouseEntered
-        goToSignUpButton.setForeground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_goToSignUpButtonMouseEntered
-
-    private void goToSignUpButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMouseExited
-        goToSignUpButton.setForeground(ColorManager.DARK_GREEN);
-    }//GEN-LAST:event_goToSignUpButtonMouseExited
-
-    private void goToSignUpButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMousePressed
-        goToSignUpButton.setForeground(ColorManager.MEDIUM_BLUE);
-    }//GEN-LAST:event_goToSignUpButtonMousePressed
-
-    private void goToSignUpButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMouseReleased
-        goToSignUpButton.setForeground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_goToSignUpButtonMouseReleased
-
-    private void goToSignUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMouseClicked
-        dispose();
-        new LoginPage().setVisible(true);
-    }//GEN-LAST:event_goToSignUpButtonMouseClicked
-
     private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
         RightPanel.grabFocus();
     }//GEN-LAST:event_RightPanelMouseClicked
@@ -402,6 +396,29 @@ public class ProfilePicturePage extends javax.swing.JFrame {
             UIUtils.resetErrorLabel(noPictureErrorLabel);
         }
     }//GEN-LAST:event_uploadPicturePanelMouseClicked
+
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+        SignUpPage signUpPage = new SignUpPage(userData, userDataStack);
+        signUpPage.onBackButtonPressed();
+        dispose();
+        signUpPage.setVisible(true);
+    }//GEN-LAST:event_backButtonMouseClicked
+
+    private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
+        backButton.setBackground(ColorManager.DARK_GREY);
+    }//GEN-LAST:event_backButtonMouseEntered
+
+    private void backButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseExited
+        backButton.setBackground(ColorManager.DEEP_GREY);
+    }//GEN-LAST:event_backButtonMouseExited
+
+    private void backButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMousePressed
+        backButton.setBackground(ColorManager.CHARCOAL_GREY);
+    }//GEN-LAST:event_backButtonMousePressed
+
+    private void backButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseReleased
+        backButton.setBackground(ColorManager.DARK_GREY);
+    }//GEN-LAST:event_backButtonMouseReleased
 
     /**
      * @param args the command line arguments
@@ -433,18 +450,18 @@ public class ProfilePicturePage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new ProfilePicturePage(new UserData()).setVisible(true);
+            new ProfilePicturePage(new UserData(), new NavigationStack<>()).setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
+    private javax.swing.JPanel backButton;
+    private javax.swing.JLabel backLabel;
     private javax.swing.JLabel banner;
-    private javax.swing.JLabel dontHaveAccountLabel;
     private javax.swing.JPanel finishButton;
     private javax.swing.JLabel finishLabel;
-    private javax.swing.JLabel goToSignUpButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;

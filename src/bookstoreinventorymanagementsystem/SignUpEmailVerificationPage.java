@@ -19,6 +19,7 @@ import javax.swing.Timer;
 public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
     private final UserData userData;
+    private final NavigationStack<UserData> userDataStack;
     private final EmailHandler emailHandler;
     private final Timer resendCodeButtonTimer;
 
@@ -27,9 +28,11 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
      *
      * @param userData the UserData object containing user information, passed
      * from SignUpPage class.
+     * @param userDataStack
      */
-    public SignUpEmailVerificationPage(UserData userData) {
+    public SignUpEmailVerificationPage(UserData userData, NavigationStack<UserData> userDataStack) {
         this.userData = userData;
+        this.userDataStack = userDataStack;
         initComponents();
         emailHandler = new EmailHandler();
 
@@ -84,12 +87,11 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
         verificationCodeIcon = new javax.swing.JLabel();
         finishButton = new javax.swing.JPanel();
         finishLabel = new javax.swing.JLabel();
-        rememberPasswordLabel = new javax.swing.JLabel();
-        goToLoginButton = new javax.swing.JLabel();
         verificationCodeErrorLabel = new javax.swing.JLabel();
         didntReceiveLabel = new javax.swing.JLabel();
         resendCodeButton = new javax.swing.JLabel();
-        resendCodeButton1 = new javax.swing.JLabel();
+        backButton = new javax.swing.JPanel();
+        backLabel = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -168,7 +170,7 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
         });
 
         verificationCodeIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        verificationCodeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/user.png"))); // NOI18N
+        verificationCodeIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/verification_code_icon_3.png"))); // NOI18N
         verificationCodeIcon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         finishButton.setBackground(new java.awt.Color(0, 140, 214));
@@ -212,32 +214,6 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        rememberPasswordLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        rememberPasswordLabel.setForeground(new java.awt.Color(0, 100, 0));
-        rememberPasswordLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        rememberPasswordLabel.setText("Remember your password?");
-
-        goToLoginButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        goToLoginButton.setForeground(new java.awt.Color(0, 100, 0));
-        goToLoginButton.setText("Login");
-        goToLoginButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                goToLoginButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                goToLoginButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                goToLoginButtonMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                goToLoginButtonMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                goToLoginButtonMouseReleased(evt);
-            }
-        });
-
         didntReceiveLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         didntReceiveLabel.setForeground(new java.awt.Color(0, 100, 0));
         didntReceiveLabel.setText("Didn't receive?");
@@ -263,25 +239,46 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
             }
         });
 
-        resendCodeButton1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        resendCodeButton1.setForeground(new java.awt.Color(0, 100, 0));
-        resendCodeButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        backButton.setBackground(new java.awt.Color(180, 180, 180));
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                resendCodeButton1MouseClicked(evt);
+                backButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                resendCodeButton1MouseEntered(evt);
+                backButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                resendCodeButton1MouseExited(evt);
+                backButtonMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                resendCodeButton1MousePressed(evt);
+                backButtonMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                resendCodeButton1MouseReleased(evt);
+                backButtonMouseReleased(evt);
             }
         });
+
+        backLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backLabel.setForeground(new java.awt.Color(255, 255, 255));
+        backLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backLabel.setText("BACK");
+
+        javax.swing.GroupLayout backButtonLayout = new javax.swing.GroupLayout(backButton);
+        backButton.setLayout(backButtonLayout);
+        backButtonLayout.setHorizontalGroup(
+            backButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        backButtonLayout.setVerticalGroup(
+            backButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backButtonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(backLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
@@ -299,12 +296,6 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(verificationCodeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(rememberPasswordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(goToLoginButton))
-                            .addComponent(finishButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(verificationCodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
                                 .addComponent(verificationCodeIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -312,9 +303,11 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
                             .addGroup(LeftPanelLayout.createSequentialGroup()
                                 .addComponent(didntReceiveLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(resendCodeButton)
+                                .addComponent(resendCodeButton))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
+                                .addComponent(finishButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(resendCodeButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -334,18 +327,14 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addComponent(verificationCodeErrorLabel)
                 .addGap(10, 10, 10)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(didntReceiveLabel)
-                        .addComponent(resendCodeButton))
-                    .addComponent(resendCodeButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rememberPasswordLabel)
-                    .addComponent(goToLoginButton))
-                .addContainerGap(149, Short.MAX_VALUE))
+                    .addComponent(didntReceiveLabel)
+                    .addComponent(resendCodeButton))
+                .addGap(18, 18, 18)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -393,7 +382,7 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
             // If the code is valid, proceed to profile picture upload page
             if (codeValidation.isValid()) {
                 dispose();
-                new ProfilePicturePage(userData).setVisible(true);
+                new ProfilePicturePage(userData, userDataStack).setVisible(true);
             } else {
                 // If the code is invalid, mark the field as errorneous and display error message
                 UIUtils.setFieldErrorState(verificationCodeField);
@@ -420,27 +409,6 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
     private void finishButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_finishButtonMousePressed
         finishButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_finishButtonMousePressed
-
-    private void goToLoginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseEntered
-        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_goToLoginButtonMouseEntered
-
-    private void goToLoginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseExited
-        goToLoginButton.setForeground(ColorManager.DARK_GREEN);
-    }//GEN-LAST:event_goToLoginButtonMouseExited
-
-    private void goToLoginButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMousePressed
-        goToLoginButton.setForeground(ColorManager.MEDIUM_BLUE);
-    }//GEN-LAST:event_goToLoginButtonMousePressed
-
-    private void goToLoginButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseReleased
-        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_goToLoginButtonMouseReleased
-
-    private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
-        dispose();
-        new LoginPage().setVisible(true);
-    }//GEN-LAST:event_goToLoginButtonMouseClicked
 
     private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
         LeftPanel.grabFocus();
@@ -496,25 +464,28 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
         resendCodeButton.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_resendCodeButtonMouseReleased
 
-    private void resendCodeButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButton1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_resendCodeButton1MouseClicked
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+        SignUpPage signUpPage = new SignUpPage(userData, userDataStack);
+        signUpPage.onBackButtonPressed();
+        dispose();
+        signUpPage.setVisible(true);
+    }//GEN-LAST:event_backButtonMouseClicked
 
-    private void resendCodeButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButton1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_resendCodeButton1MouseEntered
+    private void backButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseEntered
+        backButton.setBackground(ColorManager.DARK_GREY);
+    }//GEN-LAST:event_backButtonMouseEntered
 
-    private void resendCodeButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButton1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_resendCodeButton1MouseExited
+    private void backButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseExited
+        backButton.setBackground(ColorManager.DEEP_GREY);
+    }//GEN-LAST:event_backButtonMouseExited
 
-    private void resendCodeButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButton1MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_resendCodeButton1MousePressed
+    private void backButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMousePressed
+        backButton.setBackground(ColorManager.CHARCOAL_GREY);
+    }//GEN-LAST:event_backButtonMousePressed
 
-    private void resendCodeButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendCodeButton1MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_resendCodeButton1MouseReleased
+    private void backButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseReleased
+        backButton.setBackground(ColorManager.DARK_GREY);
+    }//GEN-LAST:event_backButtonMouseReleased
 
     /**
      * @param args the command line arguments
@@ -552,24 +523,23 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new SignUpEmailVerificationPage(new UserData()).setVisible(true);
+            new SignUpEmailVerificationPage(new UserData(), new NavigationStack<>()).setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
+    private javax.swing.JPanel backButton;
+    private javax.swing.JLabel backLabel;
     private javax.swing.JLabel banner;
     private javax.swing.JLabel didntReceiveLabel;
     private javax.swing.JPanel finishButton;
     private javax.swing.JLabel finishLabel;
-    private javax.swing.JLabel goToLoginButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JLabel rememberPasswordLabel;
     private javax.swing.JLabel resendCodeButton;
-    private javax.swing.JLabel resendCodeButton1;
     private javax.swing.JLabel subTitleLabel;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JLabel verificationCodeErrorLabel;

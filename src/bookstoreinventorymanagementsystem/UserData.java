@@ -23,6 +23,8 @@ public final class UserData {
     private UserRole role;
     private byte[] profilePicture;
 
+    private boolean isUsingUsernameForRecover;
+
     public UserData() {
         setUserID(null);
         setFullName(null);
@@ -36,7 +38,7 @@ public final class UserData {
     private String getUserID() {
         return userID;
     }
-    
+
     private void setUserID(String userID) {
         this.userID = userID;
     }
@@ -87,6 +89,14 @@ public final class UserData {
 
     public byte[] getProfilePicture() {
         return profilePicture;
+    }
+
+    public boolean isUsingUsernameForRecover() {
+        return isUsingUsernameForRecover;
+    }
+
+    public void setUsingUsernameForRecover(boolean isUsingUsernameForRecover) {
+        this.isUsingUsernameForRecover = isUsingUsernameForRecover;
     }
 
     private String getNextUserID() throws SQLException {

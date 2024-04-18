@@ -486,7 +486,7 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void goToSignUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToSignUpButtonMouseClicked
         dispose();
-        new RoleSelectionPage().setVisible(true);
+        new RoleSelectionPage(new NavigationStack<>()).setVisible(true);
     }//GEN-LAST:event_goToSignUpButtonMouseClicked
 
     private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
@@ -499,7 +499,7 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void forgotPasswordButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordButtonMouseClicked
         dispose();
-        new UsernameValidationPage().setVisible(true);
+        new RecoverAccountPage(new NavigationStack<>()).setVisible(true);
     }//GEN-LAST:event_forgotPasswordButtonMouseClicked
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
