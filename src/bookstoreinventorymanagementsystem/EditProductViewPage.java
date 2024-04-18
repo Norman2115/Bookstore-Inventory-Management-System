@@ -1,32 +1,68 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
 
-import javax.swing.JScrollBar;
-import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author User
  */
 public class EditProductViewPage extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form welcomeText
-     */
+    private final ReadProductData input = new ReadProductData();
     public EditProductViewPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         
+        ProductData[] productData;
+        productData = input.readData("product","book_title");
+        displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
     }
     
+    private void displayRow(ProductData[] productData) {
+        ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
+        int length = productData.length;
+        System.out.println(length);
+        if (length > 0) {
+            for (int i = 0; i < length; i++) {
+                Object[] rowData = new Object[10];
+                rowData[0] = productData[i].getBookTitle();
+                rowData[1] = productData[i].getISBN();
+                rowData[2] = productData[i].getGenre();
+                rowData[3] = productData[i].getLanguage();
+                rowData[4] = productData[i].getAuthor();
+                rowData[5] = productData[i].getPublisher();
+                rowData[6] = productData[i].getPublicatioYear();
+                rowData[7] = productData[i].getUnitPrice();
+                rowData[8] = productData[i].getDiscount();
+                productData[i].calculateNetPrice();
+                rowData[9] = productData[i].getNetPrice();
+                //insert row
+                ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
+            }
+        } else {
+            ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
+        }
+    }
+
+    private String getSelection() {
+        String searchBy = null;
+        switch (searchType.getSelectedIndex()) {
+            case 0:
+                searchBy = "book_title";
+                break;
+            case 1:
+                searchBy = "book_title";
+                break;
+            case 2:
+                searchBy = "isbn";
+                break;
+        }
+        return searchBy;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,8 +82,8 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         jLabel16 = new javax.swing.JLabel();
         publicationYear2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        displayTable = new javax.swing.JTable();
+        searchType = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
@@ -105,7 +141,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        displayTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -147,26 +183,26 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setToolTipText("");
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setFocusable(false);
-        jTable1.setRowHeight(25);
-        jTable1.setSelectionBackground(new java.awt.Color(0, 140, 214));
-        jTable1.setSelectionForeground(new java.awt.Color(253, 252, 248));
-        jTable1.setShowGrid(false);
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addInputMethodListener(new java.awt.event.InputMethodListener() {
+        displayTable.setToolTipText("");
+        displayTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        displayTable.setFocusable(false);
+        displayTable.setRowHeight(25);
+        displayTable.setSelectionBackground(new java.awt.Color(0, 140, 214));
+        displayTable.setSelectionForeground(new java.awt.Color(253, 252, 248));
+        displayTable.setShowGrid(false);
+        displayTable.getTableHeader().setResizingAllowed(false);
+        displayTable.getTableHeader().setReorderingAllowed(false);
+        displayTable.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                jTable1InputMethodTextChanged(evt);
+                displayTableInputMethodTextChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(displayTable);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
-        jComboBox1.setToolTipText("");
+        searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
+        searchType.setToolTipText("");
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_icon.png"))); // NOI18N
@@ -199,7 +235,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                                     .addGap(0, 0, 0)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(searchType, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 60, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -220,7 +256,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(searchType, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
@@ -251,15 +287,15 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_publicationYear2ActionPerformed
 
-    private void jTable1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTable1InputMethodTextChanged
+    private void displayTableInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_displayTableInputMethodTextChanged
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1InputMethodTextChanged
+    }//GEN-LAST:event_displayTableInputMethodTextChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
     private javax.swing.JPanel displayPanel;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTable displayTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
@@ -269,7 +305,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField publicationYear2;
+    private javax.swing.JComboBox<String> searchType;
     // End of variables declaration//GEN-END:variables
 }

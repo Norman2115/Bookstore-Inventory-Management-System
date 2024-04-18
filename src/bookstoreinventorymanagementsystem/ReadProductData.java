@@ -33,10 +33,7 @@ public final class ReadProductData {
             //get select coloumn number
             String query = "SELECT COUNT(*) FROM "+tableName;
             System.out.println(query);
-            Statement countRow = connection.createStatement();
-            ResultSet resultCount = countRow.executeQuery(query);
-            resultCount.next();
-            rowNumber = resultCount.getInt(1);
+            rowNumber = getLength(tableName);
             ProductData[] productData = new ProductData[rowNumber];
             //initialized
             for (int i = 0;i<rowNumber;i++){
@@ -55,10 +52,11 @@ public final class ReadProductData {
                 productData[i].setAuthor(resultSet.getString("author"));
                 productData[i].setPublisher(resultSet.getString("publisher"));
                 productData[i].setPublicationYear(resultSet.getInt("publication_year"));
-                productData[i].setISBN(resultSet.getInt("isbn"));
+                productData[i].setISBN(resultSet.getString("isbn"));                
                 productData[i].setStockQuantity(resultSet.getInt("stock_quantity"));
                 productData[i].setUnitPrice(resultSet.getDouble("unit_price"));
                 productData[i].setDiscount(resultSet.getDouble("discount"));
+
                 try {
                     byte[] image = ImageUtils.convertBlobToByteArray(resultSet.getBlob("picture"));
                     productData[i].setImage(image);
@@ -79,10 +77,7 @@ public final class ReadProductData {
             //get select coloumn number
             String query = "SELECT COUNT(*) FROM "+tableName+ " WHERE " + condition;
             System.out.println(query);
-            Statement countRow = connection.createStatement();
-            ResultSet resultCount = countRow.executeQuery(query);
-            resultCount.next();
-            rowNumber = resultCount.getInt(1);
+            rowNumber = getLength(tableName,condition);
             ProductData[] productData = new ProductData[rowNumber];
             //initialized
             for (int i = 0;i<rowNumber;i++){
@@ -102,7 +97,7 @@ public final class ReadProductData {
                 productData[i].setAuthor(resultSet.getString("author"));
                 productData[i].setPublisher(resultSet.getString("publisher"));
                 productData[i].setPublicationYear(resultSet.getInt("publication_year"));
-                productData[i].setISBN(resultSet.getInt("isbn"));
+                productData[i].setISBN(resultSet.getString("isbn"));
                 productData[i].setStockQuantity(resultSet.getInt("stock_quantity"));
                 productData[i].setUnitPrice(resultSet.getDouble("unit_price"));
                 productData[i].setDiscount(resultSet.getDouble("discount"));

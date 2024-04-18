@@ -893,8 +893,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
             }
         }
         if (valid1.isValid()&&valid2.isValid()){
-            int isbnInInteger = Integer.parseInt(isbn.getText());
-            productData.setISBN(isbnInInteger);
+            productData.setISBN(isbn.getText());
             isUnitPriceValid  =  true;
             UIUtils.resetFieldState(isbn);
             isbnErrorLabel.setForeground(ColorManager.WHITE);

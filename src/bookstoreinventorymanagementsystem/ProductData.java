@@ -17,7 +17,7 @@ public final class ProductData {
     private String author;
     private String publisher;
     private int publicationYear;
-    private int isbn;
+    private String isbn;
     private int stockQuantity;
     private double unitPrice;
     private double discount;
@@ -30,7 +30,7 @@ public final class ProductData {
         setLanguage(null);
         setAuthor(null);
         setPublicationYear(0);
-        setISBN(0);
+        setISBN(null);
         setStockQuantity(0);
         setUnitPrice(0.0);
         setDiscount(0.0);
@@ -55,7 +55,7 @@ public final class ProductData {
     public void setPublicationYear(int publicationYear){
         this.publicationYear=publicationYear;
     }
-    public void setISBN(int isbn){
+    public void setISBN(String isbn){
         this.isbn=isbn;
     }
     public void setStockQuantity(int stockQuantity){
@@ -93,7 +93,7 @@ public final class ProductData {
     public int getPublicatioYear(){
         return publicationYear;
     }
-    public int getISBN(){
+    public String getISBN(){
         return isbn;
     }
     public int getStockQuantity(){
@@ -120,7 +120,7 @@ public final class ProductData {
         setAuthor(null);
         setPublisher(null);
         setPublicationYear(0);
-        setISBN(0);
+        setISBN(null);
         setStockQuantity(0);
         setUnitPrice(0.0);
         setDiscount(0.0);
@@ -132,7 +132,7 @@ public final class ProductData {
         Connection connection = DatabaseManager.getConnection();
 
         StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,image) VALUES (?");
-        for (int i = 1; i < 11; i++) {
+        for (int i = 1; i < 12; i++) {
             queryBuilder.append(", ?");
         }
         queryBuilder.append(");");
