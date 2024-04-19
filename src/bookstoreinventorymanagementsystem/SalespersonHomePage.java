@@ -328,7 +328,7 @@ public class SalespersonHomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlCustomerMouseEntered
 
     private void pnlOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlOrderMouseClicked
-        new ManageOrder().setVisible(true);
+        new ManageOrder(new SalesData()).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_pnlOrderMouseClicked
 
@@ -337,7 +337,7 @@ public class SalespersonHomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlOrderMouseEntered
 
     private void pnlInvoiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlInvoiceMouseClicked
-        new ManageInvoice().setVisible(true);
+        new ManageSales().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_pnlInvoiceMouseClicked
 
