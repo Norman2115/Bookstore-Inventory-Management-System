@@ -60,6 +60,22 @@ public class BookDAO {
         }
     }
     
+    public void restockUpdate(BookData productData){
+        try (Connection connection = DatabaseManager.getConnection()){
+            String query = "UPDATE product "
+                    + "SET stock_quantity = ? "
+                    + "WHERE isbn = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setObject(1, productData.getStockQuantity());
+            statement.setObject(2, productData.getISBN());
+            System.out.println(query);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public BookData[] readData(String tableName,String orderBy){
         try (Connection connection = DatabaseManager.getConnection()){
             int rowNumber;
