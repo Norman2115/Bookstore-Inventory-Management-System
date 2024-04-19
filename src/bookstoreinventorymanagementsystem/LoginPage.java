@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  */
 public class LoginPage extends javax.swing.JFrame {
 
-    private final UserData userData;
+    private UserData userData;
     private boolean isUsernameValid;
     private boolean isPasswordValid;
 
@@ -407,7 +407,7 @@ public class LoginPage extends javax.swing.JFrame {
 
         if (isUsernameValid && isPasswordValid) {
             try {
-                userData.readUserDataFromDatabase(usernameOrEmail);
+                userData = UserDAO.readUserDataFromDatabase(usernameOrEmail);
                 dispose();
                 if (userData.getRole() == UserRole.ADMIN) {
                     new AdminHomePage(userData).setVisible(true);

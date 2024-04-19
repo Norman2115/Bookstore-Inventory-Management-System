@@ -397,7 +397,7 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         if (isPasswordValid && isConfirmPasswordValid) {
             try {
                 // Proceed to update the password for the user
-                userData.updatePassword(newPassword);
+                UserDAO.updatePassword(userData, newPassword);
                 dispose();
                 new ResetPasswordSuccessfulPage().setVisible(true);
             } catch (SQLException ex) {
@@ -536,7 +536,7 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         RecoverAccountPage recoverAccountPage = new RecoverAccountPage(userDataStack);
-        recoverAccountPage.onBackButtonPressed();
+        recoverAccountPage.onReturnFromNextPage();
         dispose();
         recoverAccountPage.setVisible(true);
     }//GEN-LAST:event_backButtonMouseClicked

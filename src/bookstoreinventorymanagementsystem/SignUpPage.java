@@ -43,7 +43,7 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
     }
 
     @Override
-    public void onBackButtonPressed() {
+    public void onReturnFromNextPage() {
         if (userDataStack != null && !userDataStack.isEmpty()) {
             fullName = userData.getFullName();
             email = userData.getEmail();
@@ -62,7 +62,7 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
     }
 
     @Override
-    public void onForwardButtonPressed() {
+    public void onProceedToNextPage() {
         if (userDataStack != null) {
             userDataStack.pushPageData(userData);
         }
@@ -520,7 +520,7 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
             userData.setEmail(email);
             userData.setUsername(username);
             userData.setPassword(password);
-            onForwardButtonPressed();
+            onProceedToNextPage();
             dispose();
             new SignUpEmailVerificationPage(userData, userDataStack).setVisible(true);
         }
@@ -731,7 +731,7 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         RoleSelectionPage roleSelectionPage = new RoleSelectionPage(userDataStack);
-        roleSelectionPage.onBackButtonPressed();
+        roleSelectionPage.onReturnFromNextPage();
         dispose();
         roleSelectionPage.setVisible(true);
     }//GEN-LAST:event_backButtonMouseClicked

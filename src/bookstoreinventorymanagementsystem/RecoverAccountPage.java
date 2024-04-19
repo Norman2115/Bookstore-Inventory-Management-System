@@ -30,7 +30,7 @@ public class RecoverAccountPage extends javax.swing.JFrame implements Navigation
     }
 
     @Override
-    public void onBackButtonPressed() {
+    public void onReturnFromNextPage() {
         if (userDataStack != null && !userDataStack.isEmpty()) {
             userData = userDataStack.popPageData();
 
@@ -43,7 +43,7 @@ public class RecoverAccountPage extends javax.swing.JFrame implements Navigation
     }
 
     @Override
-    public void onForwardButtonPressed() {
+    public void onProceedToNextPage() {
         if (userDataStack != null) {
             userDataStack.pushPageData(userData);
         }
@@ -324,9 +324,9 @@ public class RecoverAccountPage extends javax.swing.JFrame implements Navigation
                     }
 
                     try {
-                        userData.readUserDataFromDatabase(usernameOrEmail);
+                        userData = UserDAO.readUserDataFromDatabase(usernameOrEmail);
                         dispose();
-                        onForwardButtonPressed();
+                        onProceedToNextPage();
                         // Proceed to reset password email verification page
                         new ResetPasswordEmailVerificationPage(userData, userDataStack).setVisible(true);
                     } catch (IOException ex) {

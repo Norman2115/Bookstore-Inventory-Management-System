@@ -466,7 +466,7 @@ public class SignUpEmailVerificationPage extends javax.swing.JFrame {
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         SignUpPage signUpPage = new SignUpPage(userData, userDataStack);
-        signUpPage.onBackButtonPressed();
+        signUpPage.onReturnFromNextPage();
         dispose();
         signUpPage.setVisible(true);
     }//GEN-LAST:event_backButtonMouseClicked

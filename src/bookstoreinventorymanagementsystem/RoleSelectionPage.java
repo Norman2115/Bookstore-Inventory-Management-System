@@ -28,7 +28,7 @@ public class RoleSelectionPage extends javax.swing.JFrame implements NavigationL
     }
 
     @Override
-    public void onBackButtonPressed() {
+    public void onReturnFromNextPage() {
         if (userDataStack != null && !userDataStack.isEmpty()) {
             userData = userDataStack.popPageData();
             handleRoleSelection(userData.getRole());
@@ -36,7 +36,7 @@ public class RoleSelectionPage extends javax.swing.JFrame implements NavigationL
     }
 
     @Override
-    public void onForwardButtonPressed() {
+    public void onProceedToNextPage() {
         if (userDataStack != null) {
             userDataStack.pushPageData(userData);
         }
@@ -421,7 +421,7 @@ public class RoleSelectionPage extends javax.swing.JFrame implements NavigationL
         if (userRole != null) {
             // Set the selected role in the user data
             userData.setRole(userRole);
-            onForwardButtonPressed();
+            onProceedToNextPage();
             dispose();
             new SignUpPage(userData, userDataStack).setVisible(true);
         } else {

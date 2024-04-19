@@ -523,7 +523,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         RecoverAccountPage recoverAccountPage = new RecoverAccountPage(userDataStack);
-        recoverAccountPage.onBackButtonPressed();
+        recoverAccountPage.onReturnFromNextPage();
         dispose();
         recoverAccountPage.setVisible(true);
     }//GEN-LAST:event_backButtonMouseClicked

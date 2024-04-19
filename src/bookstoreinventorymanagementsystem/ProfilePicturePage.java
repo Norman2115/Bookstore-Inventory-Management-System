@@ -336,7 +336,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
 
                 try {
                     // Save the user's sign-up data to the database as the final step
-                    userData.saveUserDataToDatabase();
+                    UserDAO.saveUserDataToDatabase(userData);
                     dispose();
                     new SignUpSuccessfulPage().setVisible(true);
                 } catch (SQLException ex) {
@@ -399,7 +399,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         SignUpPage signUpPage = new SignUpPage(userData, userDataStack);
-        signUpPage.onBackButtonPressed();
+        signUpPage.onReturnFromNextPage();
         dispose();
         signUpPage.setVisible(true);
     }//GEN-LAST:event_backButtonMouseClicked
