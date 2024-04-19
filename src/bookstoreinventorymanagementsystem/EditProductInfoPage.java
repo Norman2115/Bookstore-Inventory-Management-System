@@ -25,7 +25,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  */
 public class EditProductInfoPage extends javax.swing.JInternalFrame {
     
-    private final ProductData productData;
+    private final BookData productData;
     
     public EditProductInfoPage() {
         initComponents();
@@ -33,10 +33,10 @@ public class EditProductInfoPage extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         
-        productData  = new ProductData();
+        productData  = new BookData();
     }
     
-    public void fillProductInfo(ProductData productData){
+    public void fillProductInfo(BookData productData){
         reset();
         bookTitle.setText(productData.getBookTitle());
         genre.setSelectedItem(productData.getGenre());
@@ -915,7 +915,7 @@ public class EditProductInfoPage extends javax.swing.JInternalFrame {
             productData.setUnitPrice(Double.parseDouble(unitPrice.getText()));
             productData.setDiscount(Double.parseDouble(discount.getText()));
             try {
-                UpdateProductData updateProductData = new UpdateProductData();
+                BookDAO updateProductData = new BookDAO();
                 System.out.println(productData.getISBN());
                 updateProductData.updateData(productData);
                 this.dispose();

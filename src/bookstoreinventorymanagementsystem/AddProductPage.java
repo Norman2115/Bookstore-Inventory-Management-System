@@ -25,7 +25,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  */
 public class AddProductPage extends javax.swing.JInternalFrame {
     
-    private final ProductData productData;
+    private final BookData productData;
     private boolean isBookTitleValid = false;
     private boolean isAuthorValid = false;
     private boolean isPublisherValid = false;
@@ -37,7 +37,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         
-        productData  = new ProductData();
+        productData  = new BookData();
     }
     
     private void reset(){
@@ -730,7 +730,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         if (valid)
         {
             try {
-                productData.saveUserDataToDatabase();
+                productData.saveBookDataToDatabase();
             } catch (SQLException ex) {
                 Logger.getLogger(AddProductPage.class.getName()).log(Level.SEVERE, null, ex);
             }

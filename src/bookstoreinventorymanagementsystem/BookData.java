@@ -3,14 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package bookstoreinventorymanagementsystem;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author User
  */
-public final class ProductData {    
+public final class BookData {    
     private String bookTitle;
     private String genre;
     private String language;
@@ -24,7 +29,7 @@ public final class ProductData {
     private byte[] image;
     private double netPrice;
     
-    public ProductData(){
+    public BookData(){
         setBookTitle(null);
         setGenre(null);
         setLanguage(null);
@@ -128,7 +133,7 @@ public final class ProductData {
         calculateNetPrice();
     }
     
-    public void saveUserDataToDatabase() throws SQLException {
+    public void saveBookDataToDatabase() throws SQLException {
         Connection connection = DatabaseManager.getConnection();
 
         StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,image) VALUES (?");

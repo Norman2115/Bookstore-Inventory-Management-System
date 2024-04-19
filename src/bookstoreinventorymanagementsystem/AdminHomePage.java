@@ -23,7 +23,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         this.userData = userData;
     }
     
-    public static void createEditProductInfoPage(ProductData productData){
+    public static void createEditProductInfoPage(BookData productData){
         displayPanel.add(editProductInfo,JLayeredPane.DEFAULT_LAYER,0);
         editProductInfo.setVisible(true);
         editProductInfo.fillProductInfo(productData);
