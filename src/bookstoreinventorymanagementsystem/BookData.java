@@ -3,12 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package bookstoreinventorymanagementsystem;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -133,29 +130,33 @@ public final class BookData {
         calculateNetPrice();
     }
     
-    public void saveBookDataToDatabase() throws SQLException {
-        Connection connection = DatabaseManager.getConnection();
-
-        StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,image) VALUES (?");
-        for (int i = 1; i < 11; i++) {
-            queryBuilder.append(", ?");
+    public void saveBookDataToDatabase(){
+        try (Connection connection = DatabaseManager.getConnection();){
+            
+            
+            StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,image) VALUES (?");
+            for (int i = 1; i < 11; i++) {
+                queryBuilder.append(", ?");
+            }
+            queryBuilder.append(");");
+            String query = queryBuilder.toString();
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setObject(1, bookTitle);
+            statement.setObject(2, genre);
+            statement.setObject(3, language);
+            statement.setObject(4, author);
+            statement.setObject(5, publisher);
+            statement.setObject(6, publicationYear);
+            statement.setObject(7, isbn);
+            statement.setObject(8, stockQuantity);
+            statement.setObject(9, unitPrice);
+            statement.setObject(10, discount);
+            statement.setObject(11, image);
+            
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookData.class.getName()).log(Level.SEVERE, null, ex);
         }
-        queryBuilder.append(");");
-        String query = queryBuilder.toString();
-        PreparedStatement statement = connection.prepareStatement(query);
-
-        statement.setObject(1, bookTitle);
-        statement.setObject(2, genre);
-        statement.setObject(3, language);
-        statement.setObject(4, author);
-        statement.setObject(5, publisher);
-        statement.setObject(6, publicationYear);
-        statement.setObject(7, isbn);
-        statement.setObject(8, stockQuantity);
-        statement.setObject(9, unitPrice);
-        statement.setObject(10, discount);
-        statement.setObject(11, image);
-
-        statement.executeUpdate();
     }
 }

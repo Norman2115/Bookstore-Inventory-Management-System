@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class ViewProductPage extends javax.swing.JInternalFrame {
+public class ViewProductPage extends javax.swing.JInternalFrame{
     private final BookDAO bookDAO = new BookDAO();
     /**
      * Creates new form welcomeText
