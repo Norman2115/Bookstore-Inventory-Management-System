@@ -196,13 +196,6 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                 displayTableMouseClicked(evt);
             }
         });
-        displayTable.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                displayTableInputMethodTextChanged(evt);
-            }
-        });
         jScrollPane1.setViewportView(displayTable);
 
         searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
@@ -294,14 +287,6 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         productData = bookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
-
-    private void displayTableInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_displayTableInputMethodTextChanged
-        BookData[] productData;
-        String searchBy = getSelection();
-        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
-    }//GEN-LAST:event_displayTableInputMethodTextChanged
 
     
     private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
