@@ -18,9 +18,12 @@ import java.util.logging.Logger;
 public class ManageCustomer extends javax.swing.JFrame {
 
     private final CustomerData customerData;
-    private boolean isFullNameValid = true;
-    private boolean isEmailValid = true;
-    private boolean isMobileNumberValid = true;
+    private String fullName;
+    private String email;
+    private String mobileNumber;
+    private boolean isFullNameValid;
+    private boolean isEmailValid;
+    private boolean isMobileNumberValid;
 
     /**
      * Creates new form ManageCustomer
@@ -31,6 +34,9 @@ public class ManageCustomer extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.customerData = customerData;
+        isFullNameValid = false;
+        isEmailValid = false;
+        isMobileNumberValid = false;
     }
 
     //Customer table is updated
@@ -108,7 +114,7 @@ public class ManageCustomer extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(253, 252, 248));
         jPanel1.setPreferredSize(new java.awt.Dimension(900, 500));
 
         lblGreenStrip.setBackground(new java.awt.Color(62, 164, 52));
@@ -228,8 +234,9 @@ public class ManageCustomer extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 100, 0));
         jLabel3.setText("Email");
 
+        customerNameTxt.setBackground(new java.awt.Color(253, 252, 248));
         customerNameTxt.setForeground(new java.awt.Color(0, 100, 0));
-        customerNameTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        customerNameTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         customerNameTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerNameTxtActionPerformed(evt);
@@ -241,8 +248,9 @@ public class ManageCustomer extends javax.swing.JFrame {
             }
         });
 
+        customerMNumberTxt.setBackground(new java.awt.Color(253, 252, 248));
         customerMNumberTxt.setForeground(new java.awt.Color(0, 100, 0));
-        customerMNumberTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        customerMNumberTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         customerMNumberTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerMNumberTxtActionPerformed(evt);
@@ -254,8 +262,9 @@ public class ManageCustomer extends javax.swing.JFrame {
             }
         });
 
+        customerEmailTxt.setBackground(new java.awt.Color(253, 252, 248));
         customerEmailTxt.setForeground(new java.awt.Color(0, 100, 0));
-        customerEmailTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        customerEmailTxt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         customerEmailTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerEmailTxtActionPerformed(evt);
@@ -342,6 +351,8 @@ public class ManageCustomer extends javax.swing.JFrame {
             updateButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
+
+        fullNameErrorLabel.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
 
         clearButton.setBackground(new java.awt.Color(0, 140, 214));
         clearButton.setPreferredSize(new java.awt.Dimension(136, 33));
@@ -445,22 +456,13 @@ public class ManageCustomer extends javax.swing.JFrame {
                         .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(customerEmailTxt)
                     .addComponent(customerMNumberTxt)
-                    .addComponent(customerNameTxt))
+                    .addComponent(customerNameTxt)
+                    .addComponent(mobileNumberErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(emailErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fullNameErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(50, 50, 50)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(mobileNumberErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(fullNameErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(541, Short.MAX_VALUE)))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(51, 51, 51)
-                    .addComponent(emailErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(562, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -476,36 +478,30 @@ public class ManageCustomer extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(customerNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addGap(2, 2, 2)
+                        .addComponent(fullNameErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(customerMNumberTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addGap(2, 2, 2)
+                        .addComponent(mobileNumberErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(customerEmailTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addGap(2, 2, 2)
+                        .addComponent(emailErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(updateButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(saveButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(30, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(182, 182, 182)
-                    .addComponent(fullNameErrorLabel)
-                    .addGap(84, 84, 84)
-                    .addComponent(mobileNumberErrorLabel)
-                    .addContainerGap(234, Short.MAX_VALUE)))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(348, 348, 348)
-                    .addComponent(emailErrorLabel)
-                    .addContainerGap(152, Short.MAX_VALUE)))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -567,18 +563,30 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_customerTableMouseClicked
 
     private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseClicked
-        customerData.setFullName(customerNameTxt.getText());
-        customerData.setMobileNumber(customerMNumberTxt.getText());
-        customerData.setEmail(customerEmailTxt.getText());
+        if (customerNameTxt.getText().trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(customerNameTxt, fullNameErrorLabel);
+        }
+        if (customerMNumberTxt.getText().trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(customerMNumberTxt, mobileNumberErrorLabel);
+        }
+        if (customerEmailTxt.getText().trim().isEmpty()) {
+            UIUtils.markFieldAsRequired(customerEmailTxt, emailErrorLabel);
+        }
 
         if (isFullNameValid && isEmailValid && isMobileNumberValid) {
             try {
-                customerData.saveCustomerDataToDatabase();
+                customerData.setFullName(fullName);
+                customerData.setMobileNumber(mobileNumber);
+                customerData.setEmail(email);
+                CustomerDAO.saveCustomerDataToDatabase(customerData);
                 clearFields();
                 updateTable();
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage("Failed to save customer record.");
-                Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to save customer record: ", ex);
+                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+                Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            } catch (NullPointerException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         } else {
             UIUtils.displayErrorMessage("Please correct the errors in the fields.");
@@ -672,9 +680,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_homeButtonMouseReleased
 
     private void customerNameTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerNameTxtKeyReleased
-        customerData.setFullName(customerNameTxt.getText());
-        if (!customerData.getFullName().trim().isEmpty()) {
-            ValidationResult fullNameValidation = ValidationHandler.validateFullName(customerData.getFullName());
+        fullName = customerNameTxt.getText();
+        if (!fullName.trim().isEmpty()) {
+            ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
             isFullNameValid = fullNameValidation.isValid();
             if (!fullNameValidation.isValid()) {
                 UIUtils.setFieldErrorState(customerNameTxt);
@@ -685,14 +693,14 @@ public class ManageCustomer extends javax.swing.JFrame {
             }
         } else {
             UIUtils.resetFieldState(customerNameTxt);
-            UIUtils.resetErrorLabel(emailErrorLabel);
+            UIUtils.resetErrorLabel(fullNameErrorLabel);
         }
     }//GEN-LAST:event_customerNameTxtKeyReleased
 
     private void customerEmailTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerEmailTxtKeyReleased
-        customerData.setEmail(customerEmailTxt.getText());
-        if (!customerData.getEmail().trim().isEmpty()) {
-            ValidationResult emailValidation = ValidationHandler.validateEmail(customerData.getEmail());
+        email = customerEmailTxt.getText();
+        if (!email.trim().isEmpty()) {
+            ValidationResult emailValidation = ValidationHandler.validateEmail(email);
             isEmailValid = emailValidation.isValid();
             if (!emailValidation.isValid()) {
                 UIUtils.setFieldErrorState(customerEmailTxt);
@@ -700,6 +708,16 @@ public class ManageCustomer extends javax.swing.JFrame {
             } else {
                 UIUtils.resetFieldState(customerEmailTxt);
                 UIUtils.resetErrorLabel(emailErrorLabel);
+
+//                try {
+//                    ValidationResult em
+//                } catch (SQLException ex) {
+//                    UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+//                    Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+//                } catch (NullPointerException ex) {
+//                    UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+//                    Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+//                }
             }
         } else {
             UIUtils.resetFieldState(customerEmailTxt);
@@ -708,9 +726,9 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_customerEmailTxtKeyReleased
 
     private void customerMNumberTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerMNumberTxtKeyReleased
-        customerData.setMobileNumber(customerMNumberTxt.getText());
-        if (!customerData.getMobileNumber().trim().isEmpty()) {
-            ValidationResult mobileNumberValidation = ValidationHandler.validateMobileNumber(customerData.getMobileNumber());
+        mobileNumber = customerMNumberTxt.getText();
+        if (!mobileNumber.trim().isEmpty()) {
+            ValidationResult mobileNumberValidation = ValidationHandler.validateMobileNumber(mobileNumber);
             isMobileNumberValid = mobileNumberValidation.isValid();
             if (!mobileNumberValidation.isValid()) {
                 UIUtils.setFieldErrorState(customerMNumberTxt);
@@ -721,7 +739,7 @@ public class ManageCustomer extends javax.swing.JFrame {
             }
         } else {
             UIUtils.resetFieldState(customerMNumberTxt);
-            UIUtils.resetErrorLabel(emailErrorLabel);
+            UIUtils.resetErrorLabel(mobileNumberErrorLabel);
         }
     }//GEN-LAST:event_customerMNumberTxtKeyReleased
 
