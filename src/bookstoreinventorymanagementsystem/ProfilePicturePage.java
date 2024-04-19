@@ -29,7 +29,8 @@ public class ProfilePicturePage extends javax.swing.JFrame {
      *
      * @param userData the UserData object containing user information, passed
      * from SignUpEmailVerificationPage class.
-     * @param userDataStack
+     * @param userDataStack the navigation stack used for storing page data
+     * history for restoration and navigation.
      */
     public ProfilePicturePage(UserData userData, NavigationStack<UserData> userDataStack) {
         initComponents();
@@ -78,6 +79,8 @@ public class ProfilePicturePage extends javax.swing.JFrame {
         noPictureErrorLabel = new javax.swing.JLabel();
         backButton = new javax.swing.JPanel();
         backLabel = new javax.swing.JLabel();
+        alreadyHaveAnAccountLabel = new javax.swing.JLabel();
+        goToLoginButton = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -248,6 +251,32 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        alreadyHaveAnAccountLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        alreadyHaveAnAccountLabel.setForeground(new java.awt.Color(0, 100, 0));
+        alreadyHaveAnAccountLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        alreadyHaveAnAccountLabel.setText("Already have an account?");
+
+        goToLoginButton.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        goToLoginButton.setForeground(new java.awt.Color(0, 100, 0));
+        goToLoginButton.setText("Login");
+        goToLoginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                goToLoginButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                goToLoginButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                goToLoginButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                goToLoginButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                goToLoginButtonMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
@@ -273,6 +302,12 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(uploadPicturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(134, 134, 134))
+            .addGroup(LeftPanelLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(alreadyHaveAnAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(goToLoginButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         LeftPanelLayout.setVerticalGroup(
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,7 +324,11 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(finishButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(alreadyHaveAnAccountLabel)
+                    .addComponent(goToLoginButton))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -335,17 +374,20 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                 userData.setProfilePicture(profilePicture);
 
                 try {
-                    // Save the user's sign-up data to the database as the final step
-                    userData.saveUserDataToDatabase();
+                    // Save the user's sign-up data to the database as final step
+                    UserDAO.saveUserDataToDatabase(userData);
                     dispose();
                     new SignUpSuccessfulPage().setVisible(true);
                 } catch (SQLException ex) {
                     UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                    Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                } catch (NullPointerException ex) {
+                    UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+                    Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             } catch (IOException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
-                Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         } else {
             // If no profile picture is selected, display error message
@@ -399,7 +441,7 @@ public class ProfilePicturePage extends javax.swing.JFrame {
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         SignUpPage signUpPage = new SignUpPage(userData, userDataStack);
-        signUpPage.onBackButtonPressed();
+        signUpPage.onReturnFromNextPage();
         dispose();
         signUpPage.setVisible(true);
     }//GEN-LAST:event_backButtonMouseClicked
@@ -419,6 +461,27 @@ public class ProfilePicturePage extends javax.swing.JFrame {
     private void backButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseReleased
         backButton.setBackground(ColorManager.DARK_GREY);
     }//GEN-LAST:event_backButtonMouseReleased
+
+    private void goToLoginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseClicked
+        dispose();
+        new LoginPage().setVisible(true);
+    }//GEN-LAST:event_goToLoginButtonMouseClicked
+
+    private void goToLoginButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseEntered
+        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMouseEntered
+
+    private void goToLoginButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseExited
+        goToLoginButton.setForeground(ColorManager.DARK_GREEN);
+    }//GEN-LAST:event_goToLoginButtonMouseExited
+
+    private void goToLoginButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMousePressed
+        goToLoginButton.setForeground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMousePressed
+
+    private void goToLoginButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goToLoginButtonMouseReleased
+        goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_goToLoginButtonMouseReleased
 
     /**
      * @param args the command line arguments
@@ -457,11 +520,13 @@ public class ProfilePicturePage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
+    private javax.swing.JLabel alreadyHaveAnAccountLabel;
     private javax.swing.JPanel backButton;
     private javax.swing.JLabel backLabel;
     private javax.swing.JLabel banner;
     private javax.swing.JPanel finishButton;
     private javax.swing.JLabel finishLabel;
+    private javax.swing.JLabel goToLoginButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;

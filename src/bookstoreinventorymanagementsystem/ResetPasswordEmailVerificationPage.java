@@ -3,6 +3,8 @@ package bookstoreinventorymanagementsystem;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.swing.Timer;
 
@@ -26,7 +28,8 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
      *
      * @param userData the UserData object containing user information, passed
      * from UsernameValidationPage class.
-     * @param userDataStack
+     * @param userDataStack the navigation stack used for storing page data
+     * history for restoration and navigation.
      */
     public ResetPasswordEmailVerificationPage(UserData userData, NavigationStack<UserData> userDataStack) {
         this.userData = userData;
@@ -56,9 +59,11 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
             try {
                 emailHandler.sendResetPasswordEmail(toEmail);
             } catch (MessagingException | UnsupportedEncodingException ex) {
-                UIUtils.displayErrorMessage(ex.getMessage());
-                dispose();
-                new LoginPage().setVisible(true);
+                UIUtils.displayErrorMessage(ExceptionMessages.EMAIL_ERROR);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            } catch (NullPointerException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         });
         emailThread.start();
@@ -425,7 +430,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
                 UIUtils.setErrorLabelMessage(verificationCodeErrorLabel, codeValidation.getErrorMessage());
             }
         } else {
-            // If field is empty, reset the field state and clear error message, if any
+            // Mark the verification code field as required if it's empty
             UIUtils.markFieldAsRequired(verificationCodeField, verificationCodeErrorLabel);
         }
     }//GEN-LAST:event_finishButtonMouseClicked
@@ -489,7 +494,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
     private void verificationCodeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verificationCodeFieldKeyTyped
         char c = evt.getKeyChar();
 
-        // Only accepts digits and limits the length of entered code to 6 characters.
+        // Only accepts digits and limits the length to 6 characters
         if (!Character.isDigit(c) || verificationCodeField.getText().length() >= 6) {
             evt.consume();
         }
@@ -523,7 +528,7 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         RecoverAccountPage recoverAccountPage = new RecoverAccountPage(userDataStack);
-        recoverAccountPage.onBackButtonPressed();
+        recoverAccountPage.onReturnFromNextPage();
         dispose();
         recoverAccountPage.setVisible(true);
     }//GEN-LAST:event_backButtonMouseClicked

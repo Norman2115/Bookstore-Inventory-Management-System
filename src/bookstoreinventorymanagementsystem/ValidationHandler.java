@@ -43,6 +43,10 @@ public class ValidationHandler {
      * @throws java.sql.SQLException if a database access error occurs.
      */
     public static ValidationResult checkUniqueUsername(String username) throws SQLException {
+        if (username == null) {
+            throw new NullPointerException("Username cannot be null");
+        }
+
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM user WHERE username = ?"
@@ -69,6 +73,10 @@ public class ValidationHandler {
      * @throws SQLException if a database access error occurs.
      */
     public static ValidationResult checkUsernameExistence(String username) throws SQLException {
+        if (username == null) {
+            throw new NullPointerException("Username cannot be null");
+        }
+
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM user WHERE username = ?"
@@ -113,6 +121,10 @@ public class ValidationHandler {
      * @throws SQLException
      */
     public static ValidationResult checkUniqueEmail(String email) throws SQLException {
+        if (email == null) {
+            throw new NullPointerException("Email cannot be null");
+        }
+
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM user WHERE email = ?"
@@ -137,6 +149,10 @@ public class ValidationHandler {
      * @throws SQLException
      */
     public static ValidationResult checkEmailExistence(String email) throws SQLException {
+        if (email == null) {
+            throw new NullPointerException("Email cannot be null");
+        }
+
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT * FROM user WHERE email = ?"
@@ -160,28 +176,31 @@ public class ValidationHandler {
      * @return
      * @throws SQLException
      */
-    public static ValidationResult validateUsernameOrEmail(String usernameOrEmail)
-            throws SQLException {
-        boolean isValidUsername = validateUsername(usernameOrEmail).isValid();
-        boolean isValidEmail = validateEmail(usernameOrEmail).isValid();
-
-        if (!isValidUsername && !isValidEmail) {
-            return new ValidationResult(false, "Please enter a valid username or email");
+    public static ValidationResult validateUsernameOrEmail(String usernameOrEmail) throws SQLException {
+        if (usernameOrEmail == null) {
+            throw new NullPointerException("Username or email cannot be null");
         }
 
-        if (isValidUsername) {
+        ValidationResult usernameValidation = validateUsername(usernameOrEmail);
+        ValidationResult emailValidation = validateEmail(usernameOrEmail);
+
+        if (!usernameValidation.isValid() && !emailValidation.isValid()) {
+            return new ValidationResult(false, "Incorrect username or email");
+        }
+
+        if (usernameValidation.isValid()) {
             ValidationResult usernameExistenceValidation = ValidationHandler
                     .checkUsernameExistence(usernameOrEmail);
             if (!usernameExistenceValidation.isValid()) {
-                return usernameExistenceValidation;
+                return new ValidationResult(false, "Incorrect username");
             }
         }
 
-        if (isValidEmail) {
+        if (emailValidation.isValid()) {
             ValidationResult emailExistenceValidation = ValidationHandler
                     .checkEmailExistence(usernameOrEmail);
             if (!emailExistenceValidation.isValid()) {
-                return emailExistenceValidation;
+                return new ValidationResult(false, "Incorrect email");
             }
         }
 
