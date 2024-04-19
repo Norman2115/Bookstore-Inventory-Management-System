@@ -18,18 +18,12 @@ import java.util.logging.Logger;
  * @author User
  */
 public class BookDAO {
-    private Connection connection;
     public BookDAO(){
-        try {
-            connection = DatabaseManager.getConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
     
     public void deleteData(String deleteRowName,Object deleteRow[]){
-        try {
-            connection = DatabaseManager.getConnection();
+        try (Connection connection = DatabaseManager.getConnection()){
             for(int i = 0;i<deleteRow.length;i++){
                 String query = "DELETE FROM "+"product"+" WHERE "+deleteRowName+" = \'"+deleteRow[i]+"\'";
                 System.out.println(query);
@@ -41,30 +35,33 @@ public class BookDAO {
         }
     }
     
-    public void updateData(BookData productData) throws SQLException{
-        connection = DatabaseManager.getConnection();
-        String query = "UPDATE product "
-                + "SET book_title = ?, genre = ?, language = ?, author = ?, publisher = ?, publication_year = ?, stock_quantity = ?, unit_price = ?, discount = ?, image = ? "
-                + "WHERE isbn = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        
-        statement.setObject(1, productData.getBookTitle());
-        statement.setObject(2, productData.getGenre());
-        statement.setObject(3, productData.getLanguage());
-        statement.setObject(4, productData.getAuthor());
-        statement.setObject(5, productData.getPublisher());
-        statement.setObject(6, productData.getPublicatioYear());
-        statement.setObject(7, productData.getStockQuantity());
-        statement.setObject(8, productData.getUnitPrice());
-        statement.setObject(9, productData.getDiscount());
-        statement.setObject(10, productData.getImage());
-        statement.setObject(11, productData.getISBN());
-        System.out.println(query);
-        statement.executeUpdate();
+    public void updateData(BookData productData){
+        try (Connection connection = DatabaseManager.getConnection()){
+            String query = "UPDATE product "
+                    + "SET book_title = ?, genre = ?, language = ?, author = ?, publisher = ?, publication_year = ?, stock_quantity = ?, unit_price = ?, discount = ?, image = ? "
+                    + "WHERE isbn = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setObject(1, productData.getBookTitle());
+            statement.setObject(2, productData.getGenre());
+            statement.setObject(3, productData.getLanguage());
+            statement.setObject(4, productData.getAuthor());
+            statement.setObject(5, productData.getPublisher());
+            statement.setObject(6, productData.getPublicatioYear());
+            statement.setObject(7, productData.getStockQuantity());
+            statement.setObject(8, productData.getUnitPrice());
+            statement.setObject(9, productData.getDiscount());
+            statement.setObject(10, productData.getImage());
+            statement.setObject(11, productData.getISBN());
+            System.out.println(query);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public BookData[] readData(String tableName,String orderBy){
-        try {
+        try (Connection connection = DatabaseManager.getConnection()){
             int rowNumber;
             //get select coloumn number
             String query = "SELECT COUNT(*) FROM "+tableName;
@@ -109,7 +106,7 @@ public class BookDAO {
     }
     
     public BookData[] readData(String tableName,String condition,String orderBy){
-        try {
+        try (Connection connection = DatabaseManager.getConnection()){
             int rowNumber;
             //get select coloumn number
             String query = "SELECT COUNT(*) FROM "+tableName+ " WHERE " + condition;
@@ -154,7 +151,7 @@ public class BookDAO {
     }
     
     public int getLength(String tableName){
-        try {
+        try (Connection connection = DatabaseManager.getConnection()){
             int rowNumber;
             //get select coloumn number
             String query = "SELECT COUNT(*) FROM "+tableName;
@@ -172,7 +169,7 @@ public class BookDAO {
     }
     
     public int getLength(String tableName,String condition){
-        try {
+        try (Connection connection = DatabaseManager.getConnection()){
             int rowNumber;
             //get select coloumn number
             String query = "SELECT COUNT(*) FROM "+tableName+ " WHERE " + condition;

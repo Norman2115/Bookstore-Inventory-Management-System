@@ -25,7 +25,6 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
     private void displayRow(BookData[] productData) {
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         int length = productData.length;
-        System.out.println(length);
         if (length > 0) {
             for (int i = 0; i < length; i++) {
                 Object[] rowData = new Object[10];
