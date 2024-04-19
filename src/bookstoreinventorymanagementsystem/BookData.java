@@ -25,18 +25,9 @@ public final class BookData {
     private double discount;
     private byte[] image;
     private double netPrice;
-    
+    private String bookID;
     public BookData(){
-        setBookTitle(null);
-        setGenre(null);
-        setLanguage(null);
-        setAuthor(null);
-        setPublicationYear(0);
-        setISBN(0);
-        setStockQuantity(0);
-        setUnitPrice(0.0);
-        setDiscount(0.0);
-        setImage(null); 
+        reset();
     }
     
     public void setBookTitle(String bookTitle){
@@ -128,14 +119,15 @@ public final class BookData {
         setDiscount(0.0);
         setImage(null);    
         calculateNetPrice();
+        bookID = null;
     }
     
     public void saveBookDataToDatabase(){
         try (Connection connection = DatabaseManager.getConnection();){
             
             
-            StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,image) VALUES (?");
-            for (int i = 1; i < 11; i++) {
+            StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,image,book_id) VALUES (?");
+            for (int i = 1; i < 12; i++) {
                 queryBuilder.append(", ?");
             }
             queryBuilder.append(");");
@@ -153,6 +145,9 @@ public final class BookData {
             statement.setObject(9, unitPrice);
             statement.setObject(10, discount);
             statement.setObject(11, image);
+            bookID = BookDAO.getNextBookID();
+            System.out.print(bookID);
+            statement.setObject(12, bookID);
             
             statement.executeUpdate();
         } catch (SQLException ex) {

@@ -22,7 +22,7 @@ public class BookDAO {
         
     }
     
-    public void deleteData(String deleteRowName,Object deleteRow[]){
+    public static void deleteData(String deleteRowName,Object deleteRow[]){
         try (Connection connection = DatabaseManager.getConnection()){
             for(int i = 0;i<deleteRow.length;i++){
                 String query = "DELETE FROM "+"product"+" WHERE "+deleteRowName+" = \'"+deleteRow[i]+"\'";
@@ -35,7 +35,7 @@ public class BookDAO {
         }
     }
     
-    public void updateData(BookData productData){
+    public static void updateData(BookData productData){
         try (Connection connection = DatabaseManager.getConnection()){
             String query = "UPDATE product "
                     + "SET book_title = ?, genre = ?, language = ?, author = ?, publisher = ?, publication_year = ?, stock_quantity = ?, unit_price = ?, discount = ?, image = ? "
@@ -60,7 +60,7 @@ public class BookDAO {
         }
     }
     
-    public void restockUpdate(BookData productData){
+    public static void restockUpdate(BookData productData){
         try (Connection connection = DatabaseManager.getConnection()){
             String query = "UPDATE product "
                     + "SET stock_quantity = ? "
@@ -76,19 +76,18 @@ public class BookDAO {
         }
     }
     
-    public BookData[] readData(String tableName,String orderBy){
+    public static BookData[] readData(String tableName,String orderBy){
         try (Connection connection = DatabaseManager.getConnection()){
             int rowNumber;
             //get select coloumn number
-            String query = "SELECT COUNT(*) FROM "+tableName;
-            System.out.println(query);
+
             rowNumber = getLength(tableName);
             BookData[] productData = new BookData[rowNumber];
             //initialized
             for (int i = 0;i<rowNumber;i++){
                 productData[i] = new BookData();
             }//select data from database
-            query = "SELECT * FROM " + tableName + " ORDER BY " + orderBy;
+            String query = "SELECT * FROM " + tableName + " ORDER BY " + orderBy;
             System.out.println(query);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -121,12 +120,10 @@ public class BookDAO {
         return null;
     }
     
-    public BookData[] readData(String tableName,String condition,String orderBy){
+    public static BookData[] readData(String tableName,String condition,String orderBy){
         try (Connection connection = DatabaseManager.getConnection()){
             int rowNumber;
             //get select coloumn number
-            String query = "SELECT COUNT(*) FROM "+tableName+ " WHERE " + condition;
-            System.out.println(query);
             rowNumber = getLength(tableName,condition);
             BookData[] productData = new BookData[rowNumber];
             //initialized
@@ -134,7 +131,7 @@ public class BookDAO {
                 productData[i] = new BookData();
             }
             //select data from database
-            query = "SELECT * FROM " + tableName + " WHERE " + condition + " ORDER BY " + orderBy;
+            String query = "SELECT * FROM " + tableName + " WHERE " + condition + " ORDER BY " + orderBy;
             System.out.println(query);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -166,7 +163,7 @@ public class BookDAO {
         return null;
     }
     
-    public int getLength(String tableName){
+    public static int getLength(String tableName){
         try (Connection connection = DatabaseManager.getConnection()){
             int rowNumber;
             //get select coloumn number
@@ -184,7 +181,7 @@ public class BookDAO {
     return 0;
     }
     
-    public int getLength(String tableName,String condition){
+    public static int getLength(String tableName,String condition){
         try (Connection connection = DatabaseManager.getConnection()){
             int rowNumber;
             //get select coloumn number
@@ -200,5 +197,26 @@ public class BookDAO {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     return 0;
-    }  
-}
+    }
+    
+    public static String getNextBookID(){
+        try (Connection connection = DatabaseManager.getConnection();){
+            //get select coloumn number
+            int rowNumber = getLength("product");
+            if (rowNumber==0){
+                return ("B1001");
+            }
+            String query = "SELECT * FROM product ORDER BY book_id LIMIT 1";
+            System.out.println(query);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            resultSet.next();
+            String result = resultSet.getString(1);
+            int id = Integer.parseInt(result.substring(1));
+            return ("B"+id++);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+}         
