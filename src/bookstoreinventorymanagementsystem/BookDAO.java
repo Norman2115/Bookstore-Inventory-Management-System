@@ -6,6 +6,7 @@ package bookstoreinventorymanagementsystem;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,30 +15,65 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author USER
+ * @author User
  */
-public final class ReadProductData {
+public class BookDAO {
     private Connection connection;
-    private int rowNumber;
-    public ReadProductData(){
+    public BookDAO(){
         try {
-            //Connect to database
             connection = DatabaseManager.getConnection();
         } catch (SQLException ex) {
-            Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
-    public ProductData[] readData(String tableName,String orderBy){
+    
+    public void deleteData(String deleteRowName,Object deleteRow[]){
         try {
+            connection = DatabaseManager.getConnection();
+            for(int i = 0;i<deleteRow.length;i++){
+                String query = "DELETE FROM "+"product"+" WHERE "+deleteRowName+" = \'"+deleteRow[i]+"\'";
+                System.out.println(query);
+                Statement statement = connection.createStatement();
+                statement.executeUpdate(query);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateData(BookData productData) throws SQLException{
+        connection = DatabaseManager.getConnection();
+        String query = "UPDATE product "
+                + "SET book_title = ?, genre = ?, language = ?, author = ?, publisher = ?, publication_year = ?, stock_quantity = ?, unit_price = ?, discount = ?, image = ? "
+                + "WHERE isbn = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        
+        statement.setObject(1, productData.getBookTitle());
+        statement.setObject(2, productData.getGenre());
+        statement.setObject(3, productData.getLanguage());
+        statement.setObject(4, productData.getAuthor());
+        statement.setObject(5, productData.getPublisher());
+        statement.setObject(6, productData.getPublicatioYear());
+        statement.setObject(7, productData.getStockQuantity());
+        statement.setObject(8, productData.getUnitPrice());
+        statement.setObject(9, productData.getDiscount());
+        statement.setObject(10, productData.getImage());
+        statement.setObject(11, productData.getISBN());
+        System.out.println(query);
+        statement.executeUpdate();
+    }
+    
+    public BookData[] readData(String tableName,String orderBy){
+        try {
+            int rowNumber;
             //get select coloumn number
             String query = "SELECT COUNT(*) FROM "+tableName;
             System.out.println(query);
             rowNumber = getLength(tableName);
-            ProductData[] productData = new ProductData[rowNumber];
+            BookData[] productData = new BookData[rowNumber];
             //initialized
             for (int i = 0;i<rowNumber;i++){
-                productData[i] = new ProductData();
+                productData[i] = new BookData();
             }//select data from database
             query = "SELECT * FROM " + tableName + " ORDER BY " + orderBy;
             System.out.println(query);
@@ -61,27 +97,28 @@ public final class ReadProductData {
                     byte[] imageByte = ImageUtils.convertBlobToByteArray(resultSet.getBlob("image"));
                     productData[i].setImage(imageByte);
                 } catch (IOException ex) {
-                    Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 i++;
             }
             return productData;
         } catch (SQLException ex) {
-            Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
     
-    public ProductData[] readData(String tableName,String condition,String orderBy){
+    public BookData[] readData(String tableName,String condition,String orderBy){
         try {
+            int rowNumber;
             //get select coloumn number
             String query = "SELECT COUNT(*) FROM "+tableName+ " WHERE " + condition;
             System.out.println(query);
             rowNumber = getLength(tableName,condition);
-            ProductData[] productData = new ProductData[rowNumber];
+            BookData[] productData = new BookData[rowNumber];
             //initialized
             for (int i = 0;i<rowNumber;i++){
-                productData[i] = new ProductData();
+                productData[i] = new BookData();
             }
             //select data from database
             query = "SELECT * FROM " + tableName + " WHERE " + condition + " ORDER BY " + orderBy;
@@ -105,19 +142,20 @@ public final class ReadProductData {
                     byte[] image = ImageUtils.convertBlobToByteArray(resultSet.getBlob("image"));
                     productData[i].setImage(image);
                 } catch (IOException ex) {
-                    Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 i++;
             }
             return productData;
         } catch (SQLException ex) {
-            Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         } 
         return null;
     }
     
     public int getLength(String tableName){
         try {
+            int rowNumber;
             //get select coloumn number
             String query = "SELECT COUNT(*) FROM "+tableName;
             System.out.println(query);
@@ -128,13 +166,14 @@ public final class ReadProductData {
             //return length
             return rowNumber;
         } catch (SQLException ex) {
-            Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }   
     return 0;
     }
     
     public int getLength(String tableName,String condition){
         try {
+            int rowNumber;
             //get select coloumn number
             String query = "SELECT COUNT(*) FROM "+tableName+ " WHERE " + condition;
             System.out.println(query);
@@ -145,19 +184,8 @@ public final class ReadProductData {
             //return length
             return rowNumber;
         } catch (SQLException ex) {
-            Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     return 0;
-    }       
-    
-    public void closeConnection(){
-        if (connection != null) {
-            try {
-                connection.setAutoCommit(true);
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+    }  
 }

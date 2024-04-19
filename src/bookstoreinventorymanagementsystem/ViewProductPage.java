@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class ViewProductPage extends javax.swing.JInternalFrame {
-    private final ReadProductData input = new ReadProductData();
+    private final BookDAO bookDAO = new BookDAO();
     /**
      * Creates new form welcomeText
      */
@@ -22,15 +22,15 @@ public class ViewProductPage extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         
-        ProductData[] productData;
-        productData = input.readData("product","book_title");
+        BookData[] productData;
+        productData = bookDAO.readData("product","book_title");
         displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
         // jTable1.getColumnModel().getColumn(0).setPreferredWidth(200);
     }
     
-    private void displayRow(ProductData[] productData){
+    private void displayRow(BookData[] productData){
         ((DefaultTableModel) viewTable.getModel()).setRowCount(0);
         int length = productData.length;
         System.out.println(length);
@@ -265,10 +265,10 @@ public class ViewProductPage extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        ProductData[] productData;
+        BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = input.readData("product",condition,searchBy);
+        productData = bookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
 
@@ -277,10 +277,10 @@ public class ViewProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_viewTableInputMethodTextChanged
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
-        ProductData[] productData;
+        BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = input.readData("product",condition,searchBy);
+        productData = bookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchButtonMouseClicked
 
