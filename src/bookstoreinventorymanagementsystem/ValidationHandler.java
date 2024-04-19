@@ -409,8 +409,6 @@ public class ValidationHandler {
         if ((str.matches(regex1)|| str.matches(regex2))) {
             return new ValidationResult(true, null);
         }
-        System.out.println(str.matches(regex1)+" containt number");
-        System.out.println(str.matches(regex2)+"str.matches(regex2)");
         if (!str.matches(regex1)&&!str.matches(regex3)) {
             return new ValidationResult(false, "Only accepts decimal");
         }

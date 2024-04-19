@@ -16,8 +16,10 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -73,6 +75,112 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         productData.reset();
     }
     
+    private boolean isEmpty(JTextComponent field,JLabel errorLabel){
+        if (field == null|| "".equals(field.getText())){
+            UIUtils.markFieldAsRequired(field,errorLabel);
+            return true;
+        }
+        
+        UIUtils.resetFieldState(field);
+        errorLabel.setForeground(ColorManager.WHITE);
+        return false;
+    } 
+    
+    
+    private boolean yearIsValid(){
+        ValidationResult valid = ValidationHandler.isValidYear(year.getText());
+        if (valid.isValid()){
+            int yearInInteger = Integer.parseInt(year.getText());
+            productData.setPublicationYear(yearInInteger);
+            UIUtils.resetFieldState(year);
+            yearErrorLabel.setForeground(ColorManager.WHITE);
+            return true;
+        }
+        
+        UIUtils.setFieldErrorState(year);
+        UIUtils.setErrorLabelMessage(yearErrorLabel, valid.getErrorMessage());
+        return false;
+    }
+    
+    private boolean quantityIsValid(){
+        if (ValidationHandler.containsOnlyNumbers(quantity.getText())){
+            productData.setStockQuantity(Integer.parseInt(quantity.getText()));
+            UIUtils.resetFieldState(quantity);
+            quantityErrorLabel.setForeground(ColorManager.WHITE);
+            return true;
+        }
+        UIUtils.setFieldErrorState(quantity);
+        UIUtils.setErrorLabelMessage(quantityErrorLabel, "Only digit accepted");  
+        return false;
+    }
+    
+    private boolean unitPriceIsValid(){
+        ValidationResult valid = ValidationHandler.isValidPrice(unitPrice.getText());
+        if (valid.isValid()){
+            productData.setUnitPrice(Double.parseDouble(unitPrice.getText()));
+            UIUtils.resetFieldState(unitPrice);
+            unitPriceErrorLabel.setForeground(ColorManager.WHITE);
+            return true;
+        }
+        
+        UIUtils.setFieldErrorState(unitPrice);
+        UIUtils.setErrorLabelMessage(unitPriceErrorLabel, valid.getErrorMessage());
+        return false;
+    }
+    
+    private boolean discountIsValid(){
+        ValidationResult valid = ValidationHandler.isValidDiscountValue(discount.getText());
+        if (valid.isValid()){
+            productData.setDiscount(Double.parseDouble(discount.getText()));
+            UIUtils.resetFieldState(discount);
+            discountErrorLabel.setForeground(ColorManager.WHITE);
+            return true;
+        }
+        UIUtils.setFieldErrorState(discount);
+        UIUtils.setErrorLabelMessage(discountErrorLabel, valid.getErrorMessage());
+        return false;
+    }
+    
+    private boolean isbnIsValid(){
+        ValidationResult formatValid = null;
+        ValidationResult unique = null;
+        formatValid = ValidationHandler.isValidISBN(isbn.getText());
+        if(formatValid.isValid()==true){
+            try {
+                unique = ValidationHandler.checkUniqueISBN(isbn.getText());
+            } catch (SQLException ex) {
+                Logger.getLogger(EditProductInfoPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if (formatValid.isValid()&&unique.isValid()){
+            long isbnInInteger = Long.parseLong(isbn.getText());
+            productData.setISBN(isbnInInteger);
+            UIUtils.resetFieldState(isbn);
+            isbnErrorLabel.setForeground(ColorManager.WHITE);
+            return true;
+        }
+
+        UIUtils.setFieldErrorState(isbn);
+        if (formatValid.isValid()==false){
+            UIUtils.setErrorLabelMessage(isbnErrorLabel, formatValid.getErrorMessage());
+            return false;
+        }
+        
+        UIUtils.setErrorLabelMessage(isbnErrorLabel, unique.getErrorMessage());
+        return false;
+    }
+    
+    private void displayNetPrice(){
+        if (unitPriceIsValid())
+            productData.setUnitPrice(Double.parseDouble(unitPrice.getText()));
+        if (discountIsValid())
+            productData.setDiscount(Double.parseDouble(discount.getText()));
+        productData.calculateNetPrice();
+        double price = productData.getNetPrice(); 
+        String formattedPrice = String.format("%.2f", price);
+        netPrice.setText(formattedPrice);      
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -687,53 +795,50 @@ public class AddProductPage extends javax.swing.JInternalFrame {
 
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
         boolean valid = true;
-        productData.setGenre(genre.getSelectedItem().toString());
-        productData.setLanguage(language.getSelectedItem().toString());
+        //check is all required data is filled
+        if(isEmpty(bookTitle,bookTitleErrorLabel))
+            valid  = false;
+        if(isEmpty(author,authorErrorLabel))
+            valid  = false;
+        if(isEmpty(publisher,publisherErrorLabel))
+            valid  = false;
+        if(isEmpty(year,yearErrorLabel))
+            valid  = false;
+        if(isEmpty(quantity,quantityErrorLabel))
+            valid  = false;
+        if(isEmpty(unitPrice,unitPriceErrorLabel))
+            valid  = false;
+        if(isEmpty(isbn,isbnErrorLabel))
+            valid  = false;
+
+        //check is all fill data is in accepted format
+        if(!yearIsValid())
+            valid = false;
+        if(!quantityIsValid())
+            valid = false;
+        if(!unitPriceIsValid())
+            valid = false;
+        if(!discountIsValid())
+            valid = false;
+        if(!isbnIsValid())
+            valid = false;
         
-        if (!isBookTitleValid){
-            valid = false;
-            UIUtils.markFieldAsRequired(bookTitle,bookTitleErrorLabel);
-        }
-        if (!isAuthorValid){
-            valid = false;
-            UIUtils.markFieldAsRequired(author,authorErrorLabel);
-        }
-        if (!isPublisherValid){
-            valid = false;
-            UIUtils.markFieldAsRequired(publisher,publisherErrorLabel);
-        }
-        if (productData.getPublicatioYear()==0){
-            valid = false;
-            UIUtils.markFieldAsRequired(year,yearErrorLabel);
-        }
-        if (productData.getStockQuantity()==0){
-            valid = false;
-            UIUtils.markFieldAsRequired(quantity,quantityErrorLabel);
-        }
-        if (productData.getUnitPrice()==0.0){
-            valid = false;
-            UIUtils.markFieldAsRequired(unitPrice,unitPriceErrorLabel);
-        }
-        if (!isDiscountValid){
-             valid = false;
-        }
+        //fill in defalt image if image is null
         if(productData.getImage()==null){
             Path imagePath = Paths.get("src", "icon", "no-image.png");
             try {
                 byte[] imageBytes = Files.readAllBytes(imagePath);
                  productData.setImage(imageBytes);
             } catch (IOException ex) {
-                Logger.getLogger(AddProductPage.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EditProductInfoPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+        //update data
         if (valid)
         {
-            try {
-                productData.saveBookDataToDatabase();
-            } catch (SQLException ex) {
-                Logger.getLogger(AddProductPage.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            productData.setGenre(genre.getSelectedItem().toString());
+            productData.setLanguage(language.getSelectedItem().toString());
+            productData.saveBookDataToDatabase();
             reset();
         }
     }//GEN-LAST:event_addProductButtonMouseClicked
@@ -780,103 +885,37 @@ public class AddProductPage extends javax.swing.JInternalFrame {
 
     private void bookTitleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bookTitleKeyReleased
         productData.setBookTitle(bookTitle.getText());
-        if (productData.getBookTitle().isEmpty()){
-            UIUtils.markFieldAsRequired(bookTitle,bookTitleErrorLabel);
-            isBookTitleValid = false;
-        }else{
-            isBookTitleValid = true;
-            UIUtils.resetFieldState(bookTitle);
-            bookTitleErrorLabel.setForeground(ColorManager.WHITE);
-        }
+        isEmpty(bookTitle,bookTitleErrorLabel);
     }//GEN-LAST:event_bookTitleKeyReleased
 
     private void authorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_authorKeyReleased
         productData.setAuthor(author.getText());
-        if (productData.getAuthor().isEmpty()){
-            UIUtils.markFieldAsRequired(author,authorErrorLabel);
-            isAuthorValid = false;
-        }else{
-            UIUtils.resetFieldState(author);
-            authorErrorLabel.setForeground(ColorManager.WHITE);
-            isAuthorValid  = true;
-        }
+        isEmpty(author,authorErrorLabel);
     }//GEN-LAST:event_authorKeyReleased
 
     private void publisherKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_publisherKeyReleased
         productData.setPublisher(publisher.getText());
-        if (productData.getPublisher().isEmpty()){
-            UIUtils.markFieldAsRequired(publisher,publisherErrorLabel);
-            isPublisherValid = false;
-        }else{
-            UIUtils.resetFieldState(publisher);
-            publisherErrorLabel.setForeground(ColorManager.WHITE);
-            isPublisherValid  = true;
-        }        
+        isEmpty(publisher,publisherErrorLabel);     
     }//GEN-LAST:event_publisherKeyReleased
 
     private void yearKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_yearKeyReleased
-        ValidationResult valid = ValidationHandler.isValidYear(year.getText());
-        if (valid.isValid()){
-            int yearInInteger = Integer.parseInt(year.getText());
-            productData.setPublicationYear(yearInInteger);
-            UIUtils.resetFieldState(year);
-            yearErrorLabel.setForeground(ColorManager.WHITE);
-        }else{
-            UIUtils.setFieldErrorState(year);
-            UIUtils.setErrorLabelMessage(yearErrorLabel, valid.getErrorMessage());
-        }      
+        yearIsValid();   
     }//GEN-LAST:event_yearKeyReleased
 
     private void quantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityKeyReleased
-        if (ValidationHandler.containsOnlyNumbers(quantity.getText())){
-            productData.setStockQuantity(Integer.parseInt(quantity.getText()));
-            UIUtils.resetFieldState(quantity);
-            quantityErrorLabel.setForeground(ColorManager.WHITE);
-        }else{
-            UIUtils.setFieldErrorState(quantity);
-            UIUtils.setErrorLabelMessage(quantityErrorLabel, "Only digit accepted");
-        }    
+        quantityIsValid();  
     }//GEN-LAST:event_quantityKeyReleased
 
     private void unitPriceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_unitPriceKeyReleased
-        ValidationResult valid = ValidationHandler.isValidPrice(unitPrice.getText());
-        if (valid.isValid()){
-            productData.setUnitPrice(Double.parseDouble(unitPrice.getText()));
-            UIUtils.resetFieldState(unitPrice);
-            unitPriceErrorLabel.setForeground(ColorManager.WHITE);
-            
-            if(productData.getDiscount()==0.0){
-                netPrice.setText(Double.toString(productData.getUnitPrice()));
-            }else{
-                productData.calculateNetPrice();
-                double price = productData.getNetPrice();
-                String formattedPrice = String.format("%.2f", price);
-                netPrice.setText(formattedPrice);      
-            }
-            
-        }else{
-            UIUtils.setFieldErrorState(unitPrice);
-            UIUtils.setErrorLabelMessage(unitPriceErrorLabel, valid.getErrorMessage());
-        }    
+        if(unitPriceIsValid()){
+            displayNetPrice();
+        }
     }//GEN-LAST:event_unitPriceKeyReleased
 
     private void discountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_discountKeyReleased
-        ValidationResult valid = ValidationHandler.isValidDiscountValue(discount.getText());
-        if (valid.isValid()){
-            productData.setDiscount(Double.parseDouble(discount.getText()));
-            isDiscountValid  =  true;
-            UIUtils.resetFieldState(discount);
-            discountErrorLabel.setForeground(ColorManager.WHITE);
-            
-            productData.calculateNetPrice();
-            double price = productData.getNetPrice();
-            String formattedPrice = String.format("%.2f", price);
-            netPrice.setText(formattedPrice);       
-        }else{
-            UIUtils.setFieldErrorState(discount);
-            UIUtils.setErrorLabelMessage(discountErrorLabel, valid.getErrorMessage());
-            isDiscountValid  =  false;
-        }    
+        if(discountIsValid()){
+            displayNetPrice();
+        }  
     }//GEN-LAST:event_discountKeyReleased
 
     private void isbnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isbnActionPerformed
@@ -884,28 +923,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_isbnActionPerformed
 
     private void isbnKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_isbnKeyReleased
-        ValidationResult formatValid = null;
-        ValidationResult unique = null;
-        formatValid = ValidationHandler.isValidISBN(isbn.getText());
-        if(formatValid.isValid()==true){
-            try {
-                unique = ValidationHandler.checkUniqueISBN(isbn.getText());
-            } catch (SQLException ex) {
-                Logger.getLogger(AddProductPage.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if (formatValid.isValid()&&unique.isValid()){
-            long isbnInInteger = Long.parseLong(isbn.getText());
-            productData.setISBN(isbnInInteger);
-            UIUtils.resetFieldState(isbn);
-            isbnErrorLabel.setForeground(ColorManager.WHITE);
-        }else{
-            UIUtils.setFieldErrorState(isbn);
-            if (formatValid.isValid()==false)
-                UIUtils.setErrorLabelMessage(isbnErrorLabel, formatValid.getErrorMessage());
-            else
-                UIUtils.setErrorLabelMessage(isbnErrorLabel, unique.getErrorMessage());
-        }    
+        isbnIsValid();
     }//GEN-LAST:event_isbnKeyReleased
 
 

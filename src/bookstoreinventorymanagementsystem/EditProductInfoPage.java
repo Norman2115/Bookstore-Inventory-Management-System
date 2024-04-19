@@ -914,14 +914,10 @@ public class EditProductInfoPage extends javax.swing.JInternalFrame {
             productData.setStockQuantity(Integer.parseInt(quantity.getText()));
             productData.setUnitPrice(Double.parseDouble(unitPrice.getText()));
             productData.setDiscount(Double.parseDouble(discount.getText()));
-            try {
-                BookDAO updateProductData = new BookDAO();
-                System.out.println(productData.getISBN());
-                updateProductData.updateData(productData);
-                this.dispose();
-            } catch (SQLException ex) {
-                Logger.getLogger(EditProductInfoPage.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            BookDAO updateProductData = new BookDAO();
+            System.out.println(productData.getISBN());
+            updateProductData.updateData(productData);
+            this.dispose();
             reset();
         }
     }//GEN-LAST:event_updateButtonMouseClicked
