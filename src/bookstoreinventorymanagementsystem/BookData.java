@@ -6,11 +6,13 @@ package bookstoreinventorymanagementsystem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author User
  */
-public final class ProductData {    
+public final class BookData {    
     private String bookTitle;
     private String genre;
     private String language;
@@ -23,18 +25,9 @@ public final class ProductData {
     private double discount;
     private byte[] image;
     private double netPrice;
-    
-    public ProductData(){
-        setBookTitle(null);
-        setGenre(null);
-        setLanguage(null);
-        setAuthor(null);
-        setPublicationYear(0);
-        setISBN(0);
-        setStockQuantity(0);
-        setUnitPrice(0.0);
-        setDiscount(0.0);
-        setImage(null); 
+    private String bookID;
+    public BookData(){
+        reset();
     }
     
     public void setBookTitle(String bookTitle){
@@ -126,31 +119,39 @@ public final class ProductData {
         setDiscount(0.0);
         setImage(null);    
         calculateNetPrice();
+        bookID = null;
     }
     
-    public void saveUserDataToDatabase() throws SQLException {
-        Connection connection = DatabaseManager.getConnection();
-
-        StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,image) VALUES (?");
-        for (int i = 1; i < 11; i++) {
-            queryBuilder.append(", ?");
+    public void saveBookDataToDatabase(){
+        try (Connection connection = DatabaseManager.getConnection();){
+            
+            
+            StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,image,book_id) VALUES (?");
+            for (int i = 1; i < 12; i++) {
+                queryBuilder.append(", ?");
+            }
+            queryBuilder.append(");");
+            String query = queryBuilder.toString();
+            PreparedStatement statement = connection.prepareStatement(query);
+            
+            statement.setObject(1, bookTitle);
+            statement.setObject(2, genre);
+            statement.setObject(3, language);
+            statement.setObject(4, author);
+            statement.setObject(5, publisher);
+            statement.setObject(6, publicationYear);
+            statement.setObject(7, isbn);
+            statement.setObject(8, stockQuantity);
+            statement.setObject(9, unitPrice);
+            statement.setObject(10, discount);
+            statement.setObject(11, image);
+            bookID = BookDAO.getNextBookID();
+            System.out.print(bookID);
+            statement.setObject(12, bookID);
+            
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(BookData.class.getName()).log(Level.SEVERE, null, ex);
         }
-        queryBuilder.append(");");
-        String query = queryBuilder.toString();
-        PreparedStatement statement = connection.prepareStatement(query);
-
-        statement.setObject(1, bookTitle);
-        statement.setObject(2, genre);
-        statement.setObject(3, language);
-        statement.setObject(4, author);
-        statement.setObject(5, publisher);
-        statement.setObject(6, publicationYear);
-        statement.setObject(7, isbn);
-        statement.setObject(8, stockQuantity);
-        statement.setObject(9, unitPrice);
-        statement.setObject(10, discount);
-        statement.setObject(11, image);
-
-        statement.executeUpdate();
     }
 }

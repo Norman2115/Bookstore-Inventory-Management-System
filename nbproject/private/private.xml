@@ -7,10 +7,7 @@
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ManageOrder.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/icon/user.png</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UserData.java</file>
-<<<<<<< HEAD
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/RecoverAccountPage.java</file>
-=======
->>>>>>> c0d5e27399c632027846d1bfcade91d4234e8d31
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/SignUpPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UserRole.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/icon/photo_icon.png</file>
@@ -33,10 +30,7 @@
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ResetPasswordEmailVerificationPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ResetPasswordPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/Utils.java</file>
-<<<<<<< HEAD
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/NavigationStack.java</file>
-=======
->>>>>>> c0d5e27399c632027846d1bfcade91d4234e8d31
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UserDAO.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ViewInvoicePage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/DeleteProductPage.java</file>
@@ -51,10 +45,7 @@
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ViewProductPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/AddProductPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ImageUtils.java</file>
-<<<<<<< HEAD
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/NavigationListener.java</file>
-=======
->>>>>>> c0d5e27399c632027846d1bfcade91d4234e8d31
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ProductData.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UIUtils.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/DatabaseManager.java</file>
@@ -64,11 +55,16 @@
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/manageReceipts.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/nbproject/build-impl.xml</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ColorManager.java</file>
-<<<<<<< HEAD
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/DeleteProductData.java</file>
-=======
->>>>>>> c0d5e27399c632027846d1bfcade91d4234e8d31
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ExceptionMessages.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/CustomerData.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/RestockPage.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ColorManager.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/DatabaseManager.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/DeleteProductPage.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ValidationHandler.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UIUtils.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/BookDAO.java</file>
         </group>
     </open-files>
 </project-private>

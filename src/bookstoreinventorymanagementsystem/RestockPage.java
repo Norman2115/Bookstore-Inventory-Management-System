@@ -4,29 +4,112 @@
  */
 package bookstoreinventorymanagementsystem;
 
-import javax.swing.JScrollBar;
-import javax.swing.JTable;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
  * @author User
  */
 public class RestockPage extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form welcomeText
-     */
+    private final BookDAO bookDAO = new BookDAO();
+    private int lowStockValue = 10;
     public RestockPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        
+        BookData[] bookData;
+        bookData = bookDAO.readData("product","book_title");
+        displayRow(bookData);
+        displaySideComponents();
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
     }
     
+    private void displaySideComponents(){
+        BookData[] bookData;
+        bookData = bookDAO.readData("product","book_title");
+        int outOfStock  = bookDAO.getLength("product","stock_quantity = 0");
+        int lowStock  = bookDAO.getLength("product","stock_quantity < "+lowStockValue);
+        int amountOfProduct  = bookDAO.getLength("product");
+        outOfStockLabel.setText(String.valueOf(outOfStock));
+        lowStockLabel.setText(String.valueOf(lowStock));
+        amountProductLabel.setText(String.valueOf(amountOfProduct));
+    }
+    
+    private void displayRow(BookData[] productData){
+        ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
+        int length = productData.length;
+        if(length>0){
+            for (int i = 0;i<length;i++){
+                Object[] rowData = new Object[8];
+                rowData[0] = productData[i].getBookTitle();
+                rowData[1] = productData[i].getISBN();
+                rowData[2] = productData[i].getGenre();
+                rowData[3] = productData[i].getLanguage();
+                rowData[4] = productData[i].getAuthor();
+                rowData[5] = productData[i].getPublisher();
+                rowData[6] = productData[i].getPublicatioYear();
+                rowData[7] = productData[i].getStockQuantity();
+                //insert row
+                ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
+            }
+        }else{
+            ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
+        }
+    }
+    
+    private String getSelection(){
+        String searchBy=null;
+        switch (searchType.getSelectedIndex()){
+            case 0:
+                searchBy = "book_title";
+                break;
+            case 1:
+                searchBy = "book_title";
+                break;
+            case 2:
+                searchBy = "isbn";
+                break;
+            case 3:
+                searchBy = "stock_quantity";
+                break;
+        }
+        return searchBy;
+    }
+    
+    private void selectData(){
+        BookData[] bookData;
+        String searchBy = getSelection();
+        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
+        bookData = bookDAO.readData("product",condition,searchBy);
+        displayRow(bookData);
+    }
+    
+    private boolean restockIsValid(){
+        return ValidationHandler.containsOnlyNumbers(quantityRestock.getText());
+    }
+    
+    private boolean restockIsEmpty(){
+        if (quantityRestock.getText().isEmpty()||"".equals(quantityRestock.getText()))
+            return true;
+        
+        return false;
+    }
+    
+    private void highlightRow(){
+        BookData[] bookData;
+        String condition = "stock_quantity = 0";
+        bookData = bookDAO.readData("product",condition,"stock_quantity");
+        for(int i = 0;i<bookData.length;i++){
+            
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,30 +123,31 @@ public class RestockPage extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        publicationYear2 = new javax.swing.JTextField();
+        searchBar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        addProductButton1 = new javax.swing.JPanel();
+        displayTable = new javax.swing.JTable();
+        searchType = new javax.swing.JComboBox<>();
+        searchButton = new javax.swing.JLabel();
+        restockButton = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        outOfStockLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lowStockLabel = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        isbnTextField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        quantityRestock = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        amountProductLabel = new javax.swing.JLabel();
+        quantityStockErrorLabel = new javax.swing.JLabel();
 
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(951, 630));
@@ -80,15 +164,15 @@ public class RestockPage extends javax.swing.JInternalFrame {
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        publicationYear2.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear2.addActionListener(new java.awt.event.ActionListener() {
+        searchBar.setBackground(new java.awt.Color(253, 252, 248));
+        searchBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        searchBar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear2ActionPerformed(evt);
+                searchBarActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        displayTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -130,48 +214,51 @@ public class RestockPage extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setToolTipText("");
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setFocusable(false);
-        jTable1.setRowHeight(25);
-        jTable1.setSelectionBackground(new java.awt.Color(0, 140, 214));
-        jTable1.setSelectionForeground(new java.awt.Color(253, 252, 248));
-        jTable1.setShowGrid(false);
-        jTable1.getTableHeader().setResizingAllowed(false);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                jTable1InputMethodTextChanged(evt);
+        displayTable.setToolTipText("");
+        displayTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        displayTable.setFocusable(false);
+        displayTable.setRowHeight(25);
+        displayTable.setSelectionBackground(new java.awt.Color(0, 140, 214));
+        displayTable.setSelectionForeground(new java.awt.Color(253, 252, 248));
+        displayTable.setShowGrid(false);
+        displayTable.getTableHeader().setResizingAllowed(false);
+        displayTable.getTableHeader().setReorderingAllowed(false);
+        displayTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                displayTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(displayTable);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
-        jComboBox1.setToolTipText("");
+        searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN", "Stock Quantity" }));
+        searchType.setToolTipText("");
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_icon.png"))); // NOI18N
-        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-
-        addProductButton1.setBackground(new java.awt.Color(0, 140, 214));
-        addProductButton1.setPreferredSize(new java.awt.Dimension(120, 52));
-        addProductButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        searchButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_icon.png"))); // NOI18N
+        searchButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseClicked(evt);
+                searchButtonMouseClicked(evt);
+            }
+        });
+
+        restockButton.setBackground(new java.awt.Color(0, 140, 214));
+        restockButton.setPreferredSize(new java.awt.Dimension(120, 52));
+        restockButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                restockButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseEntered(evt);
+                restockButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseExited(evt);
+                restockButtonMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                addProductButton1MousePressed(evt);
+                restockButtonMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                addProductButton1MouseReleased(evt);
+                restockButtonMouseReleased(evt);
             }
         });
 
@@ -180,18 +267,18 @@ public class RestockPage extends javax.swing.JInternalFrame {
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel26.setText("RESTOCK");
 
-        javax.swing.GroupLayout addProductButton1Layout = new javax.swing.GroupLayout(addProductButton1);
-        addProductButton1.setLayout(addProductButton1Layout);
-        addProductButton1Layout.setHorizontalGroup(
-            addProductButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButton1Layout.createSequentialGroup()
+        javax.swing.GroupLayout restockButtonLayout = new javax.swing.GroupLayout(restockButton);
+        restockButton.setLayout(restockButtonLayout);
+        restockButtonLayout.setHorizontalGroup(
+            restockButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, restockButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        addProductButton1Layout.setVerticalGroup(
-            addProductButton1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addProductButton1Layout.createSequentialGroup()
+        restockButtonLayout.setVerticalGroup(
+            restockButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, restockButtonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
                 .addContainerGap())
@@ -224,10 +311,10 @@ public class RestockPage extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 100, 0));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("0");
+        outOfStockLabel.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        outOfStockLabel.setForeground(new java.awt.Color(0, 100, 0));
+        outOfStockLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        outOfStockLabel.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -236,14 +323,14 @@ public class RestockPage extends javax.swing.JInternalFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(outOfStockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(outOfStockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -275,10 +362,10 @@ public class RestockPage extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 100, 0));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("0");
+        lowStockLabel.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        lowStockLabel.setForeground(new java.awt.Color(0, 100, 0));
+        lowStockLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lowStockLabel.setText("0");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -287,14 +374,14 @@ public class RestockPage extends javax.swing.JInternalFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lowStockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lowStockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -303,23 +390,19 @@ public class RestockPage extends javax.swing.JInternalFrame {
         jLabel8.setForeground(new java.awt.Color(0, 113, 176));
         jLabel8.setText("ISBN");
 
-        jTextField1.setBackground(new java.awt.Color(253, 252, 248));
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        isbnTextField.setBackground(new java.awt.Color(253, 252, 248));
+        isbnTextField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        isbnTextField.setEnabled(false);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 113, 176));
         jLabel10.setText("Quantity");
 
-        jTextField3.setBackground(new java.awt.Color(253, 252, 248));
-        jTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+        quantityRestock.setBackground(new java.awt.Color(253, 252, 248));
+        quantityRestock.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        quantityRestock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                quantityRestockKeyReleased(evt);
             }
         });
 
@@ -353,10 +436,10 @@ public class RestockPage extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 100, 0));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("0");
+        amountProductLabel.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        amountProductLabel.setForeground(new java.awt.Color(0, 100, 0));
+        amountProductLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        amountProductLabel.setText("0");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -365,17 +448,20 @@ public class RestockPage extends javax.swing.JInternalFrame {
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(amountProductLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(amountProductLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        quantityStockErrorLabel.setForeground(new java.awt.Color(253, 252, 248));
+        quantityStockErrorLabel.setText("jLabel3");
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -392,34 +478,37 @@ public class RestockPage extends javax.swing.JInternalFrame {
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(publicationYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(searchType, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(238, 238, 238))
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1)
                                     .addGroup(backgroundLayout.createSequentialGroup()
-                                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
+                                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(quantityStockErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
                                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(isbnTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                                .addComponent(quantityRestock, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 54, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(addProductButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                                    .addComponent(restockButton, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 60, Short.MAX_VALUE)))
+                        .addGap(0, 54, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         backgroundLayout.setVerticalGroup(
@@ -433,12 +522,12 @@ public class RestockPage extends javax.swing.JInternalFrame {
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addGap(36, 36, 36)
                                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(publicationYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(searchType, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -456,12 +545,14 @@ public class RestockPage extends javax.swing.JInternalFrame {
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(isbnTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(quantityRestock, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(addProductButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(quantityStockErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(restockButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(73, 73, 73))
         );
 
@@ -481,58 +572,86 @@ public class RestockPage extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void publicationYear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear2ActionPerformed
+    private void restockButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseClicked
+        int restock = Integer.parseInt(quantityRestock.getText());
+        int selectRow = displayTable.getSelectedRow();
+        long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
+        if(restockIsEmpty()){
+            UIUtils.markFieldAsRequired(quantityRestock,quantityStockErrorLabel);
+        }
+        if (restockIsValid()&&!restockIsEmpty()){
+            BookData[] productData;
+            String condition = "isbn" + " = " +"\'"+isbn+"\'";
+            productData = bookDAO.readData("product",condition,"isbn");
+            productData[0].setStockQuantity(productData[0].getStockQuantity()+restock);
+            bookDAO.restockUpdate(productData[0]);
+        }
+        selectData();
+        displaySideComponents();
+        quantityRestock.setText("");
+    }//GEN-LAST:event_restockButtonMouseClicked
 
-    private void jTable1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTable1InputMethodTextChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1InputMethodTextChanged
+    private void restockButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseEntered
+        restockButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_restockButtonMouseEntered
 
-    private void addProductButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseClicked
+    private void restockButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseExited
+        restockButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_restockButtonMouseExited
 
-    private void addProductButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseEntered
+    private void restockButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMousePressed
+        restockButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_restockButtonMousePressed
 
-    private void addProductButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseExited
+    private void restockButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseReleased
+        restockButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_restockButtonMouseReleased
 
-    private void addProductButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MousePressed
+    private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
+        selectData();
+    }//GEN-LAST:event_searchBarActionPerformed
 
-    private void addProductButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButton1MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addProductButton1MouseReleased
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        selectData();
+    }//GEN-LAST:event_searchButtonMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
+        if (evt.getClickCount() == 2){
+            int selectRow = displayTable.getSelectedRow();
+            long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
+            BookData[] productData;
+            String condition = "isbn" + " = " +"\'"+isbn+"\'";
+            productData = bookDAO.readData("product",condition,"isbn");
+            isbnTextField.setText(String.valueOf(productData[0].getISBN()));
+        }
+    }//GEN-LAST:event_displayTableMouseClicked
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    private void quantityRestockKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityRestockKeyReleased
+        if (restockIsValid()&&!restockIsEmpty()){
+            UIUtils.resetFieldState(quantityRestock);
+            quantityStockErrorLabel.setForeground(ColorManager.WHITE);
+        }else{
+            UIUtils.setFieldErrorState(quantityRestock);
+            UIUtils.setErrorLabelMessage(quantityStockErrorLabel, "Only digit accepted");
+        }
+        if(restockIsEmpty()){
+            UIUtils.markFieldAsRequired(quantityRestock,quantityStockErrorLabel);
+        }
+    }//GEN-LAST:event_quantityRestockKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel addProductButton1;
+    private javax.swing.JLabel amountProductLabel;
     private javax.swing.JPanel background;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTable displayTable;
+    private javax.swing.JTextField isbnTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -543,9 +662,13 @@ public class RestockPage extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField publicationYear2;
+    private javax.swing.JLabel lowStockLabel;
+    private javax.swing.JLabel outOfStockLabel;
+    private javax.swing.JTextField quantityRestock;
+    private javax.swing.JLabel quantityStockErrorLabel;
+    private javax.swing.JPanel restockButton;
+    private javax.swing.JTextField searchBar;
+    private javax.swing.JLabel searchButton;
+    private javax.swing.JComboBox<String> searchType;
     // End of variables declaration//GEN-END:variables
 }

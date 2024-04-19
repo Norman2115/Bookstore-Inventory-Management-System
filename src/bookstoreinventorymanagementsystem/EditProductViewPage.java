@@ -8,24 +8,23 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class EditProductViewPage extends javax.swing.JInternalFrame {
-    private final ReadProductData input = new ReadProductData();
+    private final BookDAO bookDAO = new BookDAO();
     public EditProductViewPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         
-        ProductData[] productData;
-        productData = input.readData("product","book_title");
+        BookData[] productData;
+        productData = bookDAO.readData("product","book_title");
         displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
     }
 
-    private void displayRow(ProductData[] productData) {
+    private void displayRow(BookData[] productData) {
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         int length = productData.length;
-        System.out.println(length);
         if (length > 0) {
             for (int i = 0; i < length; i++) {
                 Object[] rowData = new Object[10];
@@ -197,13 +196,6 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                 displayTableMouseClicked(evt);
             }
         });
-        displayTable.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                displayTableInputMethodTextChanged(evt);
-            }
-        });
         jScrollPane1.setViewportView(displayTable);
 
         searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
@@ -289,29 +281,21 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        ProductData[] productData;
+        BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = input.readData("product",condition,searchBy);
+        productData = bookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
-
-    private void displayTableInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_displayTableInputMethodTextChanged
-        ProductData[] productData;
-        String searchBy = getSelection();
-        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = input.readData("product",condition,searchBy);
-        displayRow(productData);
-    }//GEN-LAST:event_displayTableInputMethodTextChanged
 
     
     private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
         if (evt.getClickCount() == 2){
             int selectRow = displayTable.getSelectedRow();
             long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
-            ProductData[] productData;
+            BookData[] productData;
             String condition = "isbn" + " = " +"\'"+isbn+"\'";
-            productData = input.readData("product",condition,"isbn");
+            productData = bookDAO.readData("product",condition,"isbn");
             AdminHomePage.createEditProductInfoPage(productData[0]);
         }
     }//GEN-LAST:event_displayTableMouseClicked

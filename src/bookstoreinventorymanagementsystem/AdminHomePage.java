@@ -9,7 +9,8 @@ import javax.swing.JLayeredPane;
 public class AdminHomePage extends javax.swing.JFrame {
 
     private final UserData userData;
-    private static EditProductInfoPage editProductInfo = new EditProductInfoPage();
+    private static final EditProductInfoPage EDIT_PRODUCT_INFO = new EditProductInfoPage();
+    private static final ProductDetailPage PRODUCT_DETAIL_PAGE = new ProductDetailPage();
     /**
      * Creates new form Admin_homepage
      * @param userData
@@ -23,10 +24,15 @@ public class AdminHomePage extends javax.swing.JFrame {
         this.userData = userData;
     }
     
-    public static void createEditProductInfoPage(ProductData productData){
-        displayPanel.add(editProductInfo,JLayeredPane.DEFAULT_LAYER,0);
-        editProductInfo.setVisible(true);
-        editProductInfo.fillProductInfo(productData);
+    public static void createEditProductInfoPage(BookData productData){
+        displayPanel.add(EDIT_PRODUCT_INFO,JLayeredPane.DEFAULT_LAYER,0);
+        EDIT_PRODUCT_INFO.setVisible(true);
+        EDIT_PRODUCT_INFO.fillProductInfo(productData);
+    }
+    public static void createProductDetailPage(BookData productData){
+        displayPanel.add(PRODUCT_DETAIL_PAGE,JLayeredPane.DEFAULT_LAYER,0);
+        PRODUCT_DETAIL_PAGE.setVisible(true);
+        PRODUCT_DETAIL_PAGE.fillProductInfo(productData);
     }
     /**
      * This method is called from within the constructor to initialize the form.

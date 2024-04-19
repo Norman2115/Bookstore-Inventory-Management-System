@@ -14,8 +14,7 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class DeleteProductPage extends javax.swing.JInternalFrame {
-    private final ReadProductData input = new ReadProductData();
-    private final DeleteProductData delete = new DeleteProductData();
+    private final BookDAO bookDAO = new BookDAO();
     /**
      * Creates new form welcomeText
      */
@@ -25,14 +24,14 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         
-        ProductData[] productData;
-        productData = input.readData("product","book_title");
+        BookData[] productData;
+        productData = bookDAO.readData("product","book_title");
         displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
     }
     
-    private void displayRow(ProductData[] productData) {
+    private void displayRow(BookData[] productData) {
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         int length = productData.length;
         if (length > 0) {
@@ -341,10 +340,10 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        ProductData[] productData;
+        BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = input.readData("product",condition,searchBy);
+        productData = bookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
 
@@ -371,11 +370,11 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
                 }
             }
             deleteRow = Arrays.copyOf(deleteRow, lengthOfDeleteRow);
-            delete.deleteData("isbn",deleteRow);
+            bookDAO.deleteData("isbn",deleteRow);
             UIUtils.displaySuccessMessage("Delete successfull");
             
-            ProductData[] productData;
-            productData = input.readData("product","book_title");
+            BookData[] productData;
+            productData = bookDAO.readData("product","book_title");
             displayRow(productData);
         }
     }//GEN-LAST:event_deleteButtonMouseClicked
@@ -397,10 +396,10 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_deleteButtonMouseReleased
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
-        ProductData[] productData;
+        BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = input.readData("product",condition,searchBy);
+        productData = bookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchButtonMouseClicked
 
