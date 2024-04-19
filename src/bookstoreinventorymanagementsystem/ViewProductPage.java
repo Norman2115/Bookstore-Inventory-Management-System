@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class ViewProductPage extends javax.swing.JInternalFrame {
+public class ViewProductPage extends javax.swing.JInternalFrame{
     private final BookDAO bookDAO = new BookDAO();
     /**
      * Creates new form welcomeText
@@ -33,7 +33,6 @@ public class ViewProductPage extends javax.swing.JInternalFrame {
     private void displayRow(BookData[] productData){
         ((DefaultTableModel) viewTable.getModel()).setRowCount(0);
         int length = productData.length;
-        System.out.println(length);
         if(length>0){
             for (int i = 0;i<length;i++){
                 Object[] rowData = new Object[10];
