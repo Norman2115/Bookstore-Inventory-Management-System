@@ -396,21 +396,6 @@ public class ValidationHandler {
     }
 
     /**
-     * Checks if the given string contains only digital.
-     *
-     * @param str the string to check
-     * @return a ValidtationResult indicate whether the string only contains
-     * digital.
-     */
-    public static ValidationResult containsOnlyDigit(String str) {
-        if (str.matches("\\d+")) {
-            return new ValidationResult(true, null);
-        }
-
-        return new ValidationResult(false, "Only digit are accepted");
-    }
-
-    /**
      * Checks is the format of the string is valid as a normal format of price
      * which is decimal and not more than two decimal place.
      *
@@ -420,18 +405,72 @@ public class ValidationHandler {
     public static ValidationResult isValidPrice(String str) {
         String regex1 = "\\d+\\.?";
         String regex2 = "\\d+\\.\\d{1,2}$";
-        double price = Double.parseDouble(str);
-        if ((str.matches(regex1) || str.matches(regex2)) && price > 0.0) {
+        String regex3 = "\\d+\\.\\d+";
+        if ((str.matches(regex1)|| str.matches(regex2))) {
             return new ValidationResult(true, null);
         }
-
-        if (price <= 0.0) {
-            return new ValidationResult(false, "Not accepted zero as a value of price");
-        }
-        if (!str.matches(regex1)) {
+        System.out.println(str.matches(regex1)+" containt number");
+        System.out.println(str.matches(regex2)+"str.matches(regex2)");
+        if (!str.matches(regex1)&&!str.matches(regex3)) {
             return new ValidationResult(false, "Only accepts decimal");
         }
-
         return new ValidationResult(false, "Only one or two decimal places are accepted");
+    }
+    
+    /**
+     * Checks is the format of the string is valid as a normal format of discount value
+     * which is decimal, not more than two decimal place and not more than 100.0.
+     * 
+     * @param str
+     * @return 
+     */
+    public static ValidationResult isValidDiscountValue(String str) {
+        ValidationResult result1 = isValidPrice(str);
+        if(result1.isValid()){
+            if(Double.parseDouble(str)>100.0){
+                return new ValidationResult(false, "Discount value should not be morethan 100");
+            }else{
+                return new ValidationResult(true, null);
+            }
+        }
+        
+        return result1;
+    }
+    
+    /**
+     * Checks is the format of the string is valid as a format of year accepted
+     * which is integer and the length must be 10 or 13
+     * @param str
+     * @return 
+     */
+    public static ValidationResult isValidYear(String str) {
+        if(containsOnlyNumbers(str)){
+            int year = Integer.parseInt(str);
+            if(year<1901||year>2155){
+                return new ValidationResult(false, "The value of year should between 1901 and 2155"); 
+            }else{
+                return new ValidationResult(true, null);
+            }
+        }
+        
+        return new ValidationResult(false, "Only digit are accepted");
+    }
+    
+    /**
+     * Checks is the format of the string is valid as a format of ISBN
+     * which is integer and the value must between 1901 and 2155
+     * @param str
+     * @return 
+     */
+    public static ValidationResult isValidISBN(String str) {
+        if(containsOnlyNumbers(str)){
+            if (str.length() == 10 || str.length() == 13){
+                return new ValidationResult(true,null);
+            }else{
+                return new ValidationResult(false, "Invalid length for ISBN");
+            }
+        }
+        
+        return new ValidationResult(false, "Only digit are accepted");
     }
 }

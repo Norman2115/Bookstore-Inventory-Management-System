@@ -1,5 +1,7 @@
 package bookstoreinventorymanagementsystem;
 
+import javax.swing.JLayeredPane;
+
 /**
  *
  * @author User
@@ -7,7 +9,7 @@ package bookstoreinventorymanagementsystem;
 public class AdminHomePage extends javax.swing.JFrame {
 
     private final UserData userData;
-
+    private static EditProductInfoPage editProductInfo = new EditProductInfoPage();
     /**
      * Creates new form Admin_homepage
      * @param userData
@@ -20,7 +22,12 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         this.userData = userData;
     }
-
+    
+    public static void createEditProductInfoPage(ProductData productData){
+        displayPanel.add(editProductInfo,JLayeredPane.DEFAULT_LAYER,0);
+        editProductInfo.setVisible(true);
+        editProductInfo.fillProductInfo(productData);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -673,7 +680,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JPanel basePanel;
     private javax.swing.JPanel deleteProductButton;
     private javax.swing.JLabel deleteProductLable;
-    private javax.swing.JDesktopPane displayPanel;
+    private static javax.swing.JDesktopPane displayPanel;
     private javax.swing.JPanel editProductButton;
     private javax.swing.JLabel editProductLable;
     private javax.swing.JPanel invoiceButton;

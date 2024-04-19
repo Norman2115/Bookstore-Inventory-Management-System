@@ -72,7 +72,7 @@ public final class ProductData {
     }
     
     public void calculateNetPrice(){
-        this.netPrice=unitPrice*(discount/100.0)+unitPrice;
+        this.netPrice=unitPrice-unitPrice*(discount/100.0);
     }
     
     public String getBookTitle(){
