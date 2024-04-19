@@ -72,7 +72,7 @@ public final class ProductData {
     }
     
     public void calculateNetPrice(){
-        this.netPrice=unitPrice*(discount/100.0)+unitPrice;
+        this.netPrice=unitPrice-unitPrice*(discount/100.0);
     }
     
     public String getBookTitle(){
@@ -132,7 +132,7 @@ public final class ProductData {
         Connection connection = DatabaseManager.getConnection();
 
         StringBuilder queryBuilder = new StringBuilder("INSERT INTO product (book_title,genre,language,author,publisher,publication_year,isbn,stock_quantity,unit_price,discount,image) VALUES (?");
-        for (int i = 1; i < 12; i++) {
+        for (int i = 1; i < 11; i++) {
             queryBuilder.append(", ?");
         }
         queryBuilder.append(");");

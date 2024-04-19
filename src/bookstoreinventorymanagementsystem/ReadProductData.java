@@ -25,7 +25,7 @@ public final class ReadProductData {
             connection = DatabaseManager.getConnection();
         } catch (SQLException ex) {
             Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
 
     public ProductData[] readData(String tableName,String orderBy){
@@ -58,7 +58,6 @@ public final class ReadProductData {
                 productData[i].setDiscount(resultSet.getDouble("discount"));
 
                 try {
-                    System.out.println("Read image");
                     byte[] imageByte = ImageUtils.convertBlobToByteArray(resultSet.getBlob("image"));
                     productData[i].setImage(imageByte);
                 } catch (IOException ex) {
@@ -69,7 +68,7 @@ public final class ReadProductData {
             return productData;
         } catch (SQLException ex) {
             Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         return null;
     }
     
@@ -113,7 +112,7 @@ public final class ReadProductData {
             return productData;
         } catch (SQLException ex) {
             Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         return null;
     }
     
@@ -130,7 +129,7 @@ public final class ReadProductData {
             return rowNumber;
         } catch (SQLException ex) {
             Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }   
     return 0;
     }
     
@@ -149,5 +148,16 @@ public final class ReadProductData {
             Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
         }
     return 0;
-    }    
+    }       
+    
+    public void closeConnection(){
+        if (connection != null) {
+            try {
+                connection.setAutoCommit(true);
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ReadProductData.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

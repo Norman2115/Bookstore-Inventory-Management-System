@@ -21,7 +21,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
     }
-    
+
     private void displayRow(ProductData[] productData) {
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         int length = productData.length;
@@ -80,7 +80,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        publicationYear2 = new javax.swing.JTextField();
+        searchBar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
         searchType = new javax.swing.JComboBox<>();
@@ -133,11 +133,11 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        publicationYear2.setBackground(new java.awt.Color(253, 252, 248));
-        publicationYear2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        publicationYear2.addActionListener(new java.awt.event.ActionListener() {
+        searchBar.setBackground(new java.awt.Color(253, 252, 248));
+        searchBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        searchBar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                publicationYear2ActionPerformed(evt);
+                searchBarActionPerformed(evt);
             }
         });
 
@@ -192,6 +192,11 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         displayTable.setShowGrid(false);
         displayTable.getTableHeader().setResizingAllowed(false);
         displayTable.getTableHeader().setReorderingAllowed(false);
+        displayTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                displayTableMouseClicked(evt);
+            }
+        });
         displayTable.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
@@ -231,7 +236,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(publicationYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(0, 0, 0)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
@@ -251,7 +256,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addGap(36, 36, 36)
                                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(publicationYear2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(backgroundLayout.createSequentialGroup()
@@ -283,13 +288,33 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void publicationYear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_publicationYear2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_publicationYear2ActionPerformed
+    private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
+        ProductData[] productData;
+        String searchBy = getSelection();
+        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
+        productData = input.readData("product",condition,searchBy);
+        displayRow(productData);
+    }//GEN-LAST:event_searchBarActionPerformed
 
     private void displayTableInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_displayTableInputMethodTextChanged
-        // TODO add your handling code here:
+        ProductData[] productData;
+        String searchBy = getSelection();
+        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
+        productData = input.readData("product",condition,searchBy);
+        displayRow(productData);
     }//GEN-LAST:event_displayTableInputMethodTextChanged
+
+    
+    private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
+        if (evt.getClickCount() == 2){
+            int selectRow = displayTable.getSelectedRow();
+            long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
+            ProductData[] productData;
+            String condition = "isbn" + " = " +"\'"+isbn+"\'";
+            productData = input.readData("product",condition,"isbn");
+            AdminHomePage.createEditProductInfoPage(productData[0]);
+        }
+    }//GEN-LAST:event_displayTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -305,7 +330,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField publicationYear2;
+    private javax.swing.JTextField searchBar;
     private javax.swing.JComboBox<String> searchType;
     // End of variables declaration//GEN-END:variables
 }

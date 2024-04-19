@@ -26,15 +26,27 @@ public final class DeleteProductData {
     }
     
     public void deleteData(String deleteRowName,Object deleteRow[]){
-        for(int i = 0;i<deleteRow.length;i++){
-            try {
+        try {
+            connection = DatabaseManager.getConnection();
+            for(int i = 0;i<deleteRow.length;i++){
                 String query = "DELETE FROM "+"product"+" WHERE "+deleteRowName+" = \'"+deleteRow[i]+"\'";
                 System.out.println(query);
                 Statement statement = connection.createStatement();
                 statement.executeUpdate(query);
-            } catch (SQLException ex) {
-                Logger.getLogger(DeleteProductData.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DeleteProductData.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.setAutoCommit(true);
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DeleteProductData.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
+        
+        
     }
 }

@@ -29,13 +29,8 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     private boolean isBookTitleValid = false;
     private boolean isAuthorValid = false;
     private boolean isPublisherValid = false;
-    private boolean isQuantityValid = false;
-    private boolean isUnitPriceValid = false;
     private boolean isDiscountValid = true;
     
-    /**
-     * Creates new form welcomeText
-     */
     public AddProductPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
@@ -63,6 +58,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         UIUtils.resetErrorLabel(yearErrorLabel);
         UIUtils.resetErrorLabel(quantityErrorLabel);
         UIUtils.resetErrorLabel(unitPriceErrorLabel);
+        UIUtils.resetErrorLabel(discountErrorLabel);
         
         bookTitle.setText(" ");
         isbn.setText(" ");
@@ -578,41 +574,39 @@ public class AddProductPage extends javax.swing.JInternalFrame {
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(backgroundLayout.createSequentialGroup()
-                            .addGap(126, 126, 126)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(backgroundLayout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(isbnErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(author, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(authorErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(publisher, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(publisherErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(yearErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(quantityErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(isbnErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(author, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(authorErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(publisher, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(publisherErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(yearErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(quantityErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(94, 94, 94))
         );
 
@@ -627,7 +621,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
+                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -821,28 +815,26 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_publisherKeyReleased
 
     private void yearKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_yearKeyReleased
-        ValidationResult yearContaintDigit  = ValidationHandler.containsOnlyDigit(year.getText());
-        if (yearContaintDigit.isValid()&&year.getText().length()==4){
-            productData.setPublicationYear(Integer.parseInt(year.getText()));
+        ValidationResult valid = ValidationHandler.isValidYear(year.getText());
+        if (valid.isValid()){
+            int yearInInteger = Integer.parseInt(year.getText());
+            productData.setPublicationYear(yearInInteger);
             UIUtils.resetFieldState(year);
             yearErrorLabel.setForeground(ColorManager.WHITE);
         }else{
             UIUtils.setFieldErrorState(year);
-            UIUtils.setErrorLabelMessage(yearErrorLabel, "Invalid year format");
+            UIUtils.setErrorLabelMessage(yearErrorLabel, valid.getErrorMessage());
         }      
     }//GEN-LAST:event_yearKeyReleased
 
     private void quantityKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityKeyReleased
-        ValidationResult quantityContaintDigit  = ValidationHandler.containsOnlyDigit(quantity.getText());
-        if (quantityContaintDigit.isValid()){
+        if (ValidationHandler.containsOnlyNumbers(quantity.getText())){
             productData.setStockQuantity(Integer.parseInt(quantity.getText()));
-            isQuantityValid  =  true;
             UIUtils.resetFieldState(quantity);
             quantityErrorLabel.setForeground(ColorManager.WHITE);
         }else{
             UIUtils.setFieldErrorState(quantity);
-            UIUtils.setErrorLabelMessage(quantityErrorLabel, quantityContaintDigit.getErrorMessage());
-            isQuantityValid  =  false;
+            UIUtils.setErrorLabelMessage(quantityErrorLabel, "Only digit accepted");
         }    
     }//GEN-LAST:event_quantityKeyReleased
 
@@ -850,35 +842,36 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         ValidationResult valid = ValidationHandler.isValidPrice(unitPrice.getText());
         if (valid.isValid()){
             productData.setUnitPrice(Double.parseDouble(unitPrice.getText()));
-            isUnitPriceValid  =  true;
             UIUtils.resetFieldState(unitPrice);
             unitPriceErrorLabel.setForeground(ColorManager.WHITE);
             
             if(productData.getDiscount()==0.0){
                 netPrice.setText(Double.toString(productData.getUnitPrice()));
             }else{
-                double price = productData.getUnitPrice()-productData.getUnitPrice()*productData.getDiscount()/100;
-                netPrice.setText(Double.toString(price));
+                productData.calculateNetPrice();
+                double price = productData.getNetPrice();
+                String formattedPrice = String.format("%.2f", price);
+                netPrice.setText(formattedPrice);      
             }
             
         }else{
             UIUtils.setFieldErrorState(unitPrice);
             UIUtils.setErrorLabelMessage(unitPriceErrorLabel, valid.getErrorMessage());
-            isUnitPriceValid  =  false;
         }    
     }//GEN-LAST:event_unitPriceKeyReleased
 
     private void discountKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_discountKeyReleased
-        ValidationResult valid = ValidationHandler.isValidPrice(discount.getText());
+        ValidationResult valid = ValidationHandler.isValidDiscountValue(discount.getText());
         if (valid.isValid()){
             productData.setDiscount(Double.parseDouble(discount.getText()));
             isDiscountValid  =  true;
             UIUtils.resetFieldState(discount);
             discountErrorLabel.setForeground(ColorManager.WHITE);
             
-            double price = productData.getUnitPrice()-productData.getUnitPrice()*productData.getDiscount()/100;
+            productData.calculateNetPrice();
+            double price = productData.getNetPrice();
             String formattedPrice = String.format("%.2f", price);
-            netPrice.setText(formattedPrice);   
+            netPrice.setText(formattedPrice);       
         }else{
             UIUtils.setFieldErrorState(discount);
             UIUtils.setErrorLabelMessage(discountErrorLabel, valid.getErrorMessage());
@@ -891,29 +884,27 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_isbnActionPerformed
 
     private void isbnKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_isbnKeyReleased
-        ValidationResult valid1 = null;
-        ValidationResult valid2 = null;
-        valid1 = ValidationHandler.containsOnlyDigit(isbn.getText());
-        if(valid1.isValid()==true){
+        ValidationResult formatValid = null;
+        ValidationResult unique = null;
+        formatValid = ValidationHandler.isValidISBN(isbn.getText());
+        if(formatValid.isValid()==true){
             try {
-                valid2 = ValidationHandler.checkUniqueISBN(isbn.getText());
+                unique = ValidationHandler.checkUniqueISBN(isbn.getText());
             } catch (SQLException ex) {
                 Logger.getLogger(AddProductPage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (valid1.isValid()&&valid2.isValid()){
+        if (formatValid.isValid()&&unique.isValid()){
             long isbnInInteger = Long.parseLong(isbn.getText());
             productData.setISBN(isbnInInteger);
-            isUnitPriceValid  =  true;
             UIUtils.resetFieldState(isbn);
             isbnErrorLabel.setForeground(ColorManager.WHITE);
         }else{
             UIUtils.setFieldErrorState(isbn);
-            if (valid1.isValid()==false)
-                UIUtils.setErrorLabelMessage(isbnErrorLabel, valid1.getErrorMessage());
+            if (formatValid.isValid()==false)
+                UIUtils.setErrorLabelMessage(isbnErrorLabel, formatValid.getErrorMessage());
             else
-                UIUtils.setErrorLabelMessage(isbnErrorLabel, valid2.getErrorMessage());
-            isUnitPriceValid  =  false;
+                UIUtils.setErrorLabelMessage(isbnErrorLabel, unique.getErrorMessage());
         }    
     }//GEN-LAST:event_isbnKeyReleased
 
