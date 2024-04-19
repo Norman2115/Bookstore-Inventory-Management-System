@@ -21,7 +21,8 @@ public class RecoverAccountPage extends javax.swing.JFrame implements Navigation
     /**
      * Creates new form UsernameValidationPage
      *
-     * @param userDataStack
+     * @param userDataStack the navigation stack used for storing page data
+     * history for restoration and navigation.
      */
     public RecoverAccountPage(NavigationStack<UserData> userDataStack) {
         initComponents();
@@ -29,11 +30,16 @@ public class RecoverAccountPage extends javax.swing.JFrame implements Navigation
         this.userDataStack = userDataStack;
     }
 
+    /**
+     * Called when returning from the next page in navigation. Restores the page
+     * data and updates the field based on the restored data.
+     */
     @Override
     public void onReturnFromNextPage() {
         if (userDataStack != null && !userDataStack.isEmpty()) {
             userData = userDataStack.popPageData();
 
+            // Restore the usernameOrEmailField based on whether username or email was used for recovery
             if (userData.isUsingUsernameForRecover()) {
                 usernameOrEmailField.setText(userData.getUsername());
             } else {
@@ -42,6 +48,10 @@ public class RecoverAccountPage extends javax.swing.JFrame implements Navigation
         }
     }
 
+    /**
+     * Called when proceeding to the next page in navigation. Pushes the current
+     * page data to the stack to maintain navigation history.
+     */
     @Override
     public void onProceedToNextPage() {
         if (userDataStack != null) {
@@ -317,21 +327,17 @@ public class RecoverAccountPage extends javax.swing.JFrame implements Navigation
 
                 // If the username or email is valid, retrieve the userdata from the database
                 if (usernameOrEmailValidation.isValid()) {
-                    if (usernameOrEmail.contains("@")) {
-                        userData.setUsingUsernameForRecover(false);
-                    } else {
-                        userData.setUsingUsernameForRecover(true);
-                    }
-
                     try {
                         userData = UserDAO.readUserDataFromDatabase(usernameOrEmail);
                         dispose();
                         onProceedToNextPage();
-                        // Proceed to reset password email verification page
                         new ResetPasswordEmailVerificationPage(userData, userDataStack).setVisible(true);
                     } catch (IOException ex) {
                         UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                        Logger.getLogger(RecoverAccountPage.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(RecoverAccountPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    } catch (NullPointerException ex) {
+                        UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+                        Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                     }
                 } else {
                     // If the username or email is invalid, mark the field as errorneous and display error message
@@ -340,10 +346,13 @@ public class RecoverAccountPage extends javax.swing.JFrame implements Navigation
                 }
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                Logger.getLogger(RecoverAccountPage.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RecoverAccountPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            } catch (NullPointerException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         } else {
-            // If field is empty, reset the field state and clear error message, if any
+            // Mark the username or email field as required if it's empty
             UIUtils.markFieldAsRequired(usernameOrEmailField, usernameOrEmailErrorLabel);
         }
     }//GEN-LAST:event_continueButtonMouseClicked

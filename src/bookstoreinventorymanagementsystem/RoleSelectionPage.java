@@ -19,7 +19,8 @@ public class RoleSelectionPage extends javax.swing.JFrame implements NavigationL
     /**
      * Creates new form RoleSelectionPage
      *
-     * @param userDataStack
+     * @param userDataStack the navigation stack used for storing page data
+     * history for restoration and navigation.
      */
     public RoleSelectionPage(NavigationStack<UserData> userDataStack) {
         initComponents();
@@ -27,6 +28,11 @@ public class RoleSelectionPage extends javax.swing.JFrame implements NavigationL
         this.userDataStack = userDataStack;
     }
 
+    /**
+     * Called when returning from the next page in navigation. Restores the page
+     * data by popping the data history from the stack and updates the role
+     * selection UI based on the restored user role.
+     */
     @Override
     public void onReturnFromNextPage() {
         if (userDataStack != null && !userDataStack.isEmpty()) {
@@ -35,6 +41,10 @@ public class RoleSelectionPage extends javax.swing.JFrame implements NavigationL
         }
     }
 
+    /**
+     * Called when proceeding to the next page in navigation. Pushes the current
+     * page data onto the stack to maintain navigation history.
+     */
     @Override
     public void onProceedToNextPage() {
         if (userDataStack != null) {

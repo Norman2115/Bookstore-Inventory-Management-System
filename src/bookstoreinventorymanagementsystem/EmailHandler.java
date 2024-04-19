@@ -83,6 +83,10 @@ public class EmailHandler {
     public void sendRegistrationVerificationEmail(
             String toEmail
     ) throws MessagingException, UnsupportedEncodingException {
+        if (toEmail == null) {
+            throw new NullPointerException("Email cannot be null");
+        }
+
         verificationCode = generateVerificationCode();
 
         final String registrationVerificationEmailSubject
@@ -136,6 +140,10 @@ public class EmailHandler {
     public void sendResetPasswordEmail(
             String toEmail
     ) throws MessagingException, UnsupportedEncodingException {
+        if (toEmail == null) {
+            throw new NullPointerException("Email cannot be null");
+        }
+
         verificationCode = generateVerificationCode();
 
         final String passwordResetEmailSubject
@@ -167,8 +175,7 @@ public class EmailHandler {
                 </html>
                 """.formatted(verificationCode);
 
-        sendEmail(toEmail, passwordResetEmailSubject,
-                passwordResetEmailBody);
+        sendEmail(toEmail, passwordResetEmailSubject, passwordResetEmailBody);
     }
 
     /**

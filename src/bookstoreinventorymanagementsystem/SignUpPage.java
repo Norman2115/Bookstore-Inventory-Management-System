@@ -28,9 +28,10 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
     /**
      * Creates new form SignUpPage.
      *
-     * @param userData UserData object to store user data, passed from
-     * RoleSelectionPage class.
-     * @param userDataStack
+     * @param userData the UserData object to store user data, passed from
+     * previous class.
+     * @param userDataStack the navigation stack used for storing page data
+     * history for restoration and navigation.
      */
     public SignUpPage(UserData userData, NavigationStack<UserData> userDataStack) {
         initComponents();
@@ -42,6 +43,11 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
         isEmailValid = false;
     }
 
+    /**
+     * Called when returning from the next page in navigation. Pops the page
+     * data history from the stack and fills the input fields with the restored
+     * data.
+     */
     @Override
     public void onReturnFromNextPage() {
         if (userDataStack != null && !userDataStack.isEmpty()) {
@@ -61,6 +67,10 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
         }
     }
 
+    /**
+     * Called when proceeding to the next page in navigation. Pushes the current
+     * page data to the navigation stack to maintain navigation history.
+     */
     @Override
     public void onProceedToNextPage() {
         if (userDataStack != null) {
@@ -125,6 +135,11 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
 
         RightPanel.setBackground(new java.awt.Color(62, 164, 52));
         RightPanel.setPreferredSize(new java.awt.Dimension(450, 500));
+        RightPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RightPanelMouseClicked(evt);
+            }
+        });
 
         banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/bookstore_banner.png"))); // NOI18N
@@ -148,6 +163,11 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
 
         LeftPanel.setBackground(new java.awt.Color(253, 252, 248));
         LeftPanel.setPreferredSize(new java.awt.Dimension(450, 500));
+        LeftPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LeftPanelMouseClicked(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -160,17 +180,12 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
         fullNameField.setBackground(new java.awt.Color(253, 252, 248));
         fullNameField.setForeground(new java.awt.Color(0, 100, 0));
         fullNameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        fullNameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fullNameFieldActionPerformed(evt);
-            }
-        });
         fullNameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fullNameFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 fullNameFieldKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                fullNameFieldKeyTyped(evt);
             }
         });
 
@@ -262,17 +277,12 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
         passwordField.setForeground(new java.awt.Color(0, 100, 0));
         passwordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         passwordField.setEchoChar('\u2022');
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
         passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 passwordFieldKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                passwordFieldKeyTyped(evt);
             }
         });
 
@@ -283,17 +293,12 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
         emailField.setBackground(new java.awt.Color(253, 252, 248));
         emailField.setForeground(new java.awt.Color(0, 100, 0));
         emailField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        emailField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailFieldActionPerformed(evt);
-            }
-        });
         emailField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                emailFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 emailFieldKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                emailFieldKeyTyped(evt);
             }
         });
 
@@ -308,17 +313,12 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
         usernameField.setBackground(new java.awt.Color(253, 252, 248));
         usernameField.setForeground(new java.awt.Color(0, 100, 0));
         usernameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        usernameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameFieldActionPerformed(evt);
-            }
-        });
         usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 usernameFieldKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                usernameFieldKeyTyped(evt);
             }
         });
 
@@ -501,15 +501,12 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
         if (fullNameField.getText().trim().isEmpty()) {
             UIUtils.markFieldAsRequired(fullNameField, fullNameErrorLabel);
         }
-
         if (emailField.getText().trim().isEmpty()) {
             UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
         }
-
         if (usernameField.getText().trim().isEmpty()) {
             UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
         }
-
         if (new String(passwordField.getPassword()).trim().isEmpty()) {
             UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
         }
@@ -558,14 +555,6 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
         goToLoginButton.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_goToLoginButtonMouseReleased
 
-    private void fullNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fullNameFieldActionPerformed
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
     private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
         UIUtils.togglePasswordVisibility(passwordField, showHidePasswordIcon);
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
@@ -574,14 +563,6 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
         dispose();
         new LoginPage().setVisible(true);
     }//GEN-LAST:event_goToLoginButtonMouseClicked
-
-    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailFieldActionPerformed
-
-    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameFieldActionPerformed
 
     private void fullNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyReleased
         fullName = fullNameField.getText();
@@ -603,8 +584,8 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
             }
         } else {
             // If field is empty, reset the field state and clear error message, if any
-            UIUtils.resetFieldState(emailField);
-            UIUtils.resetErrorLabel(emailErrorLabel);
+            UIUtils.resetFieldState(fullNameField);
+            UIUtils.resetErrorLabel(fullNameErrorLabel);
         }
     }//GEN-LAST:event_fullNameFieldKeyReleased
 
@@ -666,7 +647,10 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
                     }
                 } catch (SQLException ex) {
                     UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                    Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                } catch (NullPointerException ex) {
+                    UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+                    Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
             }
         } else {
@@ -701,30 +685,6 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
         }
     }//GEN-LAST:event_passwordFieldKeyReleased
 
-    private void fullNameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyTyped
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            basePanel.requestFocusInWindow();
-        }
-    }//GEN-LAST:event_fullNameFieldKeyTyped
-
-    private void emailFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyTyped
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            basePanel.requestFocusInWindow();
-        }
-    }//GEN-LAST:event_emailFieldKeyTyped
-
-    private void usernameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyTyped
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            basePanel.requestFocusInWindow();
-        }
-    }//GEN-LAST:event_usernameFieldKeyTyped
-
-    private void passwordFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyTyped
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            basePanel.requestFocusInWindow();
-        }
-    }//GEN-LAST:event_passwordFieldKeyTyped
-
     private void basePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_basePanelMouseClicked
         basePanel.requestFocusInWindow();
     }//GEN-LAST:event_basePanelMouseClicked
@@ -751,6 +711,38 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
     private void backButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseReleased
         backButton.setBackground(ColorManager.DARK_GREY);
     }//GEN-LAST:event_backButtonMouseReleased
+
+    private void RightPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RightPanelMouseClicked
+        RightPanel.grabFocus();
+    }//GEN-LAST:event_RightPanelMouseClicked
+
+    private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
+        LeftPanel.grabFocus();
+    }//GEN-LAST:event_LeftPanelMouseClicked
+
+    private void fullNameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_fullNameFieldKeyPressed
+
+    private void emailFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_emailFieldKeyPressed
+
+    private void usernameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_usernameFieldKeyPressed
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_passwordFieldKeyPressed
 
     /**
      * @param args the command line arguments

@@ -1,13 +1,17 @@
 package bookstoreinventorymanagementsystem;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * The class represents login page of the application and serves as the entry
+ * point of the application. Users are required to provide their username and
+ * password. Users are directed to different page based on their account role.
  *
- * @author Norman
+ * @author Teo Chung Henn
  */
 public class LoginPage extends javax.swing.JFrame {
 
@@ -119,12 +123,10 @@ public class LoginPage extends javax.swing.JFrame {
         usernameField.setBackground(new java.awt.Color(253, 252, 248));
         usernameField.setForeground(new java.awt.Color(0, 100, 0));
         usernameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        usernameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameFieldActionPerformed(evt);
-            }
-        });
         usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 usernameFieldKeyReleased(evt);
             }
@@ -239,12 +241,10 @@ public class LoginPage extends javax.swing.JFrame {
         passwordField.setForeground(new java.awt.Color(0, 100, 0));
         passwordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         passwordField.setEchoChar('\u2022');
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
         passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 passwordFieldKeyReleased(evt);
             }
@@ -356,59 +356,70 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
         String usernameOrEmail = usernameField.getText();
-        String email = "";
 
+        // Check if the entered username or email is not empty
         if (!usernameOrEmail.trim().isEmpty()) {
             try {
-                ValidationResult usernameOrEmailValidation = ValidationHandler
-                        .validateUsernameOrEmail(usernameOrEmail);
+                // Validate the username or email
+                ValidationResult usernameOrEmailValidation = ValidationHandler.validateUsernameOrEmail(usernameOrEmail);
                 isUsernameValid = usernameOrEmailValidation.isValid();
 
-                if (usernameOrEmailValidation.isValid()) {
-                    if (!usernameOrEmail.contains("@")) {
-                        email = UserDAO.readEmailByUsername(usernameOrEmail);
-                    } else {
-                        email = usernameOrEmail;
-                    }
-                } else {
+                // Check if either the username or password is invalid
+                if (!isUsernameValid || !isPasswordValid) {
                     UIUtils.setFieldErrorState(usernameField);
-                    UIUtils.setErrorLabelMessage(usernameErrorLabel,
-                            usernameOrEmailValidation.getErrorMessage());
+
+                    // If the either username or password is invalid, mark the field as errorneous and display a generic error message
+                    // Do not reveal whether the username valid or exists in the system or not
+                    UIUtils.setErrorLabelMessage(usernameErrorLabel, "Incorrect username or email");
                 }
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
                 Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         } else {
+            // Mark the password field as required if it's empty
             UIUtils.markFieldAsRequired(usernameField, usernameErrorLabel);
         }
 
         String password = new String(passwordField.getPassword());
 
+        // Check if the entered password is not empty
         if (!password.trim().isEmpty()) {
             try {
-                String actualPassword = UserDAO.readPasswordByUsernameOrEmail(email);
-                ValidationResult passwordMatchValidation = ValidationHandler
-                        .checkPasswordMatches(password, actualPassword);
+                // Retrieve the actual password from the database based on the entered username or email
+                String actualPassword = UserDAO.readPasswordByUsernameOrEmail(usernameOrEmail);
+
+                // Validate if the entered password matches the actual password
+                ValidationResult passwordMatchValidation = ValidationHandler.checkPasswordMatches(password, actualPassword);
                 isPasswordValid = passwordMatchValidation.isValid();
 
-                if (!passwordMatchValidation.isValid()) {
+                // If the password is invalid, mark the field as errorneous and display error message
+                if (!isPasswordValid) {
                     UIUtils.setFieldErrorState(passwordField);
-                    UIUtils.setErrorLabelMessage(passwordErrorLabel,
-                            passwordMatchValidation.getErrorMessage());
+                    UIUtils.setErrorLabelMessage(passwordErrorLabel, passwordMatchValidation.getErrorMessage());
                 }
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
                 Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         } else {
+            // Mark the password field as required if it's empty
             UIUtils.markFieldAsRequired(passwordField, passwordErrorLabel);
         }
 
+        // Proceed to login if both username and password are valid
         if (isUsernameValid && isPasswordValid) {
             try {
                 userData = UserDAO.readUserDataFromDatabase(usernameOrEmail);
                 dispose();
+
+                // Direct user to the appropriate home page based on the user role
                 if (userData.getRole() == UserRole.ADMIN) {
                     new AdminHomePage(userData).setVisible(true);
                 } else {
@@ -416,10 +427,13 @@ public class LoginPage extends javax.swing.JFrame {
                 }
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             } catch (IOException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            } catch (NullPointerException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         }
     }//GEN-LAST:event_loginButtonMouseClicked
@@ -472,14 +486,6 @@ public class LoginPage extends javax.swing.JFrame {
         goToSignUpButton.setForeground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_goToSignUpButtonMouseReleased
 
-    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameFieldActionPerformed
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
     private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
         UIUtils.togglePasswordVisibility(passwordField, showHidePasswordIcon);
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
@@ -512,6 +518,18 @@ public class LoginPage extends javax.swing.JFrame {
         UIUtils.resetErrorLabel(passwordErrorLabel);
     }//GEN-LAST:event_passwordFieldKeyReleased
 
+    private void usernameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_usernameFieldKeyPressed
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_passwordFieldKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -540,6 +558,8 @@ public class LoginPage extends javax.swing.JFrame {
         //</editor-fold>
 
         try {
+            // Tests the connection to the database
+            // Activates the connection pool upon starting the application.
             DatabaseManager.getConnection().close();
         } catch (ExceptionInInitializerError | SQLException ex) {
             UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);

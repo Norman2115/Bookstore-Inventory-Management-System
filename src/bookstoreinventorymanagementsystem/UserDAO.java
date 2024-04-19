@@ -37,8 +37,15 @@ public class UserDAO {
         }
     }
 
-    public static void updatePassword(UserData userData, String newPassword)
-            throws SQLException {
+    public static void updatePassword(UserData userData, String newPassword) throws SQLException {
+        if (userData == null) {
+            throw new NullPointerException("UserData cannot be null");
+        }
+
+        if (newPassword == null) {
+            throw new NullPointerException("New password cannot be null");
+        }
+
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "UPDATE user "
@@ -53,8 +60,11 @@ public class UserDAO {
         }
     }
 
-    public static UserData readUserDataFromDatabase(String usernameOrEmail)
-            throws SQLException, IOException {
+    public static UserData readUserDataFromDatabase(String usernameOrEmail) throws SQLException, IOException {
+        if (usernameOrEmail == null) {
+            throw new NullPointerException("Username or email cannot be null");
+        }
+
         UserData userData = new UserData();
 
         try (Connection connection = DatabaseManager.getConnection()) {
@@ -83,6 +93,34 @@ public class UserDAO {
     }
 
     public static void saveUserDataToDatabase(UserData userData) throws SQLException {
+        if (userData == null) {
+            throw new NullPointerException("UserData cannot be null");
+        }
+
+        if (userData.getFullName() == null) {
+            throw new NullPointerException("Full name cannot be null");
+        }
+
+        if (userData.getUsername() == null) {
+            throw new NullPointerException("Username cannot be null");
+        }
+
+        if (userData.getEmail() == null) {
+            throw new NullPointerException("Email cannot be null");
+        }
+
+        if (userData.getPassword() == null) {
+            throw new NullPointerException("Password cannot be null");
+        }
+
+        if (userData.getRole() == null) {
+            throw new NullPointerException("Role cannot be null");
+        }
+
+        if (userData.getProfilePicture() == null) {
+            throw new NullPointerException("Profile picture cannot be null");
+        }
+
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -131,8 +169,11 @@ public class UserDAO {
         }
     }
 
-    public static String readPasswordByUsernameOrEmail(String usernameOrEmail)
-            throws SQLException {
+    public static String readPasswordByUsernameOrEmail(String usernameOrEmail) throws SQLException {
+        if (usernameOrEmail == null) {
+            throw new NullPointerException("Username or email cannot be null");
+        }
+
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT password FROM user WHERE username = ? OR email = ?"
@@ -152,6 +193,10 @@ public class UserDAO {
     }
 
     public static String readEmailByUsername(String username) throws SQLException {
+        if (username == null) {
+            throw new NullPointerException("Username cannot be null");
+        }
+        
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT email FROM user WHERE username = ?"
