@@ -4,16 +4,26 @@
  */
 package bookstoreinventorymanagementsystem;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
  */
-public class ManageInvoice extends javax.swing.JFrame {
+public class ManageSales extends javax.swing.JFrame {
 
     /**
      * Creates new form ManageInvoice
      */
-    public ManageInvoice() {
+    public ManageSales() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -40,17 +50,11 @@ public class ManageInvoice extends javax.swing.JFrame {
         TotalLabel2 = new javax.swing.JLabel();
         TotalLabel3 = new javax.swing.JLabel();
         TotalLabel4 = new javax.swing.JLabel();
-        TotalLabel5 = new javax.swing.JLabel();
-        TotalLabel6 = new javax.swing.JLabel();
         TotalLabel7 = new javax.swing.JLabel();
         TotalLabel8 = new javax.swing.JLabel();
         TotalLabel9 = new javax.swing.JLabel();
-        TotalLabel10 = new javax.swing.JLabel();
-        TotalLabel11 = new javax.swing.JLabel();
         placeOrderButton = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        TotalLabel12 = new javax.swing.JLabel();
-        TotalLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -64,20 +68,20 @@ public class ManageInvoice extends javax.swing.JFrame {
 
         CartTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "No.", "Book Name", "Quantity", "Price", "Sub Total"
+                "Book Name", "Quantity", "Price", "Sub Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -141,7 +145,7 @@ public class ManageInvoice extends javax.swing.JFrame {
         HomePage.setBackground(new java.awt.Color(0, 140, 214));
         HomePage.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         HomePage.setForeground(new java.awt.Color(0, 140, 214));
-        HomePage.setText("Invoice");
+        HomePage.setText("Sales");
 
         lblGreenStrip.setBackground(new java.awt.Color(62, 164, 52));
 
@@ -166,27 +170,19 @@ public class ManageInvoice extends javax.swing.JFrame {
 
         TotalLabel2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         TotalLabel2.setForeground(new java.awt.Color(0, 100, 0));
-        TotalLabel2.setText("InvoiceID");
+        TotalLabel2.setText("salesID");
 
         TotalLabel3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         TotalLabel3.setForeground(new java.awt.Color(0, 100, 0));
-        TotalLabel3.setText("Invoice: ");
+        TotalLabel3.setText("Sales ID:");
 
         TotalLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         TotalLabel4.setForeground(new java.awt.Color(0, 100, 0));
-        TotalLabel4.setText("Invoice Date: ");
-
-        TotalLabel5.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        TotalLabel5.setForeground(new java.awt.Color(0, 100, 0));
-        TotalLabel5.setText("Due Date: ");
-
-        TotalLabel6.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        TotalLabel6.setForeground(new java.awt.Color(0, 100, 0));
-        TotalLabel6.setText("due Date");
+        TotalLabel4.setText("Sales Date:");
 
         TotalLabel7.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         TotalLabel7.setForeground(new java.awt.Color(0, 100, 0));
-        TotalLabel7.setText("invoice Date");
+        TotalLabel7.setText("salesDate");
 
         TotalLabel8.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         TotalLabel8.setForeground(new java.awt.Color(0, 100, 0));
@@ -195,14 +191,6 @@ public class ManageInvoice extends javax.swing.JFrame {
         TotalLabel9.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         TotalLabel9.setForeground(new java.awt.Color(0, 100, 0));
         TotalLabel9.setText("00.0");
-
-        TotalLabel10.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        TotalLabel10.setForeground(new java.awt.Color(0, 100, 0));
-        TotalLabel10.setText("Amount Due (RM)");
-
-        TotalLabel11.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        TotalLabel11.setForeground(new java.awt.Color(0, 100, 0));
-        TotalLabel11.setText("00.0");
 
         placeOrderButton.setBackground(new java.awt.Color(0, 140, 214));
         placeOrderButton.setPreferredSize(new java.awt.Dimension(136, 33));
@@ -226,29 +214,21 @@ public class ManageInvoice extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Make Payment");
+        jLabel4.setText("Generate Bill");
 
         javax.swing.GroupLayout placeOrderButtonLayout = new javax.swing.GroupLayout(placeOrderButton);
         placeOrderButton.setLayout(placeOrderButtonLayout);
         placeOrderButtonLayout.setHorizontalGroup(
             placeOrderButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(placeOrderButtonLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(56, 56, 56)
                 .addComponent(jLabel4)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         placeOrderButtonLayout.setVerticalGroup(
             placeOrderButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
-
-        TotalLabel12.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        TotalLabel12.setForeground(new java.awt.Color(0, 100, 0));
-        TotalLabel12.setText("Terms and Condition");
-
-        TotalLabel13.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        TotalLabel13.setForeground(new java.awt.Color(0, 100, 0));
-        TotalLabel13.setText("Please pay the invoice within 14 days.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -275,25 +255,13 @@ public class ManageInvoice extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(TotalLabel4)
-                                .addComponent(TotalLabel3)
-                                .addComponent(TotalLabel5))
+                                .addComponent(TotalLabel3))
                             .addGap(26, 26, 26)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(TotalLabel2)
-                                .addComponent(TotalLabel7)
-                                .addComponent(TotalLabel6)))
+                                .addComponent(TotalLabel7)))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 674, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(TotalLabel13)
-                                .addComponent(TotalLabel12))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(placeOrderButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(TotalLabel10)
-                                    .addGap(60, 60, 60)
-                                    .addComponent(TotalLabel11))))))
+                        .addComponent(placeOrderButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -316,29 +284,15 @@ public class ManageInvoice extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TotalLabel7)
-                            .addComponent(TotalLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TotalLabel5)
-                            .addComponent(TotalLabel6))))
-                .addGap(13, 13, 13)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TotalLabel4))))
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TotalLabel8)
-                            .addComponent(TotalLabel9))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TotalLabel10)
-                            .addComponent(TotalLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(TotalLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TotalLabel13)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TotalLabel8)
+                    .addComponent(TotalLabel9))
+                .addGap(43, 43, 43)
+                .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 31, Short.MAX_VALUE))
         );
 
@@ -386,7 +340,7 @@ public class ManageInvoice extends javax.swing.JFrame {
     }//GEN-LAST:event_homeButtonMouseReleased
 
     private void placeOrderButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeOrderButtonMouseClicked
-
+       
     }//GEN-LAST:event_placeOrderButtonMouseClicked
 
     private void placeOrderButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeOrderButtonMouseEntered
@@ -422,20 +376,23 @@ public class ManageInvoice extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManageInvoice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageSales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManageInvoice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageSales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManageInvoice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageSales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManageInvoice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManageSales.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageInvoice().setVisible(true);
+                new ManageSales().setVisible(true);
             }
         });
     }
@@ -445,15 +402,9 @@ public class ManageInvoice extends javax.swing.JFrame {
     private javax.swing.JLabel HomePage;
     private javax.swing.JLabel TotalLabel;
     private javax.swing.JLabel TotalLabel1;
-    private javax.swing.JLabel TotalLabel10;
-    private javax.swing.JLabel TotalLabel11;
-    private javax.swing.JLabel TotalLabel12;
-    private javax.swing.JLabel TotalLabel13;
     private javax.swing.JLabel TotalLabel2;
     private javax.swing.JLabel TotalLabel3;
     private javax.swing.JLabel TotalLabel4;
-    private javax.swing.JLabel TotalLabel5;
-    private javax.swing.JLabel TotalLabel6;
     private javax.swing.JLabel TotalLabel7;
     private javax.swing.JLabel TotalLabel8;
     private javax.swing.JLabel TotalLabel9;
