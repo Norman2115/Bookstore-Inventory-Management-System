@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author Liew Wen Yen
  */
 public class SalesUtils {
-    public static String billPath = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Customer Bills";
+    public static String billPath = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "Customer Bills"+ File.separator ;
 
     static {
         // Create the directory if it doesn't exist
@@ -33,24 +33,14 @@ public class SalesUtils {
             }
         }
     }
-    public static void savePdfToDatabase(File pdfFile) throws SQLException, IOException {
-    FileInputStream fis = null;
-    Connection con = null;
-    PreparedStatement ps = null;
-    
-    try {
-        // Open input stream for reading the PDF file
-        fis = new FileInputStream(pdfFile);
+   public static void savePdfToDatabase(File pdfFile) throws SQLException, IOException {
+    try (Connection con = DatabaseManager.getConnection();){
+         FileInputStream fis = new FileInputStream(pdfFile);
+         PreparedStatement ps = con.prepareStatement("INSERT INTO pdf_files (file_name, file_data) VALUES (?, ?)") ;
 
-        // Get database connection
-        con = DatabaseManager.getConnection();
-
-        // Prepare the SQL insert statement
-        String insertQuery = "INSERT INTO pdf_files (file_name, file_data) VALUES (?, ?)";
-        ps = con.prepareStatement(insertQuery);
         ps.setString(1, pdfFile.getName()); // Set the file name
         ps.setBinaryStream(2, fis, (int) pdfFile.length()); // Set the file data as binary stream
-       
+
         // Execute the insert statement
         int rowsAffected = ps.executeUpdate();
 
@@ -59,23 +49,10 @@ public class SalesUtils {
             JOptionPane.showMessageDialog(null, "PDF file successfully saved to the database.");
         } else {
             JOptionPane.showMessageDialog(null, "Failed to save PDF file to the database.");
-
         }
     } catch (SQLException | IOException e) {
-
-        e.printStackTrace(); 
-        throw e; 
-    } finally {
-        // Close resources in finally block to ensure they are closed even if an exception occurs
-        if (ps != null) {
-            ps.close();
-        }
-        if (con != null) {
-            con.close();
-        }
-        if (fis != null) {
-            fis.close();
-        }
+        e.printStackTrace();
+        throw e;
     }
 }
 

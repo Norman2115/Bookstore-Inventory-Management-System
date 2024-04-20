@@ -139,54 +139,84 @@ public class SalesData {
 
     }
 
-    public void generateBill() throws FileNotFoundException, DocumentException, IOException, SQLException {
-        String filePath = SalesUtils.billPath + File.separator + salesID + ".pdf";
+    public void generateBill(String salesId) throws FileNotFoundException, DocumentException, IOException, SQLException {
+        Double salesTotalPrice = 0.0;
+        String fileName = salesId + ".pdf";
+        String filePath = SalesUtils.billPath + File.separator + fileName;
 
-        Document document = new Document(PageSize.A4);
+        // Check if the file already exists
+        File existingFile = new File(filePath);
+        int count = 1;
+        while (existingFile.exists()) {
+            fileName = salesId + "(" + count + ").pdf"; // Append a suffix to make the filename unique
+            filePath = SalesUtils.billPath + File.separator + fileName;
+            existingFile = new File(filePath);
+            count++;
+        }
+
+        Document document = new Document(PageSize.A5);
         PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
         document.open();
         // Add header
         PdfPTable header = new PdfPTable(1);
+        // Add blue cell
         PdfPCell blueCell = new PdfPCell(new Phrase(""));
         blueCell.setBackgroundColor(new BaseColor(0, 140, 214));
         blueCell.setBorderWidth(0);
-        blueCell.setPadding(12);
+        blueCell.setPadding(10);
         header.addCell(blueCell);
 
+        // Add title cell
         PdfPCell titleCell = new PdfPCell(new Phrase("Family Book Store"));
         titleCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         titleCell.setBorderWidth(0);
-        titleCell.setPadding(10);
+        titleCell.setPadding(6);
         header.addCell(titleCell);
 
+        // Add green cell
         PdfPCell greenCell = new PdfPCell();
         greenCell.setBackgroundColor(new BaseColor(62, 164, 52));
         greenCell.setBorderWidth(0);
-        greenCell.setFixedHeight(10);
+        greenCell.setFixedHeight(7);
         header.addCell(greenCell);
 
         document.add(header);
 
         // Create table with one column
-        // Create table with one column and no border
         PdfPTable salesInfoTable = new PdfPTable(1);
         salesInfoTable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
-        // Add each line of sales information as a separate cell without borders
-        PdfPCell salesIdCell = new PdfPCell(new Phrase("\n\nSales ID: " + getSalesID()));
-        salesIdCell.setBorder(Rectangle.NO_BORDER);
-        salesInfoTable.addCell(salesIdCell);
+        try (Connection con = DatabaseManager.getConnection()) {
+            String sql = "SELECT c.name, u.full_name, sd.sales_id, sd.sales_date, sd.total_price "
+                    + "FROM sales_detail sd "
+                    + "JOIN user u ON sd.salesperson_id = u.user_id "
+                    + "JOIN customer c ON sd.customer_id = c.customer_id "
+                    + "WHERE sd.sales_id = ?";
+            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                pstmt.setString(1, salesId);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        salesInfoTable.setSpacingBefore(20);
+                        salesInfoTable.addCell(new Phrase("Sales ID     : " + rs.getString("sales_id")));
+                        salesInfoTable.addCell(new Phrase("Date           : " + rs.getString("sales_date")));
+                        salesInfoTable.addCell(new Phrase("\nBill To        : " + rs.getString("name")));
+                        salesInfoTable.addCell(new Phrase("Bill From    : " + rs.getString("full_name")));
+                        salesTotalPrice = rs.getDouble("total_price");
+                        salesInfoTable.setSpacingAfter(20);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
 
-        PdfPCell dateCell = new PdfPCell(new Phrase("Date: " + getOrderDate()));
-        dateCell.setBorder(Rectangle.NO_BORDER);
-        salesInfoTable.addCell(dateCell);
-        salesInfoTable.setSpacingAfter(20); // Adjust the space as needed
-        // Add the table to the document
         document.add(salesInfoTable);
 
         // Add table header
         PdfPTable tb1 = new PdfPTable(4);
+        // Add table headers with background color
+        // Add table headers with background color
         PdfPCell nameCell = new PdfPCell(new Phrase("Name"));
         PdfPCell priceCell = new PdfPCell(new Phrase("Quantity"));
         PdfPCell quantityCell = new PdfPCell(new Phrase("Price per Unit(RM)"));
@@ -214,7 +244,7 @@ public class SalesData {
                     + "JOIN customer c ON sd.customer_id = c.customer_id " // Join with customer table
                     + "WHERE sb.sales_id = ?";
             try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-                pstmt.setString(1, getSalesID());
+                pstmt.setString(1, salesId);
                 try (ResultSet rs = pstmt.executeQuery()) {
                     while (rs.next()) {
                         tb1.addCell(rs.getString("product_name"));
@@ -230,37 +260,22 @@ public class SalesData {
 
         document.add(tb1);
 
-        // Create table with one column and no border
+        // Create table with one column and no border for total price
         PdfPTable totalPriceTable = new PdfPTable(1);
         totalPriceTable.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
 
-// Add total price as a cell in the table with no border
-        PdfPCell cell = new PdfPCell(new Phrase("\n\nTotal Price: RM " + getTotalPrice()));
-        cell.setBorder(PdfPCell.NO_BORDER);
-        totalPriceTable.addCell(cell);
+        // Add total price as a cell in the table with no border
+        PdfPCell totalCell = new PdfPCell(new Phrase("\n\nTotal Price : RM " + salesTotalPrice));
+        totalCell.setBorder(PdfPCell.NO_BORDER);
+        totalPriceTable.addCell(totalCell);
 
-// Add the table to the document
+        // Add the table to the document
         document.add(totalPriceTable);
         document.close();
 
         // Open the generated PDF
-        File file = new File(filePath);
-        if (file.exists()) {
-            try {
-                Desktop.getDesktop().open(file);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("PDF file not found: " + filePath);
-        }
+        OpenPdf.OpenByPath(filePath);
 
-        // Save the PDF to the database
-        try {
-            SalesUtils.savePdfToDatabase(file);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        setNextSalesID();
     }
+
 }
