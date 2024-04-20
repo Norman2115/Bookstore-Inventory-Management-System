@@ -121,6 +121,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
 
         background.setBackground(new java.awt.Color(253, 252, 248));
         background.setPreferredSize(new java.awt.Dimension(942, 630));
+        background.setRequestFocusEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
         jLabel1.setText("<html><font color='#3EA434'>EDIT</font> <font color='#008CD6'>PRODUCT</font></html>");

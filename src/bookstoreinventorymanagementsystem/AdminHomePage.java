@@ -19,7 +19,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     public AdminHomePage(UserData userData) {
         initComponents();
         displayPanel.removeAll();
-        welcomeText text = new welcomeText();
+        Dashboard text = new Dashboard();
         displayPanel.add(text).setVisible(true);
 
         this.userData = userData;
@@ -439,7 +439,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addGap(43, 43, 43))
         );
 
-        displayPanel.setBackground(new java.awt.Color(204, 204, 204));
+        displayPanel.setBackground(new java.awt.Color(253, 252, 248));
         displayPanel.setPreferredSize(new java.awt.Dimension(942, 630));
 
         javax.swing.GroupLayout displayPanelLayout = new javax.swing.GroupLayout(displayPanel);
