@@ -24,8 +24,8 @@ public class RestockPage extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         BookData[] bookData;
-        bookData = bookDAO.readData("product","book_title");
-        displayRow(bookData);
+        // bookData = bookDAO.readData("product","book_title");
+        // displayRow(bookData);
         displaySideComponents();
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
@@ -33,13 +33,13 @@ public class RestockPage extends javax.swing.JInternalFrame {
     
     private void displaySideComponents(){
         BookData[] bookData;
-        bookData = bookDAO.readData("product","book_title");
-        int outOfStock  = bookDAO.getLength("product","stock_quantity = 0");
-        int lowStock  = bookDAO.getLength("product","stock_quantity < "+lowStockValue);
-        int amountOfProduct  = bookDAO.getLength("product");
-        outOfStockLabel.setText(String.valueOf(outOfStock));
-        lowStockLabel.setText(String.valueOf(lowStock));
-        amountProductLabel.setText(String.valueOf(amountOfProduct));
+//        bookData = bookDAO.readData("product","book_title");
+//        int outOfStock  = bookDAO.getLength("product","stock_quantity = 0");
+//        int lowStock  = bookDAO.getLength("product","stock_quantity < "+lowStockValue);
+//        int amountOfProduct  = bookDAO.getLength("product");
+//        outOfStockLabel.setText(String.valueOf(outOfStock));
+//        lowStockLabel.setText(String.valueOf(lowStock));
+//        amountProductLabel.setText(String.valueOf(amountOfProduct));
     }
     
     private void displayRow(BookData[] productData){
@@ -87,8 +87,8 @@ public class RestockPage extends javax.swing.JInternalFrame {
         BookData[] bookData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        bookData = bookDAO.readData("product",condition,searchBy);
-        displayRow(bookData);
+        // bookData = bookDAO.readData("product",condition,searchBy);
+        // displayRow(bookData);
     }
     
     private boolean restockIsValid(){
@@ -105,10 +105,10 @@ public class RestockPage extends javax.swing.JInternalFrame {
     private void highlightRow(){
         BookData[] bookData;
         String condition = "stock_quantity = 0";
-        bookData = bookDAO.readData("product",condition,"stock_quantity");
-        for(int i = 0;i<bookData.length;i++){
-            
-        }
+        // bookData = bookDAO.readData("product",condition,"stock_quantity");
+//        for(int i = 0;i<bookData.length;i++){
+//            
+//        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -582,9 +582,9 @@ public class RestockPage extends javax.swing.JInternalFrame {
         if (restockIsValid()&&!restockIsEmpty()){
             BookData[] productData;
             String condition = "isbn" + " = " +"\'"+isbn+"\'";
-            productData = bookDAO.readData("product",condition,"isbn");
-            productData[0].setStockQuantity(productData[0].getStockQuantity()+restock);
-            bookDAO.restockUpdate(productData[0]);
+            // productData = bookDAO.readData("product",condition,"isbn");
+            // productData[0].setStockQuantity(productData[0].getStockQuantity()+restock);
+            // bookDAO.restockUpdate(productData[0]);
         }
         selectData();
         displaySideComponents();
@@ -621,8 +621,8 @@ public class RestockPage extends javax.swing.JInternalFrame {
             long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
             BookData[] productData;
             String condition = "isbn" + " = " +"\'"+isbn+"\'";
-            productData = bookDAO.readData("product",condition,"isbn");
-            isbnTextField.setText(String.valueOf(productData[0].getISBN()));
+            // productData = bookDAO.readData("product",condition,"isbn");
+            // isbnTextField.setText(String.valueOf(productData[0].getISBN()));
         }
     }//GEN-LAST:event_displayTableMouseClicked
 

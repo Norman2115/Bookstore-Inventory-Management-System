@@ -66,7 +66,7 @@ public class InvoiceDetailPage extends javax.swing.JInternalFrame {
     private String[][] readDataFromDatabase(String invoiceID){
         try (Connection connection = DatabaseManager.getConnection()){
             int i = 0;
-            int rowNumber = BookDAO.getLength("sales_book s INNER JOIN book b ON s.book_id = b.book_id","sales_id = \'"+invoiceID+"\' ORDER BY s.book_id");
+            int rowNumber = BookDAO.getRowCount("sales_book s INNER JOIN book b ON s.book_id = b.book_id","sales_id = \'"+invoiceID+"\' ORDER BY s.book_id");
                 String[][] data = new String[rowNumber][6];//0-book_id;1-quantity;2-subtotal;3-book_title;4-isbn;5-unit_price by calculate
             for (i = 0;i<rowNumber;i++){
                 data[i][0] = "";
@@ -324,7 +324,7 @@ public class InvoiceDetailPage extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -338,7 +338,7 @@ public class InvoiceDetailPage extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 

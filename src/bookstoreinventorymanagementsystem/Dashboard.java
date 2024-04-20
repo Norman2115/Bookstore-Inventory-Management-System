@@ -5,6 +5,10 @@
 package bookstoreinventorymanagementsystem;
 
 import java.awt.Color;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
@@ -12,38 +16,53 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  * @author User
  */
 public class Dashboard extends javax.swing.JInternalFrame {
-    private int lowStockValue = 10;
+    private final int lowStockValue = 10;
+
     public Dashboard() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        
-       pieChart.clearData();
-       showPieChart();
+
+        pieChart.clearData();
+        showPieChart();
     }
-    private void  showPieChart(){
+
+    private void showPieChart() {
         pieChart.clearData();
         BookData[] bookData;
-        bookData = BookDAO.readData("product","book_title");
-        int outOfStock  = BookDAO.getLength("product","stock_quantity = 0");
-        int lowStock  = BookDAO.getLength("product","stock_quantity < "+lowStockValue);
-        int amountOfProduct  = BookDAO.getLength("product");
-        pieChart.addData(new ModelPieChart("Out Of Stock",outOfStock,getColour(0)));
-        pieChart.addData(new ModelPieChart("Low Stock",lowStock-outOfStock,getColour(1)));
-        pieChart.addData(new ModelPieChart("Sufficient Stock",amountOfProduct-lowStock,getColour(2)));
+        try {
+            bookData = BookDAO.readBookDataFromDatabase("product", "book_title");
+            int outOfStock = BookDAO.getRowCount("product", "stock_quantity = 0");
+            int lowStock = BookDAO.getRowCount("product", "stock_quantity < " + lowStockValue);
+            int amountOfProduct = BookDAO.getRowCount("product");
+            pieChart.addData(new ModelPieChart("Out Of Stock", outOfStock, getColour(0)));
+            pieChart.addData(new ModelPieChart("Low Stock", lowStock - outOfStock, getColour(1)));
+            pieChart.addData(new ModelPieChart("Sufficient Stock", amountOfProduct - lowStock, getColour(2)));
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
     private Color getColour(int i) {
-        switch (i){
-            case 0:
+        switch (i) {
+            case 0 -> {
                 return ColorManager.MEDIUM_BLUE;
-            case 1:
+            }
+            case 1 -> {
                 return ColorManager.MEDIUM_GREEN;
-            case 2:
+            }
+            case 2 -> {
                 return ColorManager.MEDIUM_RED;
+            }
         }
         return null;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

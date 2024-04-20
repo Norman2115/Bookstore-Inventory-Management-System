@@ -1,6 +1,7 @@
 package bookstoreinventorymanagementsystem;
 
-import javax.swing.JLayeredPane;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -9,11 +10,10 @@ import javax.swing.JLayeredPane;
 public class AdminHomePage extends javax.swing.JFrame {
 
     private final UserData userData;
-    private static final EditProductInfoPage EDIT_PRODUCT_INFO = new EditProductInfoPage();
-    private static final BookDetailPage PRODUCT_DETAIL_PAGE = new BookDetailPage();
-    private static final InvoiceDetailPage INVOICE_DETAIL_PAGE = new InvoiceDetailPage();
+    
     /**
      * Creates new form Admin_homepage
+     *
      * @param userData
      */
     public AdminHomePage(UserData userData) {
@@ -23,23 +23,42 @@ public class AdminHomePage extends javax.swing.JFrame {
         displayPanel.add(text).setVisible(true);
 
         this.userData = userData;
+
+        ImageIcon icon = new ImageIcon(userData.getProfilePicture());
+        Image image = icon.getImage();
+        Image scaledImage = image.getScaledInstance(profilePictureLabel.getWidth(),
+                profilePictureLabel.getHeight(), Image.SCALE_SMOOTH);
+        profilePictureLabel.setIcon(new ImageIcon(scaledImage));
+        profilePictureLabel.revalidate();
+        profilePictureLabel.repaint();
+    }
+
+    public static void createEditProductViewPage() {
+        displayPanel.removeAll();
+        EditProductViewPage editProductViewPage = new EditProductViewPage();
+        displayPanel.add(editProductViewPage).setVisible(true);
+    }
+
+    public static void createEditProductInfoPage(BookData bookData) {
+        displayPanel.removeAll();
+        EditProductInfoPage editProductInfoPage = new EditProductInfoPage();
+        displayPanel.add(editProductInfoPage).setVisible(true);
+        editProductInfoPage.fillProductInfo(bookData);
+    }
+
+    public static void createProductDetailPage(BookData bookData) {
+//        displayPanel.removeAll();
+//        // BookDetailPage bookDetailPage = new BookDetailPage();
+//        displayPanel.add(bookDetailPage).setVisible(true);
+//        bookDetailPage.fillProductInfo(bookData);
+    }
+
+    public static void createViewProductPage() {
+        displayPanel.removeAll();
+        ViewProductPage viewProductPage = new ViewProductPage();
+        displayPanel.add(viewProductPage).setVisible(true);
     }
     
-    public static void createEditProductInfoPage(BookData productData){
-        displayPanel.add(EDIT_PRODUCT_INFO,JLayeredPane.DEFAULT_LAYER,0);
-        EDIT_PRODUCT_INFO.setVisible(true);
-        EDIT_PRODUCT_INFO.fillProductInfo(productData);
-    }
-    public static void createProductDetailPage(BookData productData){
-        displayPanel.add(PRODUCT_DETAIL_PAGE,JLayeredPane.DEFAULT_LAYER,0);
-        PRODUCT_DETAIL_PAGE.setVisible(true);
-        PRODUCT_DETAIL_PAGE.fillProductInfo(productData);
-    }
-    public static void createInvoiceDetailPage(String[] invoiceData){
-        displayPanel.add(INVOICE_DETAIL_PAGE,JLayeredPane.DEFAULT_LAYER,0);
-        INVOICE_DETAIL_PAGE.setVisible(true);
-        INVOICE_DETAIL_PAGE.fillData(invoiceData);
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,7 +84,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         logoutLable = new javax.swing.JLabel();
         viewProductButton = new javax.swing.JPanel();
         viewProductLable = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        profilePicturePanel = new javax.swing.JPanel();
         profilePictureLabel = new javax.swing.JLabel();
         displayPanel = new javax.swing.JDesktopPane();
 
@@ -381,22 +400,22 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.setBackground(new java.awt.Color(0, 140, 214));
+        profilePicturePanel.setBackground(new java.awt.Color(0, 140, 214));
 
         profilePictureLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout profilePicturePanelLayout = new javax.swing.GroupLayout(profilePicturePanel);
+        profilePicturePanel.setLayout(profilePicturePanelLayout);
+        profilePicturePanelLayout.setHorizontalGroup(
+            profilePicturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(profilePicturePanelLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(profilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        profilePicturePanelLayout.setVerticalGroup(
+            profilePicturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(profilePicturePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(profilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -414,14 +433,14 @@ public class AdminHomePage extends javax.swing.JFrame {
                     .addComponent(restockButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(logoutButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(addProductButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(profilePicturePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(viewProductButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(invoiceButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         sideNavBarLayout.setVerticalGroup(
             sideNavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sideNavBarLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(profilePicturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(viewProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -697,10 +716,10 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JLabel editProductLable;
     private javax.swing.JPanel invoiceButton;
     private javax.swing.JLabel invoiceLable;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel logoutButton;
     private javax.swing.JLabel logoutLable;
     private javax.swing.JLabel profilePictureLabel;
+    private javax.swing.JPanel profilePicturePanel;
     private javax.swing.JPanel restockButton;
     private javax.swing.JLabel restockLable;
     private javax.swing.JPanel sideNavBar;
