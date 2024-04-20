@@ -155,7 +155,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         
         if (formatValid.isValid()&&unique.isValid()){
             long isbnInInteger = Long.parseLong(isbn.getText());
-            productData.setISBN(isbnInInteger);
+            // productData.setISBN(isbnInInteger);
             UIUtils.resetFieldState(isbn);
             isbnErrorLabel.setForeground(ColorManager.WHITE);
             return true;
@@ -838,7 +838,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         {
             productData.setGenre(genre.getSelectedItem().toString());
             productData.setLanguage(language.getSelectedItem().toString());
-            productData.saveBookDataToDatabase();
+            // productData.saveBookDataToDatabase();
             reset();
         }
     }//GEN-LAST:event_addProductButtonMouseClicked

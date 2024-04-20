@@ -16,8 +16,8 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         bi.setNorthPane(null);
         
         BookData[] productData;
-        productData = bookDAO.readData("product","book_title");
-        displayRow(productData);
+        // productData = bookDAO.readData("product","book_title");
+        // displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
     }
@@ -284,8 +284,8 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        // productData = bookDAO.readData("product",condition,searchBy);
+        // displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
 
     
@@ -295,8 +295,8 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
             long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
             BookData[] productData;
             String condition = "isbn" + " = " +"\'"+isbn+"\'";
-            productData = bookDAO.readData("product",condition,"isbn");
-            AdminHomePage.createEditProductInfoPage(productData[0]);
+            // productData = bookDAO.readData("product",condition,"isbn");
+            // AdminHomePage.createEditProductInfoPage(productData[0]);
         }
     }//GEN-LAST:event_displayTableMouseClicked
 

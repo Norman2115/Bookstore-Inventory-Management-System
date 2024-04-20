@@ -22,8 +22,8 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
         bi.setNorthPane(null);
         
         BookData[] productData;
-        productData = BookDAO.readData("product","book_title");
-        displayRow(productData);
+        // productData = BookDAO.readData("product","book_title");
+        // displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
         // jTable1.getColumnModel().getColumn(0).setPreferredWidth(200);
@@ -264,16 +264,16 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
         BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = BookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        // productData = BookDAO.readData("product",condition,searchBy);
+        // displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = BookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        // roductData = BookDAO.readData("product",condition,searchBy);
+        // displayRow(productData);
     }//GEN-LAST:event_searchButtonMouseClicked
 
     private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
@@ -282,8 +282,8 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
             long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
             BookData[] productData;
             String condition = "isbn" + " = " +"\'"+isbn+"\'";
-            productData = BookDAO.readData("product",condition,"isbn");
-            AdminHomePage.createProductDetailPage(productData[0]);
+            // productData = BookDAO.readData("product",condition,"isbn");
+            // AdminHomePage.createProductDetailPage(productData[0]);
         }
     }//GEN-LAST:event_displayTableMouseClicked
 

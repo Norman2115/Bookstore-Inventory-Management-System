@@ -225,7 +225,7 @@ public class EditProductInfoPage extends javax.swing.JInternalFrame {
         
         if (formatValid.isValid()&&unique.isValid()){
             long isbnInInteger = Long.parseLong(isbn.getText());
-            productData.setISBN(isbnInInteger);
+            // productData.setISBN(isbnInInteger);
             UIUtils.resetFieldState(isbn);
             isbnErrorLabel.setForeground(ColorManager.WHITE);
             return true;
@@ -907,7 +907,7 @@ public class EditProductInfoPage extends javax.swing.JInternalFrame {
             productData.setBookTitle(bookTitle.getText());
             productData.setGenre(genre.getSelectedItem().toString());
             productData.setLanguage(language.getSelectedItem().toString());
-            productData.setISBN(Long.parseLong(isbn.getText()));
+            // productData.setISBN(Long.parseLong(isbn.getText()));
             productData.setAuthor(author.getText());
             productData.setPublisher(publisher.getText());
             productData.setPublicationYear(Integer.parseInt(year.getText()));

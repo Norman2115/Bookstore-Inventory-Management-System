@@ -25,8 +25,8 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         bi.setNorthPane(null);
         
         BookData[] productData;
-        productData = bookDAO.readData("product","book_title");
-        displayRow(productData);
+        // productData = bookDAO.readData("product","book_title");
+        // displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
     }
@@ -343,8 +343,8 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        // productData = bookDAO.readData("product",condition,searchBy);
+        // displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void displayTableInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_displayTableInputMethodTextChanged
@@ -374,8 +374,8 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
             UIUtils.displaySuccessMessage("Delete successfull");
             
             BookData[] productData;
-            productData = bookDAO.readData("product","book_title");
-            displayRow(productData);
+            // productData = bookDAO.readData("product","book_title");
+            // displayRow(productData);
         }
     }//GEN-LAST:event_deleteButtonMouseClicked
 
@@ -399,8 +399,8 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        // productData = bookDAO.readData("product",condition,searchBy);
+        // displayRow(productData);
     }//GEN-LAST:event_searchButtonMouseClicked
 
 
