@@ -270,6 +270,11 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
         displayTable.setSelectionForeground(new java.awt.Color(253, 252, 248));
         displayTable.setShowGrid(false);
         displayTable.getTableHeader().setReorderingAllowed(false);
+        displayTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                displayTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(displayTable);
 
         searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Invoice ID", "Customer", "Salesperson  ID", "Salesperson", "Date" }));
@@ -359,6 +364,19 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
         displayRow(readDataFromDatabase(condition,searchBy));
     }//GEN-LAST:event_searchButtonMouseClicked
+
+    private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
+        if (evt.getClickCount() == 2){
+            int selectRow = displayTable.getSelectedRow();
+            System.out.println("Selected row  "+selectRow);
+            String[] invoiceData  = new String[4];
+            invoiceData[0] =  (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 0);
+            invoiceData[1] =  (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 4);
+            invoiceData[2] =  (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 3);
+            invoiceData[3] =  (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 2);
+            AdminHomePage.createInvoiceDetailPage(invoiceData);
+        }
+    }//GEN-LAST:event_displayTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
