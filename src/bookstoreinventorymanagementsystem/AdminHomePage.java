@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 public class AdminHomePage extends javax.swing.JFrame {
 
     private final UserData userData;
-    
+
     /**
      * Creates new form Admin_homepage
      *
@@ -47,10 +47,10 @@ public class AdminHomePage extends javax.swing.JFrame {
     }
 
     public static void createProductDetailPage(BookData bookData) {
-//        displayPanel.removeAll();
-//        // BookDetailPage bookDetailPage = new BookDetailPage();
-//        displayPanel.add(bookDetailPage).setVisible(true);
-//        bookDetailPage.fillProductInfo(bookData);
+        displayPanel.removeAll();
+        BookDetailPage bookDetailPage = new BookDetailPage();
+        displayPanel.add(bookDetailPage).setVisible(true);
+        bookDetailPage.fillProductInfo(bookData);
     }
 
     public static void createViewProductPage() {
@@ -58,7 +58,19 @@ public class AdminHomePage extends javax.swing.JFrame {
         ViewProductPage viewProductPage = new ViewProductPage();
         displayPanel.add(viewProductPage).setVisible(true);
     }
-    
+
+    public static void createInvoiceDetailPage(String[] invoiceData) {
+        displayPanel.removeAll();
+        InvoiceDetailPage invoiceDetailPage = new InvoiceDetailPage();
+        displayPanel.add(invoiceDetailPage).setVisible(true);
+    }
+
+    public static void createViewInvoicePage() {
+        displayPanel.removeAll();
+        ViewInvoicePage viewInvoicePage = new ViewInvoicePage();
+        displayPanel.add(viewInvoicePage).setVisible(true);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

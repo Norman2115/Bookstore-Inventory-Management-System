@@ -375,7 +375,7 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
             invoiceData[1] = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 4);
             invoiceData[2] = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 3);
             invoiceData[3] = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 2);
-            // AdminHomePage.createInvoiceDetailPage(invoiceData);
+            AdminHomePage.createInvoiceDetailPage(invoiceData);
         }
     }//GEN-LAST:event_displayTableMouseClicked
 

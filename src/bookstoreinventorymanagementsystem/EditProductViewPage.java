@@ -18,7 +18,6 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-
         try {
             BookData[] bookData = BookDAO.readBookDataFromDatabase("book", "book_title");
             displayRow(bookData);
@@ -90,7 +89,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
         searchType = new javax.swing.JComboBox<>();
-        searchButton = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
         displayPanel.setBackground(new java.awt.Color(253, 252, 248));
@@ -129,7 +128,6 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
 
         background.setBackground(new java.awt.Color(253, 252, 248));
         background.setPreferredSize(new java.awt.Dimension(942, 630));
-        background.setRequestFocusEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
         jLabel1.setText("<html><font color='#3EA434'>EDIT</font> <font color='#008CD6'>PRODUCT</font></html>");
@@ -199,19 +197,19 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         displayTable.setShowGrid(false);
         displayTable.getTableHeader().setResizingAllowed(false);
         displayTable.getTableHeader().setReorderingAllowed(false);
+        displayTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                displayTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(displayTable);
 
         searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
         searchType.setToolTipText("");
 
-        searchButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_icon.png"))); // NOI18N
-        searchButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                searchButtonMouseClicked(evt);
-            }
-        });
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_icon.png"))); // NOI18N
+        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 60, 60));
@@ -238,7 +236,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(0, 0, 0)
-                                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(searchType, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -257,7 +255,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                                 .addGap(36, 36, 36)
                                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -288,14 +286,41 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
-       
-    }//GEN-LAST:event_searchButtonMouseClicked
-
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        // TODO add your handling code here:
+        BookData[] bookDatas;
+        String searchBy = getSelection();
+        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        try {
+            bookDatas = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
+            displayRow(bookDatas);
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+            Logger.getLogger(EditProductViewPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+            Logger.getLogger(EditProductViewPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchBarActionPerformed
+
+
+    private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
+        if (evt.getClickCount() == 2) {
+            int selectRow = displayTable.getSelectedRow();
+            String isbn = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
+            BookData[] bookDatas;
+            String condition = "isbn" + " = " + "\'" + isbn + "\'";
+            try {
+                bookDatas = BookDAO.readBookDataFromDatabase("book", condition, "isbn");
+                AdminHomePage.createEditProductInfoPage(bookDatas[0]);
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+                Logger.getLogger(EditProductViewPage.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+                Logger.getLogger(EditProductViewPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_displayTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -308,10 +333,10 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField searchBar;
-    private javax.swing.JLabel searchButton;
     private javax.swing.JComboBox<String> searchType;
     // End of variables declaration//GEN-END:variables
 }

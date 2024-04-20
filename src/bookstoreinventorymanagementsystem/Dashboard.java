@@ -32,10 +32,10 @@ public class Dashboard extends javax.swing.JInternalFrame {
         pieChart.clearData();
         BookData[] bookData;
         try {
-            bookData = BookDAO.readBookDataFromDatabase("product", "book_title");
-            int outOfStock = BookDAO.getRowCount("product", "stock_quantity = 0");
-            int lowStock = BookDAO.getRowCount("product", "stock_quantity < " + lowStockValue);
-            int amountOfProduct = BookDAO.getRowCount("product");
+            bookData = BookDAO.readBookDataFromDatabase("book", "book_title");
+            int outOfStock = BookDAO.getRowCount("book", "stock_quantity = 0");
+            int lowStock = BookDAO.getRowCount("book", "stock_quantity < " + lowStockValue);
+            int amountOfProduct = BookDAO.getRowCount("book");
             pieChart.addData(new ModelPieChart("Out Of Stock", outOfStock, getColour(0)));
             pieChart.addData(new ModelPieChart("Low Stock", lowStock - outOfStock, getColour(1)));
             pieChart.addData(new ModelPieChart("Sufficient Stock", amountOfProduct - lowStock, getColour(2)));

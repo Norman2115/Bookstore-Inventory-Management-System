@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
 
 import java.sql.Connection;
@@ -347,6 +343,7 @@ public class InvoiceDetailPage extends javax.swing.JInternalFrame {
 
     private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseClicked
         this.dispose();
+        AdminHomePage.createViewInvoicePage();
     }//GEN-LAST:event_exitButtonMouseClicked
 
     private void exitButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitButtonMouseEntered
