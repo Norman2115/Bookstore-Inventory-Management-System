@@ -129,7 +129,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="searchBar" min="-2" pref="345" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                      <Component id="jLabel6" min="-2" pref="36" max="-2" attributes="0"/>
+                                      <Component id="searchButton" min="-2" pref="36" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="searchType" min="-2" pref="131" max="-2" attributes="0"/>
                                   </Group>
@@ -155,7 +155,7 @@
                                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="searchBar" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
-                                      <Component id="jLabel6" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="searchButton" alignment="0" max="32767" attributes="0"/>
                                       <Component id="jLabel5" min="-2" pref="29" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -284,7 +284,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
+        <Component class="javax.swing.JLabel" name="searchButton">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -298,6 +298,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="searchButtonMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>

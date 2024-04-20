@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class EditProductViewPage extends javax.swing.JInternalFrame {
-    private final BookDAO bookDAO = new BookDAO();
     public EditProductViewPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
@@ -16,7 +15,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         bi.setNorthPane(null);
         
         BookData[] productData;
-        productData = bookDAO.readData("product","book_title");
+        productData = BookDAO.readData("product","book_title");
         displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
@@ -83,7 +82,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         displayTable = new javax.swing.JTable();
         searchType = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
+        searchButton = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
         displayPanel.setBackground(new java.awt.Color(253, 252, 248));
@@ -201,9 +200,14 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
         searchType.setToolTipText("");
 
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_icon.png"))); // NOI18N
-        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        searchButton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_icon.png"))); // NOI18N
+        searchButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchButtonMouseClicked(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 60, 60));
@@ -230,7 +234,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(0, 0, 0)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(searchType, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -249,7 +253,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                                 .addGap(36, 36, 36)
                                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(backgroundLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -284,21 +288,28 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
+        productData = BookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
 
-    
     private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
         if (evt.getClickCount() == 2){
             int selectRow = displayTable.getSelectedRow();
             long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
             BookData[] productData;
             String condition = "isbn" + " = " +"\'"+isbn+"\'";
-            productData = bookDAO.readData("product",condition,"isbn");
+            productData = BookDAO.readData("product",condition,"isbn");
             AdminHomePage.createEditProductInfoPage(productData[0]);
         }
     }//GEN-LAST:event_displayTableMouseClicked
+
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        BookData[] productData;
+        String searchBy = getSelection();
+        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
+        productData = BookDAO.readData("product",condition,searchBy);
+        displayRow(productData);
+    }//GEN-LAST:event_searchButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -311,10 +322,10 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField searchBar;
+    private javax.swing.JLabel searchButton;
     private javax.swing.JComboBox<String> searchType;
     // End of variables declaration//GEN-END:variables
 }
