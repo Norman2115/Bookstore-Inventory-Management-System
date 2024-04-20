@@ -19,6 +19,8 @@
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/icon/hidePasswordIcon.png</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/SalespersonHomePage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/BookDAO.java</file>
+            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ManageInvoice.java</file>
+            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/CustomerDAO.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ManageDashboard.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/LoginPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ProfilePicturePage.java</file>
@@ -31,6 +33,7 @@
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ResetPasswordPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/Utils.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/NavigationStack.java</file>
+            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UserDAO.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/AdminHomePage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ViewInvoicePage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/DeleteProductPage.java</file>
