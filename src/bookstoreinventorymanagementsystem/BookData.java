@@ -1,14 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -27,11 +17,31 @@ public final class BookData {
     private int stockQuantity;
     private double unitPrice;
     private double discount;
-    private byte[] image;
+    private byte[] coverPage;
     private double netPrice;
 
     public BookData() {
-        reset();
+        setBookID(null);
+        setBookTitle(null);
+        setGenre(null);
+        setLanguage(null);
+        setAuthor(null);
+        setPublisher(null);
+        setISBN(null);
+        setCoverPage(null);
+        setPublicationYear(0);
+        setStockQuantity(0);
+        setUnitPrice(0.0);
+        setDiscount(0.0);
+        calculateNetPrice();
+    }
+
+    public String getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(String bookID) {
+        this.bookID = bookID;
     }
 
     public void setBookTitle(String bookTitle) {
@@ -74,8 +84,12 @@ public final class BookData {
         this.discount = discount;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setCoverPage(byte[] coverPage) {
+        this.coverPage = coverPage;
+    }
+
+    public void setNetPrice() {
+        netPrice = unitPrice * (1 - discount / 100);
     }
 
     public void calculateNetPrice() {
@@ -123,27 +137,10 @@ public final class BookData {
     }
 
     public double getNetPrice() {
-        calculateNetPrice();
         return netPrice;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void reset() {
-        setBookTitle(null);
-        setGenre(null);
-        setLanguage(null);
-        setAuthor(null);
-        setPublisher(null);
-        setPublicationYear(0);
-        setISBN(null);
-        setStockQuantity(0);
-        setUnitPrice(0.0);
-        setDiscount(0.0);
-        setImage(null);
-        calculateNetPrice();
-        bookID = null;
+    public byte[] getCoverPage() {
+        return coverPage;
     }
 }

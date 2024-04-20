@@ -29,7 +29,7 @@ public class BookDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return "B" + resultSet.getInt("current_user_id");
+                return "B" + resultSet.getInt("current_book_id");
             } else {
                 throw new SQLException("No book ID found in the database");
             }
@@ -49,7 +49,7 @@ public class BookDAO {
     public static void deleteBookData(String columnName, Object values[]) throws SQLException {
         try (Connection connection = DatabaseManager.getConnection()) {
             for (Object value : values) {
-                String query = "DELETE FROM product WHERE " + columnName + " = ?";
+                String query = "DELETE FROM book WHERE " + columnName + " = ?";
                 PreparedStatement statement = connection.prepareStatement(query);
 
                 statement.setObject(1, value);
@@ -63,13 +63,12 @@ public class BookDAO {
      * Updates book data in the database.
      *
      * @param bookData the BookData object containing the updated information.
-     * @param originalISBN the original ISBN of the book to be updated.
      * @throws SQLException if a database access error occurs or the SQL
      * execution fails.
      * @throws NullPointerException if any of the mandatory fields in the
      * provided BookData object are null.
      */
-    public static void updateBookData(BookData bookData, String originalISBN) throws SQLException {
+    public static void updateBookData(BookData bookData) throws SQLException {
         Objects.requireNonNull(bookData.getBookTitle(), "Title cannot be null");
         Objects.requireNonNull(bookData.getISBN(), "ISBN cannot be null");
         Objects.requireNonNull(bookData.getGenre(), "Genre cannot be null");
@@ -78,7 +77,7 @@ public class BookDAO {
         Objects.requireNonNull(bookData.getPublisher(), "Publisher cannot be null");
 
         try (Connection connection = DatabaseManager.getConnection()) {
-            String query = "UPDATE product "
+            String query = "UPDATE book "
                     + "SET book_title = ?, "
                     + "isbn = ?, "
                     + "genre = ?, "
@@ -94,8 +93,8 @@ public class BookDAO {
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, bookData.getBookTitle());
-            statement.setString(2, bookData.getGenre());
-            statement.setString(3, bookData.getISBN());
+            statement.setString(2, bookData.getISBN());
+            statement.setString(3, bookData.getGenre());
             statement.setString(4, bookData.getLanguage());
             statement.setString(5, bookData.getAuthor());
             statement.setString(6, bookData.getPublisher());
@@ -103,9 +102,9 @@ public class BookDAO {
             statement.setInt(8, bookData.getStockQuantity());
             statement.setDouble(9, bookData.getUnitPrice());
             statement.setDouble(10, bookData.getDiscount());
-            InputStream inputStream = new ByteArrayInputStream(bookData.getImage());
+            InputStream inputStream = new ByteArrayInputStream(bookData.getCoverPage());
             statement.setBlob(11, inputStream);
-            statement.setString(12, originalISBN);
+            statement.setString(12, bookData.getISBN());
 
             statement.executeUpdate();
         }
@@ -125,7 +124,7 @@ public class BookDAO {
         Objects.requireNonNull(bookData.getISBN(), "ISBN cannot be null");
 
         try (Connection connection = DatabaseManager.getConnection()) {
-            String query = "UPDATE product "
+            String query = "UPDATE book "
                     + "SET stock_quantity = ? "
                     + "WHERE isbn = ?";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -182,8 +181,8 @@ public class BookDAO {
                 productData[i].setStockQuantity(resultSet.getInt("stock_quantity"));
                 productData[i].setUnitPrice(resultSet.getDouble("unit_price"));
                 productData[i].setDiscount(resultSet.getDouble("discount"));
-                byte[] imageByte = ImageUtils.convertBlobToByteArray(resultSet.getBlob("image"));
-                productData[i].setImage(imageByte);
+                byte[] coverPage = ImageUtils.convertBlobToByteArray(resultSet.getBlob("image"));
+                productData[i].setCoverPage(coverPage);
                 i++;
             }
 
@@ -241,8 +240,8 @@ public class BookDAO {
                 productData[i].setStockQuantity(resultSet.getInt("stock_quantity"));
                 productData[i].setUnitPrice(resultSet.getDouble("unit_price"));
                 productData[i].setDiscount(resultSet.getDouble("discount"));
-                byte[] image = ImageUtils.convertBlobToByteArray(resultSet.getBlob("image"));
-                productData[i].setImage(image);
+                byte[] coverPage = ImageUtils.convertBlobToByteArray(resultSet.getBlob("image"));
+                productData[i].setCoverPage(coverPage);
                 i++;
             }
             return productData;
@@ -259,7 +258,7 @@ public class BookDAO {
      * @throws NullPointerException if any of the required fields in the book
      * data is null.
      */
-    public void saveBookDataToDatabase(BookData bookData) throws SQLException, IOException {
+    public static void saveBookDataToDatabase(BookData bookData) throws SQLException, IOException {
         Objects.requireNonNull(bookData.getBookTitle(), "Title cannot be null");
         Objects.requireNonNull(bookData.getISBN(), "ISBN cannot be null");
         Objects.requireNonNull(bookData.getGenre(), "Genre cannot be null");
@@ -290,7 +289,7 @@ public class BookDAO {
             statement.setInt(9, bookData.getStockQuantity());
             statement.setDouble(10, bookData.getUnitPrice());
             statement.setDouble(11, bookData.getDiscount());
-            InputStream inputStream = new ByteArrayInputStream(bookData.getImage());
+            InputStream inputStream = new ByteArrayInputStream(bookData.getCoverPage());
             statement.setBlob(12, inputStream);
             statement.executeUpdate();
 

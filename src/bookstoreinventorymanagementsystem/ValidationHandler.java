@@ -1,5 +1,6 @@
 package bookstoreinventorymanagementsystem;
 
+import bookstoreinventorymanagementsystem.ValidationResult;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -306,7 +307,7 @@ public class ValidationHandler {
         }
 
         if (!containsOnlySingleSpace(fullName)) {
-            return new ValidationResult(false, "Must contain at most one space and cannot start or end with space");
+            return new ValidationResult(false, "Must contain at most one space between characters");
         }
 
         return new ValidationResult(true, null);
@@ -374,7 +375,7 @@ public class ValidationHandler {
      * and does not end with a space.
      */
     public static boolean containsOnlySingleSpace(String str) {
-        return str.matches("^[a-zA-Z]+( [a-zA-z]+)*$");
+        return str.matches("^\\s*[a-zA-Z0-9]+(?:\\s[a-zA-Z0-9]+)*\\s*$");
     }
 
     /**
@@ -399,7 +400,7 @@ public class ValidationHandler {
     public static ValidationResult checkUniqueISBN(String isbn) throws SQLException {
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM product WHERE isbn = ?"
+                    "SELECT * FROM book WHERE isbn = ?"
             );
 
             statement.setString(1, isbn);
@@ -407,87 +408,74 @@ public class ValidationHandler {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return new ValidationResult(false, "ISBN already exists in the database.");
+                return new ValidationResult(false, "Already exists in the database");
             }
 
             return new ValidationResult(true, null);
         }
     }
 
-    /**
-     * Checks is the format of the string is valid as a normal format of price
-     * which is decimal and not more than two decimal place.
-     *
-     * @param str the string to check
-     * @return
-     */
-    public static ValidationResult isValidPrice(String str) {
-        String regex1 = "\\d+\\.?";
-        String regex2 = "\\d+\\.\\d{1,2}$";
-        String regex3 = "\\d+\\.\\d+";
-        if ((str.matches(regex1)|| str.matches(regex2))) {
-            return new ValidationResult(true, null);
-        }
-        if (!str.matches(regex1)&&!str.matches(regex3)) {
-            return new ValidationResult(false, "Only accepts decimal");
-        }
-        return new ValidationResult(false, "Only one or two decimal places are accepted");
+    public static boolean containsOnlyNumbersAndDecimalPoint(String str) {
+        return str.matches("[0-9]+(\\.[0-9]+)?");
     }
-    
-    /**
-     * Checks is the format of the string is valid as a normal format of discount value
-     * which is decimal, not more than two decimal place and not more than 100.0.
-     * 
-     * @param str
-     * @return 
-     */
-    public static ValidationResult isValidDiscountValue(String str) {
-        ValidationResult result1 = isValidPrice(str);
-        if(result1.isValid()){
-            if(Double.parseDouble(str)>100.0){
-                return new ValidationResult(false, "Discount value should not be morethan 100");
-            }else{
-                return new ValidationResult(true, null);
-            }
+
+    public static ValidationResult validateUnitPrice(String unitPrice) {
+        if (!containsOnlyNumbersAndDecimalPoint(unitPrice)) {
+            return new ValidationResult(false, "Must contain only digits and a decimal point");
         }
-        
-        return result1;
+
+        if (Double.parseDouble(unitPrice) < 0) {
+            return new ValidationResult(false, "Value cannot be negative");
+        }
+
+        return new ValidationResult(true, null);
     }
-    
-    /**
-     * Checks is the format of the string is valid as a format of year accepted
-     * which is integer and the length must be 10 or 13
-     * @param str
-     * @return 
-     */
-    public static ValidationResult isValidYear(String str) {
-        if(containsOnlyNumbers(str)){
-            int year = Integer.parseInt(str);
-            if(year<1901||year>2155){
-                return new ValidationResult(false, "The value of year should between 1901 and 2155"); 
-            }else{
-                return new ValidationResult(true, null);
-            }
+
+    public static ValidationResult validateDiscount(String discount) {
+        if (!containsOnlyNumbersAndDecimalPoint(discount)) {
+            return new ValidationResult(false, "Must contain only digits and a decimal point");
         }
-        
-        return new ValidationResult(false, "Only digit are accepted");
+
+        if (Double.parseDouble(discount) < 0 || Double.parseDouble(discount) > 100) {
+            return new ValidationResult(false, "Must be between 0 and 100");
+        }
+
+        return new ValidationResult(true, null);
     }
-    
-    /**
-     * Checks is the format of the string is valid as a format of ISBN
-     * which is integer and the value must between 1901 and 2155
-     * @param str
-     * @return 
-     */
-    public static ValidationResult isValidISBN(String str) {
-        if(containsOnlyNumbers(str)){
-            if (str.length() == 10 || str.length() == 13){
-                return new ValidationResult(true,null);
-            }else{
-                return new ValidationResult(false, "Invalid length for ISBN");
-            }
+
+    public static ValidationResult validateYear(String year) {
+        if (!containsOnlyNumbers(year)) {
+            return new ValidationResult(false, "Must contain only digits");
         }
-        
-        return new ValidationResult(false, "Only digit are accepted");
+
+        if (Integer.parseInt(year) < 1901 || Integer.parseInt(year) > 2155) {
+            return new ValidationResult(false, "Year should between 1901 and 2155");
+        }
+
+        return new ValidationResult(true, null);
+    }
+
+    public static ValidationResult validateStockQuantity(String quantity) {
+        if (!containsOnlyNumbers(quantity)) {
+            return new ValidationResult(false, "Must contain only digits");
+        }
+
+        if (Integer.parseInt(quantity) < 0) {
+            return new ValidationResult(false, "Value cannot be negative");
+        }
+
+        return new ValidationResult(true, null);
+    }
+
+    public static ValidationResult validateISBN(String str) {
+        if (!containsOnlyNumbers(str)) {
+            return new ValidationResult(false, "Must only contain digits");
+        }
+
+        if (str.length() != 10 && str.length() != 13) {
+            return new ValidationResult(false, "Invalid length for ISBN");
+        }
+
+        return new ValidationResult(true, null);
     }
 }
