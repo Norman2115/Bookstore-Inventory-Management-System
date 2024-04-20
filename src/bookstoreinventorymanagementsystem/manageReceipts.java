@@ -41,7 +41,6 @@ public class manageReceipts extends javax.swing.JFrame {
         lblBlueStrip.setBackground(new java.awt.Color(0, 140, 214));
         lblBlueStrip.setForeground(new java.awt.Color(51, 102, 255));
         lblBlueStrip.setPreferredSize(new java.awt.Dimension(45, 28));
-        lblBlueStrip.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         homeButton.setBackground(new java.awt.Color(0, 140, 214));
         homeButton.setPreferredSize(new java.awt.Dimension(136, 33));
@@ -74,17 +73,24 @@ public class manageReceipts extends javax.swing.JFrame {
             homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homeButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(homeIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                .addComponent(homeIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 26, Short.MAX_VALUE)
                 .addContainerGap())
         );
         homeButtonLayout.setVerticalGroup(
             homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homeButtonLayout.createSequentialGroup()
-                .addComponent(homeIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(homeIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
-        lblBlueStrip.add(homeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 28));
+        javax.swing.GroupLayout lblBlueStripLayout = new javax.swing.GroupLayout(lblBlueStrip);
+        lblBlueStrip.setLayout(lblBlueStripLayout);
+        lblBlueStripLayout.setHorizontalGroup(
+            lblBlueStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        lblBlueStripLayout.setVerticalGroup(
+            lblBlueStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         HomePage.setBackground(new java.awt.Color(0, 140, 214));
         HomePage.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -109,7 +115,7 @@ public class manageReceipts extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblGreenStrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblBlueStrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblBlueStrip, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 396, Short.MAX_VALUE)
                 .addComponent(HomePage)
@@ -118,7 +124,7 @@ public class manageReceipts extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lblBlueStrip, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblBlueStrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(HomePage)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
