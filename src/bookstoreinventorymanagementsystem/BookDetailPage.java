@@ -13,11 +13,11 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
  *
  * @author User
  */
-public class ProductDetailPage extends javax.swing.JInternalFrame {
+public class BookDetailPage extends javax.swing.JInternalFrame {
     
     private final BookData productData;
     
-    public ProductDetailPage() {
+    public BookDetailPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
@@ -117,7 +117,7 @@ public class ProductDetailPage extends javax.swing.JInternalFrame {
         background.setPreferredSize(new java.awt.Dimension(942, 630));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
-        jLabel1.setText("<html><font color='#3EA434'>PRODUCT</font> <font color='#008CD6'> DETAIL</font></html>");
+        jLabel1.setText("<html><font color='#3EA434'>BOOK</font> <font color='#008CD6'> DETAIL</font></html>");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 113, 176));
@@ -395,7 +395,7 @@ public class ProductDetailPage extends javax.swing.JInternalFrame {
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(publisher, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(year, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -422,7 +422,7 @@ public class ProductDetailPage extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
+                .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 

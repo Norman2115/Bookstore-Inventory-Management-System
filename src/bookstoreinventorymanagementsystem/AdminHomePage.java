@@ -10,7 +10,8 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     private final UserData userData;
     private static final EditProductInfoPage EDIT_PRODUCT_INFO = new EditProductInfoPage();
-    private static final ProductDetailPage PRODUCT_DETAIL_PAGE = new ProductDetailPage();
+    private static final BookDetailPage PRODUCT_DETAIL_PAGE = new BookDetailPage();
+    private static final InvoiceDetailPage INVOICE_DETAIL_PAGE = new InvoiceDetailPage();
     /**
      * Creates new form Admin_homepage
      * @param userData
@@ -33,6 +34,11 @@ public class AdminHomePage extends javax.swing.JFrame {
         displayPanel.add(PRODUCT_DETAIL_PAGE,JLayeredPane.DEFAULT_LAYER,0);
         PRODUCT_DETAIL_PAGE.setVisible(true);
         PRODUCT_DETAIL_PAGE.fillProductInfo(productData);
+    }
+    public static void createInvoiceDetailPage(String[] invoiceData){
+        displayPanel.add(INVOICE_DETAIL_PAGE,JLayeredPane.DEFAULT_LAYER,0);
+        INVOICE_DETAIL_PAGE.setVisible(true);
+        INVOICE_DETAIL_PAGE.fillData(invoiceData);
     }
     /**
      * This method is called from within the constructor to initialize the form.
