@@ -4,19 +4,11 @@
  */
 package bookstoreinventorymanagementsystem;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileOutputStream;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -108,14 +100,11 @@ public class ManageOrder extends javax.swing.JFrame {
         basePanel.setBackground(new java.awt.Color(255, 255, 255));
         basePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         basePanel.setPreferredSize(new java.awt.Dimension(900, 500));
-        basePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        basePanel.add(DateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 277, -1, -1));
 
         HomePage.setBackground(new java.awt.Color(0, 140, 214));
         HomePage.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         HomePage.setForeground(new java.awt.Color(0, 140, 214));
         HomePage.setText("Manage Order");
-        basePanel.add(HomePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(367, 36, -1, -1));
 
         lblGreenStrip.setBackground(new java.awt.Color(62, 164, 52));
 
@@ -123,14 +112,12 @@ public class ManageOrder extends javax.swing.JFrame {
         lblGreenStrip.setLayout(lblGreenStripLayout);
         lblGreenStripLayout.setHorizontalGroup(
             lblGreenStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 898, Short.MAX_VALUE)
         );
         lblGreenStripLayout.setVerticalGroup(
             lblGreenStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
-
-        basePanel.add(lblGreenStrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 75, 898, -1));
 
         CartPanel1.setBackground(new java.awt.Color(0, 153, 255));
         CartPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -253,7 +240,7 @@ public class ManageOrder extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CartPanel1Layout.createSequentialGroup()
-                        .addGap(0, 326, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(finalTotalPriceLabel1)
                         .addGap(19, 19, 19))
                     .addComponent(addToCartButton, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
@@ -268,7 +255,7 @@ public class ManageOrder extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(customerSelectionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 13, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(CartPanel1Layout.createSequentialGroup()
                 .addGap(106, 106, 106)
@@ -299,8 +286,6 @@ public class ManageOrder extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addComponent(finalTotalPriceLabel1))
         );
-
-        basePanel.add(CartPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 103, -1, 390));
 
         CartPanel.setBackground(new java.awt.Color(255, 255, 255));
         CartPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -465,12 +450,9 @@ public class ManageOrder extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        basePanel.add(CartPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(479, 103, -1, 390));
-
         lblBlueStrip.setBackground(new java.awt.Color(0, 140, 214));
         lblBlueStrip.setForeground(new java.awt.Color(51, 102, 255));
         lblBlueStrip.setPreferredSize(new java.awt.Dimension(45, 28));
-        lblBlueStrip.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         homeButton.setBackground(new java.awt.Color(0, 140, 214));
         homeButton.setPreferredSize(new java.awt.Dimension(136, 33));
@@ -503,19 +485,58 @@ public class ManageOrder extends javax.swing.JFrame {
             homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homeButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(homeIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                .addComponent(homeIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 26, Short.MAX_VALUE)
                 .addContainerGap())
         );
         homeButtonLayout.setVerticalGroup(
             homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homeButtonLayout.createSequentialGroup()
-                .addComponent(homeIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(homeIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
 
-        lblBlueStrip.add(homeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 50, 28));
+        javax.swing.GroupLayout lblBlueStripLayout = new javax.swing.GroupLayout(lblBlueStrip);
+        lblBlueStrip.setLayout(lblBlueStripLayout);
+        lblBlueStripLayout.setHorizontalGroup(
+            lblBlueStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        lblBlueStripLayout.setVerticalGroup(
+            lblBlueStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
-        basePanel.add(lblBlueStrip, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 898, -1));
+        javax.swing.GroupLayout basePanelLayout = new javax.swing.GroupLayout(basePanel);
+        basePanel.setLayout(basePanelLayout);
+        basePanelLayout.setHorizontalGroup(
+            basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblBlueStrip, javax.swing.GroupLayout.PREFERRED_SIZE, 898, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(basePanelLayout.createSequentialGroup()
+                .addGap(366, 366, 366)
+                .addComponent(HomePage))
+            .addComponent(lblGreenStrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(basePanelLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(CartPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(DateLabel)
+                .addGap(29, 29, 29)
+                .addComponent(CartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        basePanelLayout.setVerticalGroup(
+            basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(basePanelLayout.createSequentialGroup()
+                .addComponent(lblBlueStrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(HomePage)
+                .addGap(7, 7, 7)
+                .addComponent(lblGreenStrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(CartPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(basePanelLayout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(DateLabel))
+                    .addComponent(CartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -629,27 +650,6 @@ public class ManageOrder extends javax.swing.JFrame {
         addToCartButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_addToCartButtonMouseReleased
 
-    private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
-        setVisible(false);
-        new SalespersonHomePage().setVisible(true);
-    }//GEN-LAST:event_homeButtonMouseClicked
-
-    private void homeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseEntered
-        homeButton.setBackground(ColorManager.MEDIUM_BLUE);
-    }//GEN-LAST:event_homeButtonMouseEntered
-
-    private void homeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseExited
-        homeButton.setBackground(ColorManager.PRIMARY_BLUE);
-    }//GEN-LAST:event_homeButtonMouseExited
-
-    private void homeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMousePressed
-        homeButton.setBackground(ColorManager.DEEP_BLUE);
-    }//GEN-LAST:event_homeButtonMousePressed
-
-    private void homeButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseReleased
-        homeButton.setBackground(ColorManager.MEDIUM_BLUE);
-    }//GEN-LAST:event_homeButtonMouseReleased
-
     private void placeOrderButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeOrderButtonMouseReleased
         placeOrderButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_placeOrderButtonMouseReleased
@@ -680,7 +680,7 @@ public class ManageOrder extends javax.swing.JFrame {
                 
                 String formattedTotalPrice = String.format("%.2f", finalTotalPrice);
                 salesData.setTotalPrice(Double.parseDouble(formattedTotalPrice));
-                
+                String currentSalesID =  salesData.getCurrentSalesID();
                 salesData.saveSalesDataToDatabase();
 
                 String query = "INSERT INTO sales_book(sales_id, product_id, quantity, subtotal) VALUES (?, ?, ?, ?)";
@@ -690,7 +690,7 @@ public class ManageOrder extends javax.swing.JFrame {
                     int quantity = Integer.parseInt(dtm.getValueAt(i, 2).toString());
                     double subtotal = Double.parseDouble(dtm.getValueAt(i, 3).toString());
 
-                    ps.setString(1, salesData.getCurrentSalesID());
+                    ps.setString(1,currentSalesID);
                     ps.setString(2, productId);
                     ps.setInt(3, quantity);
                     ps.setDouble(4, subtotal);
@@ -698,10 +698,9 @@ public class ManageOrder extends javax.swing.JFrame {
                     ps.executeUpdate();
                 }
 
-                // Display success message
                 UIUtils.displaySuccessMessage("Sales data saved successfully.");
                 setVisible(false);
-                new ManageSales().setVisible(true);
+                 new ManageSales(new SalesData(new UserData()), new UserData()).setVisible(true);
             } catch (SQLException e) {
                 UIUtils.displayErrorMessage("An error occurred: " + e.getMessage());
             }
@@ -756,6 +755,27 @@ public class ManageOrder extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cartTableMouseClicked
 
+    private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
+        setVisible(false);
+        new SalespersonHomePage().setVisible(true);
+    }//GEN-LAST:event_homeButtonMouseClicked
+
+    private void homeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseEntered
+        homeButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_homeButtonMouseEntered
+
+    private void homeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseExited
+        homeButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_homeButtonMouseExited
+
+    private void homeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMousePressed
+        homeButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_homeButtonMousePressed
+
+    private void homeButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseReleased
+        homeButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_homeButtonMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -789,7 +809,7 @@ public class ManageOrder extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageOrder(new SalesData()).setVisible(true);
+                new ManageOrder(new SalesData(new UserData())).setVisible(true);
             }
         });
     }
