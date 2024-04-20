@@ -4,8 +4,10 @@
  */
 package bookstoreinventorymanagementsystem;
 
+import java.awt.Desktop;
 import java.io.File;
-import javax.swing.JOptionPane;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  *
@@ -13,15 +15,23 @@ import javax.swing.JOptionPane;
  */
 public class OpenPdf {
 
-    public static void OpenById(String id) {
-        try {
-            if ((new File(SalesUtils.billPath + id + ".pdf")).exists()) {
-                Process p = Runtime
-                        .getRuntime()
-                        .exec("rundll32 url.dll,FileProtocolHandler " + SalesUtils.billPath + "" + id + ".pdf");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+    public static void OpenById(String id) throws IOException {
+        File pdfFile = new File(SalesUtils.billPath + id + ".pdf");
+        if (pdfFile.exists()) {
+            Desktop.getDesktop().open(pdfFile);
+        } else {
+            throw new FileNotFoundException("PDF file not found: " + pdfFile.getPath());
         }
     }
+
+    public static void OpenByPath(String filePath) throws IOException {
+
+        File pdfFile = new File(filePath);
+        if (pdfFile.exists()) {
+            Desktop.getDesktop().open(pdfFile);
+        } else {
+            throw new FileNotFoundException("PDF file not found: " + pdfFile.getPath());
+        }
+    }
+
 }

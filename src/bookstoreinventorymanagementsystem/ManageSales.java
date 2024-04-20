@@ -405,19 +405,19 @@ public class ManageSales extends javax.swing.JFrame {
     }//GEN-LAST:event_homeButtonMouseReleased
 
     private void generateBillButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_generateBillButtonMouseClicked
-        salesData.setTotalPrice(totalPrice);
-        salesData.setSalesID(salesID);
-        salesData.setOrderDate(salesDate);
-
         try {
-            salesData.generateBill();
-        } catch (DocumentException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-            Logger.getLogger(ManageSales.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-            Logger.getLogger(ManageSales.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+            //Generate Bill 
+            salesData.generateBill(salesID);
+            // Save the PDF to the database
+            String filePath = SalesUtils.billPath + File.separator + salesID + ".pdf";
+            File file = new File(filePath);
+            try {
+                SalesUtils.savePdfToDatabase(file);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            salesData.setNextSalesID();
+        } catch (DocumentException | IOException | SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
             Logger.getLogger(ManageSales.class.getName()).log(Level.SEVERE, null, ex);
         }
