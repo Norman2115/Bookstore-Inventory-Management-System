@@ -1,17 +1,11 @@
 package bookstoreinventorymanagementsystem;
 
-import java.sql.Blob;
-import java.io.InputStream;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 /**
+ * The class represents user data within the system. It encapsulates various
+ * properties of a user, such as userID, username, email, password, role, and
+ * profile picture.
  *
- * @author Norman
+ * @author Teo Chung Henn
  */
 public final class UserData {
 
@@ -22,9 +16,12 @@ public final class UserData {
     private String password;
     private UserRole role;
     private byte[] profilePicture;
-
     private boolean isUsingUsernameForRecover;
 
+    /**
+     * Constructs a new UserData object with default values. All properties are
+     * initialized to null and false values.
+     */
     public UserData() {
         setUserID(null);
         setFullName(null);
@@ -33,178 +30,155 @@ public final class UserData {
         setPassword(null);
         setRole(null);
         setProfilePicture(null);
+        setUsingUsernameForRecover(false);
     }
 
-    private String getUserID() {
-        return userID;
-    }
-
-    private void setUserID(String userID) {
+    /**
+     * Sets the user ID.
+     *
+     * @param userID the user ID to set.
+     */
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
-    public String getFullName() {
-        return fullName;
+    /**
+     * Retrieves the ID of the user.
+     *
+     * @return the ID of the user, or null if not set.
+     */
+    public String getUserID() {
+        return userID;
     }
 
+    /**
+     * Sets the full name of the user.
+     *
+     * @param fullName the full name to set.
+     */
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
+    /**
+     * Retrieves the full name of the user.
+     *
+     * @return the full name of the user, or null if not set.
+     */
+    public String getFullName() {
+        return fullName;
+    }
+
+    /**
+     * Sets the username of the user.
+     *
+     * @param username the username to set.
+     */
     public void setUsername(String username) {
         this.username = username;
     }
 
+    /**
+     * Retrieves the username of the user
+     *
+     * @return the username of the user, or null if not set.
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Sets the email address of the user.
+     *
+     * @param email the email address to set.
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Retrieves the email address of the user.
+     *
+     * @return the email address of the user, or null if not set.
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets the password of the the user.
+     *
+     * @param password the password to set.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Retrieves the password of the user.
+     *
+     * @return the password of the user, or null if not set.
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Sets the role of the user in the form of a value from the UserRole
+     * enumeration.
+     *
+     * @param role the role to set.
+     */
     public void setRole(UserRole role) {
         this.role = role;
     }
 
+    /**
+     * Retrieves the role of the user.
+     *
+     * @return the role of the user, or null if not set.
+     */
     public UserRole getRole() {
         return role;
     }
 
+    /**
+     * Sets the profile picture of the user in the form of byte array.
+     *
+     * @param profilePicture the profile picture to set.
+     */
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
 
+    /**
+     * Retrieves the profile picture of the user in the form of byte array.
+     *
+     * @return the profile picture of the user, or null if not set.
+     */
     public byte[] getProfilePicture() {
         return profilePicture;
     }
 
-    public boolean isUsingUsernameForRecover() {
-        return isUsingUsernameForRecover;
-    }
-
+    /**
+     * Sets whether the username is being used for account recovery.
+     *
+     * @param isUsingUsernameForRecover true if username is being used for
+     * recovery, false otherwise.
+     */
     public void setUsingUsernameForRecover(boolean isUsingUsernameForRecover) {
         this.isUsingUsernameForRecover = isUsingUsernameForRecover;
     }
 
-    private String getNextUserID() throws SQLException {
-        String prefix = (role == UserRole.ADMIN) ? "A" : "S";
-
-        try (Connection connection = DatabaseManager.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT current_user_id FROM user_id_counter WHERE prefix = ?"
-            );
-
-            statement.setString(1, prefix);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                return prefix + resultSet.getInt("current_user_id");
-            } else {
-                throw new SQLException("No user ID found in the database");
-            }
-        }
-    }
-
-    public void updatePassword(String newPassword) throws SQLException {
-        try (Connection connection = DatabaseManager.getConnection();) {
-            PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE user "
-                    + "SET password = ? "
-                    + "WHERE user_id = ?"
-            );
-
-            statement.setString(1, newPassword);
-            statement.setString(2, getUserID());
-
-            statement.executeUpdate();
-        }
-    }
-
-    public void readUserDataFromDatabase(String usernameOrEmail)
-            throws SQLException, IOException {
-        try (Connection connection = DatabaseManager.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM user WHERE username = ? OR email = ?"
-            );
-
-            statement.setString(1, usernameOrEmail);
-            statement.setString(2, usernameOrEmail);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                userID = resultSet.getString("user_id");
-                fullName = resultSet.getString("full_name");
-                username = resultSet.getString("username");
-                email = resultSet.getString("email");
-                password = resultSet.getString("password");
-                role = UserRole.valueOf(resultSet.getString("user_role"));
-                Blob pictureBlob = resultSet.getBlob("profile_picture");
-                profilePicture = ImageUtils.convertBlobToByteArray(pictureBlob);
-            }
-        }
-    }
-
-    public void saveUserDataToDatabase() throws SQLException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-
-        try {
-            connection = DatabaseManager.getConnection();
-            connection.setAutoCommit(false);
-
-            String nextUserID = getNextUserID();
-
-            statement = connection.prepareStatement(
-                    "INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?)"
-            );
-            statement.setString(1, nextUserID);
-            statement.setString(2, getFullName());
-            statement.setString(3, getUsername());
-            statement.setString(4, getEmail());
-            statement.setString(5, getPassword());
-            statement.setString(6, getRole().toString());
-            InputStream inputStream = new ByteArrayInputStream(getProfilePicture());
-            statement.setBlob(7, inputStream);
-            statement.executeUpdate();
-
-            statement = connection.prepareStatement(
-                    "UPDATE user_id_counter "
-                    + "SET current_user_id = ? "
-                    + "WHERE prefix = ?"
-            );
-            statement.setInt(1, Integer.parseInt(nextUserID.substring(1)) + 1);
-            statement.setString(2, (getRole() == UserRole.ADMIN) ? "A" : "S");
-            statement.executeUpdate();
-
-            connection.commit();
-        } catch (SQLException ex) {
-            if (connection != null) {
-                connection.rollback();
-            }
-            throw ex;
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
-            if (connection != null) {
-                connection.setAutoCommit(true);
-                connection.close();
-            }
-        }
+    /**
+     * Determine whether the username is being used for account recovery. If
+     * username is being used for recovery, the value is set to true. If email
+     * is used instead, the value is set to false.
+     *
+     * @return true if the username is being used for account recovery, false
+     * otherwise.
+     */
+    public boolean isUsingUsernameForRecover() {
+        return isUsingUsernameForRecover;
     }
 }

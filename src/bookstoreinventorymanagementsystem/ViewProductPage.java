@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class ViewProductPage extends javax.swing.JInternalFrame{
-    private final BookDAO bookDAO = new BookDAO();
     /**
      * Creates new form welcomeText
      */
@@ -23,7 +22,7 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
         bi.setNorthPane(null);
         
         BookData[] productData;
-        productData = bookDAO.readData("product","book_title");
+        productData = BookDAO.readData("product","book_title");
         displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
@@ -31,7 +30,7 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
     }
     
     private void displayRow(BookData[] productData){
-        ((DefaultTableModel) viewTable.getModel()).setRowCount(0);
+        ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         int length = productData.length;
         if(length>0){
             for (int i = 0;i<length;i++){
@@ -48,10 +47,10 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
                 productData[i].calculateNetPrice();
                 rowData[9] = productData[i].getNetPrice();
                 //insert row
-                ((DefaultTableModel) viewTable.getModel()).addRow(rowData);
+                ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
             }
         }else{
-            ((DefaultTableModel) viewTable.getModel()).setRowCount(0);
+            ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         }
     }
     
@@ -89,7 +88,7 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
         jLabel16 = new javax.swing.JLabel();
         searchBar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        viewTable = new javax.swing.JTable();
+        displayTable = new javax.swing.JTable();
         searchType = new javax.swing.JComboBox<>();
         searchButton = new javax.swing.JLabel();
 
@@ -147,7 +146,7 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
             }
         });
 
-        viewTable.setModel(new javax.swing.table.DefaultTableModel(
+        displayTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -170,22 +169,20 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
                 return canEdit [columnIndex];
             }
         });
-        viewTable.setToolTipText("");
-        viewTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        viewTable.setFocusable(false);
-        viewTable.setRowHeight(25);
-        viewTable.setSelectionBackground(new java.awt.Color(0, 140, 214));
-        viewTable.setSelectionForeground(new java.awt.Color(253, 252, 248));
-        viewTable.setShowGrid(false);
-        viewTable.getTableHeader().setReorderingAllowed(false);
-        viewTable.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                viewTableInputMethodTextChanged(evt);
+        displayTable.setToolTipText("");
+        displayTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        displayTable.setFocusable(false);
+        displayTable.setRowHeight(25);
+        displayTable.setSelectionBackground(new java.awt.Color(0, 140, 214));
+        displayTable.setSelectionForeground(new java.awt.Color(253, 252, 248));
+        displayTable.setShowGrid(false);
+        displayTable.getTableHeader().setReorderingAllowed(false);
+        displayTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                displayTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(viewTable);
+        jScrollPane1.setViewportView(displayTable);
 
         searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
         searchType.setToolTipText("");
@@ -267,26 +264,34 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
         BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
+        productData = BookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
-
-    private void viewTableInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_viewTableInputMethodTextChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_viewTableInputMethodTextChanged
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
+        productData = BookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchButtonMouseClicked
+
+    private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
+        if (evt.getClickCount() == 2){
+            int selectRow = displayTable.getSelectedRow();
+            long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
+            BookData[] productData;
+            String condition = "isbn" + " = " +"\'"+isbn+"\'";
+            productData = BookDAO.readData("product",condition,"isbn");
+            AdminHomePage.createProductDetailPage(productData[0]);
+        }
+    }//GEN-LAST:event_displayTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
     private javax.swing.JPanel displayPanel;
+    private javax.swing.JTable displayTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
@@ -297,6 +302,5 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
     private javax.swing.JTextField searchBar;
     private javax.swing.JLabel searchButton;
     private javax.swing.JComboBox<String> searchType;
-    private javax.swing.JTable viewTable;
     // End of variables declaration//GEN-END:variables
 }

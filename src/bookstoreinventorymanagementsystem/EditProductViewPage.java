@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class EditProductViewPage extends javax.swing.JInternalFrame {
-    private final BookDAO bookDAO = new BookDAO();
     public EditProductViewPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
@@ -16,7 +15,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         bi.setNorthPane(null);
         
         BookData[] productData;
-        productData = bookDAO.readData("product","book_title");
+        productData = BookDAO.readData("product","book_title");
         displayRow(productData);
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
@@ -289,7 +288,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
+        productData = BookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchBarActionPerformed
 
@@ -299,7 +298,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
             long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
             BookData[] productData;
             String condition = "isbn" + " = " +"\'"+isbn+"\'";
-            productData = bookDAO.readData("product",condition,"isbn");
+            productData = BookDAO.readData("product",condition,"isbn");
             AdminHomePage.createEditProductInfoPage(productData[0]);
         }
     }//GEN-LAST:event_displayTableMouseClicked
@@ -308,7 +307,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
+        productData = BookDAO.readData("product",condition,searchBy);
         displayRow(productData);
     }//GEN-LAST:event_searchButtonMouseClicked
 

@@ -1,14 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
 
 /**
+ * The interface provides methods to handle navigation events between pages,
+ * such as returning from the next page or proceeding to the next page.
  *
- * @author coco1
+ * @author Teo Chung Henn
  */
 public interface NavigationListener {
-    void onBackButtonPressed();
-    void onForwardButtonPressed();
+
+    /**
+     * Called when returning from the next page. Implementations should handle
+     * actions to be performed when navigating back to the current page.
+     */
+    void onReturnFromNextPage();
+
+    /**
+     * Called when proceeding to next page. Implements should handle actions to
+     * be performed when navigating forward to the next page.
+     */
+    void onProceedToNextPage();
 }

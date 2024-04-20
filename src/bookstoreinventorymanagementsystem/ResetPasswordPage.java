@@ -1,5 +1,6 @@
 package bookstoreinventorymanagementsystem;
 
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,7 +9,7 @@ import java.util.logging.Logger;
  * The class represents user interface for resetting the password. Users are
  * required to provide a new password that is different from the old password.
  *
- * @author Norman
+ * @author Teo Chung Henn
  */
 public class ResetPasswordPage extends javax.swing.JFrame {
 
@@ -205,12 +206,10 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         passwordField.setForeground(new java.awt.Color(0, 100, 0));
         passwordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         passwordField.setEchoChar('\u2022');
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
         passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 passwordFieldKeyReleased(evt);
             }
@@ -224,12 +223,10 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         confirmPasswordField.setForeground(new java.awt.Color(0, 100, 0));
         confirmPasswordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         confirmPasswordField.setEchoChar('\u2022');
-        confirmPasswordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmPasswordFieldActionPerformed(evt);
-            }
-        });
         confirmPasswordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                confirmPasswordFieldKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 confirmPasswordFieldKeyReleased(evt);
             }
@@ -396,13 +393,16 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         // Check if both password and confirm password fields are valid
         if (isPasswordValid && isConfirmPasswordValid) {
             try {
-                // Proceed to update the password for the user
-                userData.updatePassword(newPassword);
+                // Proceed to update the password in the database for the user
+                UserDAO.updatePassword(userData, newPassword);
                 dispose();
                 new ResetPasswordSuccessfulPage().setVisible(true);
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
                 Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
         }
     }//GEN-LAST:event_confirmButtonMouseClicked
@@ -423,10 +423,6 @@ public class ResetPasswordPage extends javax.swing.JFrame {
         confirmButton.setBackground(ColorManager.DEEP_BLUE);
     }//GEN-LAST:event_confirmButtonMousePressed
 
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
     private void showHidePasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHidePasswordIconMouseClicked
         UIUtils.togglePasswordVisibility(passwordField, showHidePasswordIcon);
     }//GEN-LAST:event_showHidePasswordIconMouseClicked
@@ -438,10 +434,6 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     private void LeftPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LeftPanelMouseClicked
         LeftPanel.grabFocus();
     }//GEN-LAST:event_LeftPanelMouseClicked
-
-    private void confirmPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPasswordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_confirmPasswordFieldActionPerformed
 
     private void showHideConfirmPasswordIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showHideConfirmPasswordIconMouseClicked
         UIUtils.togglePasswordVisibility(confirmPasswordField, showHideConfirmPasswordIcon);
@@ -536,7 +528,7 @@ public class ResetPasswordPage extends javax.swing.JFrame {
 
     private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
         RecoverAccountPage recoverAccountPage = new RecoverAccountPage(userDataStack);
-        recoverAccountPage.onBackButtonPressed();
+        recoverAccountPage.onReturnFromNextPage();
         dispose();
         recoverAccountPage.setVisible(true);
     }//GEN-LAST:event_backButtonMouseClicked
@@ -556,6 +548,18 @@ public class ResetPasswordPage extends javax.swing.JFrame {
     private void backButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseReleased
         backButton.setBackground(ColorManager.DARK_GREY);
     }//GEN-LAST:event_backButtonMouseReleased
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_passwordFieldKeyPressed
+
+    private void confirmPasswordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmPasswordFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            LeftPanel.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_confirmPasswordFieldKeyPressed
 
     /**
      * @param args the command line arguments

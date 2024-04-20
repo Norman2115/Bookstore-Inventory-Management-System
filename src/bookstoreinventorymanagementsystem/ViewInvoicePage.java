@@ -1,5 +1,11 @@
 package bookstoreinventorymanagementsystem;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -8,29 +14,29 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class ViewInvoicePage extends javax.swing.JInternalFrame {
-    private final BookDAO bookDAO = new BookDAO();
     public ViewInvoicePage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        
+        displayRow(readDataFromDatabase());
         // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
         // jTable1.getColumnModel().getColumn(0).setPreferredWidth(200);
     }
     
-    private void displayRow(BookData[] productData){
+    private void displayRow(String[][] data){
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
-        int length = productData.length;
+        int length = data.length;
         if(length>0){
             for (int i = 0;i<length;i++){
                 Object[] rowData = new Object[5];
-                rowData[0] = productData[i].getBookTitle();
-                rowData[1] = productData[i].getISBN();
-                rowData[2] = productData[i].getGenre();
-                rowData[3] = productData[i].getLanguage();
-                rowData[4] = productData[i].getAuthor();
+                //0-sales_id;1-salesperson_id;2-customer_id;3-sales_date;4-total_price;5-customer_name;6-salesperson_name
+                rowData[0] = data[i][0];
+                rowData[1] = data[i][5];
+                rowData[2] = data[i][1];
+                rowData[3] = data[i][6];
+                rowData[4] = data[i][3];
                 //insert row
                 ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
             }
@@ -39,23 +45,100 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
         }
     }
     
+    private String[][] readDataFromDatabase(){
+        try (Connection connection = DatabaseManager.getConnection()){
+            int i = 0;
+            int rowNumber = BookDAO.getLength("sales_detail");
+            String[][] data = new String[rowNumber][7];//0-sales_id;1-salesperson_id;2-customer_id;3-sales_date;4-total_price;5-customer_name;6-salesperson_name
+            for (i = 0;i<rowNumber;i++){
+                data[i][0] = "";
+                data[i][1] = "";
+                data[i][2] = "";
+                data[i][3] = "";
+                data[i][4] = "";
+            }
+            //select data
+            String query = "SELECT * FROM sales_detail s INNER JOIN customer c ON s.customer_id  = c.customer_id INNER JOIN user u ON s.salesperson_id = user_id ";
+            System.out.println(query);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            //catch data from result set
+            i = 0;
+            while (resultSet.next()){
+                data[i][0] = resultSet.getString("sales_id");
+                data[i][1] = resultSet.getString("salesperson_id");
+                data[i][2] = resultSet.getString("customer_id");
+                data[i][3] = resultSet.getString("sales_date");
+                data[i][4] = resultSet.getString("total_price");
+                data[i][5] = resultSet.getString("customer_name");
+                data[i][6] = resultSet.getString("user_name");
+                i++;
+            }
+            return data;
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewInvoicePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    private String[][] readDataFromDatabase(String condition,String orderBy){
+        try (Connection connection = DatabaseManager.getConnection()){
+            int i = 0;
+            int rowNumber = BookDAO.getLength("sales_detail",condition);
+            String[][] data = new String[rowNumber][7];//0-sales_id;1-salesperson_id;2-customer_id;3-sales_date;4-total_price;5-customer_name;6-salesperson_name
+            for (i = 0;i<rowNumber;i++){
+                data[i][0] = "";
+                data[i][1] = "";
+                data[i][2] = "";
+                data[i][3] = "";
+                data[i][4] = "";
+                data[i][5] = "";
+                data[i][6] = "";
+            }
+            //select data
+            String query = "SELECT * FROM sales_detail s INNER JOIN customer c ON s.customer_id  = c.customer_id INNER JOIN user u ON s.salesperson_id = user_id " + " WHERE " + condition + " ORDER BY " + orderBy;
+            System.out.println(query);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            //catch data from result set
+            i = 0;
+            while (resultSet.next()){
+                data[i][0] = resultSet.getString("sales_id");
+                data[i][1] = resultSet.getString("salesperson_id");
+                data[i][2] = resultSet.getString("customer_id");
+                data[i][3] = resultSet.getString("sales_date");
+                data[i][4] = resultSet.getString("total_price");
+                data[i][5] = resultSet.getString("customer_name");
+                data[i][6] = resultSet.getString("user_name");
+                i++;
+            }
+            return data;
+        } catch (SQLException ex) {
+            Logger.getLogger(ViewInvoicePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     private String getSelection(){
         String searchBy=null;
         switch (searchType.getSelectedIndex()){
             case 0:
-                searchBy = "Invoice ID";
+                searchBy = "sales_id";
                 break;
             case 1:
-                searchBy = "Customer";
+                searchBy = "sales_id";
                 break;
             case 2:
-                searchBy = "Salesperson  ID";
+                searchBy = "customer_name";
                 break;
             case 3:
-                searchBy = "Salesperson";
+                searchBy = "salesperson_id";
                 break;
             case 4:
-                searchBy = "Date";
+                searchBy = "user_name";
+                break;
+            case 5:
+                searchBy = "sales_date";
                 break;
         }
         return searchBy;
@@ -266,19 +349,15 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        displayRow(readDataFromDatabase(condition,searchBy));
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
-        BookData[] productData;
         String searchBy = getSelection();
         String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        displayRow(readDataFromDatabase(condition,searchBy));
     }//GEN-LAST:event_searchButtonMouseClicked
 
 
