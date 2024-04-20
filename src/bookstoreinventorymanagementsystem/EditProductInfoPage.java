@@ -916,7 +916,7 @@ public class EditProductInfoPage extends javax.swing.JInternalFrame {
             productData.setDiscount(Double.parseDouble(discount.getText()));
             BookDAO updateProductData = new BookDAO();
             System.out.println(productData.getISBN());
-            updateProductData.updateData(productData);
+            // updateProductData.updateData(productData);
             this.dispose();
             reset();
         }

@@ -370,7 +370,7 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
                 }
             }
             deleteRow = Arrays.copyOf(deleteRow, lengthOfDeleteRow);
-            bookDAO.deleteData("isbn",deleteRow);
+            // bookDAO.deleteData("isbn", deleteRow);
             UIUtils.displaySuccessMessage("Delete successfull");
             
             BookData[] productData;
