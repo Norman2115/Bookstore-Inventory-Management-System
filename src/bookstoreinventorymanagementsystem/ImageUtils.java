@@ -1,5 +1,6 @@
 package bookstoreinventorymanagementsystem;
 
+import java.awt.Image;
 import java.io.BufferedInputStream;
 import java.sql.Blob;
 import java.io.ByteArrayOutputStream;
@@ -8,6 +9,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  * Utility class for common image-related operations.
@@ -56,5 +59,15 @@ public class ImageUtils {
             byteArray = baos.toByteArray();
         }
         return byteArray;
+    }
+
+    public static void setPicture(JLabel pictureLabel, byte[] picture) {
+        ImageIcon icon = new ImageIcon(picture);
+        Image image = icon.getImage();
+        Image scaledImage = image.getScaledInstance(pictureLabel.getWidth(),
+                pictureLabel.getHeight(), Image.SCALE_SMOOTH);
+        pictureLabel.setIcon(new ImageIcon(scaledImage));
+        pictureLabel.revalidate();
+        pictureLabel.repaint();
     }
 }

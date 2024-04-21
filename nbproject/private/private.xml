@@ -21,6 +21,7 @@
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/BookDAO.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/icon/no-image.png</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/CustomerDAO.java</file>
+            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/SalesUtils.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ManageDashboard.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/LoginPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ValidationResult.java</file>
@@ -32,6 +33,7 @@
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ResetPasswordEmailVerificationPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ResetPasswordPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/Utils.java</file>
+            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/BookDetailPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/NavigationStack.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UserDAO.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/AdminHomePage.java</file>
@@ -39,11 +41,13 @@
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/DeleteProductPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/PieChart.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ModelPieChart.java</file>
+            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/InvoiceDetailPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/SignUpSuccessfulPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/RoleSelectionPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/icon/salesperson_unselected.png</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/icon/admin_selected.png</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/nbproject/private/private.xml</file>
+            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/SalesData.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/Dashboard.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/icon/selfie_banner.png</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ResetPasswordSuccessfulPage.java</file>
@@ -53,6 +57,7 @@
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/AddProductPage.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/ImageUtils.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/NavigationListener.java</file>
+            <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/nbproject/private/private.properties</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/UIUtils.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/DatabaseManager.java</file>
             <file>file:/D:/JavaProject/Bookstore-Inventory-Management-System/src/bookstoreinventorymanagementsystem/CustomerData.java</file>

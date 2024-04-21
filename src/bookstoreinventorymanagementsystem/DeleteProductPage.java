@@ -10,13 +10,15 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * The class represents the delete book page for deleting book records. Users
+ * can view and select book(s) for deletion.
  *
- * @author User
+ * @author Tay Xuan Ye
  */
 public class DeleteProductPage extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form DeleteProductPage
+     * Creates new form DeleteProductPage.
      */
     public DeleteProductPage() {
         initComponents();
@@ -24,6 +26,7 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
 
+        // Fetch product data from the database and display it in the table
         BookData[] bookDatas;
         try {
             bookDatas = BookDAO.readBookDataFromDatabase("book", "book_title");
@@ -37,27 +40,43 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         }
     }
 
-    private void displayRow(BookData[] productData) {
+    /**
+     * Displays the rows of book data in the table.
+     *
+     * @param bookData an array of BookData objects containing book information.
+     */
+    private void displayRow(BookData[] bookData) {
+        // Clear the existing rows in the table
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
-        int length = productData.length;
+
+        // Check if there are any products to display
+        int length = bookData.length;
         if (length > 0) {
+            // Iterate through each BookData object and add to the table
             for (int i = 0; i < length; i++) {
                 Object[] rowData = new Object[7];
-                rowData[0] = productData[i].getBookTitle();
-                rowData[1] = productData[i].getISBN();
-                rowData[2] = productData[i].getGenre();
-                rowData[3] = productData[i].getLanguage();
-                rowData[4] = productData[i].getAuthor();
-                rowData[5] = productData[i].getPublisher();
-                rowData[6] = productData[i].getPublicatioYear();
+                rowData[0] = bookData[i].getBookTitle();
+                rowData[1] = bookData[i].getISBN();
+                rowData[2] = bookData[i].getGenre();
+                rowData[3] = bookData[i].getLanguage();
+                rowData[4] = bookData[i].getAuthor();
+                rowData[5] = bookData[i].getPublisher();
+                rowData[6] = bookData[i].getPublicatioYear();
 
+                // Add the row data to the table model
                 ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
             }
         } else {
+            // If no products are found, clear the table
             ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         }
     }
 
+    /**
+     * Retrieves the search criteria selected by the user.
+     *
+     * @return a string representing the search criteria.
+     */
     private String getSelection() {
         String searchBy = null;
         switch (searchType.getSelectedIndex()) {
@@ -338,10 +357,15 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
         BookData[] bookDatas;
+        // Retrieve the selected search criteria
         String searchBy = getSelection();
+        // Define the search condition
         String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+
         try {
+            // Search for products in the database based on the condition
             bookDatas = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
+            // Display the search results in the table
             displayRow(bookDatas);
         } catch (SQLException ex) {
             UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
@@ -353,34 +377,46 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        // Display a confirmation dialog before proceeding with deletion
         int deleteConfirm = JOptionPane.showConfirmDialog(null,
                 "Data cannot be recovered once deleted! Continue delete?", "Warning!",
                 JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        // If the user confirms deletion
         if (deleteConfirm == 0) {
             int length = displayTable.getRowCount();
             Object deleteRow[] = new Object[length];
             int lengthOfDeleteRow = 0;
+
+            // Iterate through the table rows
             for (int i = 0; i < length; i++) {
                 Object value = ((DefaultTableModel) displayTable.getModel()).getValueAt(i, 7);
                 boolean selected = false;
                 if (value != null) {
                     selected = (boolean) value;
                 }
+
+                // If the current row is selected for deletion
                 if (selected) {
                     deleteRow[lengthOfDeleteRow] = ((DefaultTableModel) displayTable.getModel()).getValueAt(i, 1);
                     System.out.println("Delete isbn:" + deleteRow[lengthOfDeleteRow]);
                     lengthOfDeleteRow++;
                 }
             }
+
+            // Trim the deleteRow array to the actual length of selected rows
             deleteRow = Arrays.copyOf(deleteRow, lengthOfDeleteRow);
+
             try {
+                // Delete selected products from the database
                 BookDAO.deleteBookData("isbn", deleteRow);
-                UIUtils.displaySuccessMessage("Delete successful");
+                UIUtils.displaySuccessMessage("Book record(s) successfully deleted");
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
                 Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+            // Refresh the displayed table after deletion
             BookData[] bookDatas;
             try {
                 bookDatas = BookDAO.readBookDataFromDatabase("book", "book_title");

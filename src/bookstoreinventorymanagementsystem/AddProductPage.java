@@ -13,6 +13,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
+ * The class represents the add book page of the inventory management system.
+ * Users can add new book using this page.
  *
  * @author Tay Xuan Ye
  */
@@ -21,6 +23,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     private final BookData bookData;
     private File selectedFile;
 
+    // Validation flags for form fields
     private boolean isBookTitleValid = false;
     private boolean isGenreSelected = false;
     private boolean isLanguageSelected = false;
@@ -32,6 +35,9 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     private boolean isStockQuantityValid = false;
     private boolean isUnitPriceValid = false;
 
+    /**
+     * Creates new form AddProductPage.
+     */
     public AddProductPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -41,6 +47,9 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         bookData = new BookData();
     }
 
+    /**
+     * Reset and clear the form fields and validation states.
+     */
     private void reset() {
         UIUtils.resetFieldState(bookTitleField);
         UIUtils.resetFieldState(isbnField);
@@ -79,161 +88,226 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         selectedFile = null;
     }
 
+    /**
+     * Checks if the entered book title is valid.
+     */
     private void checkBookTitleValid() {
         String bookTitle = bookTitleField.getText();
 
+        // Check if the entered book title is not empty
         if (!bookTitle.trim().isEmpty()) {
+            // Validate the book title
             ValidationResult bookTitleValidation = ValidationHandler.validateFullName(bookTitle);
             isBookTitleValid = bookTitleValidation.isValid();
 
+            // If book title is invalid, mark the field as errorneous and display error message
             if (!bookTitleValidation.isValid()) {
                 UIUtils.setFieldErrorState(bookTitleField);
                 UIUtils.setErrorLabelMessage(bookTitleErrorLabel, bookTitleValidation.getErrorMessage());
             } else {
+                // If the book title is valid, reset the field state and clear error message
                 UIUtils.resetFieldState(bookTitleField);
                 UIUtils.resetErrorLabel(bookTitleErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(bookTitleField);
             UIUtils.resetErrorLabel(bookTitleErrorLabel);
         }
     }
 
+    /**
+     * Checks if the entered author name is valid.
+     */
     private void checkAuthorValid() {
         String author = authorField.getText();
 
+        // Check if the entered author name is not empty
         if (!author.trim().isEmpty()) {
+            // Validate the author name
             ValidationResult authorNameValidation = ValidationHandler.validateFullName(author);
             isAuthorValid = authorNameValidation.isValid();
 
+            // If author name is invalid, mark the field as errorneous and display error message
             if (!authorNameValidation.isValid()) {
                 UIUtils.setFieldErrorState(authorField);
                 UIUtils.setErrorLabelMessage(authorErrorLabel, authorNameValidation.getErrorMessage());
             } else {
+                // If the author name is valid, reset the field state and clear error message
                 UIUtils.resetFieldState(authorField);
                 UIUtils.resetErrorLabel(authorErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(authorField);
             UIUtils.resetErrorLabel(authorErrorLabel);
         }
     }
 
+    /**
+     * Checks if the entered publisher name is valid
+     */
     private void checkPublisherValid() {
         String publisher = publisherField.getText();
 
+        // Check if the entered publisher name is not empty
         if (!publisher.trim().isEmpty()) {
+            // Validate the publisher name
             ValidationResult publisherNameValidation = ValidationHandler.validateFullName(publisher);
             isPublisherValid = publisherNameValidation.isValid();
 
+            // If publisher name is invalid, mark the field as errorneous and display error message
             if (!publisherNameValidation.isValid()) {
                 UIUtils.setFieldErrorState(publisherField);
                 UIUtils.setErrorLabelMessage(publisherErrorLabel, publisherNameValidation.getErrorMessage());
             } else {
+                // If the publisher name is valid, reset the field state and clear error message
                 UIUtils.resetFieldState(publisherField);
                 UIUtils.resetErrorLabel(publisherErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(publisherField);
             UIUtils.resetErrorLabel(publisherErrorLabel);
         }
     }
 
+    /**
+     * Checks if the entered publication year is valid.
+     */
     private void checkYearValid() {
         String publicationYear = yearField.getText();
 
+        // Check if the entered publication year is not empty
         if (!publicationYear.trim().isEmpty()) {
+            // Validate the publication year
             ValidationResult publicationYearValidation = ValidationHandler.validateYear(publicationYear);
             isPublicationYearValid = publicationYearValidation.isValid();
 
+            // If publication year is invalid, mark the field as errorneous and display error message
             if (!publicationYearValidation.isValid()) {
                 UIUtils.setFieldErrorState(yearField);
                 UIUtils.setErrorLabelMessage(yearErrorLabel, publicationYearValidation.getErrorMessage());
             } else {
+                // If the publication year is valid, reset the field state and clear error message
                 UIUtils.resetFieldState(yearField);
                 UIUtils.resetErrorLabel(yearErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(yearField);
             UIUtils.resetErrorLabel(yearErrorLabel);
         }
     }
 
+    /**
+     * Checks if the entered stock quantity is valid.
+     */
     private void checkQuantityValid() {
         String quantity = quantityField.getText();
 
+        // Check if the entered stock quantity is not empty
         if (!quantity.trim().isEmpty()) {
+            // Validate the stock quantity
             ValidationResult quantityValidation = ValidationHandler.validateStockQuantity(quantity);
             isStockQuantityValid = quantityValidation.isValid();
 
+            // If stock quantity is invalid, mark the field as errorneous and display error message
             if (!quantityValidation.isValid()) {
                 UIUtils.setFieldErrorState(quantityField);
                 UIUtils.setErrorLabelMessage(quantityErrorLabel, quantityValidation.getErrorMessage());
             } else {
+                // If the stock quantity is valid, reset the field state and clear error message
                 UIUtils.resetFieldState(quantityField);
                 UIUtils.resetErrorLabel(quantityErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(quantityField);
             UIUtils.resetErrorLabel(quantityErrorLabel);
         }
     }
 
+    /**
+     * Checks if the entered unit price is valid.
+     */
     private void checkUnitPriceValid() {
         String unitPrice = unitPriceField.getText();
 
+        // Check if the entered unit price is not empty
         if (!unitPrice.trim().isEmpty()) {
+            // Validate the unit price
             ValidationResult unitPriceValidation = ValidationHandler.validateUnitPrice(unitPrice);
             isUnitPriceValid = unitPriceValidation.isValid();
 
+            // If unit price is invalid, mark the field as errorneous and display error message
             if (!unitPriceValidation.isValid()) {
                 UIUtils.setFieldErrorState(unitPriceField);
                 UIUtils.setErrorLabelMessage(unitPriceErrorLabel, unitPriceValidation.getErrorMessage());
             } else {
+                // If the unit price is valid, reset the field state and clear error message
                 UIUtils.resetFieldState(unitPriceField);
                 UIUtils.resetErrorLabel(unitPriceErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(unitPriceField);
             UIUtils.resetErrorLabel(unitPriceErrorLabel);
         }
     }
 
+    /**
+     * Checks if the entered discount is valid.
+     */
     private void checkDiscountValid() {
         String discount = discountField.getText();
 
+        // Check if the entered discount is not empty
         if (!discount.trim().isEmpty()) {
+            // Validate the discount
             ValidationResult discountValidation = ValidationHandler.validateDiscount(discount);
             isValidDiscount = discountValidation.isValid();
 
+            // If discount is invalid, mark the field as errorneous and display error message
             if (!discountValidation.isValid()) {
                 UIUtils.setFieldErrorState(discountField);
                 UIUtils.setErrorLabelMessage(discountErrorLabel, discountValidation.getErrorMessage());
             } else {
+                // If the discount is valid, reset the field state and clear error message
                 UIUtils.resetFieldState(discountField);
                 UIUtils.resetErrorLabel(discountErrorLabel);
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(discountField);
             UIUtils.resetErrorLabel(discountErrorLabel);
         }
     }
 
+    /**
+     * Checks if the entered ISBN is valid.
+     */
     private void checkISBNValid() {
         String isbn = isbnField.getText();
 
+        // Check if the entered ISBN is not empty
         if (!isbn.trim().isEmpty()) {
+            // Validate the ISBN
             ValidationResult isbnValidation = ValidationHandler.validateISBN(isbn);
 
+            // If the ISBN is valid, check if the ISBN is unique
             if (isbnValidation.isValid()) {
                 try {
+                    // Check if the ISBN is unique
                     ValidationResult isbnUniqueValidation = ValidationHandler.checkUniqueISBN(isbn);
                     isISBNValid = isbnUniqueValidation.isValid();
 
+                    // If the ISBN is not unique, mark the field as errorneous and display error message
                     if (!isbnUniqueValidation.isValid()) {
                         UIUtils.setFieldErrorState(isbnField);
                         UIUtils.setErrorLabelMessage(isbnErrorLabel, isbnUniqueValidation.getErrorMessage());
                     } else {
+                        // If the ISBN is unique, reset the field state and clear error message
                         UIUtils.resetFieldState(isbnField);
                         UIUtils.resetErrorLabel(isbnErrorLabel);
                     }
@@ -242,22 +316,30 @@ public class AddProductPage extends javax.swing.JInternalFrame {
                     Logger.getLogger(AddProductPage.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
+                // If the ISBN is invalid, mark the field as errorneous and display error message
                 UIUtils.setFieldErrorState(isbnField);
                 UIUtils.setErrorLabelMessage(isbnErrorLabel, isbnValidation.getErrorMessage());
             }
         } else {
+            // If field is empty, reset the field state and clear error message, if any
             UIUtils.resetFieldState(isbnField);
             UIUtils.resetErrorLabel(isbnErrorLabel);
         }
     }
 
+    /**
+     * Calculates the net price based on the entered unit price and discount,
+     * and updates the net price field.
+     */
     private void calculateNetPrice() {
+        // Check if the unit price field is not empty
         if (!unitPriceField.getText().trim().isEmpty()) {
             double unitPrice = Double.parseDouble(unitPriceField.getText().trim());
             double discount = discountField.getText().isEmpty() ? 0 : Double.parseDouble(discountField.getText());
             double netPrice = unitPrice * (1 - discount / 100);
             netPriceField.setText(String.format("%.2f", netPrice));
         } else {
+            // If the unit price field is empty, set the net price field to 0
             netPriceField.setText("0.00");
         }
     }
@@ -822,6 +904,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
                 "Image Files", "jpg", "jpeg", "png");
         fileChooser.addChoosableFileFilter(filter);
 
+        // An image file has chosen
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileChooser.getSelectedFile();
             ImageIcon imageIcon = new ImageIcon(selectedFile.getPath());
@@ -834,77 +917,78 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_uploadPicturePanelMouseClicked
 
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
+        // Check if the book title field is empty
         if (bookTitleField.getText().trim().isEmpty()) {
             isBookTitleValid = false;
             UIUtils.markFieldAsRequired(bookTitleField, bookTitleErrorLabel);
         }
 
+        // Check if the ISBN field is empty
         if (isbnField.getText().trim().isEmpty()) {
             isISBNValid = false;
             UIUtils.markFieldAsRequired(isbnField, isbnErrorLabel);
         }
 
+        // Check if the author field is empty
         if (authorField.getText().trim().isEmpty()) {
             isAuthorValid = false;
             UIUtils.markFieldAsRequired(authorField, authorErrorLabel);
         }
 
+        // Check if the publisher field is empty
         if (publisherField.getText().trim().isEmpty()) {
             isPublisherValid = false;
             UIUtils.markFieldAsRequired(publisherField, publisherErrorLabel);
         }
 
+        // Check if the publication year is empty
         if (yearField.getText().trim().isEmpty()) {
             isPublicationYearValid = false;
             UIUtils.markFieldAsRequired(yearField, yearErrorLabel);
         }
 
+        // Check if the quantity field is empty
         if (quantityField.getText().trim().isEmpty()) {
             isStockQuantityValid = false;
             UIUtils.markFieldAsRequired(quantityField, quantityErrorLabel);
         }
 
+        // Check if the unit price field is empty
         if (unitPriceField.getText().isEmpty()) {
             isUnitPriceValid = false;
             UIUtils.markFieldAsRequired(unitPriceField, unitPriceErrorLabel);
         }
 
+        // Check if the discount field is empty
         if (discountField.getText().isEmpty()) {
             isValidDiscount = false;
             UIUtils.markFieldAsRequired(discountField, discountErrorLabel);
         }
 
+        // Check if a genre is selected from the combo box
         if (genreComboBox.getSelectedItem().equals(genreComboBox.getItemAt(0))) {
             isGenreSelected = false;
             UIUtils.setErrorLabelMessage(genreErrorLabel, "Please select a value");
         }
 
+        // Check if a language is selected from the combo box
         if (languageComboBox.getSelectedItem().equals(languageComboBox.getItemAt(0))) {
             isLanguageSelected = false;
             UIUtils.setErrorLabelMessage(languageErrorLabel, "Please select a value");
         }
 
+        // Check if a cover page has been selected
         if (selectedFile == null) {
             UIUtils.setErrorLabelMessage(coverPageErrorLabel, "Please select an image");
         }
 
-        System.out.println(isBookTitleValid);
-        System.out.println(isISBNValid);
-        System.out.println(isGenreSelected);
-        System.out.println(isLanguageSelected);
-        System.out.println(isAuthorValid);
-        System.out.println(isPublisherValid);
-        System.out.println(isPublicationYearValid);
-        System.out.println(isUnitPriceValid);
-        System.out.println(isStockQuantityValid);
-        System.out.println(isValidDiscount);
-        System.out.println(selectedFile);
-
+        // If all fields are valid and a cover page has been selected
         if (isBookTitleValid && isISBNValid && isGenreSelected
                 && isLanguageSelected && isAuthorValid && isPublisherValid
                 && isPublicationYearValid && isUnitPriceValid
                 && isStockQuantityValid && isValidDiscount
                 && selectedFile != null) {
+            // Set the data for the new book
             bookData.setBookTitle(bookTitleField.getText().trim());
             bookData.setAuthor(authorField.getText().trim());
             bookData.setISBN(isbnField.getText().trim());
@@ -918,9 +1002,11 @@ public class AddProductPage extends javax.swing.JInternalFrame {
             bookData.setNetPrice();
 
             try {
+                // Convert selected image file to byte array
                 byte[] coverPage = ImageUtils.convertFileToByteArray(selectedFile);
                 bookData.setCoverPage(coverPage);
 
+                // Save book data to database
                 try {
                     BookDAO.saveBookDataToDatabase(bookData);
                     UIUtils.displaySuccessMessage("Book added successfully");
@@ -1025,7 +1111,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     private void unitPriceFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_unitPriceFieldKeyTyped
         char c = evt.getKeyChar();
 
-        // Only accepts digits and limits the length to 4 characters
+        // Only accepts digits and decimal point
         if (!Character.isDigit(c) && c != '.') {
             evt.consume();
         }
@@ -1034,7 +1120,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
     private void quantityFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityFieldKeyTyped
         char c = evt.getKeyChar();
 
-        // Only accepts digits and limits the length to 4 characters
+        // Only accepts digits
         if (!Character.isDigit(c)) {
             evt.consume();
         }
@@ -1042,26 +1128,18 @@ public class AddProductPage extends javax.swing.JInternalFrame {
 
     private void genreComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genreComboBoxActionPerformed
         UIUtils.resetErrorLabel(genreErrorLabel);
-        if (genreComboBox.getSelectedIndex() != 0) {
-            isGenreSelected = true;
-        } else {
-            isGenreSelected = false;
-        }
+        isGenreSelected = genreComboBox.getSelectedIndex() != 0;
     }//GEN-LAST:event_genreComboBoxActionPerformed
 
     private void languageComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_languageComboBoxActionPerformed
         UIUtils.resetErrorLabel(languageErrorLabel);
-        if (languageComboBox.getSelectedIndex() != 0) {
-            isLanguageSelected = true;
-        } else {
-            isLanguageSelected = false;
-        }
+        isLanguageSelected = languageComboBox.getSelectedIndex() != 0;
     }//GEN-LAST:event_languageComboBoxActionPerformed
 
     private void discountFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_discountFieldKeyTyped
         char c = evt.getKeyChar();
 
-        // Only accepts digits and limits the length to 4 characters
+        // Only accepts digits and decimal point
         if (!Character.isDigit(c) && c != '.') {
             evt.consume();
         }
