@@ -48,7 +48,7 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
     private String[][] readDataFromDatabase() {
         try (Connection connection = DatabaseManager.getConnection()) {
             int i = 0;
-            int rowNumber = BookDAO.getRowCount("sales_detail");
+            int rowNumber = BookDAO.getRowCount("sales_detail s INNER JOIN customer c ON s.customer_id  = c.customer_id INNER JOIN user u ON s.salesperson_id = user_id ");
             String[][] data = new String[rowNumber][7];//0-sales_id;1-salesperson_id;2-customer_id;3-sales_date;4-total_price;5-customer_name;6-salesperson_name
             for (i = 0; i < rowNumber; i++) {
                 data[i][0] = "";
@@ -84,7 +84,7 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
     private String[][] readDataFromDatabase(String condition, String orderBy) {
         try (Connection connection = DatabaseManager.getConnection()) {
             int i;
-            int rowNumber = BookDAO.getRowCount("sales_detail", condition);
+            int rowNumber = BookDAO.getRowCount("sales_detail s INNER JOIN customer c ON s.customer_id  = c.customer_id INNER JOIN user u ON s.salesperson_id = user_id ", condition);
             String[][] data = new String[rowNumber][7];//0-sales_id;1-salesperson_id;2-customer_id;3-sales_date;4-total_price;5-customer_name;6-salesperson_name
             for (i = 0; i < rowNumber; i++) {
                 data[i][0] = "";
@@ -122,7 +122,7 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
     private String getSelection() {
         String searchBy = null;
         switch (searchType.getSelectedIndex()) {
-            case 0 -> searchBy = "sales_id";
+            case 0 -> searchBy = "all";
             case 1 -> searchBy = "sales_id";
             case 2 -> searchBy = "customer_name";
             case 3 -> searchBy = "salesperson_id";
@@ -344,7 +344,18 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        String condition;
+        // Construct the SQL condition for the search
+        if(searchBy.equals("all")){
+            searchBy = "sales_id";
+            condition = "sales_id LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "customer_name LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "salesperson_id LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "salesperson_id LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "sales_date LIKE \'"+searchBar.getText()+"%\'";
+        }else{
+            condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        }
         displayRow(readDataFromDatabase(condition, searchBy));
     }//GEN-LAST:event_searchBarActionPerformed
 
@@ -357,7 +368,6 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
     private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
         if (evt.getClickCount() == 2) {
             int selectRow = displayTable.getSelectedRow();
-            System.out.println("Selected row  " + selectRow);
             String[] invoiceData = new String[4];
             invoiceData[0] = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 0);
             invoiceData[1] = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 4);
