@@ -122,12 +122,18 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
     private String getSelection() {
         String searchBy = null;
         switch (searchType.getSelectedIndex()) {
-            case 0 -> searchBy = "all";
-            case 1 -> searchBy = "sales_id";
-            case 2 -> searchBy = "customer_name";
-            case 3 -> searchBy = "salesperson_id";
-            case 4 -> searchBy = "username";
-            case 5 -> searchBy = "sales_date";
+            case 0 -> 
+                searchBy = "all";
+            case 1 -> 
+                searchBy = "sales_id";
+            case 2 -> 
+                searchBy = "customer_name";
+            case 3 -> 
+                searchBy = "salesperson_id";
+            case 4 -> 
+                searchBy = "username";
+            case 5 -> 
+                searchBy = "sales_date";
         }
         return searchBy;
     }
@@ -361,7 +367,18 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        String condition;
+        // Construct the SQL condition for the search
+        if(searchBy.equals("all")){
+            searchBy = "sales_id";
+            condition = "sales_id LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "customer_name LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "salesperson_id LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "salesperson_id LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "sales_date LIKE \'"+searchBar.getText()+"%\'";
+        }else{
+            condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        }
         displayRow(readDataFromDatabase(condition, searchBy));
     }//GEN-LAST:event_searchButtonMouseClicked
 

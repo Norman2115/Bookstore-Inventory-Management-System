@@ -35,7 +35,7 @@ public class RestockPage extends javax.swing.JInternalFrame {
     private void displaySideComponents() {
         try {
             int outOfStock = BookDAO.getRowCount("book", "stock_quantity = 0");
-            int lowStock = BookDAO.getRowCount("book", "stock_quantity < " + lowStockValue);
+            int lowStock = BookDAO.getRowCount("book", "stock_quantity < " + lowStockValue) - outOfStock;
             int amountOfProduct = BookDAO.getRowCount("book");
             outOfStockLabel.setText(String.valueOf(outOfStock));
             lowStockLabel.setText(String.valueOf(lowStock));
