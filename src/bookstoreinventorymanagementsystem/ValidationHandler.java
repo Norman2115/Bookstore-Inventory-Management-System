@@ -1,6 +1,5 @@
 package bookstoreinventorymanagementsystem;
 
-import bookstoreinventorymanagementsystem.ValidationResult;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -375,7 +374,7 @@ public class ValidationHandler {
      * and does not end with a space.
      */
     public static boolean containsOnlySingleSpace(String str) {
-        return str.matches("^\\s*[a-zA-Z0-9]+(?:\\s[a-zA-Z0-9]+)*\\s*$");
+        return str.matches("^\\s*[a-zA-Z0-9.,!?()'\"]+(?:\\s[a-zA-Z0-9.,!?()'\"]+)*\\s*$");
     }
 
     /**
@@ -418,12 +417,20 @@ public class ValidationHandler {
     public static boolean containsOnlyNumbersAndDecimalPoint(String str) {
         return str.matches("[0-9]+(\\.[0-9]+)?");
     }
+    public static boolean containNotMoreThanTwoDecimalPlace(String str){
+        return str.matches("[0-9]+(\\.[0-9]{0,2})?");
+    }
 
     public static ValidationResult validateUnitPrice(String unitPrice) {
+       
         if (!containsOnlyNumbersAndDecimalPoint(unitPrice)) {
             return new ValidationResult(false, "Must contain only digits and a decimal point");
         }
-
+ 
+        if(!containNotMoreThanTwoDecimalPlace(unitPrice)&&containsOnlyNumbersAndDecimalPoint(unitPrice)){
+                return new ValidationResult(false, "Value cannot exceed two decimal places");
+        }
+        
         if (Double.parseDouble(unitPrice) < 0) {
             return new ValidationResult(false, "Value cannot be negative");
         }
@@ -436,6 +443,10 @@ public class ValidationHandler {
             return new ValidationResult(false, "Must contain only digits and a decimal point");
         }
 
+        if(!containNotMoreThanTwoDecimalPlace(discount)&&containsOnlyNumbersAndDecimalPoint(discount)){
+                return new ValidationResult(false, "Value cannot exceed two decimal places");
+        }
+        
         if (Double.parseDouble(discount) < 0 || Double.parseDouble(discount) > 100) {
             return new ValidationResult(false, "Must be between 0 and 100");
         }
@@ -476,6 +487,19 @@ public class ValidationHandler {
             return new ValidationResult(false, "Invalid length for ISBN");
         }
 
+        return new ValidationResult(true, null);
+    }
+    
+    public static ValidationResult validateBookTitle(String bookTitle) {
+        
+        if (!bookTitle.matches("^[\\p{L}\\d\\s.,!?()'\"]+$")) {
+            return new ValidationResult(false, "Must contain only letters,number,and some punctuation marks");
+        }
+
+        if (!containsOnlySingleSpace(bookTitle)) {
+            return new ValidationResult(false, "Must contain at most one space between characters");
+        }
+        
         return new ValidationResult(true, null);
     }
 }

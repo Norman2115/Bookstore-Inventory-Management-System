@@ -125,7 +125,7 @@ public class EditProductInfoPage extends javax.swing.JInternalFrame {
         // Check if the entered book title is not empty
         if (!bookTitle.trim().isEmpty()) {
             // Validate the book title
-            ValidationResult bookTitleValidation = ValidationHandler.validateFullName(bookTitle);
+            ValidationResult bookTitleValidation = ValidationHandler.validateBookTitle(bookTitle);
             isBookTitleValid = bookTitleValidation.isValid();
 
             // If book title is invalid, mark the field as errorneous and display error message
