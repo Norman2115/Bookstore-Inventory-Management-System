@@ -17,7 +17,6 @@ public class ManageOrder extends javax.swing.JFrame {
     private final UserData userData;
     private final SalesData salesData;
     private double finalTotalPrice = 0;
-    private String customerID;
 
     /**
      * Creates new form ManageOrder
@@ -158,11 +157,6 @@ public class ManageOrder extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
-            }
-        });
-        productTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                productTableMouseClicked(evt);
             }
         });
         jScrollPane3.setViewportView(productTable);
@@ -658,15 +652,16 @@ public class ManageOrder extends javax.swing.JFrame {
     private void placeOrderButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeOrderButtonMouseClicked
         // Check if customer is selected and cart is not empty
         if (!customerSelectionComboBox.getSelectedItem().equals("Please Select") && cartTable.getRowCount() > 0) {
-            salesData.setSalespersonID(userData.getUserID());
-            salesData.setCustomerID(selectedCustomerIDLabel.getText());
-            String formattedTotalPrice = String.format("%.2f", finalTotalPrice);
-            salesData.setTotalPrice(Double.parseDouble(formattedTotalPrice));
-
             try {
+                salesData.setSalesID(SalesDAO.setNextSalesID());
+                salesData.setSalespersonID(userData.getUserID());
+                salesData.setCustomerID(selectedCustomerIDLabel.getText());
+                String formattedTotalPrice = String.format("%.2f", finalTotalPrice);
+                salesData.setTotalPrice(Double.parseDouble(formattedTotalPrice));
                 SalesDAO.saveSalesData(salesData, cartTable);
+                UIUtils.displaySuccessMessage("Order placed. Sales ID: " + salesData.getSalesID());
                 dispose();
-                new ManageSales(salesData, userData).setVisible(true);
+                new SalespersonHomePage(userData).setVisible(true);
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage("Failed to save sales data: " + ex.getMessage());
                 Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to save sales data", ex);
@@ -682,7 +677,6 @@ public class ManageOrder extends javax.swing.JFrame {
 
         try {
             CustomerData customer = CustomerDAO.getCustomerByName(selectedCustomerName);
-            customerID = customer.getCustomerID();
             selectedCustomerIDLabel.setText(customer.getCustomerID());
             selectedCustomerNameLabel.setText(customer.getFullName());
         } catch (SQLException ex) {
@@ -694,13 +688,6 @@ public class ManageOrder extends javax.swing.JFrame {
     private void orderQuantityFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderQuantityFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_orderQuantityFieldActionPerformed
-
-    private void productTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productTableMouseClicked
-//        int index = productTable.getSelectedRow();
-//        TableModel model = productTable.getModel();
-//        String id = model.getValueAt(index, 0).toString();
-//        productPk = id;
-    }//GEN-LAST:event_productTableMouseClicked
 
     private void cartTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartTableMouseClicked
         int index = cartTable.getSelectedRow();

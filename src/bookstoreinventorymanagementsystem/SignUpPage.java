@@ -20,10 +20,6 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
     private boolean isUsernameValid;
     private boolean isPasswordValid;
     private boolean isEmailValid;
-    private String fullName;
-    private String username;
-    private String password;
-    private String email;
 
     /**
      * Creates new form SignUpPage.
@@ -51,15 +47,11 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
     @Override
     public void onReturnFromNextPage() {
         if (userDataStack != null && !userDataStack.isEmpty()) {
-            fullName = userData.getFullName();
-            email = userData.getEmail();
-            username = userData.getUsername();
-            password = userData.getPassword();
             userData = userDataStack.popPageData();
-            fullNameField.setText(fullName);
-            emailField.setText(email);
-            usernameField.setText(username);
-            passwordField.setText(password);
+            fullNameField.setText(userData.getFullName());
+            emailField.setText(userData.getEmail());
+            usernameField.setText(userData.getUsername());
+            passwordField.setText(userData.getPassword());
             isFullNameValid = true;
             isUsernameValid = true;
             isPasswordValid = true;
@@ -499,9 +491,11 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
         // Check if any required field is empty and mark it as required if so
         if (fullNameField.getText().trim().isEmpty()) {
+            isFullNameValid = false;
             UIUtils.markFieldAsRequired(fullNameField, fullNameErrorLabel);
         }
         if (emailField.getText().trim().isEmpty()) {
+            isEmailValid = false;
             UIUtils.markFieldAsRequired(emailField, emailErrorLabel);
         }
         if (usernameField.getText().trim().isEmpty()) {
@@ -513,10 +507,10 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
 
         // If all fields are valid, set user data and proceed to sign-up email verification
         if (isFullNameValid && isEmailValid && isUsernameValid && isPasswordValid) {
-            userData.setFullName(fullName);
-            userData.setEmail(email);
-            userData.setUsername(username);
-            userData.setPassword(password);
+            userData.setFullName(fullNameField.getText().trim());
+            userData.setEmail(emailField.getText().trim());
+            userData.setUsername(usernameField.getText().trim());
+            userData.setPassword(new String(passwordField.getPassword()).trim());
             onProceedToNextPage();
             dispose();
             new SignUpEmailVerificationPage(userData, userDataStack).setVisible(true);
@@ -565,121 +559,134 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
     }//GEN-LAST:event_goToLoginButtonMouseClicked
 
     private void fullNameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fullNameFieldKeyReleased
-        fullName = fullNameField.getText();
+        String fullName = fullNameField.getText();
 
-        // Check if the entered full name is not empty
-        if (!fullName.trim().isEmpty()) {
-            // Validate the full name
-            ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
-            isFullNameValid = fullNameValidation.isValid();
+        if (fullName.trim().isEmpty()) {
+            // Reset the field state and clear the error message, if any
+            UIUtils.resetFieldState(fullNameField);
+            UIUtils.resetErrorLabel(fullNameErrorLabel);
+            return;
+        }
 
-            // If full name is invalid, mark the field as errorneous and display error message
-            if (!fullNameValidation.isValid()) {
-                UIUtils.setFieldErrorState(fullNameField);
-                UIUtils.setErrorLabelMessage(fullNameErrorLabel, fullNameValidation.getErrorMessage());
-            } else {
-                // If the full name is valid, reset the field state and clear error message
-                UIUtils.resetFieldState(fullNameField);
-                UIUtils.resetErrorLabel(fullNameErrorLabel);
-            }
+        // Validate the full name
+        ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
+        isFullNameValid = fullNameValidation.isValid();
+
+        // If full name is invalid, mark the field as erroneous and display an error message
+        if (!fullNameValidation.isValid()) {
+            UIUtils.setFieldErrorState(fullNameField);
+            UIUtils.setErrorLabelMessage(fullNameErrorLabel, fullNameValidation.getErrorMessage());
         } else {
-            // If field is empty, reset the field state and clear error message, if any
+            // If the full name is valid, reset the field state and clear the error message
             UIUtils.resetFieldState(fullNameField);
             UIUtils.resetErrorLabel(fullNameErrorLabel);
         }
     }//GEN-LAST:event_fullNameFieldKeyReleased
 
     private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyReleased
-        email = emailField.getText();
+        String email = emailField.getText();
 
-        // Check if the entered email is not empty
-        if (!email.trim().isEmpty()) {
-            // Validate the email
-            ValidationResult emailValidation = ValidationHandler.validateEmail(email);
-            isEmailValid = emailValidation.isValid();
+        // Check if the entered email is empty
+        if (email.trim().isEmpty()) {
+            // Reset the field state and clear the error message, if any
+            UIUtils.resetFieldState(emailField);
+            UIUtils.resetErrorLabel(emailErrorLabel);
+            return;
+        }
 
-            // If the email is invalid, mark the field as errorneous and display error message
-            if (!emailValidation.isValid()) {
+        // Validate the email
+        ValidationResult emailValidation = ValidationHandler.validateEmail(email);
+
+        // If the email is invalid, mark the field as erroneous and display an error message
+        if (!emailValidation.isValid()) {
+            UIUtils.setFieldErrorState(emailField);
+            UIUtils.setErrorLabelMessage(emailErrorLabel, emailValidation.getErrorMessage());
+            return;
+        }
+
+        // If the email is valid, attempt to check if it's unique
+        try {
+            ValidationResult emailUniqueValidation = ValidationHandler.checkUniqueEmail(email);
+            isEmailValid = emailUniqueValidation.isValid();
+
+            // If the email is not unique, mark the field as erroneous and display an error message
+            if (!emailUniqueValidation.isValid()) {
                 UIUtils.setFieldErrorState(emailField);
-                UIUtils.setErrorLabelMessage(emailErrorLabel, emailValidation.getErrorMessage());
+                UIUtils.setErrorLabelMessage(emailErrorLabel, emailUniqueValidation.getErrorMessage());
             } else {
-                // If the email is valid, reset the field state and clear error message
+                // If the email is unique, reset the field state and clear the error message
                 UIUtils.resetFieldState(emailField);
                 UIUtils.resetErrorLabel(emailErrorLabel);
             }
-        } else {
-            // If field is empty, reset the field state and clear error message, if any
-            UIUtils.resetFieldState(emailField);
-            UIUtils.resetErrorLabel(emailErrorLabel);
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage("Failed to check unqiue email: " + ex.getMessage());
+            Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, "Failed to check unqiue email", ex);
         }
     }//GEN-LAST:event_emailFieldKeyReleased
 
     private void usernameFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyReleased
-        username = usernameField.getText();
+        String username = usernameField.getText();
 
-        // Check if the entered username is not empty
-        if (!username.trim().isEmpty()) {
-            // Validate the username
-            ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
-
-            // If the username is invalid, mark the field as errorneous and display error message
-            if (!usernameValidation.isValid()) {
-                UIUtils.setFieldErrorState(usernameField);
-                UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
-            } else {
-                // If the username is valid, reset the field state and clear error message
-                UIUtils.setFieldErrorState(usernameField);
-                UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
-
-                try {
-                    // Check if the username is unique
-                    ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
-                    isUsernameValid = usernameUniqueValidation.isValid();
-
-                    // If the username is not unique, mark the field as errorneous and display error message
-                    if (!usernameUniqueValidation.isValid()) {
-                        UIUtils.setFieldErrorState(usernameField);
-                        UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameUniqueValidation.getErrorMessage());
-                    } else {
-                        // If the username is unique, reset the field state and clear error message
-                        UIUtils.resetFieldState(usernameField);
-                        UIUtils.resetErrorLabel(usernameErrorLabel);
-                    }
-                } catch (SQLException ex) {
-                    UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                    Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                } catch (NullPointerException ex) {
-                    UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
-                    Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                }
-            }
-        } else {
-            // If field is empty, reset the field state and clear error message, if any
+        // Check if the entered username is empty
+        if (username.trim().isEmpty()) {
+            // Reset the field state and clear the error message, if any
             UIUtils.resetFieldState(usernameField);
             UIUtils.resetErrorLabel(usernameErrorLabel);
+            // Early return since the field is empty
+            return;
+        }
+
+        // Validate the username
+        ValidationResult usernameValidation = ValidationHandler.validateUsername(username);
+
+        // If the username is invalid, mark the field as erroneous and display an error message
+        if (!usernameValidation.isValid()) {
+            UIUtils.setFieldErrorState(usernameField);
+            UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
+            return;
+        }
+
+        // If the username is valid, attempt to check if it's unique
+        try {
+            ValidationResult usernameUniqueValidation = ValidationHandler.checkUniqueUsername(username);
+            isUsernameValid = usernameUniqueValidation.isValid();
+
+            // If the username is not unique, mark the field as erroneous and display an error message
+            if (!usernameUniqueValidation.isValid()) {
+                UIUtils.setFieldErrorState(usernameField);
+                UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameUniqueValidation.getErrorMessage());
+            } else {
+                // If the username is unique, reset the field state and clear the error message
+                UIUtils.resetFieldState(usernameField);
+                UIUtils.resetErrorLabel(usernameErrorLabel);
+            }
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage("Failed to check unique username: " + ex.getMessage());
+            Logger.getLogger(SignUpPage.class.getName()).log(Level.SEVERE, "Failed to check unique username", ex);
         }
     }//GEN-LAST:event_usernameFieldKeyReleased
 
     private void passwordFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyReleased
-        password = new String(passwordField.getPassword());
+        // Get the entered password from the password field
+        String password = new String(passwordField.getPassword());
 
-        // Check if the entered password is not empty
-        if (!password.trim().isEmpty()) {
-            // Validate the password
-            ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
-            isPasswordValid = passwordValidation.isValid();
+        // Check if the entered password is empty
+        if (password.trim().isEmpty()) {
+            // Reset the field state and clear the error message, if any
+            UIUtils.resetFieldState(passwordField);
+            UIUtils.resetErrorLabel(passwordErrorLabel);
+        }
 
-            // If the password is invalid, mark the field as errorneous and display error message
-            if (!passwordValidation.isValid()) {
-                UIUtils.setFieldErrorState(passwordField);
-                UIUtils.setErrorLabelMessage(passwordErrorLabel, passwordValidation.getErrorMessage());
-            } else {
-                // If the password is invalid, reset the field state and clear error message
-                UIUtils.resetFieldState(passwordField);
-                UIUtils.resetErrorLabel(passwordErrorLabel);
-            }
+        // Validate the password
+        ValidationResult passwordValidation = ValidationHandler.validatePassword(password);
+        isPasswordValid = passwordValidation.isValid();
+
+        // If the password is invalid, mark the field as erroneous and display an error message
+        if (!passwordValidation.isValid()) {
+            UIUtils.setFieldErrorState(passwordField);
+            UIUtils.setErrorLabelMessage(passwordErrorLabel, passwordValidation.getErrorMessage());
         } else {
-            // If field is empty, reset the field state and clear error message, if any
+            // If the password is valid, reset the field state and clear the error message
             UIUtils.resetFieldState(passwordField);
             UIUtils.resetErrorLabel(passwordErrorLabel);
         }

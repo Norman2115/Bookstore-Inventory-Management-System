@@ -41,5 +41,4 @@ public class ModelMonth {
     public String toString() {
         return monthText;
     }
-
 }

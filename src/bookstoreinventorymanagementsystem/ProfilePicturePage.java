@@ -379,15 +379,12 @@ public class ProfilePicturePage extends javax.swing.JFrame {
                     dispose();
                     new SignUpSuccessfulPage().setVisible(true);
                 } catch (SQLException ex) {
-                    UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                    Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                } catch (NullPointerException ex) {
-                    UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
-                    Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                    UIUtils.displayErrorMessage("Failed to save user data: " + ex.getMessage());
+                    Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, "Failed to save user data", ex);
                 }
             } catch (IOException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
-                Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                UIUtils.displayErrorMessage("Failed to convert picture to the required format: " + ex.getMessage());
+                Logger.getLogger(ProfilePicturePage.class.getName()).log(Level.SEVERE, "Failed to convert picture to the required format", ex);
             }
         } else {
             // If no profile picture is selected, display error message

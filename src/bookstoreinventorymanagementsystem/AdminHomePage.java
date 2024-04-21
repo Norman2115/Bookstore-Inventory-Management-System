@@ -17,72 +17,73 @@ public class AdminHomePage extends javax.swing.JFrame {
     public AdminHomePage(UserData userData) {
         initComponents();
         displayPanel.removeAll();
-        Dashboard text = new Dashboard(userData.getUsername());
+        AdminDashboard text = new AdminDashboard(userData);
         displayPanel.add(text).setVisible(true);
-
+        
+        ImageUtils.setPicture(profilePictureLabel, userData.getProfilePicture());
     }
 
     /**
-     * Creates and displays the edit product view page.
+     * Creates and displays the edit book view page.
      */
-    public static void createEditProductViewPage() {
+    public static void createEditBookViewPage() {
         displayPanel.removeAll();
-        EditProductViewPage editProductViewPage = new EditProductViewPage();
+        EditBookViewPage editProductViewPage = new EditBookViewPage();
         displayPanel.add(editProductViewPage).setVisible(true);
     }
 
     /**
-     * Creates and displays the edit product information page.
+     * Creates and displays the edit book information page.
      *
      * @param bookData the book data to be edited.
      * 
      */
-    public static void createEditProductInfoPage(BookData bookData) {
+    public static void createEditBookInfoPage(BookData bookData) {
         displayPanel.removeAll();
-        EditProductInfoPage editProductInfoPage = new EditProductInfoPage();
+        EditBookInfoPage editProductInfoPage = new EditBookInfoPage();
         displayPanel.add(editProductInfoPage).setVisible(true);
         editProductInfoPage.fillProductInfo(bookData);
     }
 
     /**
-     * Creates and displays the product detail page.
+     * Creates and displays the book detail page.
      * 
      * @param bookData the book data to be displayed.
      */
-    public static void createProductDetailPage(BookData bookData) {
+    public static void createBookDetailPage(BookData bookData) {
         displayPanel.removeAll();
         BookDetailPage bookDetailPage = new BookDetailPage();
         displayPanel.add(bookDetailPage).setVisible(true);
-        bookDetailPage.fillProductInfo(bookData);
+        bookDetailPage.fillBookInfo(bookData);
     }
 
     /**
-     * Creates and displays the view product page.
+     * Creates and displays the view book page.
      */
-    public static void createViewProductPage() {
+    public static void createViewBookPage() {
         displayPanel.removeAll();
-        ViewProductPage viewProductPage = new ViewProductPage();
+        ViewBookPage viewProductPage = new ViewBookPage();
         displayPanel.add(viewProductPage).setVisible(true);
     }
 
     /**
-     * Creates and displays the view invoice page.
+     * Creates and displays the view sales page.
      * 
-     * @param invoiceData the invoice data to be displayed.
+     * @param invoiceData the sales data to be displayed.
      */
-    public static void createInvoiceDetailPage(String[] invoiceData) {
+    public static void createSalesDetailPage(String[] invoiceData) {
         displayPanel.removeAll();
-        InvoiceDetailPage invoiceDetailPage = new InvoiceDetailPage();
+        SalesDetailPage invoiceDetailPage = new SalesDetailPage();
         invoiceDetailPage.fillData(invoiceData);
         displayPanel.add(invoiceDetailPage).setVisible(true);
     }
 
     /**
-     * Creates and displays the view invoice page.
+     * Creates and displays the view sales page.
      */
-    public static void createViewInvoicePage() {
+    public static void createViewSalesPage() {
         displayPanel.removeAll();
-        ViewInvoicePage viewInvoicePage = new ViewInvoicePage();
+        ViewSalesPage viewInvoicePage = new ViewSalesPage();
         displayPanel.add(viewInvoicePage).setVisible(true);
     }
 
@@ -442,10 +443,10 @@ public class AdminHomePage extends javax.swing.JFrame {
         );
         profilePicturePanelLayout.setVerticalGroup(
             profilePicturePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(profilePicturePanelLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profilePicturePanelLayout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(profilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout sideNavBarLayout = new javax.swing.GroupLayout(sideNavBar);
@@ -468,7 +469,7 @@ public class AdminHomePage extends javax.swing.JFrame {
             sideNavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sideNavBarLayout.createSequentialGroup()
                 .addComponent(profilePicturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(viewProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addProductButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -547,7 +548,7 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     private void viewProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseClicked
         displayPanel.removeAll();
-        ViewProductPage viewProduct = new ViewProductPage();
+        ViewBookPage viewProduct = new ViewBookPage();
         displayPanel.add(viewProduct).setVisible(true);
     }//GEN-LAST:event_viewProductButtonMouseClicked
 
@@ -591,7 +592,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     //invoice
     private void invoiceButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_invoiceButtonMouseClicked
         displayPanel.removeAll();
-        ViewInvoicePage viewInvoice = new ViewInvoicePage();
+        ViewSalesPage viewInvoice = new ViewSalesPage();
         displayPanel.add(viewInvoice).setVisible(true);
     }//GEN-LAST:event_invoiceButtonMouseClicked
 
@@ -635,7 +636,7 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     private void editProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseClicked
         displayPanel.removeAll();
-        EditProductViewPage editProductView = new EditProductViewPage();
+        EditBookViewPage editProductView = new EditBookViewPage();
         displayPanel.add(editProductView).setVisible(true);
     }//GEN-LAST:event_editProductButtonMouseClicked
 
@@ -679,7 +680,7 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
         displayPanel.removeAll();
-        AddProductPage addProduct = new AddProductPage();
+        AddBookPage addProduct = new AddBookPage();
         displayPanel.add(addProduct).setVisible(true);
     }//GEN-LAST:event_addProductButtonMouseClicked
 

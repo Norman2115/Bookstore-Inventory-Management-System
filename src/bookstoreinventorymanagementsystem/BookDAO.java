@@ -70,13 +70,6 @@ public class BookDAO {
      * provided BookData object are null.
      */
     public static void updateBookData(BookData bookData) throws SQLException {
-        Objects.requireNonNull(bookData.getBookTitle(), "Title cannot be null");
-        Objects.requireNonNull(bookData.getISBN(), "ISBN cannot be null");
-        Objects.requireNonNull(bookData.getGenre(), "Genre cannot be null");
-        Objects.requireNonNull(bookData.getLanguage(), "Language cannot be null");
-        Objects.requireNonNull(bookData.getAuthor(), "Author cannot be null");
-        Objects.requireNonNull(bookData.getPublisher(), "Publisher cannot be null");
-
         try (Connection connection = DatabaseManager.getConnection()) {
             String query = "UPDATE book "
                     + "SET book_title = ?, "
@@ -152,8 +145,6 @@ public class BookDAO {
      * @throws NullPointerException if tableName is null.
      */
     public static BookData[] readBookDataFromDatabase(String tableName, String orderBy) throws SQLException, IOException {
-        Objects.requireNonNull(tableName, "Table name cannot be null");
-
         try (Connection connection = DatabaseManager.getConnection()) {
             int rowCount = getRowCount(tableName);
             BookData[] productData = new BookData[rowCount];
@@ -260,13 +251,6 @@ public class BookDAO {
      * data is null.
      */
     public static void saveBookDataToDatabase(BookData bookData) throws SQLException, IOException {
-        Objects.requireNonNull(bookData.getBookTitle(), "Title cannot be null");
-        Objects.requireNonNull(bookData.getISBN(), "ISBN cannot be null");
-        Objects.requireNonNull(bookData.getGenre(), "Genre cannot be null");
-        Objects.requireNonNull(bookData.getLanguage(), "Language cannot be null");
-        Objects.requireNonNull(bookData.getAuthor(), "Author cannot be null");
-        Objects.requireNonNull(bookData.getPublisher(), "Publisher cannot be null");
-
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -327,8 +311,6 @@ public class BookDAO {
      * @throws NullPointerException if tableName is null.
      */
     public static int getRowCount(String tableName) throws SQLException {
-        Objects.requireNonNull(tableName, "Table name cannot be null");
-
         try (Connection connection = DatabaseManager.getConnection()) {
             String query = "SELECT COUNT(*) FROM " + tableName;
             PreparedStatement statement = connection.prepareStatement(query);
@@ -356,8 +338,6 @@ public class BookDAO {
      * @throws NullPointerException if tableName is null.
      */
     public static int getRowCount(String tableName, String condition) throws SQLException {
-        Objects.requireNonNull(tableName, "Table name cannot be null");
-
         try (Connection connection = DatabaseManager.getConnection()) {
             String query = "SELECT COUNT(*) FROM " + tableName;
             if (condition != null && !condition.isEmpty()) {

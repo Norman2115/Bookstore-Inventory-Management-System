@@ -398,11 +398,8 @@ public class ResetPasswordPage extends javax.swing.JFrame {
                 dispose();
                 new ResetPasswordSuccessfulPage().setVisible(true);
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NullPointerException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                UIUtils.displayErrorMessage("Failed to update password: " + ex.getMessage());
+                Logger.getLogger(ResetPasswordPage.class.getName()).log(Level.SEVERE, "Failed to update password", ex);
             }
         }
     }//GEN-LAST:event_confirmButtonMouseClicked

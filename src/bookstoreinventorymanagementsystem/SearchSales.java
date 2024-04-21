@@ -7,9 +7,6 @@ package bookstoreinventorymanagementsystem;
 import com.itextpdf.text.DocumentException;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -27,9 +24,6 @@ public class SearchSales extends javax.swing.JFrame {
     private final UserData userData;
     private final SalesData salesData;
     private String salesID;
-    private String salespersonID;
-    private String salesDate;
-    private double totalPrice;
 
     /**
      * Creates new form SearchSales
@@ -53,7 +47,7 @@ public class SearchSales extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             UIUtils.displayErrorMessage("Failed to load customer ID: " + ex.getMessage());
-            Logger.getLogger(EditProductInfoPage.class.getName()).log(Level.SEVERE, "Failed to load customer ID", ex);
+            Logger.getLogger(EditBookInfoPage.class.getName()).log(Level.SEVERE, "Failed to load customer ID", ex);
         }
     }
 
@@ -444,7 +438,7 @@ public class SearchSales extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select a record from the table.", "No Record Selected", JOptionPane.WARNING_MESSAGE);
         } else {
             salesID = (String) salesTable.getValueAt(selectedRow, 0);
-            String filePath = SalesUtils.billPath + File.separator + salesID + ".pdf";
+            String filePath = SalesUtils.BILL_PATH + File.separator + salesID + ".pdf";
             File pdfFile = new File(filePath);
             if (pdfFile.exists()) {
                 int option = JOptionPane.showConfirmDialog(null, "PDF file already exists. Do you want to download it again?", "PDF Exists", JOptionPane.YES_NO_OPTION);

@@ -319,41 +319,32 @@ public class RecoverAccountPage extends javax.swing.JFrame implements Navigation
     private void continueButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_continueButtonMouseClicked
         String usernameOrEmail = usernameOrEmailField.getText();
 
-        // Check if the entered username or email is not empty
-        if (!usernameOrEmail.trim().isEmpty()) {
-            try {
-                // Validate the username or email
-                ValidationResult usernameOrEmailValidation = ValidationHandler.validateUsernameOrEmail(usernameOrEmail);
-
-                // If the username or email is valid, retrieve the userdata from the database
-                if (usernameOrEmailValidation.isValid()) {
-                    try {
-                        userData = UserDAO.readUserDataFromDatabase(usernameOrEmail);
-                        dispose();
-                        onProceedToNextPage();
-                        new ResetPasswordEmailVerificationPage(userData, userDataStack).setVisible(true);
-                    } catch (IOException ex) {
-                        UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                        Logger.getLogger(RecoverAccountPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                    } catch (NullPointerException ex) {
-                        UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
-                        Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                    }
-                } else {
-                    // If the username or email is invalid, mark the field as errorneous and display error message
-                    UIUtils.setFieldErrorState(usernameOrEmailField);
-                    UIUtils.setErrorLabelMessage(usernameOrEmailErrorLabel, usernameOrEmailValidation.getErrorMessage());
-                }
-            } catch (SQLException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                Logger.getLogger(RecoverAccountPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            } catch (NullPointerException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            }
-        } else {
-            // Mark the username or email field as required if it's empty
+        // Check if the entered username or email is empty
+        if (usernameOrEmail.trim().isEmpty()) {
             UIUtils.markFieldAsRequired(usernameOrEmailField, usernameOrEmailErrorLabel);
+            return;
+        }
+
+        try {
+            // Validate the username or email
+            ValidationResult usernameOrEmailValidation = ValidationHandler.validateUsernameOrEmail(usernameOrEmail);
+
+            // If the username or email is invalid, mark the field as erroneous and display an error message
+            if (!usernameOrEmailValidation.isValid()) {
+                UIUtils.setFieldErrorState(usernameOrEmailField);
+                UIUtils.setErrorLabelMessage(usernameOrEmailErrorLabel, usernameOrEmailValidation.getErrorMessage());
+                return;
+            }
+            userData = UserDAO.readUserDataFromDatabase(usernameOrEmail);
+            dispose();
+            onProceedToNextPage();
+            new ResetPasswordEmailVerificationPage(userData, userDataStack).setVisible(true);
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage("Failed to read user data: " + ex.getMessage());
+            Logger.getLogger(RecoverAccountPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } catch (IOException ex) {
+            UIUtils.displayErrorMessage("Failed to convert picture to the required format: " + ex.getMessage());
+            Logger.getLogger(RecoverAccountPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
     }//GEN-LAST:event_continueButtonMouseClicked
 

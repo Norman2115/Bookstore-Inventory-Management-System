@@ -9,6 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * The class represents interface for managing customer data. Users can view,
+ * add, update, and delete customer records.
  *
  * @author Liew Wen Yen
  */
@@ -34,12 +36,20 @@ public class ManageCustomer extends javax.swing.JFrame {
         isMobileNumberValid = false;
     }
 
+    /**
+     * Displays the customer data in the table.
+     *
+     * @throws SQLException if a SQL error occurs while retrieving data from the
+     * database.
+     */
     private void displayTable() throws SQLException {
         DefaultTableModel model = (DefaultTableModel) customerTable.getModel();
 
+        // Retrieve all customers from the database
         ArrayList<CustomerData> customers = CustomerDAO.getAllCustomers();
         model.setRowCount(0);
 
+        // Populate the table with customer data
         for (CustomerData customer : customers) {
             String[] rowData = {
                 customer.getCustomerID(),
@@ -51,6 +61,9 @@ public class ManageCustomer extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Clears the input fields.
+     */
     public void clearFields() {
         customerNameTxt.setText("");
         customerMNumberTxt.setText("");
@@ -493,46 +506,60 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_formComponentShown
 
     private void customerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseClicked
+        // Get the index of the selected row in the customer table 
         int index = customerTable.getSelectedRow();
         TableModel model = customerTable.getModel();
         String id = model.getValueAt(index, 0).toString();
         customerData.setCustomerID(id);
 
+        // Retrieve the data from the selected row and set them in the customer data object
         customerData.setFullName(model.getValueAt(index, 1).toString());
         customerData.setMobileNumber(model.getValueAt(index, 2).toString());
         customerData.setEmail(model.getValueAt(index, 3).toString());
 
+        // Populate the text fields with the customer's information
         customerNameTxt.setText(customerData.getFullName());
         customerMNumberTxt.setText(customerData.getMobileNumber());
         customerEmailTxt.setText(customerData.getEmail());
 
+        // Set flags to indicate that the fields are valid
         isFullNameValid = true;
         isMobileNumberValid = true;
         isEmailValid = true;
 
+        // Disable the save button and enable the update button
         saveButton.setEnabled(false);
         updateButton.setEnabled(true);
     }//GEN-LAST:event_customerTableMouseClicked
 
     private void saveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveButtonMouseClicked
+        // Check if customer name is empty
         if (customerNameTxt.getText().trim().isEmpty()) {
             isFullNameValid = false;
             UIUtils.markFieldAsRequired(customerNameTxt, fullNameErrorLabel);
         }
+
+        // Check if customer mobile number is empty
         if (customerMNumberTxt.getText().trim().isEmpty()) {
             isMobileNumberValid = false;
             UIUtils.markFieldAsRequired(customerMNumberTxt, mobileNumberErrorLabel);
         }
+
+        // Check if customer email is empty
         if (customerEmailTxt.getText().trim().isEmpty()) {
             isEmailValid = false;
             UIUtils.markFieldAsRequired(customerEmailTxt, emailErrorLabel);
         }
 
+        // If all fields are valid, proceed to save the customer data
         if (isFullNameValid && isEmailValid && isMobileNumberValid) {
             try {
+                // Set the customer data based on the input fields
                 customerData.setFullName(customerNameTxt.getText().trim());
                 customerData.setMobileNumber(customerMNumberTxt.getText().trim());
                 customerData.setEmail(customerEmailTxt.getText().trim());
+
+                // Save the customer data to the database
                 CustomerDAO.saveCustomerDataToDatabase(customerData);
                 clearFields();
                 displayTable();
@@ -565,12 +592,15 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_saveButtonMouseReleased
 
     private void updateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateButtonMouseClicked
+        // Set the customer data based on the input fields
         customerData.setFullName(customerNameTxt.getText());
         customerData.setMobileNumber(customerMNumberTxt.getText());
         customerData.setEmail(customerEmailTxt.getText());
 
+        // If all fields are valid, proceed to update the customer data in the database
         if (isFullNameValid && isEmailValid && isMobileNumberValid) {
             try {
+                // Attempt to update the customer data in the database
                 boolean success = CustomerDAO.updateCustomer(customerData);
                 if (success) {
                     UIUtils.displaySuccessMessage("Customer Updated Successfully");
@@ -605,7 +635,7 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_updateButtonMouseReleased
 
     private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
-        setVisible(false);
+        dispose();
         new SalespersonHomePage(userData).setVisible(true);
     }//GEN-LAST:event_homeButtonMouseClicked
 
@@ -627,17 +657,25 @@ public class ManageCustomer extends javax.swing.JFrame {
 
     private void customerNameTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerNameTxtKeyReleased
         String fullName = customerNameTxt.getText();
-        if (!fullName.trim().isEmpty()) {
-            ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
-            isFullNameValid = fullNameValidation.isValid();
-            if (!fullNameValidation.isValid()) {
-                UIUtils.setFieldErrorState(customerNameTxt);
-                UIUtils.setErrorLabelMessage(fullNameErrorLabel, fullNameValidation.getErrorMessage());
-            } else {
-                UIUtils.resetFieldState(customerNameTxt);
-                UIUtils.resetErrorLabel(fullNameErrorLabel);
-            }
+
+        // Check if the full name is not empty
+        if (fullName.trim().isEmpty()) {
+            // If the full name is empty, reset the field state and clear the error label
+            UIUtils.resetFieldState(customerNameTxt);
+            UIUtils.resetErrorLabel(fullNameErrorLabel);
+            return;
+        }
+
+        // Validate the full name
+        ValidationResult fullNameValidation = ValidationHandler.validateFullName(fullName);
+        isFullNameValid = fullNameValidation.isValid();
+
+        // If the full name is invalid, mark the field as erroneous and display the error message
+        if (!fullNameValidation.isValid()) {
+            UIUtils.setFieldErrorState(customerNameTxt);
+            UIUtils.setErrorLabelMessage(fullNameErrorLabel, fullNameValidation.getErrorMessage());
         } else {
+            // If the full name is valid, reset the field state and clear the error label
             UIUtils.resetFieldState(customerNameTxt);
             UIUtils.resetErrorLabel(fullNameErrorLabel);
         }
@@ -645,18 +683,25 @@ public class ManageCustomer extends javax.swing.JFrame {
 
     private void customerEmailTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerEmailTxtKeyReleased
         String email = customerEmailTxt.getText();
-        if (!email.trim().isEmpty()) {
-            ValidationResult emailValidation = ValidationHandler.validateEmail(email);
-            isEmailValid = emailValidation.isValid();
 
-            if (!emailValidation.isValid()) {
-                UIUtils.setFieldErrorState(customerEmailTxt);
-                UIUtils.setErrorLabelMessage(emailErrorLabel, emailValidation.getErrorMessage());
-            } else {
-                UIUtils.resetFieldState(customerEmailTxt);
-                UIUtils.resetErrorLabel(emailErrorLabel);
-            }
+        // Check if the email is not empty
+        if (email.trim().isEmpty()) {
+            // If the email is empty, reset the field state and clear the error label
+            UIUtils.resetFieldState(customerEmailTxt);
+            UIUtils.resetErrorLabel(emailErrorLabel);
+            return;
+        }
+
+        // Validate the email
+        ValidationResult emailValidation = ValidationHandler.validateEmail(email);
+        isEmailValid = emailValidation.isValid();
+
+        // If the email is invalid, mark the field as erroneous and display the error message
+        if (!emailValidation.isValid()) {
+            UIUtils.setFieldErrorState(customerEmailTxt);
+            UIUtils.setErrorLabelMessage(emailErrorLabel, emailValidation.getErrorMessage());
         } else {
+            // If the email is valid, reset the field state and clear the error label
             UIUtils.resetFieldState(customerEmailTxt);
             UIUtils.resetErrorLabel(emailErrorLabel);
         }
@@ -664,17 +709,25 @@ public class ManageCustomer extends javax.swing.JFrame {
 
     private void customerMNumberTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerMNumberTxtKeyReleased
         String mobileNumber = customerMNumberTxt.getText();
-        if (!mobileNumber.trim().isEmpty()) {
-            ValidationResult mobileNumberValidation = ValidationHandler.validateMobileNumber(mobileNumber);
-            isMobileNumberValid = mobileNumberValidation.isValid();
-            if (!mobileNumberValidation.isValid()) {
-                UIUtils.setFieldErrorState(customerMNumberTxt);
-                UIUtils.setErrorLabelMessage(mobileNumberErrorLabel, mobileNumberValidation.getErrorMessage());
-            } else {
-                UIUtils.resetFieldState(customerMNumberTxt);
-                UIUtils.resetErrorLabel(mobileNumberErrorLabel);
-            }
+
+        // Check if the mobile number is not empty
+        if (mobileNumber.trim().isEmpty()) {
+            // If the mobile number is empty, reset the field state and clear the error label
+            UIUtils.resetFieldState(customerMNumberTxt);
+            UIUtils.resetErrorLabel(mobileNumberErrorLabel);
+            return; // Early return
+        }
+
+        // Validate the mobile number
+        ValidationResult mobileNumberValidation = ValidationHandler.validateMobileNumber(mobileNumber);
+        isMobileNumberValid = mobileNumberValidation.isValid();
+
+        // If the mobile number is invalid, mark the field as erroneous and display the error message
+        if (!mobileNumberValidation.isValid()) {
+            UIUtils.setFieldErrorState(customerMNumberTxt);
+            UIUtils.setErrorLabelMessage(mobileNumberErrorLabel, mobileNumberValidation.getErrorMessage());
         } else {
+            // If the mobile number is valid, reset the field state and clear the error label
             UIUtils.resetFieldState(customerMNumberTxt);
             UIUtils.resetErrorLabel(mobileNumberErrorLabel);
         }
@@ -701,19 +754,26 @@ public class ManageCustomer extends javax.swing.JFrame {
     }//GEN-LAST:event_clearButtonMouseReleased
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        // Get the index of the selected row
         int selectedRow = customerTable.getSelectedRow();
+
+        // Check if a row is selected
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(null, "Please select a record to delete.");
             return;
         }
 
+        // Get the customer ID of the record to delete
         String customerIDToDelete = customerTable.getValueAt(selectedRow, 0).toString();
 
+        // Ask for confirmation before deleting
         int confirmation = JOptionPane.showConfirmDialog(null,
                 "Are you sure you want to delete this record?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
 
+        // If user confirms deletion
         if (confirmation == JOptionPane.YES_OPTION) {
             try {
+                // Attempt to delete the customer record
                 boolean success = CustomerDAO.deleteCustomer(customerIDToDelete);
                 if (success) {
                     UIUtils.displaySuccessMessage("Record deleted successfully.");

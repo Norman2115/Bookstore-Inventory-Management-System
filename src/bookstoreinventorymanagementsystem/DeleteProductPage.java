@@ -27,16 +27,16 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         bi.setNorthPane(null);
 
         // Fetch product data from the database and display it in the table
-        BookData[] bookDatas;
+        BookData[] bookData;
         try {
-            bookDatas = BookDAO.readBookDataFromDatabase("book", "book_title");
-            displayRow(bookDatas);
+            bookData = BookDAO.readBookDataFromDatabase("book", "book_title");
+            displayRow(bookData);
         } catch (SQLException ex) {
-            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            UIUtils.displayErrorMessage("Failed to read book data: " + ex.getMessage());
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, "Failed to read book data", ex);
         } catch (IOException ex) {
-            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
-            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            UIUtils.displayErrorMessage("Failed to convert picture to the required format: " + ex.getMessage());
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, "Failed to convert picture to the required format", ex);
         }
     }
 
@@ -361,16 +361,16 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         String searchBy = getSelection();
         String condition;
         // Define the search condition
-        if(searchBy.equals("all")){
+        if (searchBy.equals("all")) {
             searchBy = "book_title";
-            condition = "book_title LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "isbn LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "genre LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "language LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "author LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "publisher LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "publication_year LIKE \'"+searchBar.getText()+"%\'";
-        }else{
+            condition = "book_title LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "isbn LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "genre LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "language LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "author LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "publisher LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "publication_year LIKE \'" + searchBar.getText() + "%\'";
+        } else {
             condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
         }
 
@@ -380,11 +380,11 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
             // Display the search results in the table
             displayRow(bookDatas);
         } catch (SQLException ex) {
-            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            UIUtils.displayErrorMessage("Failed to read book data: " + ex.getMessage());
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, "Failed to read book data", ex);
         } catch (IOException ex) {
-            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
-            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            UIUtils.displayErrorMessage("Failed to convert picture to the required format: " + ex.getMessage());
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, "Failed to convert picture to the required format", ex);
         }
     }//GEN-LAST:event_searchBarActionPerformed
 
@@ -424,8 +424,8 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
                 BookDAO.deleteBookData("isbn", deleteRow);
                 UIUtils.displaySuccessMessage("Book record(s) successfully deleted");
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+                UIUtils.displayErrorMessage("Failed to read book data: " + ex.getMessage());
+                Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, "Failed to read book data", ex);
             }
 
             // Refresh the displayed table after deletion
@@ -434,11 +434,11 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
                 bookDatas = BookDAO.readBookDataFromDatabase("book", "book_title");
                 displayRow(bookDatas);
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+                UIUtils.displayErrorMessage("Failed to read book data: " + ex.getMessage());
+                Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, "Failed to read book data", ex);
             } catch (IOException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
-                Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+                UIUtils.displayErrorMessage("Failed to convert picture to the required format: " + ex.getMessage());
+                Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, "Failed to convert picture to the required format", ex);
             }
         }
     }//GEN-LAST:event_deleteButtonMouseClicked
@@ -460,31 +460,35 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_deleteButtonMouseReleased
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
-        BookData[] bookDatas;
+        BookData[] bookData;
         String searchBy = getSelection();
         String condition;
-        if(searchBy.equals("all")){
+
+        // If search criteria is "all", search across multiple fields
+        if (searchBy.equals("all")) {
             searchBy = "book_title";
-            condition = "book_title LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "isbn LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "genre LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "language LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "author LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "publisher LIKE \'"+searchBar.getText()+"%\' OR "
-                    + "publication_year LIKE \'"+searchBar.getText()+"%\'";
+            condition = "book_title LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "isbn LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "genre LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "language LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "author LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "publisher LIKE \'" + searchBar.getText() + "%\' OR "
+                    + "publication_year LIKE \'" + searchBar.getText() + "%\'";
             System.out.println(condition);
-        }else{
+        } else {
+            // For specific search criteria, search only in the selected field
             condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
         }
         try {
-            bookDatas = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
-            displayRow(bookDatas);
+            // Read book data from the database based on the search condition
+            bookData = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
+            displayRow(bookData);
         } catch (SQLException ex) {
-            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            UIUtils.displayErrorMessage("Failed to read book data: " + ex.getMessage());
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, "Failed to read book data", ex);
         } catch (IOException ex) {
-            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
-            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            UIUtils.displayErrorMessage("Failed to convert picture to the required format: " + ex.getMessage());
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, "Failed to convert picture to the required format", ex);
         }
     }//GEN-LAST:event_searchButtonMouseClicked
 

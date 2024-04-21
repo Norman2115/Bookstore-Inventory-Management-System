@@ -61,6 +61,13 @@ public class ImageUtils {
         return byteArray;
     }
 
+    /**
+     * Sets the picture to the specified JLabel component.
+     *
+     * @param pictureLabel the JLabel component to which the picture will be
+     * set.
+     * @param picture the byte array representing the image data.
+     */
     public static void setPicture(JLabel pictureLabel, byte[] picture) {
         ImageIcon icon = new ImageIcon(picture);
         Image image = icon.getImage();

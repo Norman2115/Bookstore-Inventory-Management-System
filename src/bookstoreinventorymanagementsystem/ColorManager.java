@@ -10,7 +10,7 @@ import java.awt.Color;
  */
 public class ColorManager {
 
-    // Note: The comments on top of each color are just suggestions.
+    // Note: The comments on top of each color are just suggestions
     // You can use these colors wherever apppropriate
     // Family Mart Primary Colors
     // Used for button and background color
@@ -23,7 +23,7 @@ public class ColorManager {
     // WHITE
     // Used for text color
     public static final Color WHITE = new Color(255, 255, 255);
-
+    
     // BLACK
     // Used for text color
     public static final Color BLACK = new Color(30, 30, 30);

@@ -10,13 +10,22 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
+ * Utility class for opening PDF files. This class provides methods to open PDF
+ * files by ID or by file path.
  *
  * @author Liew Wen Yen
  */
 public class OpenPdf {
 
+    /**
+     * Opens a PDF file by its ID.
+     *
+     * @param id the ID of the PDF file.
+     * @throws IOException if an I/O error occurs.
+     * @throws FileNotFoundException if the PDF file is not found.
+     */
     public static void OpenById(String id) throws IOException {
-        File pdfFile = new File(SalesUtils.billPath + id + ".pdf");
+        File pdfFile = new File(SalesUtils.BILL_PATH + id + ".pdf");
         if (pdfFile.exists()) {
             Desktop.getDesktop().open(pdfFile);
         } else {
@@ -24,8 +33,14 @@ public class OpenPdf {
         }
     }
 
+    /**
+     * Opens a PDF file by its file path.
+     *
+     * @param filePath the file path of the PDF file.
+     * @throws IOException if an I/O error occurs.
+     * @throws FileNotFoundException if the PDF file is not found.
+     */
     public static void OpenByPath(String filePath) throws IOException {
-
         File pdfFile = new File(filePath);
         if (pdfFile.exists()) {
             Desktop.getDesktop().open(pdfFile);
