@@ -1,5 +1,7 @@
 package bookstoreinventorymanagementsystem;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -663,6 +665,22 @@ public class ManageOrder extends javax.swing.JFrame {
             String formattedTotalPrice = String.format("%.2f", finalTotalPrice);
             salesData.setTotalPrice(Double.parseDouble(formattedTotalPrice));
 
+            DefaultTableModel dtm = (DefaultTableModel) cartTable.getModel();
+            if (cartTable.getRowCount() != 0) {
+                for (int i = 0; i < cartTable.getRowCount(); ++i) {
+                    try (Connection con = DatabaseManager.getConnection();) {
+                        PreparedStatement pst = con.prepareStatement("UPDATE book SET stock_quantity = stock_quantity - ? WHERE book_id = ?");
+                        pst.setInt(1, Integer.parseInt(dtm.getValueAt(i, 2).toString()));
+                        pst.setString(2, dtm.getValueAt(i, 0).toString());
+
+                        pst.executeUpdate();
+                        con.close();
+                    } catch (SQLException ex) {
+                        UIUtils.displayErrorMessage("Failed to update stock quantity: " + ex.getMessage());
+                        Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to update stock quantity", ex);
+                    }
+                }
+            }
             try {
                 SalesDAO.saveSalesData(salesData, cartTable);
                 dispose();
