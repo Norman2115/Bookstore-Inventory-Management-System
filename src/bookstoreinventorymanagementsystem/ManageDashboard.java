@@ -4,9 +4,15 @@
  */
 package bookstoreinventorymanagementsystem;
 
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  *
- * @author User
+ * @author Liew Wen Yen
  */
 public class ManageDashboard extends javax.swing.JFrame {
 
@@ -27,23 +33,183 @@ public class ManageDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        lblGreenStrip = new javax.swing.JPanel();
+        HomePage = new javax.swing.JLabel();
+        lblBlueStrip = new javax.swing.JPanel();
+        homeButton = new javax.swing.JPanel();
+        pieChart = new bookstoreinventorymanagementsystem.PieChart();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        customerNameLabel = new javax.swing.JLabel();
+        monthCombo = new javax.swing.JComboBox<>();
+        customerNameLabel1 = new javax.swing.JLabel();
+        yearCombo = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
             }
         });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblGreenStrip.setBackground(new java.awt.Color(62, 164, 52));
+
+        javax.swing.GroupLayout lblGreenStripLayout = new javax.swing.GroupLayout(lblGreenStrip);
+        lblGreenStrip.setLayout(lblGreenStripLayout);
+        lblGreenStripLayout.setHorizontalGroup(
+            lblGreenStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        lblGreenStripLayout.setVerticalGroup(
+            lblGreenStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        HomePage.setBackground(new java.awt.Color(0, 140, 214));
+        HomePage.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        HomePage.setForeground(new java.awt.Color(0, 140, 214));
+        HomePage.setText("Dashboard");
+
+        lblBlueStrip.setBackground(new java.awt.Color(0, 140, 214));
+        lblBlueStrip.setForeground(new java.awt.Color(51, 102, 255));
+        lblBlueStrip.setPreferredSize(new java.awt.Dimension(45, 28));
+
+        homeButton.setBackground(new java.awt.Color(0, 140, 214));
+        homeButton.setPreferredSize(new java.awt.Dimension(136, 33));
+        homeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                homeButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                homeButtonMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                homeButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                homeButtonMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout homeButtonLayout = new javax.swing.GroupLayout(homeButton);
+        homeButton.setLayout(homeButtonLayout);
+        homeButtonLayout.setHorizontalGroup(
+            homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+        homeButtonLayout.setVerticalGroup(
+            homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 28, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout lblBlueStripLayout = new javax.swing.GroupLayout(lblBlueStrip);
+        lblBlueStrip.setLayout(lblBlueStripLayout);
+        lblBlueStripLayout.setHorizontalGroup(
+            lblBlueStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        lblBlueStripLayout.setVerticalGroup(
+            lblBlueStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        customerNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        customerNameLabel.setForeground(new java.awt.Color(0, 100, 0));
+        customerNameLabel.setText("Year: ");
+
+        monthCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthComboActionPerformed(evt);
+            }
+        });
+
+        customerNameLabel1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        customerNameLabel1.setForeground(new java.awt.Color(0, 100, 0));
+        customerNameLabel1.setText("Month:");
+
+        yearCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearComboActionPerformed(evt);
+            }
+        });
+
+        jLayeredPane1.setLayer(customerNameLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(monthCombo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(customerNameLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(yearCombo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                .addComponent(customerNameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(yearCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(customerNameLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(monthCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(customerNameLabel)
+                    .addComponent(customerNameLabel1)
+                    .addComponent(monthCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yearCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2))
+        );
+
+        pieChart.add(jLayeredPane1);
+        jLayeredPane1.setBounds(590, 10, 300, 30);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblBlueStrip, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+            .addComponent(lblGreenStrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(388, 388, 388)
+                .addComponent(HomePage)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(pieChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(lblBlueStrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(HomePage)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblGreenStrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -52,6 +218,132 @@ public class ManageDashboard extends javax.swing.JFrame {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
     }//GEN-LAST:event_formComponentShown
+
+    private void monthComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboActionPerformed
+        if (monthCombo.getSelectedIndex() >= 0) {
+            int year = Integer.parseInt(yearCombo.getSelectedItem().toString());
+            ModelMonth month = (ModelMonth) monthCombo.getSelectedItem();
+            showData(year, month.getMonth());
+        }
+    }//GEN-LAST:event_monthComboActionPerformed
+
+    private void yearComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearComboActionPerformed
+        if (yearCombo.getSelectedIndex() >= 0) {
+            int year = Integer.parseInt(yearCombo.getSelectedItem().toString());
+            try {
+                monthCombo.removeAllItems();
+                showMonth(year);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_yearComboActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            showYear();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
+        setVisible(false);
+        new SalespersonHomePage().setVisible(true);
+    }//GEN-LAST:event_homeButtonMouseClicked
+
+    private void homeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseEntered
+        homeButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_homeButtonMouseEntered
+
+    private void homeButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseExited
+        homeButton.setBackground(ColorManager.PRIMARY_BLUE);
+    }//GEN-LAST:event_homeButtonMouseExited
+
+    private void homeButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMousePressed
+        homeButton.setBackground(ColorManager.DEEP_BLUE);
+    }//GEN-LAST:event_homeButtonMousePressed
+
+    private void homeButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseReleased
+        homeButton.setBackground(ColorManager.MEDIUM_BLUE);
+    }//GEN-LAST:event_homeButtonMouseReleased
+
+    private void showYear() throws SQLException {
+        try (Connection con = DatabaseManager.getConnection()) {
+            PreparedStatement p = con.prepareStatement("SELECT DATE_FORMAT(sales_date,'%Y') AS YearNumber\n"
+                    + "FROM sales_detail group by YearNumber");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                int year = r.getInt("YearNumber");
+                yearCombo.addItem(year + "");
+            }
+        }
+    }
+
+    private void showMonth(int year) throws SQLException {
+        try (Connection con = DatabaseManager.getConnection()) {
+            PreparedStatement p = con.prepareStatement("SELECT DATE_FORMAT(sales_date, '%M') AS MonthText,\n"
+                    + "       DATE_FORMAT(sales_date, '%m') AS MonthNumber \n"
+                    + "FROM sales_detail \n"
+                    + "WHERE DATE_FORMAT(sales_date, '%Y') = ? \n"
+                    + "GROUP BY MonthNumber, MonthText;");
+            p.setInt(1, year);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                String monthText = r.getString("MonthText");
+                int month = r.getInt("MonthNumber");
+                monthCombo.addItem(new ModelMonth(month, monthText));
+            }
+        }
+    }
+
+    private void showData(int year, int month) {
+        try (Connection con = DatabaseManager.getConnection()) {
+            pieChart.clearData();
+            PreparedStatement p = con.prepareStatement("SELECT p.product_name, SUM(sb.subtotal) AS total_sales\n"
+                    + "FROM sales_detail sd \n"
+                    + "JOIN sales_book sb ON sd.sales_id = sb.sales_id \n"
+                    + "JOIN product p ON p.product_id = sb.product_id \n"
+                    + "WHERE DATE_FORMAT(sd.sales_date, '%Y') = ? AND DATE_FORMAT(sd.sales_date, '%m') = ?\n"
+                    + "GROUP BY p.product_name;");
+            p.setInt(1, year);
+            p.setInt(2, month);
+            ResultSet r = p.executeQuery();
+            int index = 0;
+            while (r.next()) {
+                String productName = r.getString(1);
+                double values = r.getDouble(2);
+                pieChart.addData(new ModelPieChart(productName, values, getColor(index++)));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Color getColor(int index) throws IllegalArgumentException, IllegalAccessException {
+        // Get all fields (colors) from the ColorManager class
+        java.lang.reflect.Field[] fields = ColorManager.class.getFields();
+        // Initialize counter for valid colors
+        int validCount = 0;
+        // Iterate through fields to find the color at the specified index
+        for (java.lang.reflect.Field field : fields) {
+            // Get the name of the field (color)
+            String fieldName = field.getName();
+            // Check if the color is excluded
+            if (!fieldName.equals("WHITE") && !fieldName.equals("BLACK") && !fieldName.equals("PRIMARY_WHITE")) {
+                // Increment the counter if the color is valid
+                if (validCount == index) {
+                    // Access the color at the specified index
+                    Color color = (Color) field.get(null);
+                    return color;
+                }
+                validCount++;
+            }
+        }
+        // Return default color if no valid color found at the specified index
+        return Color.BLACK;
+    }
 
     /**
      * @param args the command line arguments
@@ -89,5 +381,16 @@ public class ManageDashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel HomePage;
+    private javax.swing.JLabel customerNameLabel;
+    private javax.swing.JLabel customerNameLabel1;
+    private javax.swing.JPanel homeButton;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel lblBlueStrip;
+    private javax.swing.JPanel lblGreenStrip;
+    private javax.swing.JComboBox<Object> monthCombo;
+    private bookstoreinventorymanagementsystem.PieChart pieChart;
+    private javax.swing.JComboBox<String> yearCombo;
     // End of variables declaration//GEN-END:variables
 }

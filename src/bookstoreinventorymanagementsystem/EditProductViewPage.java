@@ -8,17 +8,24 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * The class represents the edit book view page for viewing editable book
+ * information. Users can view and select a book to modify its details.
  *
- * @author User
+ * @author Tay Xuan Ye
  */
 public class EditProductViewPage extends javax.swing.JInternalFrame {
 
+    /**
+     * Creates new form EditProductViewPage.
+     */
     public EditProductViewPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
+
         try {
+            // Read product data from the database and display in the table.
             BookData[] bookData = BookDAO.readBookDataFromDatabase("book", "book_title");
             displayRow(bookData);
         } catch (SQLException ex) {
@@ -30,10 +37,19 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Displays the rows of book data in the table.
+     *
+     * @param bookData an array of BookData objects containing book information.
+     */
     public final void displayRow(BookData[] bookData) {
+        // Clear the existing rows in the table
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
+
+        // Check if there are any products to display
         int length = bookData.length;
         if (length > 0) {
+            // Iterate through each BookData object and add to the table
             for (int i = 0; i < length; i++) {
                 Object[] rowData = new Object[10];
                 rowData[0] = bookData[i].getBookTitle();
@@ -48,13 +64,20 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                 bookData[i].setNetPrice();
                 rowData[9] = bookData[i].getNetPrice();
 
+                // Add the row data to the table model
                 ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
             }
         } else {
+            // If no products are found, clear the table
             ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         }
     }
 
+    /**
+     * Retrieves the search criteria selected by the user.
+     *
+     * @return a string representing the search criteria.
+     */
     private String getSelection() {
         String searchBy = null;
         switch (searchType.getSelectedIndex()) {
@@ -288,8 +311,10 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
         BookData[] bookDatas;
+        // Get the search criteria selected by the user
         String searchBy = getSelection();
         String condition;
+        // Construct the SQL condition for the search
         if(searchBy.equals("all")){
             searchBy = "book_title";
             condition = "book_title LIKE \'"+searchBar.getText()+"%\' OR "
@@ -302,8 +327,11 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         }else{
             condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
         }
+
         try {
+            // Read product data from the database based on the search condition
             bookDatas = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
+            // Display the retrieved product data in the table
             displayRow(bookDatas);
         } catch (SQLException ex) {
             UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
@@ -316,13 +344,17 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
 
 
     private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
+        // Check if the row is double-clicked
         if (evt.getClickCount() == 2) {
             int selectRow = displayTable.getSelectedRow();
+            // Get the ISBN of the selected book from the table
             String isbn = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
             BookData[] bookDatas;
             String condition = "isbn" + " = " + "\'" + isbn + "\'";
             try {
+                // Read product data from the database based on the ISBN
                 bookDatas = BookDAO.readBookDataFromDatabase("book", condition, "isbn");
+                // Display the Edit Product Info page with the selected book's information
                 AdminHomePage.createEditProductInfoPage(bookDatas[0]);
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);

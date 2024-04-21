@@ -1,56 +1,57 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
 
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Color;
-import java.awt.Component;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+
 
 /**
  *
- * @author User
+ * @author Tay Xuan Ye
  */
 public class RestockPage extends javax.swing.JInternalFrame {
-    private final BookDAO bookDAO = new BookDAO();
     private int lowStockValue = 10;
+
     public RestockPage() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
+
         BookData[] bookData;
-        // bookData = bookDAO.readData("product","book_title");
-        // displayRow(bookData);
-        displaySideComponents();
-        // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
-        // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
+        try {
+            bookData = BookDAO.readBookDataFromDatabase("book", "book_title");
+            displayRow(bookData);
+            displaySideComponents();
+        } catch (SQLException | IOException ex) {
+            UIUtils.displayErrorMessage("An error occured: " + ex.getMessage());
+            Logger.getLogger(RestockPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
     }
-    
-    private void displaySideComponents(){
-        BookData[] bookData;
-//        bookData = bookDAO.readData("product","book_title");
-//        int outOfStock  = bookDAO.getLength("product","stock_quantity = 0");
-//        int lowStock  = bookDAO.getLength("product","stock_quantity < "+lowStockValue);
-//        int amountOfProduct  = bookDAO.getLength("product");
-//        outOfStockLabel.setText(String.valueOf(outOfStock));
-//        lowStockLabel.setText(String.valueOf(lowStock));
-//        amountProductLabel.setText(String.valueOf(amountOfProduct));
+
+    private void displaySideComponents() {
+        try {
+            int outOfStock = BookDAO.getRowCount("book", "stock_quantity = 0");
+            int lowStock = BookDAO.getRowCount("book", "stock_quantity < " + lowStockValue);
+            int amountOfProduct = BookDAO.getRowCount("book");
+            outOfStockLabel.setText(String.valueOf(outOfStock));
+            lowStockLabel.setText(String.valueOf(lowStock));
+            amountProductLabel.setText(String.valueOf(amountOfProduct));
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage("An error occured: " + ex.getMessage());
+            Logger.getLogger(RestockPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
     }
-    
-    private void displayRow(BookData[] productData){
+
+    private void displayRow(BookData[] productData) {
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
+        
         int length = productData.length;
-        if(length>0){
-            for (int i = 0;i<length;i++){
+        if (length > 0) {
+            for (int i = 0; i < length; i++) {
                 Object[] rowData = new Object[8];
                 rowData[0] = productData[i].getBookTitle();
                 rowData[1] = productData[i].getISBN();
@@ -60,66 +61,50 @@ public class RestockPage extends javax.swing.JInternalFrame {
                 rowData[5] = productData[i].getPublisher();
                 rowData[6] = productData[i].getPublicatioYear();
                 rowData[7] = productData[i].getStockQuantity();
-                //insert row
+                
                 ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
             }
-        }else{
+        } else {
             ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         }
     }
-    
-    private String getSelection(){
-        String searchBy=null;
-        switch (searchType.getSelectedIndex()){
-            case 0:
+
+    private String getSelection() {
+        String searchBy = null;
+        switch (searchType.getSelectedIndex()) {
+            case 0 ->
                 searchBy = "book_title";
-                break;
-            case 1:
+            case 1 ->
                 searchBy = "book_title";
-                break;
-            case 2:
+            case 2 ->
                 searchBy = "isbn";
-                break;
-            case 3:
+            case 3 ->
                 searchBy = "stock_quantity";
-                break;
         }
         return searchBy;
     }
-    
-    private void selectData(){
+
+    private void selectData() {
+        BookData[] bookData;
+        String searchBy = getSelection();
+        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
         try {
-            BookData[] bookData;
-            String searchBy = getSelection();
-            String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-            bookData = bookDAO.readBookDataFromDatabase("product",condition,searchBy);
+            bookData = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
             displayRow(bookData);
-        } catch (SQLException ex) {
-            Logger.getLogger(RestockPage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RestockPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException | IOException ex) {
+            UIUtils.displayErrorMessage("An error occured: " + ex.getMessage());
+            Logger.getLogger(RestockPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
-    
-    private boolean restockIsValid(){
+
+    private boolean restockIsValid() {
         return ValidationHandler.containsOnlyNumbers(quantityRestock.getText());
     }
-    
-    private boolean restockIsEmpty(){
-        if (quantityRestock.getText().isEmpty()||"".equals(quantityRestock.getText()))
-            return true;
-        
-        return false;
+
+    private boolean restockIsEmpty() {
+        return quantityRestock.getText().isEmpty() || "".equals(quantityRestock.getText());
     }
-    
-    private void highlightRow(){
-        BookData[] bookData;
-        String condition = "stock_quantity = 0";
-        // bookData = bookDAO.readData("product",condition,"stock_quantity");
-//        for(int i = 0;i<bookData.length;i++){
-//            
-//        }
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -471,7 +456,6 @@ public class RestockPage extends javax.swing.JInternalFrame {
         );
 
         quantityStockErrorLabel.setForeground(new java.awt.Color(253, 252, 248));
-        quantityStockErrorLabel.setText("jLabel3");
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -498,12 +482,12 @@ public class RestockPage extends javax.swing.JInternalFrame {
                                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1)
                                     .addGroup(backgroundLayout.createSequentialGroup()
-                                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
+                                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(backgroundLayout.createSequentialGroup()
                                                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(quantityStockErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
+                                            .addGroup(backgroundLayout.createSequentialGroup()
                                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(isbnTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -585,17 +569,25 @@ public class RestockPage extends javax.swing.JInternalFrame {
     private void restockButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseClicked
         int restock = Integer.parseInt(quantityRestock.getText());
         int selectRow = displayTable.getSelectedRow();
-        long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
-        if(restockIsEmpty()){
-            UIUtils.markFieldAsRequired(quantityRestock,quantityStockErrorLabel);
+        String isbn = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
+        
+        if (restockIsEmpty()) {
+            UIUtils.markFieldAsRequired(quantityRestock, quantityStockErrorLabel);
         }
-        if (restockIsValid()&&!restockIsEmpty()){
-            BookData[] productData;
-            String condition = "isbn" + " = " +"\'"+isbn+"\'";
-            // productData = bookDAO.readData("product",condition,"isbn");
-            // productData[0].setStockQuantity(productData[0].getStockQuantity()+restock);
-            // bookDAO.restockUpdate(productData[0]);
+        
+        if (restockIsValid() && !restockIsEmpty()) {
+            BookData[] bookData;
+            String condition = "isbn" + " = " + "\'" + isbn + "\'";
+            try {
+                bookData = BookDAO.readBookDataFromDatabase("book", condition, "isbn");
+                bookData[0].setStockQuantity(bookData[0].getStockQuantity() + restock);
+                BookDAO.updateStockQuantity(bookData[0]);
+            } catch (SQLException | IOException ex) {
+                UIUtils.displayErrorMessage("An error occured: " + ex.getMessage());
+                Logger.getLogger(RestockPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            }
         }
+        
         selectData();
         displaySideComponents();
         quantityRestock.setText("");
@@ -626,26 +618,33 @@ public class RestockPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_searchButtonMouseClicked
 
     private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
-        if (evt.getClickCount() == 2){
+        if (evt.getClickCount() == 2) {
             int selectRow = displayTable.getSelectedRow();
-            long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
-            BookData[] productData;
-            String condition = "isbn" + " = " +"\'"+isbn+"\'";
-            // productData = bookDAO.readData("product",condition,"isbn");
-            // isbnTextField.setText(String.valueOf(productData[0].getISBN()));
+            String isbn = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
+            BookData[] bookData;
+            String condition = "isbn" + " = " + "\'" + isbn + "\'";
+            
+            try {
+                bookData = BookDAO.readBookDataFromDatabase("book", condition, "isbn");
+                isbnTextField.setText(String.valueOf(bookData[0].getISBN()));
+            } catch (SQLException | IOException ex) {
+                UIUtils.displayErrorMessage("An error occured: " + ex.getMessage());
+                Logger.getLogger(RestockPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            }
         }
     }//GEN-LAST:event_displayTableMouseClicked
 
     private void quantityRestockKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quantityRestockKeyReleased
-        if (restockIsValid()&&!restockIsEmpty()){
+        if (restockIsValid() && !restockIsEmpty()) {
             UIUtils.resetFieldState(quantityRestock);
             quantityStockErrorLabel.setForeground(ColorManager.WHITE);
-        }else{
+        } else {
             UIUtils.setFieldErrorState(quantityRestock);
             UIUtils.setErrorLabelMessage(quantityStockErrorLabel, "Only digit accepted");
         }
-        if(restockIsEmpty()){
-            UIUtils.markFieldAsRequired(quantityRestock,quantityStockErrorLabel);
+        
+        if (restockIsEmpty()) {
+            UIUtils.markFieldAsRequired(quantityRestock, quantityStockErrorLabel);
         }
     }//GEN-LAST:event_quantityRestockKeyReleased
 

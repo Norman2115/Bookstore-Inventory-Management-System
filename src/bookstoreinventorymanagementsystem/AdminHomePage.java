@@ -1,20 +1,20 @@
 package bookstoreinventorymanagementsystem;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
-
 /**
+ * The class represents the admin home page of the bookstore inventory
+ * management system. It contains methods to create different views and manage
+ * the display panel.
  *
- * @author User
+ * @author Tay Xuan Ye
  */
 public class AdminHomePage extends javax.swing.JFrame {
 
     private final UserData userData;
 
     /**
-     * Creates new form Admin_homepage
+     * Creates new form AdminHomePage
      *
-     * @param userData
+     * @param userData the user data associated with the admin
      */
     public AdminHomePage(UserData userData) {
         initComponents();
@@ -24,21 +24,25 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         this.userData = userData;
 
-        ImageIcon icon = new ImageIcon(userData.getProfilePicture());
-        Image image = icon.getImage();
-        Image scaledImage = image.getScaledInstance(profilePictureLabel.getWidth(),
-                profilePictureLabel.getHeight(), Image.SCALE_SMOOTH);
-        profilePictureLabel.setIcon(new ImageIcon(scaledImage));
-        profilePictureLabel.revalidate();
-        profilePictureLabel.repaint();
+        // Set the profile picture of the admin using the provided user data.
+        // ImageUtils.setPicture(profilePictureLabel, userData.getProfilePicture());
     }
 
+    /**
+     * Creates and displays the edit product view page.
+     */
     public static void createEditProductViewPage() {
         displayPanel.removeAll();
         EditProductViewPage editProductViewPage = new EditProductViewPage();
         displayPanel.add(editProductViewPage).setVisible(true);
     }
 
+    /**
+     * Creates and displays the edit product information page.
+     *
+     * @param bookData the book data to be edited.
+     * 
+     */
     public static void createEditProductInfoPage(BookData bookData) {
         displayPanel.removeAll();
         EditProductInfoPage editProductInfoPage = new EditProductInfoPage();
@@ -46,6 +50,11 @@ public class AdminHomePage extends javax.swing.JFrame {
         editProductInfoPage.fillProductInfo(bookData);
     }
 
+    /**
+     * Creates and displays the product detail page.
+     * 
+     * @param bookData the book data to be displayed.
+     */
     public static void createProductDetailPage(BookData bookData) {
         displayPanel.removeAll();
         BookDetailPage bookDetailPage = new BookDetailPage();
@@ -53,18 +62,29 @@ public class AdminHomePage extends javax.swing.JFrame {
         bookDetailPage.fillProductInfo(bookData);
     }
 
+    /**
+     * Creates and displays the view product page.
+     */
     public static void createViewProductPage() {
         displayPanel.removeAll();
         ViewProductPage viewProductPage = new ViewProductPage();
         displayPanel.add(viewProductPage).setVisible(true);
     }
 
+    /**
+     * Creates and displays the view invoice page.
+     * 
+     * @param invoiceData the invoice data to be displayed.
+     */
     public static void createInvoiceDetailPage(String[] invoiceData) {
         displayPanel.removeAll();
         InvoiceDetailPage invoiceDetailPage = new InvoiceDetailPage();
         displayPanel.add(invoiceDetailPage).setVisible(true);
     }
 
+    /**
+     * Creates and displays the view invoice page.
+     */
     public static void createViewInvoicePage() {
         displayPanel.removeAll();
         ViewInvoicePage viewInvoicePage = new ViewInvoicePage();
@@ -526,7 +546,6 @@ public class AdminHomePage extends javax.swing.JFrame {
         viewProductButton.setBackground(ColorManager.PRIMARY_BLUE);
     }//GEN-LAST:event_viewProductButtonMouseExited
 
-// viewProductButton
     private void viewProductButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProductButtonMouseEntered
         viewProductButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_viewProductButtonMouseEntered
@@ -553,7 +572,6 @@ public class AdminHomePage extends javax.swing.JFrame {
         logoutButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_logoutButtonMouseEntered
 
-    //logout
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
         dispose();
         new LoginPage().setVisible(true);
@@ -598,7 +616,6 @@ public class AdminHomePage extends javax.swing.JFrame {
         restockButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_restockButtonMouseEntered
 
-    //restockButton
     private void restockButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restockButtonMouseClicked
         displayPanel.removeAll();
         RestockPage restockPage = new RestockPage();
@@ -621,7 +638,6 @@ public class AdminHomePage extends javax.swing.JFrame {
         editProductButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_editProductButtonMouseEntered
 
-    //editProductButton
     private void editProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductButtonMouseClicked
         displayPanel.removeAll();
         EditProductViewPage editProductView = new EditProductViewPage();
@@ -644,7 +660,6 @@ public class AdminHomePage extends javax.swing.JFrame {
         deleteProductButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_deleteProductButtonMouseEntered
 
-    // deleteProductButton
     private void deleteProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteProductButtonMouseClicked
         displayPanel.removeAll();
         DeleteProductPage deleteProduct = new DeleteProductPage();
@@ -667,7 +682,6 @@ public class AdminHomePage extends javax.swing.JFrame {
         addProductButton.setBackground(ColorManager.MEDIUM_BLUE);
     }//GEN-LAST:event_addProductButtonMouseEntered
 
-    // addProductButton
     private void addProductButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductButtonMouseClicked
         displayPanel.removeAll();
         AddProductPage addProduct = new AddProductPage();
@@ -709,11 +723,8 @@ public class AdminHomePage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new AdminHomePage(new UserData()).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new AdminHomePage(new UserData()).setVisible(true);
         });
     }
 
