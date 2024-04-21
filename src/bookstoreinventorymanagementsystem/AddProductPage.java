@@ -20,7 +20,6 @@ public class AddProductPage extends javax.swing.JInternalFrame {
 
     private final BookData bookData;
     private File selectedFile;
-
     private boolean isBookTitleValid = false;
     private boolean isGenreSelected = false;
     private boolean isLanguageSelected = false;
@@ -40,7 +39,9 @@ public class AddProductPage extends javax.swing.JInternalFrame {
 
         bookData = new BookData();
     }
-
+    /**
+     * Reset all field and waring label into default 
+     */
     private void reset() {
         UIUtils.resetFieldState(bookTitleField);
         UIUtils.resetFieldState(isbnField);
@@ -78,7 +79,10 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         pictureLabel.setIcon(new ImageIcon(getClass().getResource("/icon/photo_icon_1.png")));
         selectedFile = null;
     }
-
+    
+    /**
+     * Check book title is valid and display error message if not valid.
+     */
     private void checkBookTitleValid() {
         String bookTitle = bookTitleField.getText();
 
@@ -98,7 +102,10 @@ public class AddProductPage extends javax.swing.JInternalFrame {
             UIUtils.resetErrorLabel(bookTitleErrorLabel);
         }
     }
-
+    
+    /**
+     * Check author is valid and display error message if not valid.
+     */
     private void checkAuthorValid() {
         String author = authorField.getText();
 
@@ -119,6 +126,9 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Check publisher is valid and display error message if not valid.
+     */
     private void checkPublisherValid() {
         String publisher = publisherField.getText();
 
@@ -139,6 +149,9 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Check publication year is valid and display error message if not valid.
+     */
     private void checkYearValid() {
         String publicationYear = yearField.getText();
 
@@ -159,6 +172,9 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Check stock quantity is valid and display error message if not valid.
+     */
     private void checkQuantityValid() {
         String quantity = quantityField.getText();
 
@@ -179,6 +195,9 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Check unit price is valid and display error message if not valid.
+     */
     private void checkUnitPriceValid() {
         String unitPrice = unitPriceField.getText();
 
@@ -199,6 +218,9 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Check discount value is valid and display error message if not valid.
+     */
     private void checkDiscountValid() {
         String discount = discountField.getText();
 
@@ -219,6 +241,9 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Check ISBN is valid and display error message if not valid.
+     */
     private void checkISBNValid() {
         String isbn = isbnField.getText();
 
@@ -251,6 +276,9 @@ public class AddProductPage extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Calculate the net price and display it in netPriceField.
+     */
     private void calculateNetPrice() {
         if (!unitPriceField.getText().trim().isEmpty()) {
             double unitPrice = Double.parseDouble(unitPriceField.getText().trim());
