@@ -201,8 +201,8 @@ public class SalespersonHomePage extends javax.swing.JFrame {
 
         lblInvoice.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblInvoice.setForeground(new java.awt.Color(0, 140, 214));
-        lblInvoice.setText("Invoice");
-        pnlInvoice.add(lblInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 70, 30));
+        lblInvoice.setText("Sales");
+        pnlInvoice.add(lblInvoice, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 50, 30));
 
         invoiceIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Invoice(icon).png"))); // NOI18N
         pnlInvoice.add(invoiceIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 7, 110, 130));
@@ -333,7 +333,7 @@ public class SalespersonHomePage extends javax.swing.JFrame {
                     .addGroup(basePanelLayout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
         basePanelLayout.setVerticalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

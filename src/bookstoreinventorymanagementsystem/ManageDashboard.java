@@ -42,6 +42,7 @@ public class ManageDashboard extends javax.swing.JFrame {
         HomePage = new javax.swing.JLabel();
         lblBlueStrip = new javax.swing.JPanel();
         homeButton = new javax.swing.JPanel();
+        homeIcon1 = new javax.swing.JLabel();
         pieChart = new bookstoreinventorymanagementsystem.PieChart();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         customerNameLabel = new javax.swing.JLabel();
@@ -105,26 +106,39 @@ public class ManageDashboard extends javax.swing.JFrame {
             }
         });
 
+        homeIcon1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        homeIcon1.setForeground(new java.awt.Color(255, 255, 255));
+        homeIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Home Icon.png"))); // NOI18N
+        homeIcon1.setPreferredSize(new java.awt.Dimension(33, 30));
+
         javax.swing.GroupLayout homeButtonLayout = new javax.swing.GroupLayout(homeButton);
         homeButton.setLayout(homeButtonLayout);
         homeButtonLayout.setHorizontalGroup(
             homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeButtonLayout.createSequentialGroup()
+                .addGap(0, 17, Short.MAX_VALUE)
+                .addComponent(homeIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         homeButtonLayout.setVerticalGroup(
             homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 28, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeButtonLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(homeIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout lblBlueStripLayout = new javax.swing.GroupLayout(lblBlueStrip);
         lblBlueStrip.setLayout(lblBlueStripLayout);
         lblBlueStripLayout.setHorizontalGroup(
             lblBlueStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(lblBlueStripLayout.createSequentialGroup()
+                .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(850, 850, 850))
         );
         lblBlueStripLayout.setVerticalGroup(
             lblBlueStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(lblBlueStripLayout.createSequentialGroup()
+                .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2))
         );
 
         customerNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
@@ -389,6 +403,7 @@ public class ManageDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel customerNameLabel;
     private javax.swing.JLabel customerNameLabel1;
     private javax.swing.JPanel homeButton;
+    private javax.swing.JLabel homeIcon1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel lblBlueStrip;
