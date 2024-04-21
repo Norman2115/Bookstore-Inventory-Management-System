@@ -13,7 +13,6 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,18 +32,26 @@ import javax.swing.JOptionPane;
  */
 public class SalesData {
 
-    private final UserData userData;
+    private String salespersonID;
     private String salesID;
     private String customerID;
     private String orderDate;
     private double totalPrice;
     private int currentID;
 
-    public SalesData(UserData userData) {
+    public SalesData() {
         this.salesID = null;
         this.orderDate = null;
+        this.salespersonID = null;
         this.totalPrice = 0.0;
-        this.userData = userData;
+    }
+    
+    public void setSalespersonID(String salespersonID) {
+        this.salespersonID = salespersonID;
+    }
+    
+    public String getSalespersonID() {
+        return salespersonID;
     }
 
     // Getters and setters
@@ -123,18 +130,16 @@ public class SalesData {
     public void saveSalesDataToDatabase() throws SQLException {
         try (Connection con = DatabaseManager.getConnection()) {
 
-            SimpleDateFormat myFormat = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
             Calendar cal = Calendar.getInstance();
             setOrderDate(myFormat.format(cal.getTime()));
             PreparedStatement ps = con.prepareStatement("INSERT INTO sales_detail(sales_id,salesperson_id, customer_id,sales_date,total_price) VALUES(?,?,?,?,?)");
             ps.setString(1, getCurrentSalesID());
-            ps.setString(2, "S1001");
-            //ps.setString(2, userData.getUserID());
+            ps.setString(2, getSalespersonID());
             ps.setString(3, getCustomerID());
             ps.setString(4, getOrderDate());
             ps.setDouble(5, getTotalPrice());
             ps.executeUpdate();
-
         }
 
     }
@@ -235,11 +240,11 @@ public class SalesData {
 
         // Retrieve data from the database
         try (Connection con = DatabaseManager.getConnection()) {
-            String sql = "SELECT p.product_name, sb.quantity, sb.subtotal, p.unit_price, "
+            String sql = "SELECT b.book_title, sb.quantity, sb.subtotal, b.unit_price, "
                     + "sd.sales_id, sd.sales_date, sd.total_price, "
                     + "c.customer_id, c.name " // Selecting columns from customer and sales_detail tables
                     + "FROM sales_book sb "
-                    + "JOIN product p ON sb.product_id = p.product_id "
+                    + "JOIN book b ON sb.book_id = b.book_id "
                     + "JOIN sales_detail sd ON sb.sales_id = sd.sales_id " // Join with sales_detail table
                     + "JOIN customer c ON sd.customer_id = c.customer_id " // Join with customer table
                     + "WHERE sb.sales_id = ?";
@@ -247,7 +252,7 @@ public class SalesData {
                 pstmt.setString(1, salesId);
                 try (ResultSet rs = pstmt.executeQuery()) {
                     while (rs.next()) {
-                        tb1.addCell(rs.getString("product_name"));
+                        tb1.addCell(rs.getString("book_title"));
                         tb1.addCell(rs.getString("quantity"));
                         tb1.addCell(rs.getString("unit_price"));
                         tb1.addCell(rs.getString("subtotal"));

@@ -999,7 +999,7 @@ public class AddProductPage extends javax.swing.JInternalFrame {
             bookData.setDiscount(Double.parseDouble(discountField.getText().trim()));
             bookData.setGenre(genreComboBox.getSelectedItem().toString());
             bookData.setLanguage(languageComboBox.getSelectedItem().toString());
-            bookData.setNetPrice();
+            bookData.calculateNetPrice();
 
             try {
                 // Convert selected image file to byte array

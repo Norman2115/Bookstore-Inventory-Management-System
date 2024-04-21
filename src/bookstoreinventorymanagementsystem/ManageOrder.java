@@ -1,14 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
 
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,32 +14,45 @@ import javax.swing.table.TableModel;
  */
 public class ManageOrder extends javax.swing.JFrame {
 
+    private final UserData userData;
     private final SalesData salesData;
     private double finalTotalPrice = 0;
-    private String productPk;
     private String customerID;
 
     /**
      * Creates new form ManageOrder
      *
      * @param salesData
+     * @param userData
      */
-    public ManageOrder(SalesData salesData) {
+    public ManageOrder(SalesData salesData, UserData userData) {
         initComponents();
         setLocationRelativeTo(null);
-        updateCombo();
+        updateCustomerComboBox();
         this.salesData = salesData;
+        this.userData = userData;
     }
 
-    private void updateCombo() {
-        String sql = "SELECT * FROM customer";
-        try (Connection con = DatabaseManager.getConnection(); PreparedStatement pst = con.prepareStatement(sql); ResultSet rs = pst.executeQuery()) {
-            while (rs.next()) {
-                customerSelectionComboBox.addItem(rs.getString("name"));
+    private void updateCustomerComboBox() {
+        try {
+            ArrayList<String> customerNames = CustomerDAO.getAllCustomersName();
+            for (String customerName : customerNames) {
+                customerSelectionComboBox.addItem(customerName);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage("Failed to load customer names: " + ex.getMessage());
+            Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to load customer names", ex);
         }
+    }
+
+    private boolean isProductAlreadyInCart(DefaultTableModel model, String bookID) {
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String existingProductId = model.getValueAt(i, 0).toString();
+            if (existingProductId.equals(bookID)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -97,8 +103,7 @@ public class ManageOrder extends javax.swing.JFrame {
             }
         });
 
-        basePanel.setBackground(new java.awt.Color(255, 255, 255));
-        basePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        basePanel.setBackground(new java.awt.Color(253, 252, 248));
         basePanel.setPreferredSize(new java.awt.Dimension(900, 500));
 
         HomePage.setBackground(new java.awt.Color(0, 140, 214));
@@ -112,14 +117,14 @@ public class ManageOrder extends javax.swing.JFrame {
         lblGreenStrip.setLayout(lblGreenStripLayout);
         lblGreenStripLayout.setHorizontalGroup(
             lblGreenStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 898, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         lblGreenStripLayout.setVerticalGroup(
             lblGreenStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        CartPanel1.setBackground(new java.awt.Color(0, 153, 255));
+        CartPanel1.setBackground(new java.awt.Color(253, 252, 248));
         CartPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         CartPanel1.setForeground(new java.awt.Color(153, 153, 153));
         CartPanel1.setOpaque(false);
@@ -160,11 +165,6 @@ public class ManageOrder extends javax.swing.JFrame {
                 productTableMouseClicked(evt);
             }
         });
-        productTable.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                productTableComponentShown(evt);
-            }
-        });
         jScrollPane3.setViewportView(productTable);
         if (productTable.getColumnModel().getColumnCount() > 0) {
             productTable.getColumnModel().getColumn(0).setResizable(false);
@@ -185,8 +185,10 @@ public class ManageOrder extends javax.swing.JFrame {
         QuantityLabel3.setForeground(new java.awt.Color(0, 100, 0));
         QuantityLabel3.setText("Quantity: ");
 
+        orderQuantityField.setBackground(new java.awt.Color(253, 252, 248));
         orderQuantityField.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         orderQuantityField.setForeground(new java.awt.Color(0, 100, 0));
+        orderQuantityField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         orderQuantityField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         orderQuantityField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,21 +244,20 @@ public class ManageOrder extends javax.swing.JFrame {
                     .addGroup(CartPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(finalTotalPriceLabel1)
-                        .addGap(19, 19, 19))
-                    .addComponent(addToCartButton, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                        .addContainerGap(356, Short.MAX_VALUE))
                     .addGroup(CartPanel1Layout.createSequentialGroup()
                         .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(CartPanel1Layout.createSequentialGroup()
                                 .addGap(123, 123, 123)
                                 .addComponent(CartLabel1))
-                            .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(CartPanel1Layout.createSequentialGroup()
                                     .addComponent(QuantityLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(customerSelectionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 13, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                                .addComponent(addToCartButton, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)))
+                        .addContainerGap(25, Short.MAX_VALUE))))
             .addGroup(CartPanel1Layout.createSequentialGroup()
                 .addGap(106, 106, 106)
                 .addComponent(QuantityLabel3)
@@ -277,17 +278,15 @@ public class ManageOrder extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(CartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(orderQuantityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(CartPanel1Layout.createSequentialGroup()
-                        .addComponent(QuantityLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)))
+                    .addComponent(QuantityLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(orderQuantityField, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(addToCartButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addComponent(finalTotalPriceLabel1))
         );
 
-        CartPanel.setBackground(new java.awt.Color(255, 255, 255));
+        CartPanel.setBackground(new java.awt.Color(253, 252, 248));
         CartPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         CartPanel.setPreferredSize(new java.awt.Dimension(380, 420));
 
@@ -447,7 +446,7 @@ public class ManageOrder extends javax.swing.JFrame {
                     .addComponent(finalPriceLabel))
                 .addGap(12, 12, 12)
                 .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         lblBlueStrip.setBackground(new java.awt.Color(0, 140, 214));
@@ -485,7 +484,7 @@ public class ManageOrder extends javax.swing.JFrame {
             homeButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homeButtonLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(homeIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 26, Short.MAX_VALUE)
+                .addComponent(homeIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                 .addContainerGap())
         );
         homeButtonLayout.setVerticalGroup(
@@ -497,7 +496,9 @@ public class ManageOrder extends javax.swing.JFrame {
         lblBlueStrip.setLayout(lblBlueStripLayout);
         lblBlueStripLayout.setHorizontalGroup(
             lblBlueStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(lblBlueStripLayout.createSequentialGroup()
+                .addComponent(homeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         lblBlueStripLayout.setVerticalGroup(
             lblBlueStripLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -508,18 +509,21 @@ public class ManageOrder extends javax.swing.JFrame {
         basePanel.setLayout(basePanelLayout);
         basePanelLayout.setHorizontalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblBlueStrip, javax.swing.GroupLayout.PREFERRED_SIZE, 898, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(basePanelLayout.createSequentialGroup()
-                .addGap(366, 366, 366)
-                .addComponent(HomePage))
-            .addComponent(lblGreenStrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(basePanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(CartPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(DateLabel)
-                .addGap(29, 29, 29)
-                .addComponent(CartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(basePanelLayout.createSequentialGroup()
+                        .addGap(366, 366, 366)
+                        .addComponent(HomePage))
+                    .addGroup(basePanelLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(CartPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(DateLabel)
+                        .addGap(29, 29, 29)
+                        .addComponent(CartPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(lblBlueStrip, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+            .addComponent(lblGreenStrip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         basePanelLayout.setVerticalGroup(
             basePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -553,84 +557,69 @@ public class ManageOrder extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        DefaultTableModel model = (DefaultTableModel) productTable.getModel();
+        ArrayList<BookData> bookDataList;
+        model.setRowCount(0);
 
-        try (Connection con = DatabaseManager.getConnection();) {
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT product_id, product_name, stock_quantity, unit_price FROM product");
-            DefaultTableModel model = (DefaultTableModel) productTable.getModel();
+        try {
+            bookDataList = BookDAO.getBooksDetailsForOrderManagement();
 
-            while (rs.next()) {
-                String bookId = rs.getString("product_id");
-                String bookName = rs.getString("product_name");
-                int quantity = rs.getInt("stock_quantity");
-                double price = rs.getDouble("unit_price");
-
-                model.addRow(new Object[]{bookId, bookName, quantity, price});
+            for (BookData bookData : bookDataList) {
+                Object[] rowData = {
+                    bookData.getBookID(),
+                    bookData.getBookTitle(),
+                    bookData.getStockQuantity(),
+                    bookData.getNetPrice()
+                };
+                model.addRow(rowData);
             }
-
-            productTable.setModel(model);
-
         } catch (SQLException ex) {
-            UIUtils.displayErrorMessage("Unable to fetch data from the database");
-            Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Unable to fetch data from the database", ex);
+            UIUtils.displayErrorMessage("Failed to fetch book data: " + ex.getMessage());
+            Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to fetch book data", ex);
         }
-
     }//GEN-LAST:event_formComponentShown
-
-    private void productTableComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_productTableComponentShown
-
-
-    }//GEN-LAST:event_productTableComponentShown
 
     private void addToCartButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addToCartButtonMouseClicked
         String noOfUnits = orderQuantityField.getText();
-        if (!noOfUnits.isEmpty()) {
-            int selectedRow = productTable.getSelectedRow();
-            if (selectedRow != -1) {
-                String productId = productTable.getValueAt(selectedRow, 0).toString();
-                String productName = productTable.getValueAt(selectedRow, 1).toString();
-                String unitPriceStr = productTable.getValueAt(selectedRow, 3).toString();
 
-                try {
-                    int stockQuantity = Integer.parseInt(productTable.getValueAt(selectedRow, 2).toString());
-                    double unitPrice = Double.parseDouble(unitPriceStr);
-                    double totalPrice = Double.parseDouble(noOfUnits) * unitPrice;
+        if (noOfUnits.trim().isEmpty()) {
+            UIUtils.displayErrorMessage("No quantity entered.");
+            return;
+        }
 
-                    DefaultTableModel model = (DefaultTableModel) cartTable.getModel();
+        int selectedRow = productTable.getSelectedRow();
+        if (selectedRow == -1) {
+            UIUtils.displayErrorMessage("Please select a product from the table.");
+            return;
+        }
 
-                    boolean productAlreadyExistInCart = false;
+        String bookID = productTable.getValueAt(selectedRow, 0).toString();
+        String bookTitle = productTable.getValueAt(selectedRow, 1).toString();
+        String netPriceStr = productTable.getValueAt(selectedRow, 3).toString();
 
-                    // Check if the cart is not empty and if the product already exists in the cart
-                    if (model.getRowCount() > 0) {
-                        for (int i = 0; i < model.getRowCount(); i++) {
-                            String existingProductId = model.getValueAt(i, 0).toString();
-                            if (existingProductId.equals(productId)) {
-                                productAlreadyExistInCart = true;
-                                JOptionPane.showMessageDialog(null, "Product already exists in cart.");
-                                break;
-                            }
-                        }
-                    }
+        try {
+            int stockQuantity = Integer.parseInt(productTable.getValueAt(selectedRow, 2).toString());
+            double netPrice = Double.parseDouble(netPriceStr);
+            double totalPrice = Double.parseDouble(noOfUnits) * netPrice;
 
-                    if (!productAlreadyExistInCart) {
-                        if (stockQuantity >= Integer.parseInt(noOfUnits)) {
-                            model.addRow(new Object[]{productId, productName, noOfUnits, totalPrice});
-                            finalTotalPrice += totalPrice;
-                            finalPriceLabel.setText(String.format("%.2f", finalTotalPrice));
-                            JOptionPane.showMessageDialog(null, "Added to cart successfully.");
-                            orderQuantityField.setText(null);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Product is out of stock. Only " + stockQuantity + " left.");
-                        }
-                    }
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Invalid quantity or price.");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Please select a product from the table.");
+            DefaultTableModel model = (DefaultTableModel) cartTable.getModel();
+
+            if (isProductAlreadyInCart(model, bookID)) {
+                UIUtils.displayErrorMessage("Book already exists in cart.");
+                return;
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "No quantity entered.");
+
+            if (stockQuantity < Integer.parseInt(noOfUnits)) {
+                UIUtils.displayErrorMessage("Product is out of stock. Only " + stockQuantity + " left.");
+            }
+
+            model.addRow(new Object[]{bookID, bookTitle, noOfUnits, totalPrice});
+            finalTotalPrice += totalPrice;
+            finalPriceLabel.setText(String.format("%.2f", finalTotalPrice));
+            UIUtils.displaySuccessMessage("Added to cart successfully.");
+        } catch (NumberFormatException ex) {
+            UIUtils.displayErrorMessage("Invalid quantity or price: " + ex.getMessage());
+            Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Invalid quantity or price", ex);
         }
     }//GEN-LAST:event_addToCartButtonMouseClicked
 
@@ -667,66 +656,38 @@ public class ManageOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_placeOrderButtonMouseEntered
 
     private void placeOrderButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_placeOrderButtonMouseClicked
-        //ensure that customer is selected and cart is not empty
-
+        // Check if customer is selected and cart is not empty
         if (!customerSelectionComboBox.getSelectedItem().equals("Please Select") && cartTable.getRowCount() > 0) {
+            salesData.setSalespersonID(userData.getUserID());
+            salesData.setCustomerID(selectedCustomerIDLabel.getText());
+            String formattedTotalPrice = String.format("%.2f", finalTotalPrice);
+            salesData.setTotalPrice(Double.parseDouble(formattedTotalPrice));
 
-            DefaultTableModel dtm = (DefaultTableModel) cartTable.getModel();
-
-            try (Connection con = DatabaseManager.getConnection()) {
-                // Insert sales book records
-                customerID = selectedCustomerIDLabel.getText();
-                salesData.setCustomerID(customerID);
-                
-                String formattedTotalPrice = String.format("%.2f", finalTotalPrice);
-                salesData.setTotalPrice(Double.parseDouble(formattedTotalPrice));
-                String currentSalesID =  salesData.getCurrentSalesID();
-                salesData.saveSalesDataToDatabase();
-
-                String query = "INSERT INTO sales_book(sales_id, product_id, quantity, subtotal) VALUES (?, ?, ?, ?)";
-                PreparedStatement ps = con.prepareStatement(query);
-                for (int i = 0; i < cartTable.getRowCount(); i++) {
-                    String productId = dtm.getValueAt(i, 0).toString();
-                    int quantity = Integer.parseInt(dtm.getValueAt(i, 2).toString());
-                    double subtotal = Double.parseDouble(dtm.getValueAt(i, 3).toString());
-
-                    ps.setString(1,currentSalesID);
-                    ps.setString(2, productId);
-                    ps.setInt(3, quantity);
-                    ps.setDouble(4, subtotal);
-
-                    ps.executeUpdate();
-                }
-
-                UIUtils.displaySuccessMessage("Sales data saved successfully.");
-                setVisible(false);
-                 new ManageSales(new SalesData(new UserData()), new UserData()).setVisible(true);
-            } catch (SQLException e) {
-                UIUtils.displayErrorMessage("An error occurred: " + e.getMessage());
+            try {
+                SalesDAO.saveSalesData(salesData, cartTable);
+                dispose();
+                new ManageSales(salesData, userData).setVisible(true);
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage("Failed to save sales data: " + ex.getMessage());
+                Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to save sales data", ex);
             }
-
         } else {
-            JOptionPane.showMessageDialog(null, "Please select a customer and ensure the cart is not empty.");
+            UIUtils.displayErrorMessage("Please select a customer and ensure the cart is not empty.");
         }
     }//GEN-LAST:event_placeOrderButtonMouseClicked
 
     private void customerSelectionComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerSelectionComboBoxActionPerformed
         // Get the selected customer name from the combo box
         String selectedCustomerName = (String) customerSelectionComboBox.getSelectedItem();
-        try (Connection con = DatabaseManager.getConnection()) {
-            String sql = "SELECT * FROM customer WHERE name = ?";
-            try (PreparedStatement pst = con.prepareStatement(sql)) {
-                pst.setString(1, selectedCustomerName);
-                try (ResultSet rs = pst.executeQuery()) {
-                    if (rs.next()) {
-                        // Update the labels with the selected customer's information
-                        selectedCustomerIDLabel.setText(rs.getString("customer_id"));
-                        selectedCustomerNameLabel.setText(rs.getString("name"));
-                    }
-                }
-            }
+
+        try {
+            CustomerData customer = CustomerDAO.getCustomerByName(selectedCustomerName);
+            customerID = customer.getCustomerID();
+            selectedCustomerIDLabel.setText(customer.getCustomerID());
+            selectedCustomerNameLabel.setText(customer.getFullName());
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            UIUtils.displayErrorMessage("Failed to load customer data: " + ex.getMessage());
+            Logger.getLogger(ManageCustomer.class.getName()).log(Level.SEVERE, "Failed to load customer data", ex);
         }
     }//GEN-LAST:event_customerSelectionComboBoxActionPerformed
 
@@ -735,18 +696,17 @@ public class ManageOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_orderQuantityFieldActionPerformed
 
     private void productTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productTableMouseClicked
-        int index = productTable.getSelectedRow();
-        TableModel model = productTable.getModel();
-        String id = model.getValueAt(index, 0).toString();
-        productPk = id;
-
+//        int index = productTable.getSelectedRow();
+//        TableModel model = productTable.getModel();
+//        String id = model.getValueAt(index, 0).toString();
+//        productPk = id;
     }//GEN-LAST:event_productTableMouseClicked
 
     private void cartTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartTableMouseClicked
         int index = cartTable.getSelectedRow();
-        int a = JOptionPane.showConfirmDialog(null, "Do you want to remove this product?", "Select", JOptionPane.YES_NO_OPTION);
+        int option = JOptionPane.showConfirmDialog(null, "Do you want to remove this product?", "Select", JOptionPane.YES_NO_OPTION);
 
-        if (a == 0) {
+        if (option == 0) {
             TableModel model = cartTable.getModel();
             String subTotal = model.getValueAt(index, 3).toString();
             finalTotalPrice = finalTotalPrice - Integer.parseInt(subTotal);
@@ -756,8 +716,8 @@ public class ManageOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_cartTableMouseClicked
 
     private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
-        setVisible(false);
-        new SalespersonHomePage().setVisible(true);
+        dispose();
+        new SalespersonHomePage(userData).setVisible(true);
     }//GEN-LAST:event_homeButtonMouseClicked
 
     private void homeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseEntered
@@ -809,7 +769,7 @@ public class ManageOrder extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageOrder(new SalesData(new UserData())).setVisible(true);
+                new ManageOrder(new SalesData(), new UserData()).setVisible(true);
             }
         });
     }

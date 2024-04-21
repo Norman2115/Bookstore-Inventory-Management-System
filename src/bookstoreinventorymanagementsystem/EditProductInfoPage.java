@@ -1015,7 +1015,7 @@ public class EditProductInfoPage extends javax.swing.JInternalFrame {
             bookData.setDiscount(Double.parseDouble(discountField.getText().trim()));
             bookData.setGenre(genreComboBox.getSelectedItem().toString());
             bookData.setLanguage(languageComboBox.getSelectedItem().toString());
-            bookData.setNetPrice();
+            bookData.calculateNetPrice();
 
             // Check if a new cover page has been selected
             if (selectedFile != null) {

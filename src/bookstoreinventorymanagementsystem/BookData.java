@@ -21,8 +21,8 @@ public final class BookData {
     private double netPrice;
 
     /**
-     * Constructs a new BookData object with default values. 
-     * All properties are initialized to null or 0 value.
+     * Constructs a new BookData object with default values. All properties are
+     * initialized to null or 0 value.
      */
     public BookData() {
         setBookID(null);
@@ -37,12 +37,12 @@ public final class BookData {
         setStockQuantity(0);
         setUnitPrice(0.0);
         setDiscount(0.0);
-        setNetPrice();
+        setNetPrice(0.0);
     }
 
     /**
      * Set the book ID.
-     * 
+     *
      * @param bookID the book ID to be set.
      */
     public void setBookID(String bookID) {
@@ -51,7 +51,7 @@ public final class BookData {
 
     /**
      * Set the book title of the book.
-     * 
+     *
      * @param bookTitle the book title to be set.
      */
     public void setBookTitle(String bookTitle) {
@@ -60,7 +60,7 @@ public final class BookData {
 
     /**
      * Set the genre of the book.
-     * 
+     *
      * @param genre the genre to be set.
      */
     public void setGenre(String genre) {
@@ -69,7 +69,7 @@ public final class BookData {
 
     /**
      * Set the language of the book.
-     * 
+     *
      * @param language the language to be set.
      */
     public void setLanguage(String language) {
@@ -78,7 +78,7 @@ public final class BookData {
 
     /**
      * Set the author of the book.
-     * 
+     *
      * @param author the author to be set.
      */
     public void setAuthor(String author) {
@@ -87,7 +87,7 @@ public final class BookData {
 
     /**
      * Set the publisher of the book.
-     * 
+     *
      * @param publisher the publisher to be set.
      */
     public void setPublisher(String publisher) {
@@ -96,7 +96,7 @@ public final class BookData {
 
     /**
      * Set the publication year of the book.
-     * 
+     *
      * @param publicationYear the publication year to be set.
      */
     public void setPublicationYear(int publicationYear) {
@@ -105,7 +105,7 @@ public final class BookData {
 
     /**
      * Set the ISBN of the book.
-     * 
+     *
      * @param isbn the ISBN to be set.
      */
     public void setISBN(String isbn) {
@@ -114,7 +114,7 @@ public final class BookData {
 
     /**
      * Set the stock quantity of the book.
-     * 
+     *
      * @param stockQuantity the stock quantity to be set.
      */
     public void setStockQuantity(int stockQuantity) {
@@ -123,7 +123,7 @@ public final class BookData {
 
     /**
      * Set the unit price of the book.
-     * 
+     *
      * @param unitPrice the unit price to be set.
      */
     public void setUnitPrice(double unitPrice) {
@@ -132,7 +132,7 @@ public final class BookData {
 
     /**
      * Set the discount of the book.
-     * 
+     *
      * @param discount the discount to be set.
      */
     public void setDiscount(double discount) {
@@ -141,7 +141,7 @@ public final class BookData {
 
     /**
      * Set the cover page of the book.
-     * 
+     *
      * @param coverPage the cover page of the book.
      */
     public void setCoverPage(byte[] coverPage) {
@@ -149,25 +149,32 @@ public final class BookData {
     }
 
     /**
-     * Set the net price of the book.
-     * net price = unit price - unit price * discount
+     *
+     * @param netPrice
      */
-    public void setNetPrice() {
+    public void setNetPrice(double netPrice) {
         netPrice = unitPrice * (1 - discount / 100.0);
     }
-    
+
+    /**
+     * Calculate the net price of the book.
+     */
+    public void calculateNetPrice() {
+        netPrice = unitPrice * (1 - discount / 100.0);
+    }
+
     /**
      * Retrieves the book ID of the book in the form of String.
-     * 
+     *
      * @return the book ID of the book, or null if not set.
      */
     public String getBookID() {
         return bookID;
     }
-    
+
     /**
      * Retrieves the book title of the book in the form of String.
-     * 
+     *
      * @return the book title of the book, or null if not set.
      */
     public String getBookTitle() {
@@ -176,7 +183,7 @@ public final class BookData {
 
     /**
      * Retrieves the genre of the book in the form of String.
-     * 
+     *
      * @return the genre of the book, or null if not set.
      */
     public String getGenre() {
@@ -185,7 +192,7 @@ public final class BookData {
 
     /**
      * Retrieves the language of the book in the form of String.
-     * 
+     *
      * @return the language of the book, or null if not set.
      */
     public String getLanguage() {
@@ -194,7 +201,7 @@ public final class BookData {
 
     /**
      * Retrieves the author of the book in the form of String.
-     * 
+     *
      * @return the author of the book, or null if not set.
      */
     public String getAuthor() {
@@ -203,8 +210,8 @@ public final class BookData {
 
     /**
      * Retrieves the publisher of the book in the from of String.
-     * 
-     * @return the publisher of the book, or null if not set. 
+     *
+     * @return the publisher of the book, or null if not set.
      */
     public String getPublisher() {
         return publisher;
@@ -212,7 +219,7 @@ public final class BookData {
 
     /**
      * Retrieves the publication year of the book in the form of integer.
-     * 
+     *
      * @return the publication year of the book, or 0 if not set.
      */
     public int getPublicatioYear() {
@@ -221,7 +228,7 @@ public final class BookData {
 
     /**
      * Retrieves the ISBN of the book in the form of String.
-     * 
+     *
      * @return the ISBN of the book, or null if not set.
      */
     public String getISBN() {
@@ -230,7 +237,7 @@ public final class BookData {
 
     /**
      * Retrieves the stock quantity of the book in the form of integer.
-     * 
+     *
      * @return the stock quantity of the book, or 0 if not set.
      */
     public int getStockQuantity() {
@@ -239,7 +246,7 @@ public final class BookData {
 
     /**
      * Retrieves the unit price of the book in the form of double.
-     * 
+     *
      * @return the unit price of the book, or 0.0 if not set.
      */
     public double getUnitPrice() {
@@ -248,7 +255,7 @@ public final class BookData {
 
     /**
      * Retrieves the discount of the book in the form of double.
-     * 
+     *
      * @return the discount of the book, or 0.0 if not set.
      */
     public double getDiscount() {
@@ -257,7 +264,7 @@ public final class BookData {
 
     /**
      * Retrieves the net price of the book in the term of double.
-     * 
+     *
      * @return the net price of the book, or 0.0 if not set.
      */
     public double getNetPrice() {
@@ -266,7 +273,7 @@ public final class BookData {
 
     /**
      * Retrieves the cover page of the book in the term of byte array.
-     * 
+     *
      * @return the cover page of the book, or null if not set.
      */
     public byte[] getCoverPage() {

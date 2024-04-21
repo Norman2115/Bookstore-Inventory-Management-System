@@ -639,7 +639,7 @@ public class SignUpPage extends javax.swing.JFrame implements NavigationListener
                     // If the username is not unique, mark the field as errorneous and display error message
                     if (!usernameUniqueValidation.isValid()) {
                         UIUtils.setFieldErrorState(usernameField);
-                        UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameValidation.getErrorMessage());
+                        UIUtils.setErrorLabelMessage(usernameErrorLabel, usernameUniqueValidation.getErrorMessage());
                     } else {
                         // If the username is unique, reset the field state and clear error message
                         UIUtils.resetFieldState(usernameField);

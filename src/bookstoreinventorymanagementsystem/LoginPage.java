@@ -423,7 +423,7 @@ public class LoginPage extends javax.swing.JFrame {
                 if (userData.getRole() == UserRole.ADMIN) {
                     new AdminHomePage(userData).setVisible(true);
                 } else {
-                    new SalespersonHomePage().setVisible(true);
+                    new SalespersonHomePage(userData).setVisible(true);
                 }
             } catch (SQLException ex) {
                 UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);

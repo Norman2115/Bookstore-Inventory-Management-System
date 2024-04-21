@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -370,5 +371,26 @@ public class BookDAO {
             int rowNumber = resultCount.getInt(1);
             return rowNumber;
         }
+    }
+
+    public static ArrayList<BookData> getBooksDetailsForOrderManagement() throws SQLException {
+        ArrayList<BookData> bookDetailsList = new ArrayList<>();
+        String query = "SELECT book_id, book_title, stock_quantity, unit_price, discount FROM book";
+
+        try (Connection con = DatabaseManager.getConnection(); PreparedStatement ps = con.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                BookData bookData = new BookData();
+                bookData.setBookID(rs.getString("book_id"));
+                bookData.setBookTitle(rs.getString("book_title"));
+                bookData.setStockQuantity(rs.getInt("stock_quantity"));
+                bookData.setUnitPrice(rs.getDouble("unit_price"));
+                bookData.setDiscount(rs.getDouble("discount"));
+                bookData.calculateNetPrice();
+                bookDetailsList.add(bookData);
+            }
+        }
+
+        return bookDetailsList;
     }
 }
