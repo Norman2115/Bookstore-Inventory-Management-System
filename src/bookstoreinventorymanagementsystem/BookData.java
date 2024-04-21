@@ -229,25 +229,46 @@ public final class BookData {
     }
 
     /**
-     * Retrieves the stock quantity of the book in the form of String.
-     * @return the stock quantity
+     * Retrieves the stock quantity of the book in the form of integer.
+     * 
+     * @return the stock quantity of the book, or 0 if not set.
      */
     public int getStockQuantity() {
         return stockQuantity;
     }
 
+    /**
+     * Retrieves the unit price of the book in the form of double.
+     * 
+     * @return the unit price of the book, or 0.0 if not set.
+     */
     public double getUnitPrice() {
         return unitPrice;
     }
 
+    /**
+     * Retrieves the discount of the book in the form of double.
+     * 
+     * @return the discount of the book, or 0.0 if not set.
+     */
     public double getDiscount() {
         return discount;
     }
 
+    /**
+     * Retrieves the net price of the book in the term of double.
+     * 
+     * @return the net price of the book, or 0.0 if not set.
+     */
     public double getNetPrice() {
         return netPrice;
     }
 
+    /**
+     * Retrieves the cover page of the book in the term of byte array.
+     * 
+     * @return the cover page of the book, or null if not set.
+     */
     public byte[] getCoverPage() {
         return coverPage;
     }
