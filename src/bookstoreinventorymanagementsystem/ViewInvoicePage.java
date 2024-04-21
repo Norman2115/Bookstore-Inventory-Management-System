@@ -71,7 +71,7 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
                 data[i][3] = resultSet.getString("sales_date");
                 data[i][4] = resultSet.getString("total_price");
                 data[i][5] = resultSet.getString("customer_name");
-                data[i][6] = resultSet.getString("user_name");
+                data[i][6] = resultSet.getString("username");
                 i++;
             }
             return data;

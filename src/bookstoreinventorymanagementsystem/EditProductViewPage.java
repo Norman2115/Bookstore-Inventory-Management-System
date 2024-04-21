@@ -59,7 +59,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
         String searchBy = null;
         switch (searchType.getSelectedIndex()) {
             case 0 ->
-                searchBy = "book_title";
+                searchBy = "all";
             case 1 ->
                 searchBy = "book_title";
             case 2 ->
@@ -289,7 +289,19 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
         BookData[] bookDatas;
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        String condition;
+        if(searchBy.equals("all")){
+            searchBy = "book_title";
+            condition = "book_title LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "isbn LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "genre LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "language LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "author LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "publisher LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "publication_year LIKE \'"+searchBar.getText()+"%\'";
+        }else{
+            condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        }
         try {
             bookDatas = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
             displayRow(bookDatas);

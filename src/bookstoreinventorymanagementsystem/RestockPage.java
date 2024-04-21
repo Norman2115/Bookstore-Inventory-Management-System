@@ -8,6 +8,10 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.Component;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -84,11 +88,17 @@ public class RestockPage extends javax.swing.JInternalFrame {
     }
     
     private void selectData(){
-        BookData[] bookData;
-        String searchBy = getSelection();
-        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        // bookData = bookDAO.readData("product",condition,searchBy);
-        // displayRow(bookData);
+        try {
+            BookData[] bookData;
+            String searchBy = getSelection();
+            String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
+            bookData = bookDAO.readBookDataFromDatabase("product",condition,searchBy);
+            displayRow(bookData);
+        } catch (SQLException ex) {
+            Logger.getLogger(RestockPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RestockPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private boolean restockIsValid(){

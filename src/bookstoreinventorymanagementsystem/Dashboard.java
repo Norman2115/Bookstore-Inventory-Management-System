@@ -18,7 +18,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class Dashboard extends javax.swing.JInternalFrame {
     private final int lowStockValue = 10;
 
-    public Dashboard() {
+    public Dashboard(String userName) {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
@@ -26,6 +26,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
 
         pieChart.clearData();
         showPieChart();
+        user.setText("User "+userName+"!");
     }
 
     private void showPieChart() {
@@ -73,7 +74,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        user = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         pieChart = new bookstoreinventorymanagementsystem.PieChart();
 
@@ -83,8 +84,8 @@ public class Dashboard extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(253, 252, 248));
         jPanel1.setPreferredSize(new java.awt.Dimension(939, 631));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel4.setText("User Norman2115!");
+        user.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        user.setText("User Norman2115!");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel5.setText("Hi, Catherine");
@@ -101,7 +102,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
                             .addComponent(pieChart, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(36, 36, 36)
-                                .addComponent(jLabel4))))
+                                .addComponent(user))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -115,7 +116,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(user)
                 .addGap(34, 34, 34))
         );
 
@@ -137,9 +138,9 @@ public class Dashboard extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private bookstoreinventorymanagementsystem.PieChart pieChart;
+    private javax.swing.JLabel user;
     // End of variables declaration//GEN-END:variables
 }

@@ -19,7 +19,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     public AdminHomePage(UserData userData) {
         initComponents();
         displayPanel.removeAll();
-        Dashboard text = new Dashboard();
+        Dashboard text = new Dashboard(userData.getUsername());
         displayPanel.add(text).setVisible(true);
 
         this.userData = userData;
