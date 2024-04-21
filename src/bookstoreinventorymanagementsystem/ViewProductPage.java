@@ -53,7 +53,7 @@ public class ViewProductPage extends javax.swing.JInternalFrame {
                 rowData[6] = productData[i].getPublicatioYear();
                 rowData[7] = productData[i].getUnitPrice();
                 rowData[8] = productData[i].getDiscount();
-                productData[i].calculateNetPrice();
+                productData[i].setNetPrice();
                 rowData[9] = productData[i].getNetPrice();
 
                 ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
