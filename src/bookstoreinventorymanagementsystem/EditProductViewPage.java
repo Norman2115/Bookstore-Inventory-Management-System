@@ -61,7 +61,7 @@ public class EditProductViewPage extends javax.swing.JInternalFrame {
                 rowData[6] = bookData[i].getPublicatioYear();
                 rowData[7] = bookData[i].getUnitPrice();
                 rowData[8] = bookData[i].getDiscount();
-                bookData[i].calculateNetPrice();
+                bookData[i].setNetPrice();
                 rowData[9] = bookData[i].getNetPrice();
 
                 // Add the row data to the table model

@@ -21,9 +21,9 @@ public class DatabaseManager {
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.setJdbcUrl("jdbc:mysql://localhost:3306/bookstore_inventory");
         config.setUsername("root");
-        config.setPassword("user@12345@?");
+        // config.setPassword("user@12345@?");
         //config.setPassword("wydosql");
-        // config.setPassword("admin");
+        config.setPassword("admin");
         config.setMaximumPoolSize(3);
         config.setMinimumIdle(1);
         dataSource = new HikariDataSource(config);
