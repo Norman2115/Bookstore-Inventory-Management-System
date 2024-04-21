@@ -235,7 +235,7 @@
                     <Column editable="false" title="Author" type="java.lang.String"/>
                     <Column editable="false" title="Publisher" type="java.lang.Object"/>
                     <Column editable="false" title="Year" type="java.lang.String"/>
-                    <Column editable="true" title="Quantity" type="java.lang.Integer"/>
+                    <Column editable="false" title="Quantity" type="java.lang.Integer"/>
                   </Table>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value=""/>

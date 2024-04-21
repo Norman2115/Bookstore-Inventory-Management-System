@@ -353,6 +353,12 @@ public class BookDAO {
         }
     }
 
+    /**
+     * Retrieves the data from  book table and return array list of BookData objects.
+     * 
+     * @return 
+     * @throws SQLException if a database access error occurs.
+     */
     public static ArrayList<BookData> getBooksDetailsForOrderManagement() throws SQLException {
         ArrayList<BookData> bookDetailsList = new ArrayList<>();
         String query = "SELECT book_id, book_title, stock_quantity, unit_price, discount FROM book";
