@@ -7,11 +7,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
+ * Data Access Object (DAO) class for managing customer data in the database.
+ * This class provides methods to interact with the database for CRUD operations
+ * related to customer data.
  *
  * @author Liew Wen Yen
  */
 public class CustomerDAO {
 
+    /**
+     * Retrieves the next available customer ID from the database. Customer IDs
+     * are generated using a prefix followed by an incrementing number. Throws
+     * an SQLException if the generation fails.
+     *
+     * @return The next available customer ID.
+     * @throws SQLException If an SQL exception occurs.
+     */
     private static String setNextCustomerID() throws SQLException {
         try (Connection con = DatabaseManager.getConnection();) {
             String query = "SELECT current_customer_id FROM customer_id_counter";
@@ -27,6 +38,12 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * Retrieves all customers from the database.
+     *
+     * @return An ArrayList of CustomerData objects containing all customers.
+     * @throws SQLException If an SQL exception occurs.
+     */
     public static ArrayList<CustomerData> getAllCustomers() throws SQLException {
         ArrayList<CustomerData> customers = new ArrayList<>();
         String query = "SELECT * FROM customer";
@@ -46,6 +63,12 @@ public class CustomerDAO {
         return customers;
     }
 
+    /**
+     * Retrieves the names of all customers from the database.
+     *
+     * @return An ArrayList of Strings containing the names of all customers.
+     * @throws SQLException If an SQL exception occurs.
+     */
     public static ArrayList<String> getAllCustomersName() throws SQLException {
         ArrayList<String> customersName = new ArrayList<>();
         String query = "SELECT name FROM customer";
@@ -60,9 +83,16 @@ public class CustomerDAO {
         return customersName;
     }
 
+    /**
+     * Updates customer information in the database.
+     *
+     * @param customerData The CustomerData object containing updated
+     * information.
+     * @return True if the update was successful, false otherwise.
+     * @throws SQLException If an SQL exception occurs.
+     */
     public static boolean updateCustomer(CustomerData customerData) throws SQLException {
         try (Connection con = DatabaseManager.getConnection();) {
-
             String query = "UPDATE customer SET name = ?, mobileNumber = ?, email = ? WHERE customer_id = ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, customerData.getFullName());
@@ -75,6 +105,13 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * Retrieves customer information from the database based on the name.
+     *
+     * @param name The name of the customer to retrieve.
+     * @return A CustomerData object containing the customer's information.
+     * @throws SQLException If an SQL exception occurs.
+     */
     public static CustomerData getCustomerByName(String name) throws SQLException {
         CustomerData customerData = null;
         String sql = "SELECT * FROM customer WHERE name = ?";
@@ -93,6 +130,13 @@ public class CustomerDAO {
         return customerData;
     }
 
+    /**
+     * Deletes a customer from the database based on the customer ID.
+     *
+     * @param customerID The ID of the customer to delete.
+     * @return True if the deletion was successful, false otherwise.
+     * @throws SQLException If an SQL exception occurs.
+     */
     public static boolean deleteCustomer(String customerID) throws SQLException {
         try (Connection con = DatabaseManager.getConnection(); PreparedStatement ps = con.prepareStatement("DELETE FROM customer WHERE customer_id = ?")) {
             ps.setString(1, customerID);
@@ -101,19 +145,14 @@ public class CustomerDAO {
         }
     }
 
+    /**
+     * Saves customer data to the database.
+     *
+     * @param customerData The CustomerData object containing the customer's
+     * information.
+     * @throws SQLException If an SQL exception occurs.
+     */
     public static void saveCustomerDataToDatabase(CustomerData customerData) throws SQLException {
-        if (customerData.getFullName() == null) {
-            throw new NullPointerException("Full name cannot be null");
-        }
-
-        if (customerData.getMobileNumber() == null) {
-            throw new NullPointerException("Mobile number cannot be null");
-        }
-
-        if (customerData.getEmail() == null) {
-            throw new NullPointerException("Email cannot be null");
-        }
-
         Connection con = null;
         PreparedStatement ps = null;
 

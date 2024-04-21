@@ -10,13 +10,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * User Data Access Object (DAO) for accessing single piece of user data in the
- * database
+ * Data Access Object (DAO) class for managing user data in the database. This
+ * class provides methods to interact with the database for CRUD operations
+ * related to user data.
  *
- * @author coco1
+ * @author Teo Chung Henn
  */
 public class UserDAO {
 
+    /**
+     * Retrieves the next available user ID based on the user role. User IDs are
+     * generated using a prefix followed by an incrementing number.
+     *
+     * @param role the role of the user (ADMIN or SALESPERSON).
+     * @return the next available user ID.
+     * @throws SQLException if an SQL exception occurs or no user ID found.
+     */
     private static String getNextUserID(UserRole role) throws SQLException {
         String prefix = (role == UserRole.ADMIN) ? "A" : "S";
 
@@ -37,15 +46,14 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Updates the password of a user in the database.
+     *
+     * @param userData the user data containing the user ID.
+     * @param newPassword the new password to set.
+     * @throws SQLException if an SQL exception occurs.
+     */
     public static void updatePassword(UserData userData, String newPassword) throws SQLException {
-        if (userData == null) {
-            throw new NullPointerException("UserData cannot be null");
-        }
-
-        if (newPassword == null) {
-            throw new NullPointerException("New password cannot be null");
-        }
-
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "UPDATE user "
@@ -60,11 +68,15 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Reads user data from the database based on the username or email.
+     *
+     * @param usernameOrEmail the username or email of the user.
+     * @return the user data retrieved from the database.
+     * @throws SQLException if an SQL exception occurs.
+     * @throws IOException if an IO exception occurs.
+     */
     public static UserData readUserDataFromDatabase(String usernameOrEmail) throws SQLException, IOException {
-        if (usernameOrEmail == null) {
-            throw new NullPointerException("Username or email cannot be null");
-        }
-
         UserData userData = new UserData();
 
         try (Connection connection = DatabaseManager.getConnection()) {
@@ -92,35 +104,13 @@ public class UserDAO {
         return userData;
     }
 
+    /**
+     * Saves user data to the database.
+     *
+     * @param userData the user data to save.
+     * @throws SQLException if an SQL exception occurs.
+     */
     public static void saveUserDataToDatabase(UserData userData) throws SQLException {
-        if (userData == null) {
-            throw new NullPointerException("UserData cannot be null");
-        }
-
-        if (userData.getFullName() == null) {
-            throw new NullPointerException("Full name cannot be null");
-        }
-
-        if (userData.getUsername() == null) {
-            throw new NullPointerException("Username cannot be null");
-        }
-
-        if (userData.getEmail() == null) {
-            throw new NullPointerException("Email cannot be null");
-        }
-
-        if (userData.getPassword() == null) {
-            throw new NullPointerException("Password cannot be null");
-        }
-
-        if (userData.getRole() == null) {
-            throw new NullPointerException("Role cannot be null");
-        }
-
-        if (userData.getProfilePicture() == null) {
-            throw new NullPointerException("Profile picture cannot be null");
-        }
-
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -169,11 +159,14 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Reads the password from the database based on the username or email.
+     *
+     * @param usernameOrEmail The username or email of the user.
+     * @return The password retrieved from the database.
+     * @throws SQLException If an SQL exception occurs.
+     */
     public static String readPasswordByUsernameOrEmail(String usernameOrEmail) throws SQLException {
-        if (usernameOrEmail == null) {
-            throw new NullPointerException("Username or email cannot be null");
-        }
-
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT password FROM user WHERE username = ? OR email = ?"
@@ -192,11 +185,14 @@ public class UserDAO {
         return null;
     }
 
+    /**
+     * Reads the email from the database based on the username.
+     *
+     * @param username The username of the user.
+     * @return The email retrieved from the database.
+     * @throws SQLException If an SQL exception occurs.
+     */
     public static String readEmailByUsername(String username) throws SQLException {
-        if (username == null) {
-            throw new NullPointerException("Username cannot be null");
-        }
-        
         try (Connection connection = DatabaseManager.getConnection();) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT email FROM user WHERE username = ?"

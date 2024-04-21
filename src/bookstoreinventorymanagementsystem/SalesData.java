@@ -147,14 +147,14 @@ public class SalesData {
     public void generateBill(String salesId) throws FileNotFoundException, DocumentException, IOException, SQLException {
         Double salesTotalPrice = 0.0;
         String fileName = salesId + ".pdf";
-        String filePath = SalesUtils.billPath + File.separator + fileName;
+        String filePath = SalesUtils.BILL_PATH + File.separator + fileName;
 
         // Check if the file already exists
         File existingFile = new File(filePath);
         int count = 1;
         while (existingFile.exists()) {
             fileName = salesId + "(" + count + ").pdf"; // Append a suffix to make the filename unique
-            filePath = SalesUtils.billPath + File.separator + fileName;
+            filePath = SalesUtils.BILL_PATH + File.separator + fileName;
             existingFile = new File(filePath);
             count++;
         }

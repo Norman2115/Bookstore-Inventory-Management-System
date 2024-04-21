@@ -7,10 +7,16 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
+ * The class represents the interface for displaying detailed information about
+ * a book. It provides read-only access to the book data.
+ *
  * @author Tay Xuan Ye
  */
 public class BookDetailPage extends javax.swing.JInternalFrame {
 
+    /**
+     * Creates a new form BookDetailPage
+     */
     public BookDetailPage() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -18,7 +24,14 @@ public class BookDetailPage extends javax.swing.JInternalFrame {
         bi.setNorthPane(null);
     }
 
-    public void fillProductInfo(BookData bookData) {
+    /**
+     * Fills the book information fields with the data from the provided
+     * BookData object.
+     *
+     * @param bookData the BookData object containing the information to be
+     * displayed.
+     */
+    public void fillBookInfo(BookData bookData) {
         bookTitleField.setText(bookData.getBookTitle());
         genreComboBox.setSelectedItem(bookData.getGenre());
         languageComboBox.setSelectedItem(bookData.getLanguage());
@@ -394,7 +407,7 @@ public class BookDetailPage extends javax.swing.JInternalFrame {
 
     private void clearButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseClicked
         dispose();
-        AdminHomePage.createEditProductViewPage();
+        AdminHomePage.createEditBookViewPage();
     }//GEN-LAST:event_clearButtonMouseClicked
 
     private void clearButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearButtonMouseEntered

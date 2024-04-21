@@ -1,8 +1,11 @@
 package bookstoreinventorymanagementsystem;
 
 /**
+ * The class represents book data in the system. It stores information such as
+ * book ID, title, ISBN, genre, language, author, publisher, publication year,
+ * stock quantity, unit price, discount, net price and cover page image.
  *
- * @author User
+ * @author Tay Xuan Ye
  */
 public final class BookData {
 
@@ -17,8 +20,8 @@ public final class BookData {
     private int stockQuantity;
     private double unitPrice;
     private double discount;
-    private byte[] coverPage;
     private double netPrice;
+    private byte[] coverPage;
 
     /**
      * Constructs a new BookData object with default values. All properties are
@@ -149,15 +152,18 @@ public final class BookData {
     }
 
     /**
+     * Sets the net price of the book.
      *
-     * @param netPrice
+     * @param netPrice the net price to set.
      */
     public void setNetPrice(double netPrice) {
-        netPrice = unitPrice * (1 - discount / 100.0);
+        this.netPrice = netPrice;
     }
 
     /**
-     * Calculate the net price of the book.
+     * Calculates the net price of the book based on the unit price and
+     * discount. The net price is calculated as the unit price multiplied by (1
+     * - discount percentage/100).
      */
     public void calculateNetPrice() {
         netPrice = unitPrice * (1 - discount / 100.0);

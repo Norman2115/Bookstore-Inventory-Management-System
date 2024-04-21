@@ -22,6 +22,14 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
+/**
+ * A custom Swing component for displaying a pie chart with interactive
+ * features. This component is based on the tutorial provided by Ra Ven on
+ * YouTube. Tutorial: https://youtu.be/keUbv26ReeE
+ *
+ * @author Liew Wen Yen
+ * @author Tay Xuan Ye
+ */
 public class PieChart extends JComponent {
 
     private final List<ModelPieChart> models;

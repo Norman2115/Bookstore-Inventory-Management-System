@@ -1,9 +1,8 @@
 package bookstoreinventorymanagementsystem;
 
 /**
- * The class represents user data within the system. It encapsulates various
- * properties of a user, such as userID, username, email, password, role, and
- * profile picture.
+ * The class represents user data in the system. It encapsulates information of
+ * a user, such as userID, username, email, password, role, and profile picture.
  *
  * @author Teo Chung Henn
  */

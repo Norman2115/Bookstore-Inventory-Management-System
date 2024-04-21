@@ -59,11 +59,8 @@ public class ResetPasswordEmailVerificationPage extends javax.swing.JFrame {
             try {
                 emailHandler.sendResetPasswordEmail(toEmail);
             } catch (MessagingException | UnsupportedEncodingException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.EMAIL_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            } catch (NullPointerException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                UIUtils.displayErrorMessage("Failed to send email: " + ex.getMessage());
+                Logger.getLogger(ResetPasswordEmailVerificationPage.class.getName()).log(Level.SEVERE, "Failed to send email", ex);
             }
         });
         emailThread.start();

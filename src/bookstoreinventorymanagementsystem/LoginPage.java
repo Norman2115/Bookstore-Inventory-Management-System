@@ -373,11 +373,8 @@ public class LoginPage extends javax.swing.JFrame {
                     UIUtils.setErrorLabelMessage(usernameErrorLabel, "Incorrect username or email");
                 }
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NullPointerException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                UIUtils.displayErrorMessage("Failed to read user data: " + ex.getMessage());
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, "Failed to read user data", ex);
             }
         } else {
             // Mark the password field as required if it's empty
@@ -402,11 +399,8 @@ public class LoginPage extends javax.swing.JFrame {
                     UIUtils.setErrorLabelMessage(passwordErrorLabel, passwordMatchValidation.getErrorMessage());
                 }
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NullPointerException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                UIUtils.displayErrorMessage("Failed to read user data: " + ex.getMessage());
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, "Failed to read user data", ex);
             }
         } else {
             // Mark the password field as required if it's empty
@@ -426,14 +420,11 @@ public class LoginPage extends javax.swing.JFrame {
                     new SalespersonHomePage(userData).setVisible(true);
                 }
             } catch (SQLException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                UIUtils.displayErrorMessage("Failed to read user data: " + ex.getMessage());
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, "Failed to read user data", ex);
             } catch (IOException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            } catch (NullPointerException ex) {
-                UIUtils.displayErrorMessage(ExceptionMessages.NULL_ERROR);
-                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                UIUtils.displayErrorMessage("Failed to convert picture to the required format: " + ex.getMessage());
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, "Failed to convert picture to the required format", ex);
             }
         }
     }//GEN-LAST:event_loginButtonMouseClicked
@@ -562,8 +553,8 @@ public class LoginPage extends javax.swing.JFrame {
             // Activates the connection pool upon starting the application.
             DatabaseManager.getConnection().close();
         } catch (ExceptionInInitializerError | SQLException ex) {
-            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            UIUtils.displayErrorMessage("Couldnt connect to the database");
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, "Couldnt connect to the database", ex);
         }
 
         /* Create and display the form */
