@@ -115,6 +115,28 @@ public class ValidationHandler {
         return new ValidationResult(true, null);
     }
 
+    public static ValidationResult checkUniqueCustomerEmail(String email) throws SQLException {
+        if (email == null) {
+            throw new NullPointerException("Email cannot be null");
+        }
+
+        try (Connection connection = DatabaseManager.getConnection();) {
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM customer WHERE email = ?"
+            );
+
+            statement.setString(1, email);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new ValidationResult(false, "Already exists in the database.");
+            }
+
+            return new ValidationResult(true, null);
+        }
+    }
+
     /**
      *
      * @param email

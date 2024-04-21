@@ -16,12 +16,16 @@ import java.sql.ResultSet;
  */
 public class ManageDashboard extends javax.swing.JFrame {
 
+    private final UserData userData;
+    
     /**
      * Creates new form ManageDashboard
+     * @param userData
      */
-    public ManageDashboard() {
+    public ManageDashboard(UserData userData) {
         initComponents();
         setLocationRelativeTo(null);
+        this.userData = userData;
     }
 
     /**
@@ -249,7 +253,7 @@ public class ManageDashboard extends javax.swing.JFrame {
 
     private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
         setVisible(false);
-        new SalespersonHomePage().setVisible(true);
+        new SalespersonHomePage(userData).setVisible(true);
     }//GEN-LAST:event_homeButtonMouseClicked
 
     private void homeButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseEntered
@@ -300,12 +304,12 @@ public class ManageDashboard extends javax.swing.JFrame {
     private void showData(int year, int month) {
         try (Connection con = DatabaseManager.getConnection()) {
             pieChart.clearData();
-            PreparedStatement p = con.prepareStatement("SELECT p.product_name, SUM(sb.subtotal) AS total_sales\n"
+            PreparedStatement p = con.prepareStatement("SELECT b.book_title, SUM(sb.subtotal) AS total_sales\n"
                     + "FROM sales_detail sd \n"
                     + "JOIN sales_book sb ON sd.sales_id = sb.sales_id \n"
-                    + "JOIN product p ON p.product_id = sb.product_id \n"
+                    + "JOIN book b ON b.book_id = sb.book_id \n"
                     + "WHERE DATE_FORMAT(sd.sales_date, '%Y') = ? AND DATE_FORMAT(sd.sales_date, '%m') = ?\n"
-                    + "GROUP BY p.product_name;");
+                    + "GROUP BY b.book_title;");
             p.setInt(1, year);
             p.setInt(2, month);
             ResultSet r = p.executeQuery();
@@ -375,7 +379,7 @@ public class ManageDashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ManageDashboard().setVisible(true);
+                new ManageDashboard(new UserData()).setVisible(true);
             }
         });
     }

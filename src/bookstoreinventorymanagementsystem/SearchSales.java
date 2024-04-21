@@ -11,6 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -32,6 +35,7 @@ public class SearchSales extends javax.swing.JFrame {
      * Creates new form SearchSales
      *
      * @param userData
+     * @param salesData
      */
     public SearchSales(UserData userData, SalesData salesData) {
         initComponents();
@@ -42,13 +46,14 @@ public class SearchSales extends javax.swing.JFrame {
     }
 
     private void updateComboBox() {
-        String sql = "SELECT * FROM sales_detail";
-        try (Connection con = DatabaseManager.getConnection(); PreparedStatement pst = con.prepareStatement(sql); ResultSet rs = pst.executeQuery()) {
-            while (rs.next()) {
-                customerIdSelectionComboBox.addItem(rs.getString("customer_id"));
+        try {
+            ArrayList<String> customerIDs = SalesDAO.getCustomerIDs();
+            for (String customerID : customerIDs) {
+                customerIdSelectionComboBox.addItem(customerID);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage("Failed to load customer ID: " + ex.getMessage());
+            Logger.getLogger(EditProductInfoPage.class.getName()).log(Level.SEVERE, "Failed to load customer ID", ex);
         }
     }
 
@@ -333,7 +338,7 @@ public class SearchSales extends javax.swing.JFrame {
                 .addComponent(fullNameErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(emailErrorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -392,7 +397,7 @@ public class SearchSales extends javax.swing.JFrame {
 
     private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
         setVisible(false);
-        new SalespersonHomePage().setVisible(true);
+        new SalespersonHomePage(userData).setVisible(true);
     }//GEN-LAST:event_homeButtonMouseClicked
 
     private void viewButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewButtonMouseClicked
@@ -434,16 +439,24 @@ public class SearchSales extends javax.swing.JFrame {
     }//GEN-LAST:event_viewButtonMouseReleased
 
     private void downloadButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_downloadButtonMouseClicked
-         int selectedRow = salesTable.getSelectedRow();
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(null, "Please select a record from the table.", "No Record Selected", JOptionPane.WARNING_MESSAGE);
-    } else {
-        salesID = (String) salesTable.getValueAt(selectedRow, 0); 
-        String filePath = SalesUtils.billPath + File.separator + salesID + ".pdf";
-        File pdfFile = new File(filePath);
-        if (pdfFile.exists()) {
-            int option = JOptionPane.showConfirmDialog(null, "PDF file already exists. Do you want to download it again?", "PDF Exists", JOptionPane.YES_NO_OPTION);
-            if (option == JOptionPane.YES_OPTION) {
+        int selectedRow = salesTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a record from the table.", "No Record Selected", JOptionPane.WARNING_MESSAGE);
+        } else {
+            salesID = (String) salesTable.getValueAt(selectedRow, 0);
+            String filePath = SalesUtils.billPath + File.separator + salesID + ".pdf";
+            File pdfFile = new File(filePath);
+            if (pdfFile.exists()) {
+                int option = JOptionPane.showConfirmDialog(null, "PDF file already exists. Do you want to download it again?", "PDF Exists", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Download the PDF
+                    try {
+                        salesData.generateBill(salesID);
+                    } catch (DocumentException | IOException | SQLException ex) {
+                        JOptionPane.showMessageDialog(null, "Error generating bill: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } else {
                 // Download the PDF
                 try {
                     salesData.generateBill(salesID);
@@ -451,15 +464,7 @@ public class SearchSales extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Error generating bill: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        } else {
-            // Download the PDF
-            try {
-                salesData.generateBill(salesID);
-            } catch (DocumentException | IOException | SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Error generating bill: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
         }
-    }
     }//GEN-LAST:event_downloadButtonMouseClicked
 
     private void downloadButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_downloadButtonMouseEntered
@@ -481,26 +486,18 @@ public class SearchSales extends javax.swing.JFrame {
     private void customerIdSelectionComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerIdSelectionComboBoxActionPerformed
         DefaultTableModel model = (DefaultTableModel) salesTable.getModel();
         String selectedCustomerId = (String) customerIdSelectionComboBox.getSelectedItem();
-
-        try (Connection con = DatabaseManager.getConnection()) {
-            String sql = "SELECT * FROM sales_detail WHERE customer_id = ? AND salesperson_id = ?";
-            try (PreparedStatement pst = con.prepareStatement(sql)) {
-                pst.setString(1, selectedCustomerId);
-                pst.setString(2, userData.getUserID()); // Assuming getUserID() returns the current user's ID
-                try (ResultSet rs = pst.executeQuery()) {
-                    while (rs.next()) {
-                        salesID = rs.getString("sales_id");
-                        salesDate = rs.getString("sales_date");
-                        totalPrice = rs.getDouble("total_price");
-
-                        // Add a row to the table model
-                        model.addRow(new Object[]{salesID, salesDate, totalPrice});
-                    }
-                }
+        String selectedSalespersonId = userData.getUserID();
+        model.setRowCount(0);
+        
+        try {
+            ArrayList<String[]> salesDataList = SalesDAO.getSalesDataForCustomerAndSalesperson(selectedCustomerId, selectedSalespersonId);
+            
+            for (String[] row : salesDataList) {
+                model.addRow(new Object[]{row[0], row[1], Double.valueOf(row[2])});
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, ex);
+            UIUtils.displayErrorMessage("Failed to load sales data: " + ex.getMessage());
+            Logger.getLogger(SearchSales.class.getName()).log(Level.SEVERE, "Failed to load sales data", ex);
         }
     }//GEN-LAST:event_customerIdSelectionComboBoxActionPerformed
 
@@ -538,7 +535,7 @@ public class SearchSales extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SearchSales(new UserData(), new SalesData(new UserData())).setVisible(true);
+                new SearchSales(new UserData(), new SalesData()).setVisible(true);
             }
         });
     }
@@ -552,9 +549,6 @@ public class SearchSales extends javax.swing.JFrame {
     private javax.swing.JPanel homeButton;
     private javax.swing.JLabel homeIcon;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -562,9 +556,6 @@ public class SearchSales extends javax.swing.JFrame {
     private javax.swing.JLabel lblCustomer;
     private javax.swing.JPanel lblGreenStrip;
     private javax.swing.JTable salesTable;
-    private javax.swing.JPanel saveButton;
-    private javax.swing.JPanel saveButton1;
-    private javax.swing.JPanel saveButton2;
     private javax.swing.JPanel viewButton;
     // End of variables declaration//GEN-END:variables
 }
