@@ -27,16 +27,13 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="background" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="background" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="background" pref="660" max="32767" attributes="0"/>
+              <Component id="background" pref="594" max="32767" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -72,19 +69,22 @@
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel5" min="-2" pref="106" max="-2" attributes="0"/>
+                                                  <Component id="bookTitleLabel" min="-2" pref="106" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="bookTitle" min="-2" pref="235" max="-2" attributes="0"/>
+                                                  <Component id="bookTitleField" min="-2" pref="235" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel10" min="-2" pref="106" max="-2" attributes="0"/>
+                                                  <Component id="languageLabel" min="-2" pref="106" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="genre" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="languageComboBox" min="-2" pref="235" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel19" min="-2" pref="106" max="-2" attributes="0"/>
+                                                  <Component id="genreLabel" min="-2" pref="106" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="language" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="genreErrorLabel" max="32767" attributes="0"/>
+                                                      <Component id="genreComboBox" max="32767" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                           </Group>
                                           <Component id="bookTitleErrorLabel" min="-2" pref="235" max="-2" attributes="0"/>
@@ -92,69 +92,77 @@
                                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                                           <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel21" min="-2" pref="106" max="-2" attributes="0"/>
+                                                  <Component id="publisherLabel" min="-2" pref="106" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="publisherErrorLabel" min="-2" pref="89" max="-2" attributes="0"/>
-                                                      <Component id="publisher" min="-2" pref="235" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="publisherErrorLabel" max="32767" attributes="0"/>
+                                                      <Component id="publisherField" pref="235" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="jLabel6" min="-2" pref="106" max="-2" attributes="0"/>
+                                                  <Component id="yearLabel" min="-2" pref="106" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="year" min="-2" pref="235" max="-2" attributes="0"/>
+                                                  <Component id="yearField" min="-2" pref="235" max="-2" attributes="0"/>
                                               </Group>
+                                              <Component id="yearErrorLabel" alignment="1" min="-2" pref="235" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
-                                              <Component id="jLabel20" min="-2" pref="106" max="-2" attributes="0"/>
+                                              <Component id="authorLabel" min="-2" pref="106" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="authorErrorLabel" min="-2" pref="89" max="-2" attributes="0"/>
-                                                  <Component id="author" min="-2" pref="235" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="authorErrorLabel" max="32767" attributes="0"/>
+                                                  <Component id="authorField" pref="235" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel11" min="-2" pref="106" max="-2" attributes="0"/>
+                                              <Component id="quantityLabel" min="-2" pref="106" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                   <Component id="quantityErrorLabel" max="32767" attributes="0"/>
-                                                  <Component id="quantity" min="-2" pref="235" max="-2" attributes="0"/>
+                                                  <Component id="quantityField" min="-2" pref="235" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <Component id="yearErrorLabel" min="-2" pref="235" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel25" alignment="1" min="-2" pref="106" max="-2" attributes="0"/>
-                                      <Component id="jLabel24" alignment="1" min="-2" pref="106" max="-2" attributes="0"/>
-                                      <Component id="jLabel22" max="32767" attributes="0"/>
-                                      <Component id="jLabel23" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="coverPageLabel" alignment="1" min="-2" pref="106" max="-2" attributes="0"/>
+                                      <Component id="netPriceLabel" alignment="1" min="-2" pref="106" max="-2" attributes="0"/>
+                                      <Component id="unitPriceLabel" max="32767" attributes="0"/>
+                                      <Component id="discountLabel" alignment="1" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel28" min="-2" pref="106" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="isbnErrorLabel" max="32767" attributes="0"/>
-                                      <Component id="isbn" pref="235" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="languageErrorLabel" min="-2" pref="235" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="isbnLabel" min="-2" pref="106" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="isbnErrorLabel" max="32767" attributes="0"/>
+                                              <Component id="isbnField" pref="235" max="32767" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="unitPrice" max="32767" attributes="0"/>
-                              <Component id="netPrice" alignment="1" max="32767" attributes="0"/>
-                              <Component id="uploadPicturePanel" alignment="1" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="updateButton" min="-2" pref="116" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="exitButton" pref="113" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="unitPriceField" pref="235" max="32767" attributes="0"/>
+                                  <Component id="netPriceField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="discountField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="coverPageErrorLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="unitPriceErrorLabel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="uploadPicturePanel" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="discountErrorLabel" alignment="1" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="discount" alignment="1" max="32767" attributes="0"/>
-                              <Component id="unitPriceErrorLabel" alignment="0" max="32767" attributes="0"/>
-                              <Component id="discountErrorLabel" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="addProductButton" min="-2" pref="116" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="clearButton" pref="107" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace min="-2" pref="185" max="-2" attributes="0"/>
                       </Group>
@@ -174,92 +182,100 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel22" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="unitPrice" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="jLabel5" min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="bookTitle" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="unitPriceLabel" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="unitPriceField" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="bookTitleLabel" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="bookTitleField" min="-2" pref="29" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="unitPriceErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
                       <Component id="bookTitleErrorLabel" alignment="0" min="-2" pref="15" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="jLabel10" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="genre" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="genreLabel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                          <Component id="genreComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="discount" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="jLabel23" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                          <Component id="discountField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                          <Component id="discountLabel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                  <Component id="discountErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                          <Component id="jLabel19" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="language" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="jLabel24" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="netPrice" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="uploadPicturePanel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="updateButton" min="-2" max="-2" attributes="0"/>
-                              <Component id="exitButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          <Component id="genreErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel28" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="isbn" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="isbnErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel20" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="author" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                                  <Component id="jLabel25" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                  <Component id="languageLabel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="languageComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                  <Component id="netPriceLabel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="netPriceField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                          <Component id="languageErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="discountErrorLabel" alignment="0" min="-2" pref="15" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="isbnLabel" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="isbnField" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                          <Component id="isbnErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="authorLabel" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                  <Component id="authorField" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="coverPageLabel" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           <Component id="authorErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel21" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="publisher" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="publisherLabel" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="publisherField" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           <Component id="publisherErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel6" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="year" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="yearLabel" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="yearField" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           <Component id="yearErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel11" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="quantity" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="quantityLabel" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="quantityField" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           <Component id="quantityErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="uploadPicturePanel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                          <Component id="coverPageErrorLabel" min="-2" pref="15" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="clearButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="addProductButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
+                  <EmptySpace pref="80" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -271,11 +287,11 @@
               <Font name="Segoe UI" size="30" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;&lt;html&gt;&lt;font color=&apos;#3EA434&apos;&gt;EDIT&lt;/font&gt; &lt;font color=&apos;#008CD6&apos;&gt; PRODUCT&lt;/font&gt;&lt;/html&gt;&quot;" type="code"/>
+              <Connection code="&quot;&lt;html&gt;&lt;font color=&apos;#3EA434&apos;&gt;EDIT&lt;/font&gt; &lt;font color=&apos;#008CD6&apos;&gt;BOOK&lt;/font&gt;&lt;/html&gt;&quot;" type="code"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel5">
+        <Component class="javax.swing.JLabel" name="bookTitleLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -293,7 +309,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="bookTitle">
+        <Component class="javax.swing.JTextField" name="bookTitleField">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
@@ -307,11 +323,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookTitleActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="bookTitleKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="bookTitleFieldKeyReleased"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel10">
+        <Component class="javax.swing.JLabel" name="genreLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -322,7 +337,7 @@
             <Property name="text" type="java.lang.String" value="Genre"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel19">
+        <Component class="javax.swing.JLabel" name="languageLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -333,7 +348,7 @@
             <Property name="text" type="java.lang.String" value="Language"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="author">
+        <Component class="javax.swing.JTextField" name="authorField">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
@@ -347,11 +362,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="authorActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="authorKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="authorFieldKeyReleased"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel20">
+        <Component class="javax.swing.JLabel" name="authorLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -362,7 +376,7 @@
             <Property name="text" type="java.lang.String" value="Author"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="publisher">
+        <Component class="javax.swing.JTextField" name="publisherField">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
@@ -376,11 +390,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="publisherActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="publisherKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="publisherFieldKeyReleased"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel21">
+        <Component class="javax.swing.JLabel" name="publisherLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -391,7 +404,7 @@
             <Property name="text" type="java.lang.String" value="Publisher"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
+        <Component class="javax.swing.JLabel" name="yearLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -402,7 +415,7 @@
             <Property name="text" type="java.lang.String" value="Year"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel11">
+        <Component class="javax.swing.JLabel" name="quantityLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -413,7 +426,7 @@
             <Property name="text" type="java.lang.String" value="Quantity"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel22">
+        <Component class="javax.swing.JLabel" name="unitPriceLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -424,7 +437,7 @@
             <Property name="text" type="java.lang.String" value="Unit Price (RM)"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel23">
+        <Component class="javax.swing.JLabel" name="discountLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -435,7 +448,7 @@
             <Property name="text" type="java.lang.String" value="Discount (%)"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel24">
+        <Component class="javax.swing.JLabel" name="netPriceLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -446,7 +459,7 @@
             <Property name="text" type="java.lang.String" value="Net Price (RM)"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="year">
+        <Component class="javax.swing.JTextField" name="yearField">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
@@ -460,11 +473,11 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="yearActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="yearKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="yearFieldKeyReleased"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="yearFieldKeyTyped"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="quantity">
+        <Component class="javax.swing.JTextField" name="quantityField">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
@@ -478,11 +491,11 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quantityActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="quantityKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="quantityFieldKeyReleased"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="quantityFieldKeyTyped"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="unitPrice">
+        <Component class="javax.swing.JTextField" name="unitPriceField">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
@@ -496,11 +509,11 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="unitPriceActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="unitPriceKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="unitPriceFieldKeyReleased"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="unitPriceFieldKeyTyped"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="netPrice">
+        <Component class="javax.swing.JTextField" name="netPriceField">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
@@ -514,9 +527,6 @@
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="netPriceActionPerformed"/>
-          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="uploadPicturePanel">
           <Properties>
@@ -534,10 +544,10 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Component id="pictureLabel" min="-2" pref="170" max="-2" attributes="0"/>
-                      <EmptySpace pref="33" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="pictureLabel" min="-2" pref="159" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -545,7 +555,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pictureLabel" pref="170" max="32767" attributes="0"/>
+                      <Component id="pictureLabel" pref="159" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -562,7 +572,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="jLabel25">
+        <Component class="javax.swing.JLabel" name="coverPageLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -573,7 +583,7 @@
             <Property name="text" type="java.lang.String" value="Cover Page"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JPanel" name="updateButton">
+        <Container class="javax.swing.JPanel" name="addProductButton">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="d6" green="8c" red="0" type="rgb"/>
@@ -583,11 +593,11 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="updateButtonMouseClicked"/>
-            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="updateButtonMouseEntered"/>
-            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="updateButtonMouseExited"/>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="updateButtonMousePressed"/>
-            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="updateButtonMouseReleased"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addProductButtonMouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addProductButtonMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addProductButtonMouseExited"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addProductButtonMousePressed"/>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addProductButtonMouseReleased"/>
           </Events>
 
           <Layout>
@@ -625,7 +635,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="exitButton">
+        <Container class="javax.swing.JPanel" name="clearButton">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="34" green="a4" red="3e" type="rgb"/>
@@ -635,11 +645,11 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="exitButtonMouseClicked"/>
-            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="exitButtonMouseEntered"/>
-            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="exitButtonMouseExited"/>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="exitButtonMousePressed"/>
-            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="exitButtonMouseReleased"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="clearButtonMouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="clearButtonMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="clearButtonMouseExited"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="clearButtonMousePressed"/>
+            <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="clearButtonMouseReleased"/>
           </Events>
 
           <Layout>
@@ -677,7 +687,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JTextField" name="discount">
+        <Component class="javax.swing.JTextField" name="discountField">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
@@ -691,52 +701,61 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="discountActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="discountKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="discountFieldKeyReleased"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="discountFieldKeyTyped"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="genre">
+        <Component class="javax.swing.JComboBox" name="genreComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="10">
-                <StringItem index="0" value="Fantasy"/>
-                <StringItem index="1" value="Science Fiction"/>
-                <StringItem index="2" value="Mystery/Thriller"/>
-                <StringItem index="3" value="Romance"/>
-                <StringItem index="4" value="Historical Fiction"/>
-                <StringItem index="5" value="Horror"/>
-                <StringItem index="6" value="Adventure"/>
-                <StringItem index="7" value="Non-fiction"/>
-                <StringItem index="8" value="Crime"/>
-                <StringItem index="9" value="Young Adult"/>
+              <StringArray count="11">
+                <StringItem index="0" value="- Select -"/>
+                <StringItem index="1" value="Fantasy"/>
+                <StringItem index="2" value="Science Fiction"/>
+                <StringItem index="3" value="Mystery/Thriller"/>
+                <StringItem index="4" value="Romance"/>
+                <StringItem index="5" value="Historical Fiction"/>
+                <StringItem index="6" value="Horror"/>
+                <StringItem index="7" value="Adventure"/>
+                <StringItem index="8" value="Non-fiction"/>
+                <StringItem index="9" value="Crime"/>
+                <StringItem index="10" value="Young Adult"/>
               </StringArray>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[235, 29]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="genreComboBoxActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="language">
+        <Component class="javax.swing.JComboBox" name="languageComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="8">
-                <StringItem index="0" value="English"/>
-                <StringItem index="1" value="Malay"/>
-                <StringItem index="2" value="Chinese"/>
-                <StringItem index="3" value="Spanish"/>
-                <StringItem index="4" value="French"/>
-                <StringItem index="5" value="Russian"/>
-                <StringItem index="6" value="Japanese"/>
-                <StringItem index="7" value="Arabic"/>
+              <StringArray count="9">
+                <StringItem index="0" value="- Select -"/>
+                <StringItem index="1" value="English"/>
+                <StringItem index="2" value="Malay"/>
+                <StringItem index="3" value="Chinese"/>
+                <StringItem index="4" value="Spanish"/>
+                <StringItem index="5" value="French"/>
+                <StringItem index="6" value="Russian"/>
+                <StringItem index="7" value="Japanese"/>
+                <StringItem index="8" value="Arabic"/>
               </StringArray>
             </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[235, 29]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="languageComboBoxActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -749,10 +768,9 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="discountErrorLabel">
+        <Component class="javax.swing.JLabel" name="coverPageErrorLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="10" style="0"/>
@@ -760,7 +778,6 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="bookTitleErrorLabel">
@@ -771,7 +788,6 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="authorErrorLabel">
@@ -782,7 +798,6 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="publisherErrorLabel">
@@ -793,7 +808,6 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="yearErrorLabel">
@@ -804,7 +818,6 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="quantityErrorLabel">
@@ -815,10 +828,9 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel28">
+        <Component class="javax.swing.JLabel" name="isbnLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -829,7 +841,7 @@
             <Property name="text" type="java.lang.String" value="ISBN"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="isbn">
+        <Component class="javax.swing.JTextField" name="isbnField">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
@@ -844,8 +856,7 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="isbnActionPerformed"/>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="isbnKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="isbnFieldKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="isbnErrorLabel">
@@ -856,7 +867,36 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f8" green="fc" red="fd" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="genreErrorLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="10" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f8" green="fc" red="fd" type="rgb"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="languageErrorLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="10" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f8" green="fc" red="fd" type="rgb"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="discountErrorLabel">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="10" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f8" green="fc" red="fd" type="rgb"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

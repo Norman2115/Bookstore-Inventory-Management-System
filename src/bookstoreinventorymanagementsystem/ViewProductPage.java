@@ -4,6 +4,10 @@
  */
 package bookstoreinventorymanagementsystem;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,29 +15,34 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class ViewProductPage extends javax.swing.JInternalFrame{
+public class ViewProductPage extends javax.swing.JInternalFrame {
     /**
      * Creates new form welcomeText
      */
     public ViewProductPage() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        
-        BookData[] productData;
-        productData = BookDAO.readData("product","book_title");
-        displayRow(productData);
-        // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
-        // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
-        // jTable1.getColumnModel().getColumn(0).setPreferredWidth(200);
+
+        BookData[] bookDatas;
+        try {
+            bookDatas = BookDAO.readBookDataFromDatabase("book", "book_title");
+            displayRow(bookDatas);
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+            Logger.getLogger(ViewProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+            Logger.getLogger(ViewProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
-    private void displayRow(BookData[] productData){
+
+    private void displayRow(BookData[] productData) {
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         int length = productData.length;
-        if(length>0){
-            for (int i = 0;i<length;i++){
+        if (length > 0) {
+            for (int i = 0; i < length; i++) {
                 Object[] rowData = new Object[10];
                 rowData[0] = productData[i].getBookTitle();
                 rowData[1] = productData[i].getISBN();
@@ -46,29 +55,27 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
                 rowData[8] = productData[i].getDiscount();
                 productData[i].calculateNetPrice();
                 rowData[9] = productData[i].getNetPrice();
-                //insert row
+
                 ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
             }
-        }else{
+        } else {
             ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         }
     }
-    
-    private String getSelection(){
-        String searchBy=null;
-        switch (searchType.getSelectedIndex()){
-            case 0:
+
+    private String getSelection() {
+        String searchBy = null;
+        switch (searchType.getSelectedIndex()) {
+            case 0 ->
                 searchBy = "book_title";
-                break;
-            case 1:
+            case 1 ->
                 searchBy = "book_title";
-                break;
-            case 2:
+            case 2 ->
                 searchBy = "isbn";
-                break;
         }
         return searchBy;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -261,29 +268,53 @@ public class ViewProductPage extends javax.swing.JInternalFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        BookData[] productData;
+        BookData[] bookDatas;
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = BookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        try {
+            bookDatas = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
+            displayRow(bookDatas);
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+            Logger.getLogger(ViewProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+            Logger.getLogger(ViewProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
-        BookData[] productData;
+        BookData[] bookDatas;
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = BookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        try {
+            bookDatas = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
+            displayRow(bookDatas);
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+            Logger.getLogger(ViewProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+            Logger.getLogger(ViewProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchButtonMouseClicked
 
     private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
-        if (evt.getClickCount() == 2){
+        if (evt.getClickCount() == 2) {
             int selectRow = displayTable.getSelectedRow();
-            long isbn = (long) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
-            BookData[] productData;
-            String condition = "isbn" + " = " +"\'"+isbn+"\'";
-            productData = BookDAO.readData("product",condition,"isbn");
-            AdminHomePage.createProductDetailPage(productData[0]);
+            String isbn = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 1);
+            BookData[] bookDatas;
+            String condition = "isbn" + " = " + "\'" + isbn + "\'";
+            try {
+                bookDatas = BookDAO.readBookDataFromDatabase("book", condition, "isbn");
+                AdminHomePage.createProductDetailPage(bookDatas[0]);
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+                Logger.getLogger(ViewProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+                Logger.getLogger(ViewProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_displayTableMouseClicked
 

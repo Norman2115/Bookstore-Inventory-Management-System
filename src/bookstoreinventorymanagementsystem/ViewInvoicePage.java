@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class ViewInvoicePage extends javax.swing.JInternalFrame {
     public ViewInvoicePage() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
         displayRow(readDataFromDatabase());
@@ -24,12 +24,12 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
         // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
         // jTable1.getColumnModel().getColumn(0).setPreferredWidth(200);
     }
-    
-    private void displayRow(String[][] data){
+
+    private void displayRow(String[][] data) {
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         int length = data.length;
-        if(length>0){
-            for (int i = 0;i<length;i++){
+        if (length > 0) {
+            for (int i = 0; i < length; i++) {
                 Object[] rowData = new Object[5];
                 //0-sales_id;1-salesperson_id;2-customer_id;3-sales_date;4-total_price;5-customer_name;6-salesperson_name
                 rowData[0] = data[i][0];
@@ -40,17 +40,17 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
                 //insert row
                 ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
             }
-        }else{
+        } else {
             ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         }
     }
-    
-    private String[][] readDataFromDatabase(){
-        try (Connection connection = DatabaseManager.getConnection()){
+
+    private String[][] readDataFromDatabase() {
+        try (Connection connection = DatabaseManager.getConnection()) {
             int i = 0;
-            int rowNumber = BookDAO.getLength("sales_detail");
+            int rowNumber = BookDAO.getRowCount("sales_detail");
             String[][] data = new String[rowNumber][7];//0-sales_id;1-salesperson_id;2-customer_id;3-sales_date;4-total_price;5-customer_name;6-salesperson_name
-            for (i = 0;i<rowNumber;i++){
+            for (i = 0; i < rowNumber; i++) {
                 data[i][0] = "";
                 data[i][1] = "";
                 data[i][2] = "";
@@ -64,7 +64,7 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
             ResultSet resultSet = statement.executeQuery(query);
             //catch data from result set
             i = 0;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 data[i][0] = resultSet.getString("sales_id");
                 data[i][1] = resultSet.getString("salesperson_id");
                 data[i][2] = resultSet.getString("customer_id");
@@ -80,13 +80,13 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
         }
         return null;
     }
-    
-    private String[][] readDataFromDatabase(String condition,String orderBy){
-        try (Connection connection = DatabaseManager.getConnection()){
+
+    private String[][] readDataFromDatabase(String condition, String orderBy) {
+        try (Connection connection = DatabaseManager.getConnection()) {
             int i = 0;
-            int rowNumber = BookDAO.getLength("sales_detail",condition);
+            int rowNumber = BookDAO.getRowCount("sales_detail", condition);
             String[][] data = new String[rowNumber][7];//0-sales_id;1-salesperson_id;2-customer_id;3-sales_date;4-total_price;5-customer_name;6-salesperson_name
-            for (i = 0;i<rowNumber;i++){
+            for (i = 0; i < rowNumber; i++) {
                 data[i][0] = "";
                 data[i][1] = "";
                 data[i][2] = "";
@@ -102,7 +102,7 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
             ResultSet resultSet = statement.executeQuery(query);
             //catch data from result set
             i = 0;
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 data[i][0] = resultSet.getString("sales_id");
                 data[i][1] = resultSet.getString("salesperson_id");
                 data[i][2] = resultSet.getString("customer_id");
@@ -118,10 +118,10 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
         }
         return null;
     }
-    
-    private String getSelection(){
-        String searchBy=null;
-        switch (searchType.getSelectedIndex()){
+
+    private String getSelection() {
+        String searchBy = null;
+        switch (searchType.getSelectedIndex()) {
             case 0:
                 searchBy = "sales_id";
                 break;
@@ -143,6 +143,7 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
         }
         return searchBy;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -270,6 +271,11 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
         displayTable.setSelectionForeground(new java.awt.Color(253, 252, 248));
         displayTable.setShowGrid(false);
         displayTable.getTableHeader().setReorderingAllowed(false);
+        displayTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                displayTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(displayTable);
 
         searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Invoice ID", "Customer", "Salesperson  ID", "Salesperson", "Date" }));
@@ -350,15 +356,28 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        displayRow(readDataFromDatabase(condition,searchBy));
+        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        displayRow(readDataFromDatabase(condition, searchBy));
     }//GEN-LAST:event_searchBarActionPerformed
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        displayRow(readDataFromDatabase(condition,searchBy));
+        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        displayRow(readDataFromDatabase(condition, searchBy));
     }//GEN-LAST:event_searchButtonMouseClicked
+
+    private void displayTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayTableMouseClicked
+        if (evt.getClickCount() == 2) {
+            int selectRow = displayTable.getSelectedRow();
+            System.out.println("Selected row  " + selectRow);
+            String[] invoiceData = new String[4];
+            invoiceData[0] = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 0);
+            invoiceData[1] = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 4);
+            invoiceData[2] = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 3);
+            invoiceData[3] = (String) ((DefaultTableModel) displayTable.getModel()).getValueAt(selectRow, 2);
+            AdminHomePage.createInvoiceDetailPage(invoiceData);
+        }
+    }//GEN-LAST:event_displayTableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

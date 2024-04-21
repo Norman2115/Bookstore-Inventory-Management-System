@@ -1,10 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
- */
 package bookstoreinventorymanagementsystem;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -14,23 +14,29 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class DeleteProductPage extends javax.swing.JInternalFrame {
-    private final BookDAO bookDAO = new BookDAO();
+
     /**
-     * Creates new form welcomeText
+     * Creates new form DeleteProductPage
      */
     public DeleteProductPage() {
         initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI) this.getUI();
         bi.setNorthPane(null);
-        
-        BookData[] productData;
-        productData = bookDAO.readData("product","book_title");
-        displayRow(productData);
-        // jScrollPane1.getHorizontalScrollBar().setUI(new CustomScrollBar());
-        // jScrollPane1.getVerticalScrollBar().setUI(new CustomScrollBar());
+
+        BookData[] bookDatas;
+        try {
+            bookDatas = BookDAO.readBookDataFromDatabase("book", "book_title");
+            displayRow(bookDatas);
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     private void displayRow(BookData[] productData) {
         ((DefaultTableModel) displayTable.getModel()).setRowCount(0);
         int length = productData.length;
@@ -44,7 +50,7 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
                 rowData[4] = productData[i].getAuthor();
                 rowData[5] = productData[i].getPublisher();
                 rowData[6] = productData[i].getPublicatioYear();
-                //insert row
+
                 ((DefaultTableModel) displayTable.getModel()).addRow(rowData);
             }
         } else {
@@ -55,18 +61,16 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
     private String getSelection() {
         String searchBy = null;
         switch (searchType.getSelectedIndex()) {
-            case 0:
+            case 0 ->
                 searchBy = "book_title";
-                break;
-            case 1:
+            case 1 ->
                 searchBy = "book_title";
-                break;
-            case 2:
+            case 2 ->
                 searchBy = "isbn";
-                break;
         }
         return searchBy;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -198,13 +202,6 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         displayTable.setShowGrid(false);
         displayTable.getTableHeader().setResizingAllowed(false);
         displayTable.getTableHeader().setReorderingAllowed(false);
-        displayTable.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                displayTableInputMethodTextChanged(evt);
-            }
-        });
         jScrollPane1.setViewportView(displayTable);
 
         searchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filter By", "Book Title", "ISBN" }));
@@ -340,42 +337,61 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBarActionPerformed
-        BookData[] productData;
+        BookData[] bookDatas;
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        try {
+            bookDatas = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
+            displayRow(bookDatas);
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchBarActionPerformed
 
-    private void displayTableInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_displayTableInputMethodTextChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_displayTableInputMethodTextChanged
-
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
-    int deleteConfirm = JOptionPane.showConfirmDialog(null, "Data cannot be recovered once deleted! Continue delete?", "Warning!", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
-        if(deleteConfirm == 0){
+        int deleteConfirm = JOptionPane.showConfirmDialog(null,
+                "Data cannot be recovered once deleted! Continue delete?", "Warning!",
+                JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (deleteConfirm == 0) {
             int length = displayTable.getRowCount();
             Object deleteRow[] = new Object[length];
             int lengthOfDeleteRow = 0;
-            for(int i = 0;i<length;i++){
-                Object value =((DefaultTableModel) displayTable.getModel()).getValueAt(i, 7);
+            for (int i = 0; i < length; i++) {
+                Object value = ((DefaultTableModel) displayTable.getModel()).getValueAt(i, 7);
                 boolean selected = false;
-                if (value != null){
+                if (value != null) {
                     selected = (boolean) value;
                 }
-                if (selected){
+                if (selected) {
                     deleteRow[lengthOfDeleteRow] = ((DefaultTableModel) displayTable.getModel()).getValueAt(i, 1);
-                    System.out.println("Delete isbn:"+deleteRow[lengthOfDeleteRow]);
+                    System.out.println("Delete isbn:" + deleteRow[lengthOfDeleteRow]);
                     lengthOfDeleteRow++;
                 }
             }
             deleteRow = Arrays.copyOf(deleteRow, lengthOfDeleteRow);
-            bookDAO.deleteData("isbn",deleteRow);
-            UIUtils.displaySuccessMessage("Delete successfull");
-            
-            BookData[] productData;
-            productData = bookDAO.readData("product","book_title");
-            displayRow(productData);
+            try {
+                BookDAO.deleteBookData("isbn", deleteRow);
+                UIUtils.displaySuccessMessage("Delete successful");
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+                Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            BookData[] bookDatas;
+            try {
+                bookDatas = BookDAO.readBookDataFromDatabase("book", "book_title");
+                displayRow(bookDatas);
+            } catch (SQLException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+                Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+                Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_deleteButtonMouseClicked
 
@@ -396,11 +412,19 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_deleteButtonMouseReleased
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
-        BookData[] productData;
+        BookData[] bookDatas;
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " +"\'"+searchBar.getText() + "%"+"\'";
-        productData = bookDAO.readData("product",condition,searchBy);
-        displayRow(productData);
+        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        try {
+            bookDatas = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
+            displayRow(bookDatas);
+        } catch (SQLException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.DATABASE_ERROR);
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            UIUtils.displayErrorMessage(ExceptionMessages.IO_ERROR);
+            Logger.getLogger(DeleteProductPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_searchButtonMouseClicked
 
 
