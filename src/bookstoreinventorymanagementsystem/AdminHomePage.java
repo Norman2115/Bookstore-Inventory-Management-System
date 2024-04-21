@@ -9,8 +9,6 @@ package bookstoreinventorymanagementsystem;
  */
 public class AdminHomePage extends javax.swing.JFrame {
 
-    private final UserData userData;
-
     /**
      * Creates new form AdminHomePage
      *
@@ -22,10 +20,6 @@ public class AdminHomePage extends javax.swing.JFrame {
         Dashboard text = new Dashboard(userData.getUsername());
         displayPanel.add(text).setVisible(true);
 
-        this.userData = userData;
-
-        // Set the profile picture of the admin using the provided user data.
-        // ImageUtils.setPicture(profilePictureLabel, userData.getProfilePicture());
     }
 
     /**

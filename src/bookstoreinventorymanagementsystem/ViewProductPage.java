@@ -271,6 +271,7 @@ public class ViewProductPage extends javax.swing.JInternalFrame {
         BookData[] bookDatas;
         String searchBy = getSelection();
         String condition;
+        // Define the search condition
         if(searchBy.equals("all")){
             searchBy = "book_title";
             condition = "book_title LIKE \'"+searchBar.getText()+"%\' OR "

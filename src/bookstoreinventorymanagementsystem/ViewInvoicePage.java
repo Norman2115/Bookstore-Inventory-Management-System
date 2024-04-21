@@ -83,7 +83,7 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
 
     private String[][] readDataFromDatabase(String condition, String orderBy) {
         try (Connection connection = DatabaseManager.getConnection()) {
-            int i = 0;
+            int i;
             int rowNumber = BookDAO.getRowCount("sales_detail", condition);
             String[][] data = new String[rowNumber][7];//0-sales_id;1-salesperson_id;2-customer_id;3-sales_date;4-total_price;5-customer_name;6-salesperson_name
             for (i = 0; i < rowNumber; i++) {
@@ -109,7 +109,7 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
                 data[i][3] = resultSet.getString("sales_date");
                 data[i][4] = resultSet.getString("total_price");
                 data[i][5] = resultSet.getString("customer_name");
-                data[i][6] = resultSet.getString("user_name");
+                data[i][6] = resultSet.getString("username");
                 i++;
             }
             return data;
@@ -122,24 +122,12 @@ public class ViewInvoicePage extends javax.swing.JInternalFrame {
     private String getSelection() {
         String searchBy = null;
         switch (searchType.getSelectedIndex()) {
-            case 0:
-                searchBy = "sales_id";
-                break;
-            case 1:
-                searchBy = "sales_id";
-                break;
-            case 2:
-                searchBy = "customer_name";
-                break;
-            case 3:
-                searchBy = "salesperson_id";
-                break;
-            case 4:
-                searchBy = "user_name";
-                break;
-            case 5:
-                searchBy = "sales_date";
-                break;
+            case 0 -> searchBy = "sales_id";
+            case 1 -> searchBy = "sales_id";
+            case 2 -> searchBy = "customer_name";
+            case 3 -> searchBy = "salesperson_id";
+            case 4 -> searchBy = "username";
+            case 5 -> searchBy = "sales_date";
         }
         return searchBy;
     }
