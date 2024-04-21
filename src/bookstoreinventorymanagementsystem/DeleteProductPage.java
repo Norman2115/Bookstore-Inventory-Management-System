@@ -81,7 +81,7 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         String searchBy = null;
         switch (searchType.getSelectedIndex()) {
             case 0 ->
-                searchBy = "book_title";
+                searchBy = "all";
             case 1 ->
                 searchBy = "book_title";
             case 2 ->
@@ -359,8 +359,20 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
         BookData[] bookDatas;
         // Retrieve the selected search criteria
         String searchBy = getSelection();
+        String condition;
         // Define the search condition
-        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        if(searchBy.equals("all")){
+            searchBy = "book_title";
+            condition = "book_title LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "isbn LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "genre LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "language LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "author LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "publisher LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "publication_year LIKE \'"+searchBar.getText()+"%\'";
+        }else{
+            condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        }
 
         try {
             // Search for products in the database based on the condition
@@ -450,7 +462,20 @@ public class DeleteProductPage extends javax.swing.JInternalFrame {
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         BookData[] bookDatas;
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        String condition;
+        if(searchBy.equals("all")){
+            searchBy = "book_title";
+            condition = "book_title LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "isbn LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "genre LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "language LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "author LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "publisher LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "publication_year LIKE \'"+searchBar.getText()+"%\'";
+            System.out.println(condition);
+        }else{
+            condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        }
         try {
             bookDatas = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
             displayRow(bookDatas);

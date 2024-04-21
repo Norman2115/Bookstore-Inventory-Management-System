@@ -1,11 +1,12 @@
 package bookstoreinventorymanagementsystem;
 
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.plaf.basic.BasicInternalFrameUI;
-import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -72,7 +73,7 @@ public class RestockPage extends javax.swing.JInternalFrame {
         String searchBy = null;
         switch (searchType.getSelectedIndex()) {
             case 0 ->
-                searchBy = "book_title";
+                searchBy = "all";
             case 1 ->
                 searchBy = "book_title";
             case 2 ->
@@ -86,7 +87,21 @@ public class RestockPage extends javax.swing.JInternalFrame {
     private void selectData() {
         BookData[] bookData;
         String searchBy = getSelection();
-        String condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        String condition;
+        // Define the search condition
+        if(searchBy.equals("all")){
+            searchBy = "book_title";
+            condition = "book_title LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "isbn LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "genre LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "language LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "author LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "publisher LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "publication_year LIKE \'"+searchBar.getText()+"%\' OR "
+                    + "stock_quantity LIKE \'"+searchBar.getText()+"%\'";
+        }else{
+            condition = searchBy + " LIKE " + "\'" + searchBar.getText() + "%" + "\'";
+        }
         try {
             bookData = BookDAO.readBookDataFromDatabase("book", condition, searchBy);
             displayRow(bookData);
